@@ -1,272 +1,153 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>LICENSENETWORK™ — The Civilization of Ideas</title>
-<meta name="description" content="The universal network for creators and institutions: protect IP, register copyrights & patents, collaborate, trade idea‑value, and attract investors — powered by LICENSE GỐC™." />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#0a0b0f;
-    --panel:#0f1117;
-    --gold:#f5d36a;
-    --gold-strong:#ffd54d;
-    --gold-soft:#e5c86b;
-    --text:#eae7dc;
-    --muted:#b7b3a3;
-    --line:linear-gradient(90deg,#6b5b2a 0%,#ffd54d 50%,#6b5b2a 100%);
-    --radius:18px;
-    --shadow:0 0 24px rgba(255,213,77,.12), inset 0 0 18px rgba(255,213,77,.06);
-  }
-  html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
-  a{color:var(--gold-strong);text-decoration:none}
-  .wrap{max-width:1100px;margin:auto;padding:24px}
-  /* NAV */
-  .nav{position:sticky;top:0;z-index:50;background:rgba(10,11,15,.8);backdrop-filter:blur(8px);border-bottom:1px solid rgba(229,200,107,.14)}
-  .nav-inner{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:14px 0}
-  .brand{font-family:"Playfair Display",serif;font-weight:800;letter-spacing:.4px;color:var(--gold)}
-  .nav a.btn{padding:10px 14px;border:1px solid rgba(229,200,107,.35);border-radius:10px}
-  .links{display:flex;gap:14px;flex-wrap:wrap}
-  /* HERO */
-  .hero{
-    position:relative;overflow:hidden;border-radius:var(--radius);
-    background: radial-gradient(1200px 600px at 10% 10%, rgba(255,213,77,.08), transparent 60%),
-                radial-gradient(800px 400px at 90% 0%, rgba(255,213,77,.06), transparent 60%),
-                linear-gradient(180deg,#0b0d13 0%, #0a0b0f 100%);
-    /* OPTIONAL: background image — uncomment & replace URL if you want a galaxy image
-    background-image: url('YOUR_UNIVERSE_IMAGE_URL');
-    background-size: cover;background-position:center;
-    */
-    box-shadow:var(--shadow);
-  }
-  .hero *{text-shadow:0 0 14px rgba(255,213,77,.15)}
-  .hero .content{padding:64px 28px 56px}
-  .eyebrow{display:inline-flex;align-items:center;gap:10px;
-    padding:8px 12px;border:1px solid rgba(229,200,107,.35);
-    border-radius:999px;background:rgba(255,213,77,.06);
-    box-shadow:0 0 18px rgba(255,213,77,.12) inset;
-    font-weight:600;color:var(--gold)
-  }
-  h1{font-family:"Playfair Display",serif;font-weight:800;line-height:1.1;margin:14px 0 10px;font-size:40px;color:#fff}
-  .lead{color:var(--muted);font-size:18px;max-width:820px}
-  .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
-  .btn{
-    padding:12px 18px;border-radius:12px;font-weight:700;letter-spacing:.2px;
-    transition:.2s ease;display:inline-flex;align-items:center;gap:10px
-  }
-  .btn.gold{background:linear-gradient(180deg,#ffe07a,#f3c545 60%,#e0b53a);
-    color:#2b2207;box-shadow:0 10px 30px rgba(255,213,77,.18), 0 0 22px rgba(255,213,77,.30)}
-  .btn.gold:hover{transform:translateY(-1px);box-shadow:0 14px 34px rgba(255,213,77,.25), 0 0 28px rgba(255,213,77,.38)}
-  .btn.ghost{border:1px solid rgba(229,200,107,.35);color:var(--gold);background:transparent}
-  /* SECTIONS */
-  .section{margin:40px 0}
-  .panel{
-    background:linear-gradient(180deg,#0f1117,#0c0e13);
-    border:1px solid rgba(229,200,107,.16);border-radius:var(--radius);padding:24px 20px;
-    box-shadow:var(--shadow)
-  }
-  .title{display:flex;align-items:center;gap:10px;color:var(--gold);font-weight:800;font-family:"Playfair Display",serif;font-size:28px;margin:0 0 10px}
-  .rule{height:1px;background:var(--line);border-radius:999px;margin:12px 0}
-  .grid{display:grid;gap:16px}
-  @media(min-width:880px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} .grid.cols-2{grid-template-columns:repeat(2,1fr)} }
-  .card{background:linear-gradient(180deg,#0e1015,#0b0d12);border:1px solid rgba(229,200,107,.14);
-    border-radius:14px;padding:16px;box-shadow:var(--shadow)}
-  .card h3{margin:6px 0 6px;font-weight:800;color:#fff}
-  .badge{display:inline-block;padding:6px 10px;border:1px solid rgba(229,200,107,.35);border-radius:999px;color:var(--gold);font-weight:700;margin-bottom:6px}
-  ul.list{margin:10px 0 0 18px;color:var(--muted)}
-  /* TABLE */
-  table{width:100%;border-collapse:collapse}
-  th,td{padding:12px;border-bottom:1px solid rgba(229,200,107,.14)}
-  th{color:var(--gold);text-align:left}
-  .note{color:var(--muted);font-size:14px}
-  /* FOOTER */
-  .footer{margin:40px 0 16px;color:var(--muted);font-size:14px;text-align:center}
-  .glow{filter:drop-shadow(0 0 12px rgba(255,213,77,.25))}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LICENSE GỐC™ – Universal Network</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0a0b0f;
+      color: #eae7dc;
+      line-height: 1.6;
+    }
+    header {
+      background: #111;
+      color: #f5d36a;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      background: #222;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: #f5d36a;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-shadow: 0 0 5px #ffd54d;
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1, h2, h3 {
+      color: #ffd54d;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #444;
+      padding: 10px;
+    }
+    th {
+      background: #333;
+    }
+    footer {
+      background: #111;
+      color: #aaa;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>🌐 LICENSE GỐC™</h1>
+    <h3>“Protect the Roots. Empower Humanity.”</h3>
+  </header>
 
-<!-- NAV -->
-<div class="nav">
-  <div class="wrap nav-inner">
-    <div class="brand glow">LICENSENETWORK™</div>
-    <div class="links">
-      <a class="btn" href="#network">Network</a>
-      <a class="btn" href="#uspto">Copyright & USPTO</a>
-      <a class="btn" href="#chat">Community</a>
-      <a class="btn" href="#boards">Creation Boards</a>
-      <a class="btn" href="#trade">Trade</a>
-      <a class="btn" href="#invest">Investors</a>
-      <a class="btn" href="#media">Culture</a>
-    </div>
-  </div>
-</div>
+  <nav>
+    <a href="#intro">Introduction</a>
+    <a href="#ecosystem">Ecosystem</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#values">Core Values</a>
+    <a href="#links">Official Links</a>
+  </nav>
 
-<!-- HERO -->
-<div class="wrap section">
-  <section class="hero">
-    <div class="content">
-      <span class="eyebrow">🌌 LICENSECOIN™ • Utility for Ideas</span>
-      <h1>Turn Every <span style="color:var(--gold)">Idea</span> into Value</h1>
-      <p class="lead">
-        The universal network where ideas are protected, tradable, and investable. Register on
-        <strong>LICENSEGOC™</strong>, collaborate in <strong>LICENSENETWORK™</strong>, power progress with <strong>LICENSECOIN™</strong>.
-      </p>
-      <div class="cta">
-        <a class="btn gold" href="#uspto">Start • Protect & File</a>
-        <a class="btn ghost" href="#compare">Comparative Analysis</a>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- NETWORK -->
-<div class="wrap section" id="network">
-  <div class="panel">
-    <div class="title">🌍 LICENSENETWORK™ — The Civilization of Ideas</div>
-    <div class="rule"></div>
+  <section id="intro">
+    <h2>✨ Introduction</h2>
     <p>
-      For centuries, ideas were scattered. LICENSENETWORK™ unites creators, institutions, and investors under
-      one verified ecosystem: protect authorship, prove progress, reward collaboration, and surface the strongest
-      projects to global backers.
+      LICENSE GỐC™ is the world’s first global platform combining:
+      Copyright + Patents, Social Media, Blockchain & AI, and Creative Economy.
     </p>
-    <div class="grid cols-3" style="margin-top:12px">
-      <div class="card">
-        <div class="badge">Protection</div>
-        <h3>Copyright, USPTO/WIPO</h3>
-        <p class="note">Ghost ID™, verifiable timestamps, and pathways to patents & global IP recognition.</p>
-      </div>
-      <div class="card">
-        <div class="badge">Collaboration</div>
-        <h3>Creation Boards</h3>
-        <p class="note">Form teams, co‑design, document prior‑art, and assign shared rewards.</p>
-      </div>
-      <div class="card">
-        <div class="badge">Economy</div>
-        <h3>LICENSECOIN™ Utility</h3>
-        <p class="note">Reward helpers, buy AI credits, unlock tools, and signal traction to investors.</p>
-      </div>
-    </div>
-  </div>
-</div>
+  </section>
 
-<!-- COPYRIGHT & USPTO -->
-<div class="wrap section" id="uspto">
-  <div class="panel">
-    <div class="title">🛡️ Copyright & USPTO Registration</div>
-    <div class="rule"></div>
-    <div class="grid cols-2">
-      <div class="card">
-        <h3>Step‑by‑Step</h3>
-        <ul class="list">
-          <li>Secure authorship on LICENSEGOC™ (timestamp + Ghost ID™).</li>
-          <li>File U.S. Copyright: <a href="https://copyright.gov/registration" target="_blank" rel="noopener">copyright.gov/registration</a>.</li>
-          <li>File U.S. Patent/Trademark via USPTO: <a href="https://www.uspto.gov/patents/apply" target="_blank" rel="noopener">uspto.gov/patents/apply</a>.</li>
-          <li>For WIPO international routes: <a href="https://www.wipo.int/" target="_blank" rel="noopener">wipo.int</a>.</li>
-          <li>Download templates: disclosure, assignment, NDA (coming soon).</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Why It Matters</h3>
-        <ul class="list">
-          <li>Legal certainty across borders.</li>
-          <li>Clear provenance → easier partnerships & funding.</li>
-          <li>Foundation for valuation, licensing, and exits.</li>
-        </ul>
-        <div class="cta" style="margin-top:10px">
-          <a class="btn gold" href="mailto:team@thelicenseuniversal.com">Need Help? Contact Us</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  <section id="ecosystem">
+    <h2>🚀 Core Ecosystem</h2>
+    <table>
+      <tr><th>Component</th><th>Description</th></tr>
+      <tr><td>🌍 LICENSENETWORK™</td><td>Global copyright social network</td></tr>
+      <tr><td>📜 Copyright & USPTO Guide</td><td>International copyright + patent registration</td></tr>
+      <tr><td>💬 Community AI Chat</td><td>Realtime discussion & collaboration</td></tr>
+      <tr><td>🧩 Ideas Boards</td><td>Decentralized space for idea sharing & protection</td></tr>
+      <tr><td>💰 LICENSECOINS™</td><td>Creative economy token & reward system</td></tr>
+      <tr><td>📈 Investor Center</td><td>Transparent connection of capital & ideas</td></tr>
+      <tr><td>📡 Global Ads</td><td>Fair, copyright-protected promotion</td></tr>
+      <tr><td>🎬 Culture & Science</td><td>Preserve & grow global human knowledge</td></tr>
+    </table>
+  </section>
 
-<!-- COMMUNITY -->
-<div class="wrap section" id="chat">
-  <div class="panel">
-    <div class="title">💬 Chat Community Room</div>
-    <div class="rule"></div>
-    <p>Verified spaces for mentors, reviewers, and partners. AI assistants help summarize threads, extract next steps, and keep work moving.</p>
-  </div>
-</div>
+  <section id="strategy">
+    <h2>📈 Development Strategy</h2>
+    <h3>🟢 Phase 1 (2025–2026)</h3>
+    <ul>
+      <li>Deploy infrastructure (Vercel + Supabase + GitHub)</li>
+      <li>Launch LICENSECOINS™ & Copyright Vault</li>
+      <li>Integrate AI Tim ♥️</li>
+    </ul>
+    <h3>🟡 Phase 2 (2026–2028)</h3>
+    <ul>
+      <li>Launch multi-language LICENSENETWORK™</li>
+      <li>Connect directly to USPTO + WIPO</li>
+      <li>AI tools to preserve languages & culture</li>
+    </ul>
+    <h3>🔵 Phase 3 (2028–2032)</h3>
+    <ul>
+      <li>International investment alliances</li>
+      <li>Satellite timestamping for interplanetary copyright</li>
+      <li>Global cultural & science hub</li>
+    </ul>
+    <h3>🟣 Phase 4 (2032+)</h3>
+    <ul>
+      <li>Global Charter of Creativity & Copyright</li>
+      <li>Interplanetary Creative Rights</li>
+      <li>Immortal Vaults™ of humanity’s knowledge</li>
+    </ul>
+  </section>
 
-<!-- CREATION BOARDS -->
-<div class="wrap section" id="boards">
-  <div class="panel">
-    <div class="title">🧩 Creation Boards</div>
-    <div class="rule"></div>
-    <p>Kanban‑style boards to break ideas into tasks, attach proofs, and auto‑credit contributors with LICENSECOIN™.</p>
-  </div>
-</div>
+  <section id="values">
+    <h2>🌟 Core Values</h2>
+    <ul>
+      <li>✔️ Creators at the center</li>
+      <li>✔️ Absolute transparency (Blockchain + AI)</li>
+      <li>✔️ Global by default (multilingual, multicultural)</li>
+      <li>✔️ Beyond Earth – protect ideas for future generations & planets</li>
+    </ul>
+  </section>
 
-<!-- TRADE -->
-<div class="wrap section" id="trade">
-  <div class="panel">
-    <div class="title">💱 Trade & Rewards</div>
-    <div class="rule"></div>
-    <div class="grid cols-3">
-      <div class="card"><h3>Instant Rewards</h3><p class="note">Claim‑on‑Create: register → receive LICENSECOIN™ instantly.</p></div>
-      <div class="card"><h3>Real Utility</h3><p class="note">Use coins for filings, AI credits, prototype credits, tips.</p></div>
-      <div class="card"><h3>Signals</h3><p class="note">High coin activity surfaces promising projects to backers.</p></div>
-    </div>
-  </div>
-</div>
+  <section id="links">
+    <h2>🔗 Official Links</h2>
+    <ul>
+      <li>🌐 Website: <a href="https://thelicenseuniversal.com">thelicenseuniversal.com</a></li>
+      <li>💰 LICENSECOINS™ – The currency of creativity</li>
+      <li>⚖️ Legal: USPTO + WIPO + Copyright.gov</li>
+      <li>👥 LICENSE Universal Council™</li>
+    </ul>
+  </section>
 
-<!-- INVESTORS -->
-<div class="wrap section" id="invest">
-  <div class="panel">
-    <div class="title">📈 Investors & Institutions</div>
-    <div class="rule"></div>
-    <p>Portfolio‑style visibility into protected ideas with proof of progress, contributor graphs, and risk‑reduction via legal anchoring.</p>
-  </div>
-</div>
-
-<!-- CULTURE -->
-<div class="wrap section" id="media">
-  <div class="panel">
-    <div class="title">🎬 Culture • Science • Media</div>
-    <div class="rule"></div>
-    <p>From labs to studios: publish research, scripts, formats, and prototypes; license globally with transparent provenance.</p>
-  </div>
-</div>
-
-<!-- COMPARISON -->
-<div class="wrap section" id="compare">
-  <div class="panel">
-    <div class="title">◆ Comparative Analysis</div>
-    <div class="rule"></div>
-    <div class="card">
-      <div style="overflow:auto">
-        <table>
-          <thead><tr>
-            <th>Criteria</th><th>LICENSECOIN™</th><th>Bitcoin</th><th>Ethereum</th><th>NFT Tokens</th>
-          </tr></thead>
-          <tbody>
-            <tr><td>Linked to real assets</td><td><strong>Anchored — Global IP & Copyrights</strong></td><td>None</td><td>None</td><td>Limited (art only)</td></tr>
-            <tr><td>Legal integration</td><td><strong>Ghost ID™, USPTO/WIPO</strong></td><td>None</td><td>None</td><td>Weak/Risky</td></tr>
-            <tr><td>Utility scope</td><td><strong>Ideas, Patents, Tech, Art, Inventions</strong></td><td>Payments</td><td>Smart contracts</td><td>Narrow</td></tr>
-            <tr><td>Security & protection</td><td><strong>AI Defense, GPSI™, Timestamps</strong></td><td>Basic</td><td>High fees</td><td>Easily copied</td></tr>
-            <tr><td>Growth potential</td><td><strong>Global & Scalable</strong></td><td>Saturated</td><td>Competitive</td><td>Niche</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="note" style="margin-top:10px">Descriptors are strategic & high‑level, not financial advice.</p>
-    </div>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<div class="wrap footer">
-  <div class="rule" style="margin:0 0 14px"></div>
-  <div>© <span id="y"></span> LICENSENETWORK™ • LICENSE GỐC™ — All rights reserved.</div>
-  <div class="note">Disclaimer: LICENSECOIN™ is a utility token within the LICENSEGOC™ / LICENSENETWORK™ ecosystem and is not an investment security.</div>
-</div>
-
-<script>
-  document.getElementById('y').textContent = new Date().getFullYear();
-</script>
+  <footer>
+    © 2025 LICENSE GỐC™ – The Root. Eternal. Universal.
+  </footer>
 </body>
 </html>
