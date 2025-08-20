@@ -252,6 +252,14 @@
     }, 150);
   };
 
+  // Optional: Allow Enter to send message (except Shift+Enter for newline)
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      sendBtn.click();
+    }
+  });
+
   /* ===== Google Translate: lưu & áp dụng ngôn ngữ cho mọi trang ===== */
   function setCookie(name, value, days){
     const d = new Date(); d.setTime(d.getTime()+days*864e5);
@@ -320,7 +328,6 @@
     }, 'google_translate_element');
   }
 </script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
-                        
