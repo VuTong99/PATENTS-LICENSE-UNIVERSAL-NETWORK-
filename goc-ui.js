@@ -26,18 +26,7 @@
   style.textContent = css;
   document.head.appendChild(style);
 
-  // ==== HERO (logo + tagline) ====
-  const hero = document.createElement('section');
-  hero.className = 'hero';
-  hero.innerHTML = `
-    <div class="logo-wrap">
-      <img src="${LOGO}" alt="LICENSE GỐC™" style="width:140px;height:auto;object-fit:contain;filter:drop-shadow(0 8px 30px rgba(0,0,0,.5))">
-      <div class="brand">LICENSE GỐC™</div>
-      <div class="tagline">Protect the Roots. Empower Humanity.</div>
-    </div>`;
-  document.body.prepend(hero);
-
-  // ==== FLOAT BAR (áp dụng cho mọi trang) ====
+// ==== FLOAT BAR (áp dụng cho mọi trang) ====
   const nav = document.createElement('nav');
   nav.className = 'apps-nav';
   nav.innerHTML = `
