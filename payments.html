@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LICENSE GỐC™ — Pay & Credit Cards</title>
+<meta name="description" content="Secure payments, billing profile, cards & invoices for LICENSEGOC / LICENSENETWORK / LICENSECOIN.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0b0f; --panel:#0f1117; --panel2:#0c0e13; --text:#eae7dc;
+    --muted:#b7b3a3; --gold:#f5d36a; --gold-strong:#ffd54d; --line:rgba(229,200,107,.18);
+    --radius:16px; --shadow:0 0 24px rgba(255,213,77,.12), inset 0 0 18px rgba(255,213,77,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
+  a{color:var(--gold-strong);text-decoration:none}
+  .wrap{max-width:1100px;margin:auto;padding:22px}
+
+  /* hero */
+  .hero{border:1px solid var(--line);border-radius:var(--radius);
+        background:linear-gradient(180deg,#10131a,#0a0b0f);
+        padding:22px;box-shadow:var(--shadow)}
+  .title{display:flex;gap:10px;align-items:center;font-weight:800;font-size:26px;color:#fff}
+  .subtitle{color:var(--muted);margin-top:4px}
+  .badge{display:inline-block;padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--gold);font-weight:700}
+
+  /* grid panels */
+  .grid{display:grid;gap:14px;margin-top:16px}
+  @media(min-width:960px){.grid.cols-2{grid-template-columns:1.2fr .8fr}}
+  .panel{background:linear-gradient(180deg,#0f1117,#0c0e13);border:1px solid var(--line);
+         border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+  .panel h3{margin:2px 0 10px;color:#fff}
+  .note{color:var(--muted);font-size:14px}
+
+  /* inputs */
+  .row{display:grid;gap:10px}
+  @media(min-width:720px){.row.cols-2{grid-template-columns:1fr 1fr}}
+  label{font-size:13px;color:#cfc7b0;margin-bottom:4px;display:block}
+  input,select,textarea{
+    width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.08);
+    background:#0c0e12;color:var(--text)
+  }
+  textarea{min-height:90px}
+  .btn{
+    padding:10px 14px;border-radius:10px;border:1px solid rgba(229,200,107,.35);
+    background:linear-gradient(180deg,#171a22,#0d1016);color:var(--gold-strong);font-weight:800;cursor:pointer
+  }
+  .btn.gold{
+    background:linear-gradient(180deg,#ffe07a,#f3c545 60%,#e0b53a);
+    color:#2b2207;box-shadow:0 10px 30px rgba(255,213,77,.18), 0 0 22px rgba(255,213,77,.30)
+  }
+  .btn.line{background:transparent}
+  .right{margin-left:auto}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#10131a}
+
+  table{width:100%;border-collapse:collapse;margin-top:6px}
+  th,td{padding:10px;border-bottom:1px solid rgba(229,200,107,.14)}
+  th{text-align:left;color:var(--gold)}
+  .ok{color:#5ad27d;font-weight:700}
+  .warn{color:#ffb84d;font-weight:700}
+  .err{color:#ff6b6b;font-weight:700}
+
+  /* floating app bar injected by goc-ui.js (no styles here) */
+
+  /* minimal glow */
+  .glow{filter:drop-shadow(0 0 10px rgba(255,213,77,.25))}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="title glow">💳 Pay & Credit Cards <span class="badge">Secure • PCI‑Ready (via PSP)</span></div>
+    <div class="subtitle">Manage billing profile, tokenized cards, invoices & disputes across
+      <strong>LICENSEGOC</strong> • <strong>LICENSENETWORK</strong> • <strong>LICENSECOIN</strong>.
+      This page is <em>demo‑safe</em>: no real card data is stored.
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid cols-2">
+    <!-- LEFT: Billing + Methods + Checkout + Dispute -->
+    <div class="panel">
+      <h3>👤 Billing Profile</h3>
+      <div class="row cols-2">
+        <div>
+          <label>Name</label><input id="billName" placeholder="Your name">
+        </div>
+        <div>
+          <label>Email (login)</label><input id="billEmail" placeholder="you@example.com">
+        </div>
+        <div>
+          <label>Country</label>
+          <select id="billCountry">
+            <option>US</option><option>VN</option><option>CA</option><option>EU</option><option>JP</option><option>KR</option>
+          </select>
+        </div>
+        <div>
+          <label>Address</label><input id="billAddr" placeholder="Street, City, State">
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn" id="saveProfile">Save Profile</button>
+        <span class="pill">2FA: <select id="twofa"><option>Off</option><option>Email OTP</option><option>TOTP App</option></select></span>
+      </div>
+      <div id="profileMsg" class="note" style="margin-top:6px"></div>
+
+      <div class="rule" style="height:1px;background:linear-gradient(90deg,#6b5b2a,#ffd54d,#6b5b2a);margin:14px 0"></div>
+
+      <h3>💠 Payment Methods (Tokenized)</h3>
+      <div class="note">Demo mode stores only <strong>brand + last4</strong>. Real card entry must use Stripe/Adyen Elements.</div>
+      <div class="row cols-2" style="margin-top:8px">
+        <div>
+          <label>Card Number (test — will be masked)</label>
+          <input id="cardNum" inputmode="numeric" maxlength="19" placeholder="4242 4242 4242 4242">
+        </div>
+        <div>
+          <label>Expiry (MM/YY)</label>
+          <input id="cardExp" placeholder="12/30" maxlength="5">
+        </div>
+        <div>
+          <label>Name on Card</label>
+          <input id="cardName" placeholder="CARD HOLDER">
+        </div>
+        <div>
+          <label>Brand</label>
+          <select id="cardBrand"><option>VISA</option><option>MASTERCARD</option><option>AMEX</option><option>DISCOVER</option></select>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn gold" id="addCard">Add Card (Test)</button>
+        <button class="btn line" id="clearCards">Remove All (Test)</button>
+      </div>
+      <div id="cardsList" class="note" style="margin-top:8px"></div>
+
+      <div class="rule" style="height:1px;background:linear-gradient(90deg,#6b5b2a,#ffd54d,#6b5b2a);margin:14px 0"></div>
+
+      <h3>🧾 Quick Checkout</h3>
+      <div class="row cols-2">
+        <div><label>Purpose</label>
+          <select id="purpose">
+            <option value="Account Setup">Account Setup</option>
+            <option value="USPTO Filing">USPTO Filing</option>
+            <option value="Copyright Filing">Copyright Filing</option>
+            <option value="AI Credits">AI Credits</option>
+            <option value="Marketplace">Marketplace</option>
+          </select>
+        </div>
+        <div><label>Amount (USD)</label><input id="amountUSD" inputmode="decimal" placeholder="49.00"></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn gold" id="checkoutCard">Pay by Card (Test)</button>
+        <button class="btn" id="checkoutCoin">Pay by LICENSECOIN</button>
+        <span class="pill">Demo rate: 1 LCN = <input id="rate" style="width:80px;text-align:right" value="1.00"> USD</span>
+      </div>
+      <div id="payMsg" class="note" style="margin-top:8px"></div>
+
+      <div class="rule" style="height:1px;background:linear-gradient(90deg,#6b5b2a,#ffd54d,#6b5b2a);margin:14px 0"></div>
+
+      <h3>📨 Disputes & Questions</h3>
+      <div class="row">
+        <textarea id="ticketBody" placeholder="Describe your billing question or dispute…"></textarea>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn" id="openTicket">Open Ticket</button>
+        <a class="btn line" href="mailto:billing@thelicenseuniversal.com?subject=Billing%20Help">Email Billing</a>
+      </div>
+      <div id="ticketMsg" class="note" style="margin-top:8px"></div>
+    </div>
+
+    <!-- RIGHT: Wallet + History + Cart -->
+    <div class="panel">
+      <h3>👛 Wallet • LICENSECOIN</h3>
+      <div class="note">Balance is isolated per signed-in email (demo). Switch email to see a different wallet.</div>
+      <div style="display:flex;gap:10px;align-items:center;margin-top:8px">
+        <span class="pill">Signed in: <b id="who">guest</b></span>
+        <button class="btn" id="signIn">Sign In (Mock)</button>
+        <button class="btn line right" id="signOut">Sign Out</button>
+      </div>
+      <div style="display:flex;gap:14px;align-items:end;margin-top:12px">
+        <div><div class="note">LCN Balance</div><div style="font-size:26px;font-weight:800" id="bal">0</div></div>
+        <div><div class="note">≈ USD</div><div style="font-size:22px;font-weight:700" id="balUSD">$0.00</div></div>
+      </div>
+
+      <div class="rule" style="height:1px;background:linear-gradient(90deg,#6b5b2a,#ffd54d,#6b5b2a);margin:14px 0"></div>
+
+      <h3>📚 Invoices & History</h3>
+      <div id="historyBox" class="note">No history yet.</div>
+
+      <div class="rule" style="height:1px;background:linear-gradient(90deg,#6b5b2a,#ffd54d,#6b5b2a);margin:14px 0"></div>
+
+      <h3>🛒 Cart (Demo)</h3>
+      <div class="note">Items added from Marketplace/Submit can appear here.</div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn" id="addItem">Add Sample Item</button>
+        <button class="btn line" id="clearCart">Clear Cart</button>
+      </div>
+      <div id="cartBox" class="note" style="margin-top:8px">Cart is empty.</div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:14px">
+    <h3>🛡️ Security Notes</h3>
+    <ul class="note">
+      <li><b>Do not store raw card numbers</b> on client/server. Use PSP tokenization (Stripe/Adyen) with PCI DSS compliance.</li>
+      <li>Enforce <b>2FA</b>, device binding, velocity checks, IP geo rules, and signed webhooks.</li>
+      <li>All sensitive calls must be done <b>server‑side</b> with short‑lived tokens; never expose long‑term API keys in the browser.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Inject App Bar / Translate / AI TIM -->
+<script src="goc-ui.js"></script>
+<!-- SDK logic (wallet/auth/submit mock + ready for real backend) -->
+<script src="goc-sdk.js"></script>
+
+<!-- Stripe Elements (live later) — keep but unused in demo
+<script src="https://js.stripe.com/v3"></script>
+-->
+
+<script>
+;(()=>{
+  // ===== Helpers =====
+  const $ = sel => document.querySelector(sel);
+  const fmtUSD = n => '$' + (Number(n)||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+  const fmtLCN = n => (Number(n)||0).toLocaleString(undefined,{maximumFractionDigits:2});
+
+  // ===== State =====
+  let rate = parseFloat(localStorage.getItem('goc_rate')||'1') || 1;
+  const setRate = (v)=>{ rate = Math.max(0.0001, Number(v)||1); localStorage.setItem('goc_rate', rate); $('#rate').value = rate.toFixed(2); refreshWallet(); }
+
+  // ===== Profile (mock) =====
+  function loadProfile(){
+    const p = JSON.parse(localStorage.getItem('goc_profile')||'{}');
+    $('#billName').value = p.name || '';
+    $('#billEmail').value = p.email || '';
+    $('#billCountry').value = p.country || 'US';
+    $('#billAddr').value = p.addr || '';
+    $('#twofa').value = p.twofa || 'Off';
+    $('#who').textContent = (p.email || 'guest');
+  }
+  function saveProfile(){
+    const p = {
+      name: $('#billName').value.trim(),
+      email: $('#billEmail').value.trim(),
+      country: $('#billCountry').value,
+      addr: $('#billAddr').value.trim(),
+      twofa: $('#twofa').value
+    };
+    localStorage.setItem('goc_profile', JSON.stringify(p));
+    $('#profileMsg').textContent = 'Saved locally (demo).';
+    $('#who').textContent = (p.email || 'guest');
+    if (p.email) GOC && GOC.auth && GOC.auth.signIn?.({name:p.name||'User', email:p.email});
+    refreshWallet();
+  }
+
+  // ===== Cards (token-like, demo only) =====
+  function luhnOk(num){
+    num = (num||'').replace(/\D/g,'');
+    let sum=0, alt=false;
+    for (let i=num.length-1;i>=0;i--){
+      let n = parseInt(num[i],10);
+      if (alt){ n*=2; if(n>9) n-=9; }
+      sum+=n; alt=!alt;
+    }
+    return (sum%10)===0;
+  }
+  function listCards(){
+    const arr = JSON.parse(localStorage.getItem('goc_cards')||'[]');
+    if(!arr.length){ $('#cardsList').innerHTML = '<span class="note">No saved test cards.</span>'; return; }
+    $('#cardsList').innerHTML = `
+      <table><thead><tr><th>Brand</th><th>Last4</th><th>Exp</th><th>Status</th></tr></thead>
+      <tbody>${arr.map(c=>`<tr><td>${c.brand}</td><td>•••• ${c.last4}</td><td>${c.exp}</td><td class="ok">Tokenized (demo)</td></tr>`).join('')}</tbody></table>`;
+  }
+  function addCard(){
+    const num = $('#cardNum').value.trim();
+    const exp = $('#cardExp').value.trim();
+    const brand = $('#cardBrand').value;
+    if(!luhnOk(num)){ alert('Card number invalid (demo Luhn check).'); return; }
+    const last4 = num.replace(/\D/g,'').slice(-4);
+    const arr = JSON.parse(localStorage.getItem('goc_cards')||'[]');
+    arr.push({brand,last4,exp,addedAt:Date.now()});
+    localStorage.setItem('goc_cards', JSON.stringify(arr));
+    $('#cardNum').value=''; $('#cardExp').value=''; $('#cardName').value='';
+    listCards();
+  }
+  function clearCards(){ localStorage.removeItem('goc_cards'); listCards(); }
+
+  // ===== Wallet / History =====
+  async function refreshWallet(){
+    try{
+      const me = await GOC.auth?.me?.();
+      $('#who').textContent = me?.email || (JSON.parse(localStorage.getItem('goc_profile')||'{}').email || 'guest');
+      if(GOC.wallet?.getRate){ const r = await GOC.wallet.getRate(); if(r>0) setRate(r); }
+      const bal = await GOC.wallet.balance();
+      $('#bal').textContent = fmtLCN(bal.lcn || 0);
+      $('#balUSD').textContent = fmtUSD((bal.lcn||0) * rate);
+      const hist = await GOC.wallet.history();
+      if (!hist?.length) {
+        $('#historyBox').innerHTML = '<span class="note">No history yet.</span>';
+      } else {
+        $('#historyBox').innerHTML = `
+          <table><thead><tr><th>Time</th><th>Type</th><th>Δ LCN</th><th>Balance</th><th>Note</th></tr></thead>
+          <tbody>${hist.slice().reverse().map(h=>`
+            <tr>
+              <td>${new Date(h.t).toLocaleString()}</td>
+              <td>${h.type}</td>
+              <td>${h.delta>0?'<span class="ok">+':''}${h.delta}</span></td>
+              <td>${fmtLCN(h.bal)}</td>
+              <td>${h.note||''}</td>
+            </tr>`).join('')}
+          </tbody></table>`;
+      }
+    }catch(e){ console.error(e); }
+  }
+
+  // ===== Checkout (demo) =====
+  async function payByCard(){
+    const usd = Number($('#amountUSD').value||0);
+    if(usd<=0){ $('#payMsg').innerHTML='<span class="err">Enter a positive amount.</span>'; return; }
+    const cards = JSON.parse(localStorage.getItem('goc_cards')||'[]');
+    if(!cards.length){ $('#payMsg').innerHTML='<span class="warn">No test card saved. Add one above.</span>'; return; }
+    const last = cards[cards.length-1]; // use last card
+    // In real: create PaymentIntent on server; confirm with Elements; receive webhook.
+    await GOC.wallet.pay({ memo: $('#purpose').value + ' (Card)', amountLCN: usd/rate });
+    $('#payMsg').innerHTML = `<span class="ok">Paid ${fmtUSD(usd)} via ${last.brand} •••• ${last.last4} (demo)</span>`;
+    refreshWallet();
+  }
+  async function payByCoin(){
+    const usd = Number($('#amountUSD').value||0);
+    if(usd<=0){ $('#payMsg').innerHTML='<span class="err">Enter a positive amount.</span>'; return; }
+    const lcn = usd/rate;
+    await GOC.wallet.pay({ memo: $('#purpose').value + ' (LCN)', amountLCN: lcn });
+    $('#payMsg').innerHTML = `<span class="ok">Paid ${fmtLCN(lcn)} LCN</span>`;
+    refreshWallet();
+  }
+
+  // ===== Cart (demo) =====
+  function getCart(){ return JSON.parse(localStorage.getItem('goc_cart')||'[]'); }
+  function setCart(arr){ localStorage.setItem('goc_cart', JSON.stringify(arr)); renderCart(); }
+  function renderCart(){
+    const arr = getCart();
+    if(!arr.length){ $('#cartBox').textContent = 'Cart is empty.'; return; }
+    const sum = arr.reduce((s,i)=>s + i.qty*i.usd,0);
+    $('#cartBox').innerHTML = `
+      <table><thead><tr><th>Item</th><th>Qty</th><th>USD</th></tr></thead>
+      <tbody>${arr.map(i=>`<tr><td>${i.name}</td><td>${i.qty}</td><td>${fmtUSD(i.usd*i.qty)}</td></tr>`).join('')}</tbody>
+      <tfoot><tr><th>Total</th><th></th><th>${fmtUSD(sum)}</th></tr></tfoot>
+      </table>`;
+    $('#amountUSD').value = sum.toFixed(2);
+  }
+
+  // ===== Tickets (demo) =====
+  function openTicket(){
+    const body = $('#ticketBody').value.trim();
+    if(!body){ $('#ticketMsg').innerHTML = '<span class="warn">Please describe your issue.</span>'; return; }
+    const arr = JSON.parse(localStorage.getItem('goc_tickets')||'[]');
+    arr.push({id:'T'+(Date.now()), body, t:Date.now(), status:'OPEN'});
+    localStorage.setItem('goc_tickets', JSON.stringify(arr));
+    $('#ticketBody').value='';
+    $('#ticketMsg').innerHTML = '<span class="ok">Ticket submitted (demo). We will email you.</span>';
+  }
+
+  // ===== Auth (mock) =====
+  async function doSignIn(){
+    const p = JSON.parse(localStorage.getItem('goc_profile')||'{}');
+    const email = p.email || prompt('Email to sign in (demo):','you@example.com');
+    const name  = p.name  || prompt('Your name:','Guest');
+    if(!email) return;
+    await GOC.auth.signIn?.({name, email});
+    $('#who').textContent = email;
+    refreshWallet();
+  }
+  async function doSignOut(){
+    await GOC.auth.signOut?.();
+    $('#who').textContent = 'guest';
+    refreshWallet();
+  }
+
+  // ===== Wire events =====
+  $('#saveProfile').onclick = saveProfile;
+  $('#addCard').onclick     = addCard;
+  $('#clearCards').onclick  = clearCards;
+  $('#checkoutCard').onclick= payByCard;
+  $('#checkoutCoin').onclick= payByCoin;
+  $('#openTicket').onclick  = openTicket;
+  $('#signIn').onclick      = doSignIn;
+  $('#signOut').onclick     = doSignOut;
+  $('#addItem').onclick     = ()=> setCart([...getCart(), {name:'USPTO Filing Credit', qty:1, usd:49}]);
+  $('#clearCart').onclick   = ()=> setCart([]);
+  $('#rate').onchange       = (e)=> setRate(e.target.value);
+
+  // ===== Init =====
+  (async ()=>{
+    try{ if(GOC?.config) GOC.config({ useMock:true }); }catch(e){}
+    loadProfile(); listCards(); renderCart(); setRate(rate); await refreshWallet();
+    GOC?.on?.('wallet:update', refreshWallet);
+  })();
+})();
+<script src="goc-ui.js"></script>
+<script src="goc-sdk.js"></script>
+</body>
+</html>
