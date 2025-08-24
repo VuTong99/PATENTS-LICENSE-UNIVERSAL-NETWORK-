@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Vault • LICENSE GỐC™</title>
+<meta name="description" content="Your account vault. Sign in and link your LICENSECOIN wallet." />
+<link rel="icon" href="data:,">
+<style>
+  :root{--bg:#0a0b0f;--panel:#121318;--text:#eae7dc;--gold:#f5d36a;--line:rgba(245,211,106,.25)}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:960px;margin:24px auto;padding:0 16px}
+  h1{margin:6px 0 0;font-size:28px} .sub{opacity:.75;margin:6px 0 20px}
+  .card{background:linear-gradient(180deg,#12141a,#0c0f14); border:1px solid var(--line); border-radius:16px; padding:18px; box-shadow:0 10px 28px rgba(0,0,0,.35)}
+  .row{display:grid; gap:10px; grid-template-columns:1fr 1fr}
+  input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#0c0f14;color:var(--text)}
+  .btn{padding:12px 16px;border-radius:12px;border:1px solid rgba(245,211,106,.35);background:linear-gradient(180deg,#171a22,#0d1016);color:var(--gold);font-weight:800;cursor:pointer}
+  .actions{display:flex;gap:10px;flex-wrap:wrap}
+  .muted{opacity:.75}
+  .wallet{margin-top:18px;display:grid;gap:12px}
+  .balance{font-size:42px;font-weight:900;color:var(--gold);letter-spacing:.5px}
+  .pillbar{position:sticky;bottom:12px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:24px auto 0;padding:10px 12px;background:rgba(13,13,15,.55);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(10px)}
+  .pill{font-weight:800;padding:10px 16px;border-radius:999px;color:#ffd54d;border:1px solid rgba(255,213,77,.35);background:linear-gradient(180deg,#0f0f12,#0b0b0e)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Vault • LICENSE GỐC™</h1>
+  <div class="sub">Đăng nhập đơn giản (local) để gắn ví <b>LICENSECOIN™</b> với tài khoản của bạn.</div>
+
+  <!-- Sign in / profile -->
+  <div class="card" id="authCard">
+    <div id="signedOut">
+      <div class="row">
+        <input id="name" placeholder="Your name" autocomplete="name">
+        <input id="email" placeholder="Email (dùng làm ID)" autocomplete="email">
+      </div>
+      <div class="actions" style="margin-top:10px">
+        <button class="btn" id="signInBtn">Sign in</button>
+        <span class="muted">* Demo cục bộ: dữ liệu lưu trên trình duyệt (localStorage)</span>
+      </div>
+    </div>
+
+    <div id="signedIn" style="display:none">
+      <div><b>Signed in:</b> <span id="who"></span></div>
+      <div class="actions" style="margin-top:10px">
+        <button class="btn" id="signOutBtn">Sign out</button>
+        <a class="btn" href="licensecoin.html">Mở LICENSECOIN Wallet</a>
+      </div>
+
+      <div class="wallet">
+        <div class="muted">Số dư LICENSECOIN™ hiện tại</div>
+        <div class="balance" id="balance">0 LCN</div>
+        <div class="row">
+          <input id="amount" placeholder="Nhập số (ví dụ 10)">
+          <div class="actions">
+            <button class="btn" id="addBtn">+ Nạp</button>
+            <button class="btn" id="subBtn">− Rút</button>
+            <button class="btn" id="bonusBtn">🎁 Nhận Bonus</button>
+            <button class="btn" id="resetBtn">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:12px"></div>
+</div>
+
+<!-- Float bar tối giản (đã có goc-ui.js thì có thể bỏ khối này) -->
+<nav class="pillbar">
+  <a class="pill" href="index.html">Apps</a>
+  <a class="pill" href="licensenetwork.html">LICENSENETWORK</a>
+  <a class="pill" href="licensecoin.html">LICENSECOIN</a>
+  <a class="pill" href="vault.html">Vault</a>
+  <a class="pill" href="submit.html">Submit</a>
+  <a class="pill" href="payments.html">Pay & Cards</a>
+  <a class="pill" href="logout.html">Log out</a>
+</nav>
+
+<script>
+  // ===== Key helpers =====
+  function uidFromEmail(email){
+    return (email||'').trim().toLowerCase().replace(/\s+/g,'').replace(/[^a-z0-9._-]/g,'');
+  }
+  function getUser(){
+    try{ return JSON.parse(localStorage.getItem('goc_user')||'null'); }catch(e){ return null }
+  }
+  function setUser(u){ localStorage.setItem('goc_user', JSON.stringify(u)); }
+  function clearUser(){ localStorage.removeItem('goc_user'); }
+  function balanceKey(){
+    const u=getUser();
+    return u ? `lcn_balance_${u.id}` : 'lcn_balance_demo';
+    // (khi chưa đăng nhập vẫn xài key demo)
+  }
+  function loadBalance(){
+    return parseInt(localStorage.getItem(balanceKey())||'0',10);
+  }
+  function saveBalance(v){
+    localStorage.setItem(balanceKey(), String(Math.max(0, Math.floor(v||0))));
+  }
+
+  // ===== UI wiring =====
+  const signedOut = document.getElementById('signedOut');
+  const signedIn  = document.getElementById('signedIn');
+  const who = document.getElementById('who');
+  const bal = document.getElementById('balance');
+  const amount = document.getElementById('amount');
+
+  function refresh(){
+    const u=getUser();
+    if(u){
+      signedOut.style.display='none';
+      signedIn.style.display='block';
+      who.textContent = `${u.name} (${u.email})`;
+      bal.textContent = `${loadBalance()} LCN`;
+    }else{
+      signedOut.style.display='block';
+      signedIn.style.display='none';
+    }
+  }
+
+  document.getElementById('signInBtn').onclick = ()=>{
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    if(!name || !email){ alert('Nhập tên và email'); return; }
+    const id = uidFromEmail(email);
+    setUser({id, name, email});
+    if(localStorage.getItem(`lcn_balance_${id}`) == null){
+      localStorage.setItem(`lcn_balance_${id}`, '150'); // tặng khởi tạo
+    }
+    refresh();
+  };
+  document.getElementById('signOutBtn').onclick = ()=>{
+    clearUser(); refresh();
+  };
+
+  function parseAmt(){ return parseInt(amount.value||'0',10) || 0; }
+  document.getElementById('addBtn').onclick   = ()=>{ const x=loadBalance()+parseAmt(); saveBalance(x); refresh(); };
+  document.getElementById('subBtn').onclick   = ()=>{ const x=loadBalance()-parseAmt(); saveBalance(x); refresh(); };
+  document.getElementById('bonusBtn').onclick = ()=>{ const x=loadBalance()+25; saveBalance(x); refresh(); };
+  document.getElementById('resetBtn').onclick = ()=>{ saveBalance(0); refresh(); };
+
+  refresh();
+</script>
+  </body>
+</html>
+<script src="goc-ui.js"></script>
