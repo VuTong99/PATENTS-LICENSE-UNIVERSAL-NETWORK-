@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vault • LICENSE GỐC™</title>
+  <meta name="description" content="Đăng nhập cục bộ để gắn ví LICENSECOIN™ với tài khoản của bạn." />
+  <style>
+    :root{--bg:#0a0b0f;--panel:#101217;--line:rgba(255,255,255,.08);--text:#eae7dc;--gold:#f5d36a}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+    .wrap{max-width:980px;margin:32px auto;padding:0 16px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 16px}
+    h1{margin:8px 0 12px;font-size:clamp(24px,5vw,36px)}
+    p.lead{opacity:.85;margin:0 0 16px}
+    .grid{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+    input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);
+      background:#0c0e12;color:var(--text);outline:none}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .btn{padding:12px 16px;border-radius:12px;border:1px solid rgba(245,211,106,.35);
+      background:linear-gradient(180deg,#171a22,#0d1016);color:var(--gold);font-weight:700;cursor:pointer}
+    .muted{opacity:.7}
+    .hide{display:none}
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <h1>Vault • LICENSE GỐC™</h1>
+    <p class="lead">Đăng nhập đơn giản (local) để gắn ví <b>LICENSECOIN™</b> với tài khoản của bạn.</p>
+
+    <!-- Khối đăng nhập (khi CHƯA có user) -->
+    <section id="signedOut" class="card">
+      <div class="grid">
+        <input id="name" type="text" placeholder="Your name" autocomplete="name" />
+        <input id="email" type="email" placeholder="Email (dùng làm ID)" autocomplete="email" />
+      </div>
+      <div class="row">
+        <button id="signInBtn" class="btn">Sign in</button>
+      </div>
+      <p class="muted" style="margin-top:10px">* Demo cục bộ: dữ liệu lưu trên trình duyệt (<code>localStorage</code>).</p>
+    </section>
+
+    <!-- Khối đã đăng nhập (khi ĐÃ có user) -->
+    <section id="signedIn" class="card hide">
+      <p>Xin chào, <b id="who"></b></p>
+      <p class="muted">Tài khoản của bạn đã được gắn với ví LICENSECOIN™ trên thiết bị này.</p>
+      <div class="row">
+        <button id="signOutBtn" class="btn">Log out</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // ===== Vault local auth (đồng bộ với LICENSECOIN) =====
+    const USER_KEY = 'goc_user';
+
+    function uidFromEmail(email){
+      return 'uid_' + (email || '').trim().toLowerCase()
+        .replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
+    }
+
+    function getUser(){
+      try{ return JSON.parse(localStorage.getItem(USER_KEY) || 'null'); }
+      catch(e){ return null; }
+    }
+    function setUser(u){ localStorage.setItem(USER_KEY, JSON.stringify(u)); }
+    function clearUser(){ localStorage.removeItem(USER_KEY); }
+
+    // UI refs
+    const signedOut = document.getElementById('signedOut');
+    const signedIn  = document.getElementById('signedIn');
+    const who       = document.getElementById('who');
+
+    function refresh(){
+      const u = getUser();
+      if(u){
+        signedOut.classList.add('hide');
+        signedIn.classList.remove('hide');
+        who.textContent = `${u.name} (${u.email})`;
+      }else{
+        signedIn.classList.add('hide');
+        signedOut.classList.remove('hide');
+      }
+    }
+
+    // Events
+    document.getElementById('signInBtn').onclick = () => {
+      const name  = (document.getElementById('name').value || '').trim();
+      const email = (document.getElementById('email').value || '').trim();
+      if(!name || !email){ alert('Nhập tên và email.'); return; }
+      const id = uidFromEmail(email);
+      setUser({ id, name, email });
+      // tạo ví mặc định nếu chưa có (phù hợp với trang licensecoin.html)
+      const balKey = `lcn_balance_${id}`;
+      if(localStorage.getItem(balKey) == null){
+        localStorage.setItem(balKey, '50'); // tặng khởi tạo 50 LCN
+      }
+      refresh();
+    };
+
+    document.getElementById('signOutBtn').onclick = () => { clearUser(); refresh(); };
+
+    refresh();
+  </script>
+
+  <!-- TỰ động chèn Floating Bar + AI Tim + Translate cho TẤT CẢ trang -->
+  <script src="goc-ui.js"></script>
+</body>
+</html>
