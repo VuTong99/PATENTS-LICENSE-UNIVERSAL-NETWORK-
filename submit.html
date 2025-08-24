@@ -2,224 +2,350 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Submit • LICENSE GỐC™</title>
-<meta name="description" content="Submit ideas, works, patents, and projects to LICENSE GỐC™" />
+<meta name="description" content="Submit your work / idea. Auto-save. Reward bonus. Local demo." />
 <style>
-  :root{ --bg:#0a0b0f; --panel:#111; --muted:#b7b3a3; --text:#eae7dc; --gold:#f5d36a; --line:rgba(245,211,106,.28); --radius:16px; }
-  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+  :root{
+    --bg:#0a0b0f; --panel:#121318; --text:#eaeef2; --muted:#9aa3ad;
+    --gold:#f5d36a; --line:rgba(245,211,106,.28); --radius:16px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
   a{color:inherit;text-decoration:none}
-  .wrap{max-width:980px;margin:28px auto 120px;padding:0 16px}
-  h1{font-size:clamp(28px,4.5vw,40px);margin:8px 0 6px}
-  .muted{color:#cfc8b0}
-  .card{background:linear-gradient(180deg,#0f1116,#0a0c10);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04); padding:16px}
-  .grid{display:grid;gap:14px}
-  .grid2{display:grid;gap:14px;grid-template-columns:1fr 1fr}
-  label{font-weight:700;color:#ffd54d;margin:2px 0 6px;display:block}
-  input,textarea,select{width:100%;background:#0c0e12;border:1px solid rgba(255,255,255,.08);border-radius:12px;color:var(--text);padding:12px 12px;font-size:15px}
+
+  /* hero */
+  .wrap{max-width:1100px;margin:32px auto;padding:0 16px}
+  .h1{font-size:clamp(28px,3.2vw,40px);font-weight:800;letter-spacing:.3px}
+  .tag{color:var(--muted)}
+  .badges{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 8px}
+  .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03)}
+  .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
+
+  /* card */
+  .card{background:linear-gradient(180deg,#0f1116,#0b0d12);border:1px solid var(--line);
+        border-radius:var(--radius);padding:18px;margin:18px 0;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+  .card h2{margin:6px 0 12px;font-size:clamp(22px,2.5vw,28px)}
+  .row{display:grid;gap:14px}
+  @media(min-width:760px){ .row.cols-2{grid-template-columns:1fr 1fr} }
+
+  label{display:block;font-weight:600;margin:6px 0 6px}
+  input,select,textarea{
+    width:100%; color:var(--text); background:#0e1116; border:1px solid rgba(255,255,255,.08);
+    border-radius:12px; padding:12px 14px; outline:0;
+  }
   textarea{min-height:140px;resize:vertical}
-  .row{display:flex;gap:10px;flex-wrap:wrap}
-  .btn{padding:11px 16px;border-radius:12px;border:1px solid rgba(229,200,107,.35);background:linear-gradient(180deg,#171a22,#0d1016);color:#ffd54d;font-weight:800;cursor:pointer}
+
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .btn{padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:#0f1217;cursor:pointer}
+  .btn.gold{background:linear-gradient(180deg,#ffe28a,#f1c64a); color:#1a1a1a; border-color:rgba(0,0,0,.18);font-weight:800}
   .btn.ghost{background:transparent}
-  .pill{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;border:1px solid var(--line);background:#0f1116}
-  .meta{display:flex;gap:10px;flex-wrap:wrap}
-  .kpi{font-weight:800;color:#ffd54d}
-  .preview{white-space:pre-wrap;background:#0b0d11;border:1px dashed var(--line);border-radius:12px;padding:12px;min-height:80px}
-  footer{color:#aaa;text-align:center;padding:24px 12px;border-top:1px solid rgba(255,255,255,.06);margin-top:28px}
+  .hint{color:var(--muted);font-size:13px}
+  .ok{color:#77e0a3}
+  .warn{color:#ffb2a2}
+
+  /* list */
+  .list{display:grid;gap:12px;margin:8px 0}
+  .item{padding:14px;border:1px dashed var(--line);border-radius:12px;background:#0c0f14}
+  .item h3{margin:0 0 4px;font-size:18px}
+  .small{font-size:13px;color:var(--muted)}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;
+        background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:13px}
+
+  /* upload preview */
+  .preview{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+  .preview img,.preview .file{
+    width:96px;height:96px;border-radius:10px;border:1px solid var(--line);object-fit:cover;background:#0e1116;
+    display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted);padding:8px
+  }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="meta">
-      <span class="pill">📦 <b>Submit Center</b></span>
-      <span class="pill">🔐 Status: <b id="vaultStatus">Signed out</b></span>
-      <span class="pill">🆔 Submission ID: <span class="kpi" id="subId">—</span></span>
-      <span class="pill">💾 Auto‑saved</span>
-    </div>
 
-    <h1>Submit your Work / Idea</h1>
-    <div class="muted">Điền thông tin bên dưới. Mọi dữ liệu được <b>auto‑save</b> cục bộ (localStorage). Nếu đã “Sign in” ở Vault, tên & email sẽ tự điền.</div>
-
-    <div class="card" style="margin-top:14px">
-      <div class="grid2">
-        <div>
-          <label>Your name</label>
-          <input id="name" placeholder="Họ & tên">
-        </div>
-        <div>
-          <label>Email</label>
-          <input id="email" placeholder="Email dùng làm ID">
-        </div>
-      </div>
-
-      <div class="grid" style="margin-top:8px">
-        <div>
-          <label>Title</label>
-          <input id="title" placeholder="Tên tác phẩm / ý tưởng">
-        </div>
-        <div>
-          <label>Category</label>
-          <select id="category">
-            <option value="">— Select —</option>
-            <option>Art & Design</option>
-            <option>Film & Music</option>
-            <option>Science & Tech</option>
-            <option>Culture & Language</option>
-            <option>Education</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div>
-          <label>Description / Abstract</label>
-          <textarea id="desc" placeholder="Mô tả ngắn gọn, mục tiêu, tính mới, tác động..."></textarea>
-        </div>
-        <div>
-          <label>Tags (comma separated)</label>
-          <input id="tags" placeholder="copyright, patent, AI, culture...">
-        </div>
-        <div>
-          <label>Links / References</label>
-          <textarea id="links" placeholder="Link drive, github, figma, video..."></textarea>
-        </div>
-        <div>
-          <label>Attachments (optional)</label>
-          <input id="files" type="file" multiple />
-          <div class="muted" style="font-size:13px;margin-top:6px">* Demo: file không upload lên server, chỉ đính kèm tên file vào bản lưu.</div>
-        </div>
-      </div>
-
-      <div class="row" style="margin-top:14px">
-        <button class="btn" id="submitBtn">Submit</button>
-        <button class="btn" id="exportBtn">Export JSON</button>
-        <button class="btn ghost" id="resetBtn">Reset</button>
-      </div>
-    </div>
-
-    <h3 style="margin:18px 0 8px">Quick Preview</h3>
-    <div class="preview" id="previewBox">—</div>
-
-    <footer>© 2025 LICENSE GỐC™ — The Root. Eternal. Universal.</footer>
+<div class="wrap">
+  <div class="badges">
+    <span class="badge">📦 <strong>Submit Center</strong></span>
+    <span class="badge">🔐 Status: <span id="status">checking…</span></span>
+    <span class="badge">🆔 ID: <span id="sid" class="mono"></span></span>
+    <span class="badge">💾 Auto‑saved</span>
   </div>
 
-  <script>
-  // ===== Helpers: Vault user & LCN wallet key =====
-  function getUser(){
-    try{ return JSON.parse(localStorage.getItem('goc_user')) }catch(e){ return null }
+  <h1 class="h1">Submit your Work / Idea</h1>
+  <p class="tag">Điền thông tin. Dữ liệu được lưu tạm (auto‑save) trên trình duyệt. Nếu đã “Sign in” ở Vault, tên & email sẽ tự điền.</p>
+
+  <!-- FORM -->
+  <div class="card">
+    <h2>Submission form</h2>
+
+    <div class="row cols-2">
+      <div>
+        <label>Your name</label>
+        <input id="name" placeholder="Họ & tên" />
+      </div>
+      <div>
+        <label>Email</label>
+        <input id="email" placeholder="Email dùng làm ID" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Title</label>
+        <input id="title" placeholder="Tên tác phẩm / ý tưởng" />
+      </div>
+      <div>
+        <label>Category</label>
+        <select id="cat">
+          <option value="art">Art / Design</option>
+          <option value="music">Music / Audio</option>
+          <option value="film">Film / Cinema</option>
+          <option value="ai">AI / Software</option>
+          <option value="science">Science</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div>
+        <label>Description</label>
+        <textarea id="desc" placeholder="Mô tả ngắn gọn giá trị độc đáo, bối cảnh, mục tiêu triển khai…"></textarea>
+      </div>
+      <div>
+        <label>Files (images / PDF, tối đa vài MB do giới hạn trình duyệt)</label>
+        <input id="files" type="file" multiple accept="image/*,.pdf" />
+        <div id="preview" class="preview"></div>
+        <div class="hint">* Trình duyệt lưu tạm base64, khuyến nghị chọn 1–3 tệp nhỏ.</div>
+      </div>
+    </div>
+
+    <div class="btns">
+      <button id="saveDraft" class="btn">💾 Save draft</button>
+      <button id="submitBtn" class="btn gold">🚀 Submit (nhận +50 LCN)</button>
+      <button id="clearBtn" class="btn ghost">🧹 Clear</button>
+    </div>
+
+    <div id="msg" class="hint" style="margin-top:8px"></div>
+  </div>
+
+  <!-- LIST -->
+  <div class="card">
+    <h2>Your submissions</h2>
+    <div class="btns">
+      <span class="pill">User: <span id="who" class="mono">guest</span></span>
+      <button id="refreshList" class="btn">↻ Refresh</button>
+    </div>
+    <div id="list" class="list"></div>
+    <div class="hint">Bài đã nộp chỉ lưu trên trình duyệt máy bạn (demo local). Sau này có thể kết nối API để lưu lên Vault thực.</div>
+  </div>
+</div>
+
+<!-- Global Floating Bar, AI Tim, Translate -->
+<script src="goc-ui.js"></script>
+
+<script>
+/* ===== Local helpers (độc lập, không phụ thuộc trang khác) ===== */
+function getUser(){
+  try{ return JSON.parse(localStorage.getItem('goc_user')) }catch(e){ return null }
+}
+function uidFromEmail(email){
+  // hash đơn giản (demo) → tạo id cho ví coin
+  let h = 0; for(const c of String(email||'')){ h = (h*31 + c.charCodeAt(0))>>>0 }
+  return 'U'+h.toString(16);
+}
+function balanceKey(){
+  const u = getUser();
+  return u ? `lcn_balance_${uidFromEmail(u.email)}` : 'lcn_balance_guest';
+}
+function loadBalance(){
+  return parseInt(localStorage.getItem(balanceKey())||'0')||0;
+}
+function saveBalance(v){
+  localStorage.setItem(balanceKey(), String(v));
+}
+
+/* ===== Submit Center logic ===== */
+const $ = (sel)=>document.querySelector(sel);
+const sidEl = $('#sid');
+const statusEl = $('#status');
+const whoEl = $('#who');
+const nameEl = $('#name');
+const emailEl = $('#email');
+const titleEl = $('#title');
+const catEl = $('#cat');
+const descEl = $('#desc');
+const filesEl = $('#files');
+const previewEl = $('#preview');
+const msgEl = $('#msg');
+const listEl = $('#list');
+
+let currentId = genId();
+sidEl.textContent = currentId;
+
+function genId(){
+  const rnd = Math.random().toString(36).slice(2,7).toUpperCase();
+  const t   = Date.now().toString(36).toUpperCase();
+  return `SUB_${t}${rnd}`;
+}
+function nowISO(){ return new Date().toISOString() }
+
+function initUser(){
+  const u = getUser();
+  if(u){
+    statusEl.textContent = 'signed in';
+    whoEl.textContent = `${u.name||'user'} <${u.email}>`;
+    if(!nameEl.value)  nameEl.value = u.name||'';
+    if(!emailEl.value) emailEl.value = u.email||'';
+  }else{
+    statusEl.textContent = 'signed out';
+    whoEl.textContent = 'guest';
   }
-  function uidFromEmail(email){
-    return (email||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'')
+}
+initUser();
+
+/* auto-load draft */
+(function loadDraft(){
+  const d = JSON.parse(localStorage.getItem('goc_submit_draft')||'null');
+  if(!d) return;
+  nameEl.value  = d.name||'';
+  emailEl.value = d.email||'';
+  titleEl.value = d.title||'';
+  catEl.value   = d.cat||'art';
+  descEl.value  = d.desc||'';
+  if(d.files && d.files.length){ renderPreview(d.files) }
+})();
+
+function saveDraft(){
+  const draft = {
+    name:nameEl.value.trim(),
+    email:emailEl.value.trim(),
+    title:titleEl.value.trim(),
+    cat:catEl.value,
+    desc:descEl.value.trim(),
+    files: currentFiles
+  };
+  localStorage.setItem('goc_submit_draft', JSON.stringify(draft));
+  flash('Draft saved.','ok');
+}
+function clearDraft(){
+  localStorage.removeItem('goc_submit_draft');
+  nameEl.value = emailEl.value = titleEl.value = descEl.value = '';
+  catEl.value = 'art'; currentFiles = []; renderPreview([]);
+  flash('Cleared.','');
+}
+
+$('#saveDraft').onclick = saveDraft;
+$('#clearBtn').onclick = clearDraft;
+
+/* files → base64 preview (nhẹ nhàng) */
+let currentFiles = []; // [{name,type,dataURL}]
+filesEl.onchange = async (e)=>{
+  const arr = [];
+  const max = 3; // hạn chế demo
+  for(const f of Array.from(e.target.files).slice(0,max)){
+    const dataURL = await toDataURL(f);
+    arr.push({name:f.name,type:f.type,dataURL});
   }
-  function balanceKey(uid){ return `lcn_balance_${uid}` }
-
-  // ===== Draft autosave =====
-  const draftKey = 'submit_draft_v1'
-  const $ = (id)=>document.getElementById(id)
-  const fields = ['name','email','title','category','desc','tags','links']
-
-  function readForm(){
-    const o={}
-    fields.forEach(k=>o[k]=($(k).value||'').trim())
-    // attach list of filenames only (demo)
-    o.files = Array.from($('files').files||[]).map(f=>f.name)
-    return o
-  }
-  function writeForm(o={}){
-    fields.forEach(k=>{ if(o[k]!==undefined) $(k).value=o[k] })
-  }
-  function saveDraft(){
-    const d = readForm()
-    d.submissionId = $('subId').textContent
-    localStorage.setItem(draftKey, JSON.stringify(d))
-    renderPreview()
-  }
-  function loadDraft(){
-    try{
-      const d = JSON.parse(localStorage.getItem(draftKey))
-      if(d){ writeForm(d); if(d.submissionId) $('subId').textContent = d.submissionId }
-    }catch(e){}
-  }
-  function renderPreview(){
-    const d = readForm()
-    const id = $('subId').textContent
-    $('previewBox').textContent =
-`# ${d.title||'(no title)'}
-by ${d.name||'—'} | ${d.email||'—'}
-ID: ${id}
-
-Category: ${d.category||'—'}
-Tags: ${d.tags||'—'}
-
-${d.desc||'—'}
-
-Links:
-${d.links||'—'}
-
-Files: ${(d.files||[]).join(', ') || '—'}
-`
-  }
-
-  // ===== Init: pull from Vault if present =====
-  (function init(){
-    // Submission ID
-    if(!$('subId').textContent || $('subId').textContent==='—'){
-      $('subId').textContent = 'SUB_' + Math.random().toString(36).slice(2,8).toUpperCase()
-    }
-
-    // Prefill from Vault
-    const u = getUser()
-    if(u){
-      $('vaultStatus').textContent = `Signed in as ${u.name} (${u.email})`
-      if(!$('name').value)  $('name').value  = u.name||''
-      if(!$('email').value) $('email').value = u.email||''
+  currentFiles = arr;
+  renderPreview(arr);
+  saveDraft();
+};
+function toDataURL(file){
+  return new Promise((res,rej)=>{
+    const fr = new FileReader();
+    fr.onload = ()=>res(fr.result);
+    fr.onerror= rej;
+    fr.readAsDataURL(file);
+  });
+}
+function renderPreview(files){
+  previewEl.innerHTML = '';
+  files.forEach(f=>{
+    if((f.type||'').startsWith('image/')){
+      const img = new Image(); img.src = f.dataURL; img.alt = f.name;
+      previewEl.appendChild(img);
     }else{
-      $('vaultStatus').textContent = 'Signed out'
+      const div = document.createElement('div'); div.className='file'; div.textContent = f.name||'file';
+      previewEl.appendChild(div);
     }
+  });
+}
 
-    // Load draft, then render
-    loadDraft()
-    renderPreview()
+/* Submissions store (local) */
+function loadSubmissions(){
+  try{ return JSON.parse(localStorage.getItem('goc_submissions')||'[]') }catch(e){ return [] }
+}
+function saveSubmissions(list){
+  localStorage.setItem('goc_submissions', JSON.stringify(list));
+}
+function listMine(){
+  const email = emailEl.value.trim().toLowerCase();
+  const all = loadSubmissions();
+  if(!email) return all; // nếu chưa nhập email, cứ show tất cả local
+  return all.filter(x=> (x.email||'').toLowerCase()===email);
+}
+function renderList(){
+  const list = listMine().sort((a,b)=>b.time.localeCompare(a.time));
+  listEl.innerHTML = list.map(x=>`
+    <div class="item">
+      <h3>${escapeHtml(x.title||'(untitled)')}</h3>
+      <div class="small mono">${x.id} • ${x.time}</div>
+      <div class="small">By: ${escapeHtml(x.name||'')} &lt;${escapeHtml(x.email||'')}&gt;</div>
+      <div class="small">Category: <span class="pill">${escapeHtml(x.cat||'')}</span></div>
+      <div class="small" style="margin-top:6px">${escapeHtml(x.desc||'')}</div>
+      ${x.files && x.files.length ? `<div class="preview" style="margin-top:8px">${x.files.map(renderFile).join('')}</div>`:''}
+    </div>
+  `).join('') || '<div class="hint">Chưa có submission nào.</div>';
+}
+function renderFile(f){
+  if((f.type||'').startsWith('image/')){
+    return `<img src="${f.dataURL}" alt="${escapeHtml(f.name||'')}" />`;
+  }
+  return `<div class="file">${escapeHtml(f.name||'file')}</div>`;
+}
+function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])) }
 
-    // Listen & autosave (debounced)
-    let t
-    ;[...fields.map(id=>$(id)), $('files')].forEach(el=>{
-      el.addEventListener('input', ()=>{ clearTimeout(t); t=setTimeout(saveDraft, 300) })
-      el.addEventListener('change', ()=>{ clearTimeout(t); t=setTimeout(saveDraft, 300) })
-    })
+$('#refreshList').onclick = renderList;
+renderList();
 
-    // Buttons
-    $('exportBtn').onclick = ()=>{
-      const data = { submissionId:$('subId').textContent, ...readForm(), ts:new Date().toISOString() }
-      const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'})
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a'); a.href=url; a.download=`${data.submissionId}.json`; a.click()
-      URL.revokeObjectURL(url)
-    }
+/* Submit + reward */
+$('#submitBtn').onclick = ()=>{
+  const name = nameEl.value.trim();
+  const email = emailEl.value.trim();
+  const title = titleEl.value.trim();
+  if(!name || !email || !title){ flash('Vui lòng điền Name, Email, Title.','warn'); return }
 
-    $('resetBtn').onclick = ()=>{
-      localStorage.removeItem(draftKey)
-      fields.forEach(id=>$(id).value='')
-      $('files').value = ''
-      renderPreview()
-    }
+  const item = {
+    id: currentId,
+    time: nowISO(),
+    name, email, title,
+    cat: catEl.value,
+    desc: descEl.value.trim(),
+    files: currentFiles
+  };
 
-    // Submit: save “last submission” + (optional) bonus coin
-    $('submitBtn').onclick = ()=>{
-      const d = { submissionId:$('subId').textContent, ...readForm(), ts:new Date().toISOString() }
-      localStorage.setItem('submit_last', JSON.stringify(d))
-      // OPTIONAL: bonus +20 LCN if user signed in
-      const user = getUser()
-      if(user && user.email){
-        const uid = uidFromEmail(user.email)
-        const key = balanceKey(uid)
-        const cur = parseInt(localStorage.getItem(key)||'0',10)||0
-        localStorage.setItem(key, String(cur+20))
-      }
-      alert('✅ Submitted locally!\n• Draft & last submission saved in your browser.\n• If signed in, +20 LCN bonus was added.')
-    }
-  })();
-  </script>
+  const all = loadSubmissions();
+  all.push(item);
+  saveSubmissions(all);
 
-  <!-- Global UI: Floating Bar + Translate + AI Tim -->
-  <script src="goc-ui.js"></script>
+  // reward +50 LCN (mỗi ID thưởng một lần)
+  const rewardedKey = `rewarded_${item.id}`;
+  if(!localStorage.getItem(rewardedKey)){
+    saveBalance(loadBalance()+50);
+    localStorage.setItem(rewardedKey,'1');
+  }
+
+  // reset ID cho lần tiếp theo
+  currentId = genId();
+  sidEl.textContent = currentId;
+
+  flash('Submitted! You received +50 LCN bonus.','ok');
+  renderList();
+};
+
+/* util */
+function flash(text,cls){
+  msgEl.className = 'hint ' + (cls||'');
+  msgEl.textContent = text;
+  setTimeout(()=>{ msgEl.textContent=''; msgEl.className='hint' }, 3500);
+}
+</script>
 </body>
 </html>
