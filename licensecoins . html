@@ -255,7 +255,5 @@
     ensureGTarget();
     buildLangSelect();
     loadGoogleScript();
-    renderFoot();
-  });
-})();
 <script src="goc-ui.js"></script>
+<body>
