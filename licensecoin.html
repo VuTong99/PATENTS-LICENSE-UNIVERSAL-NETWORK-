@@ -1,1 +1,17 @@
+<script>
+  // ĐỌC user từ Vault (localStorage)
+  function getUser(){
+    try{ return JSON.parse(localStorage.getItem('goc_user')||'null'); }catch(e){ return null }
+  }
+  function balanceKey(){
+    const u=getUser();
+    return u ? `lcn_balance_${u.id}` : 'lcn_balance_demo';
+  }
+  function loadBalance(){
+    return parseInt(localStorage.getItem(balanceKey())||'0',10);
+  }
+  function saveBalance(v){
+    localStorage.setItem(balanceKey(), String(Math.max(0, Math.floor(v||0))));
+  }
+</script>
 <script src="goc-ui.js"></script>
