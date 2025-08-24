@@ -1,17 +1,87 @@
-<script>
-  // ĐỌC user từ Vault (localStorage)
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LICENSECOIN™ Wallet</title>
+  <link rel="stylesheet" href="style.css"> <!-- nếu có CSS riêng -->
+</head>
+<body>
+
+  <!-- 1. Dán phần HTML hiển thị ví ngay sau <body> -->
+  <div class="wallet">
+    <h2>LICENSECOIN™ Wallet</h2>
+    <p>Số dư hiện tại:</p>
+    <h1 id="balance">0 LCN</h1>
+
+    <input type="number" id="amount" placeholder="Nhập số">
+    <button onclick="deposit()">+ Nạp</button>
+    <button onclick="withdraw()">− Rút</button>
+    <button onclick="bonus()">🎁 Nhận Bonus</button>
+    <button onclick="reset()">Reset</button>
+  </div>
+
+  <!-- 2. Dán phần script xử lý logic trước khi kết thúc </body> -->
+  <script>
   function getUser(){
-    try{ return JSON.parse(localStorage.getItem('goc_user')||'null'); }catch(e){ return null }
+    try{ return JSON.parse(localStorage.getItem("vault_user")); }
+    catch(e){ return null; }
   }
+
   function balanceKey(){
     const u=getUser();
-    return u ? `lcn_balance_${u.id}` : 'lcn_balance_demo';
+    return u ? `lcn_balance_${u.id}` : "lcn_balance_guest";
   }
+
   function loadBalance(){
-    return parseInt(localStorage.getItem(balanceKey())||'0',10);
+    return parseInt(localStorage.getItem(balanceKey())||"0");
   }
+
   function saveBalance(v){
-    localStorage.setItem(balanceKey(), String(Math.max(0, Math.floor(v||0))));
+    localStorage.setItem(balanceKey(), v);
   }
+
+  function updateBalanceUI(){
+    document.getElementById("balance").innerText = loadBalance() + " LCN";
+  }
+
+  function deposit(){
+    const v = parseInt(document.getElementById("amount").value);
+    if(v>0){ saveBalance(loadBalance()+v); updateBalanceUI(); }
+  }
+
+  function withdraw(){
+    const v = parseInt(document.getElementById("amount").value);
+    if(v>0){ saveBalance(Math.max(0, loadBalance()-v)); updateBalanceUI(); }
+  }
+
+  function bonus(){
+    saveBalance(loadBalance()+50);
+    updateBalanceUI();
+  }
+
+  function reset(){
+    saveBalance(0);
+    updateBalanceUI();
+  }
+
+  updateBalanceUI();
+  </script>
+
+  <!-- 3. Gọi script chung ở cuối cùng -->
+  <script src="goc-ui.js"></script>
+<div class="wallet">
+  <h2>LICENSECOIN™ Wallet</h2>
+  <p>Số dư hiện tại:</p>
+  <h1 id="balance">0 LCN</h1>
+
+  <input type="number" id="amount" placeholder="Nhập số">
+  <button onclick="deposit()">+ Nạp</button>
+  <button onclick="withdraw()">− Rút</button>
+  <button onclick="bonus()">🎁 Nhận Bonus</button>
+  <button onclick="reset()">Reset</button>
+</div>
+</body>
+</html>
 </script>
 <script src="goc-ui.js"></script>
