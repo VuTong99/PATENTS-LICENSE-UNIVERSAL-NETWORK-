@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Submit • LICENSE GỐC™</title>
+  <meta name="description" content="Submit an idea, work, or invention to LICENSE GỐC™ for timestamping and review."/>
+  <style>
+    :root{--bg:#0a0b0f;--panel:#101217;--line:rgba(255,255,255,.08);--text:#eae7dc;--gold:#f5d36a;--muted:#b9c0cc}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial,sans-serif}
+    .wrap{max-width:980px;margin:32px auto;padding:0 16px}
+    h1{margin:0 0 12px;font-size:clamp(24px,5vw,36px)}
+    .lead{opacity:.85;margin:0 0 18px}
+    .grid{display:grid;gap:14px}
+    @media(min-width:720px){.grid.two{grid-template-columns:1fr 1fr}}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+    label{font-weight:600;font-size:.95rem}
+    input,select,textarea{width:100%;margin-top:6px;padding:12px 14px;border-radius:12px;
+      border:1px solid var(--line);background:#0c0e12;color:var(--text);outline:none}
+    textarea{min-height:120px;resize:vertical}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{padding:12px 16px;border-radius:12px;border:1px solid rgba(245,211,106,.35);
+      background:linear-gradient(180deg,#171a22,#0d1016);color:var(--gold);font-weight:700;cursor:pointer}
+    .muted{color:var(--muted)}
+    .preview{display:grid;gap:8px}
+    .pill{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid var(--line);margin:2px 6px 0 0}
+    .footer-note{margin-top:10px;font-size:.9rem;opacity:.75}
+    .right{margin-left:auto}
+    .imgbox{display:grid;place-items:center;overflow:hidden;border-radius:12px;border:1px solid var(--line);background:#0c0e12;height:180px}
+    .imgbox img{max-width:100%;max-height:100%;object-fit:contain}
+    .id{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;color:#9bd0ff}
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <h1>Submit to LICENSE GỐC™</h1>
+    <p class="lead">Securely capture your idea/work with a timestamped Submission ID. This page saves locally in your browser. You can export or email the package for review.</p>
+
+    <!-- FORM -->
+    <form id="form" class="card grid">
+      <div class="grid two">
+        <div>
+          <label>Title <input id="title" placeholder="Project / Idea title" required/></label>
+        </div>
+        <div>
+          <label>Category
+            <select id="category">
+              <option>Invention / Patent</option>
+              <option>Software / AI</option>
+              <option>Design / Product</option>
+              <option>Art / Music / Media</option>
+              <option>Literature / Content</option>
+              <option>Business / Model</option>
+              <option>Other</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label>Short summary (max 240 chars)
+          <textarea id="summary" maxlength="240" placeholder="One-paragraph elevator pitch…"></textarea>
+        </label>
+        <div class="muted" id="sumCount">0 / 240</div>
+      </div>
+
+      <div>
+        <label>Full description
+          <textarea id="description" placeholder="Explain the concept, problem, solution, uniqueness, and potential impact…"></textarea>
+        </label>
+      </div>
+
+      <div class="grid two">
+        <div>
+          <label>Tags (comma separated) <input id="tags" placeholder="ai, blockchain, education"/></label>
+        </div>
+        <div>
+          <label>Preferred license
+            <select id="license">
+              <option value="LG-Standard">LICENSE GỐC™ — Standard</option>
+              <option value="LG-Commercial">LICENSE GỐC™ — Commercial</option>
+              <option value="LG-Open">LICENSE GỐC™ — Open/Attribution</option>
+              <option value="Undecided">Undecided</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div>
+          <label>Reference link (optional) <input id="link" placeholder="https://…"/></label>
+        </div>
+        <div>
+          <label>Image / mockup URL (optional) <input id="image" placeholder="https://…/image.png"/></label>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div>
+          <label>Country/Region <input id="country" placeholder="Vietnam / Global"/></label>
+        </div>
+        <div>
+          <label>Language <input id="lang" placeholder="English / Vietnamese / …"/></label>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div>
+          <label>Your name <input id="name" autocomplete="name" required/></label>
+        </div>
+        <div>
+          <label>Email <input id="email" type="email" autocomplete="email" required/></label>
+        </div>
+      </div>
+
+      <label class="row" style="align-items:center;gap:10px">
+        <input id="consent" type="checkbox" required/>
+        I declare I own or control the rights to this submission and consent to timestamping and evaluation under LICENSE GỐC™ terms.
+      </label>
+
+      <div class="row">
+        <button type="button" class="btn" id="exportBtn">Export JSON</button>
+        <button type="button" class="btn" id="emailBtn">Send via email</button>
+        <span class="right muted">Submission ID: <span id="sid" class="id">—</span></span>
+      </div>
+
+      <div class="footer-note">Tip: you can come back later—your draft autosaves to this browser.</div>
+    </form>
+
+    <!-- PREVIEW -->
+    <div class="card" style="margin-top:16px">
+      <h3 style="margin:0 0 10px">Live preview</h3>
+      <div class="preview grid two">
+        <div class="imgbox"><img id="imgPrev" alt="preview"/></div>
+        <div>
+          <div class="muted">ID: <span id="sid2" class="id">—</span></div>
+          <h2 id="pTitle" style="margin:.2rem 0 .4rem">—</h2>
+          <div class="muted" id="pSummary">—</div>
+          <div style="margin-top:8px" id="pTags"></div>
+          <div class="muted" style="margin-top:8px" id="pMeta">—</div>
+          <div style="margin-top:8px"><a id="pLink" href="#" target="_blank" rel="noopener" class="muted"></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Submit page logic (client-only; localStorage demo) =====
+    const KEY = 'goc_submit_draft';
+    const el = id => document.getElementById(id);
+    const fields = ['title','category','summary','description','tags','license','link','image','country','lang','name','email'];
+
+    function genId(){
+      const t = new Date();
+      const pad = n => String(n).padStart(2,'0');
+      return `LG-${t.getUTCFullYear()}${pad(t.getUTCMonth()+1)}${pad(t.getUTCDate())}-${pad(t.getUTCHours())}${pad(t.getUTCMinutes())}${pad(t.getUTCSeconds())}-${Math.random().toString(36).slice(2,7)}`;
+    }
+
+    function loadDraft(){
+      try{
+        const d = JSON.parse(localStorage.getItem(KEY) || '{}');
+        fields.forEach(f => { if(d[f]) el(f).value = d[f]; });
+        if(d.consent) el('consent').checked = true;
+        el('sid').textContent = d.sid || (d.sid = genId());
+        el('sid2').textContent = d.sid;
+        saveDraft(d); // ensure SID persists
+        render();
+      }catch(e){}
+    }
+
+    function readForm(){
+      const data = {};
+      fields.forEach(f => data[f] = el(f).value.trim());
+      data.consent = el('consent').checked;
+      data.sid = el('sid').textContent || genId();
+      data.timestamp = new Date().toISOString();
+      return data;
+    }
+
+    function saveDraft(d = readForm()){
+      localStorage.setItem(KEY, JSON.stringify(d));
+    }
+
+    function render(){
+      const d = readForm();
+      el('sumCount').textContent = `${d.summary.length} / 240`;
+      el('sid2').textContent = d.sid;
+      el('pTitle').textContent = d.title || '—';
+      el('pSummary').textContent = d.summary || '—';
+      // tags
+      el('pTags').innerHTML = '';
+      (d.tags||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(t=>{
+        const span = document.createElement('span'); span.className='pill'; span.textContent = t;
+        el('pTags').appendChild(span);
+      });
+      // meta
+      el('pMeta').textContent = [d.category, d.license, d.country, d.lang].filter(Boolean).join(' • ') || '—';
+      // link
+      el('pLink').textContent = d.link || '';
+      el('pLink').href = d.link || '#';
+      // image
+      const url = d.image || '';
+      el('imgPrev').src = url; el('imgPrev').style.opacity = url?1:.2;
+    }
+
+    // Autosave & live preview
+    fields.forEach(f => el(f).addEventListener('input', ()=>{ saveDraft(); render(); }));
+    el('consent').addEventListener('change', ()=>{ saveDraft(); });
+
+    // Export JSON
+    el('exportBtn').onclick = () => {
+      const d = readForm();
+      if(!d.consent){ alert('Please confirm IP ownership consent.'); return; }
+      const blob = new Blob([JSON.stringify(d,null,2)], {type:'application/json'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `${d.sid}.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    };
+
+    // Email (prefill)
+    el('emailBtn').onclick = () => {
+      const d = readForm();
+      if(!d.consent){ alert('Please confirm IP ownership consent.'); return; }
+      const to   = 'submit@thelicenseuniversal.com'; // <- update when ready
+      const subj = encodeURIComponent(`Submission ${d.sid}: ${d.title || ''}`);
+      const body = encodeURIComponent(
+        `Submission ID: ${d.sid}\n\n` +
+        `Name: ${d.name}\nEmail: ${d.email}\nCountry: ${d.country}\nLanguage: ${d.lang}\n\n` +
+        `Category: ${d.category}\nLicense: ${d.license}\nTags: ${d.tags}\nLink: ${d.link}\nImage: ${d.image}\n\n` +
+        `Summary:\n${d.summary}\n\nDescription:\n${d.description}\n\n` +
+        `JSON:\n${JSON.stringify(d)}`
+      );
+      window.location.href = `mailto:${to}?subject=${subj}&body=${body}`;
+    };
+
+    // Counters + initial load
+    el('summary').addEventListener('input', ()=>{ el('sumCount').textContent = `${el('summary').value.length} / 240`; });
+    loadDraft();
+  </script>
+
+  <!-- Global Floating Bar + AI Tim + Translate -->
+  <script src="goc-ui.js"></script>
+</body>
+</html>
