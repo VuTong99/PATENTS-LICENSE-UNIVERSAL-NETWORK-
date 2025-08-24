@@ -1,87 +1,92 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LICENSECOIN™ Wallet</title>
-  <link rel="stylesheet" href="style.css"> <!-- nếu có CSS riêng -->
+  <style>
+    :root{--bg:#0a0b0f;--panel:#131418;--text:#eae7dc;--gold:#f5d36a;}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+    .wrap{max-width:900px;margin:32px auto;padding:0 16px}
+    h1,h2{margin:0 0 10px}
+    .card{background:linear-gradient(180deg,#121318,#0d0e13);
+      border:1px solid rgba(245,211,106,.28); border-radius:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05);
+      padding:18px;}
+    .title{font-size:32px;font-weight:800}
+    .muted{opacity:.8}
+    .balance{font-size:56px;font-weight:900;color:var(--gold);margin:10px 0 14px}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    input[type=number]{flex:1;min-width:160px;padding:12px 14px;border-radius:10px;
+      border:1px solid rgba(255,255,255,.12);background:#0d0f14;color:var(--text)}
+    .btn{padding:12px 16px;border-radius:10px;border:1px solid rgba(245,211,106,.35);
+      background:linear-gradient(180deg,#171a22,#0d1016); color:var(--gold);
+      font-weight:800;cursor:pointer}
+    .fabbar{position:sticky;bottom:12px;margin-top:22px;display:flex;gap:10px;
+      flex-wrap:wrap;justify-content:center;background:rgba(16,16,20,.55);
+      border:1px solid rgba(245,211,106,.25);border-radius:12px;padding:10px 12px;
+      backdrop-filter:blur(10px)}
+    .pill{padding:10px 16px;border-radius:999px;border:1px solid rgba(245,211,106,.35);
+      color:var(--gold);font-weight:800;background:linear-gradient(180deg,#0f1116,#0a0c10)}
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <header style="text-align:center;margin-bottom:16px">
+      <div style="font-size:28px;font-weight:900">LICENSE GỐC™</div>
+      <div class="muted">Protect the Roots. Empower Humanity.</div>
+    </header>
 
-  <!-- 1. Dán phần HTML hiển thị ví ngay sau <body> -->
-  <div class="wallet">
-    <h2>LICENSECOIN™ Wallet</h2>
-    <p>Số dư hiện tại:</p>
-    <h1 id="balance">0 LCN</h1>
+    <section class="card">
+      <div class="title">LICENSECOIN™ Wallet</div>
+      <div class="muted">Demo tại chỗ (lưu bằng trình duyệt).</div>
 
-    <input type="number" id="amount" placeholder="Nhập số">
-    <button onclick="deposit()">+ Nạp</button>
-    <button onclick="withdraw()">− Rút</button>
-    <button onclick="bonus()">🎁 Nhận Bonus</button>
-    <button onclick="reset()">Reset</button>
+      <div style="margin-top:14px">Số dư hiện tại:</div>
+      <div id="balance" class="balance">0 LCN</div>
+
+      <div class="row">
+        <input id="amount" type="number" placeholder="Nhập số" />
+        <button class="btn" onclick="deposit()">+ Nạp</button>
+        <button class="btn" onclick="withdraw()">− Rút</button>
+        <button class="btn" onclick="bonus()">🎁 Nhận Bonus</button>
+        <button class="btn" onclick="resetBal()">Reset</button>
+      </div>
+    </section>
+
+    <!-- Thanh app nhanh (đơn giản) -->
+    <nav class="fabbar">
+      <a class="pill" href="index.html">Apps</a>
+      <a class="pill" href="licensenetwork.html">LICENSENETWORK</a>
+      <a class="pill" href="licensecoin.html">LICENSECOIN</a>
+      <a class="pill" href="vault.html">Vault</a>
+      <a class="pill" href="submit.html">Submit</a>
+      <a class="pill" href="payments.html">Pay & Cards</a>
+      <a class="pill" href="logout.html">Log out</a>
+    </nav>
   </div>
 
-  <!-- 2. Dán phần script xử lý logic trước khi kết thúc </body> -->
   <script>
-  function getUser(){
-    try{ return JSON.parse(localStorage.getItem("vault_user")); }
-    catch(e){ return null; }
-  }
+    // === Khóa theo user (nếu chưa có Vault thì dùng guest) ===
+    function getUser(){
+      try{ return JSON.parse(localStorage.getItem("vault_user")); }
+      catch(e){ return null; }
+    }
+    function key(){ const u=getUser(); return u ? `lcn_balance_${u.id}` : "lcn_balance_guest"; }
+    function load(){ return parseInt(localStorage.getItem(key())||"0"); }
+    function save(v){ localStorage.setItem(key(), v); }
+    function ui(){ document.getElementById("balance").innerText = load() + " LCN"; }
 
-  function balanceKey(){
-    const u=getUser();
-    return u ? `lcn_balance_${u.id}` : "lcn_balance_guest";
-  }
+    function val(){ return parseInt(document.getElementById("amount").value||"0"); }
+    function deposit(){ const v=val(); if(v>0){ save(load()+v); ui(); } }
+    function withdraw(){ const v=val(); if(v>0){ save(Math.max(0,load()-v)); ui(); } }
+    function bonus(){ save(load()+50); ui(); }
+    function resetBal(){ save(0); ui(); }
 
-  function loadBalance(){
-    return parseInt(localStorage.getItem(balanceKey())||"0");
-  }
-
-  function saveBalance(v){
-    localStorage.setItem(balanceKey(), v);
-  }
-
-  function updateBalanceUI(){
-    document.getElementById("balance").innerText = loadBalance() + " LCN";
-  }
-
-  function deposit(){
-    const v = parseInt(document.getElementById("amount").value);
-    if(v>0){ saveBalance(loadBalance()+v); updateBalanceUI(); }
-  }
-
-  function withdraw(){
-    const v = parseInt(document.getElementById("amount").value);
-    if(v>0){ saveBalance(Math.max(0, loadBalance()-v)); updateBalanceUI(); }
-  }
-
-  function bonus(){
-    saveBalance(loadBalance()+50);
-    updateBalanceUI();
-  }
-
-  function reset(){
-    saveBalance(0);
-    updateBalanceUI();
-  }
-
-  updateBalanceUI();
+    ui(); // init
   </script>
 
-  <!-- 3. Gọi script chung ở cuối cùng -->
+  <!-- Tùy chọn: thanh nổi + AI Tim + Translate toàn site -->
   <script src="goc-ui.js"></script>
-<div class="wallet">
-  <h2>LICENSECOIN™ Wallet</h2>
-  <p>Số dư hiện tại:</p>
-  <h1 id="balance">0 LCN</h1>
-
-  <input type="number" id="amount" placeholder="Nhập số">
-  <button onclick="deposit()">+ Nạp</button>
-  <button onclick="withdraw()">− Rút</button>
-  <button onclick="bonus()">🎁 Nhận Bonus</button>
-  <button onclick="reset()">Reset</button>
-</div>
 </body>
 </html>
-</script>
-<script src="goc-ui.js"></script>
