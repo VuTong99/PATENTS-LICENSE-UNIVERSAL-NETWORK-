@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My Account</title></head>
+<body style="background:#0a0b0f;color:#eee;font-family:system-ui;">
+  <!-- dán Floating Bar của bạn ở đây -->
+  <div style="max-width:900px;margin:80px auto 24px;padding:16px;border:1px solid rgba(245,211,106,.28);border-radius:12px;">
+    <h1 style="color:#ffd54d;margin:0 0 10px;">My Account</h1>
+    <div id="acct"></div>
+  </div>
+  <script>
+    (function(){
+      try{
+        const u = JSON.parse(localStorage.getItem('goc_auth_user'));
+        document.getElementById('acct').innerHTML = u
+          ? `<p><b>Email:</b> ${u.email}</p><p><b>Member since:</b> ${new Date(u.ts).toLocaleString()}</p>`
+          : `<p>You are not signed in.</p>`;
+      }catch(e){ document.getElementById('acct').textContent='Error loading profile.'}
+    })();
+  </script>
+  <script src="goc-ui.js"></script>
+  <script src="goc-auth.js"></script>
+</body>
+</html>
