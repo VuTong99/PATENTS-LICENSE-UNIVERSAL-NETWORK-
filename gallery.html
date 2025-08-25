@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>📸 Gallery — LICENSE GỐC™</title>
+<style>
+  :root{
+    --bg:#0a0b0f;
+    --panel:#0f1117;
+    --gold:#ffd700;         /* vàng kim */
+    --gold2:#f5d36a;        /* nhấn sáng */
+    --line:rgba(255,215,0,.25);
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:radial-gradient(1200px 600px at 50% -20%, #172034 0%, var(--bg) 60%, #000 100%);
+    color:#eae7dc; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+  }
+  header{
+    padding:28px 20px 6px; text-align:center;
+  }
+  h1{
+    margin:0 0 10px; font-size:clamp(22px,4.5vw,40px); font-weight:800; letter-spacing:.3px;
+    color:var(--gold);
+    text-shadow:0 0 10px rgba(255,215,0,.7), 0 0 22px rgba(255,183,0,.35);
+  }
+  .hint{opacity:.8; font-size:14px}
+  .wrap{
+    max-width:1200px; margin:20px auto 56px; padding:0 18px;
+  }
+  .grid{
+    display:grid; gap:18px;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  }
+  figure{
+    margin:0; background:linear-gradient(180deg,#0f1624,#0b101a);
+    border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+    box-shadow:0 0 0 1px rgba(0,0,0,.3), 0 10px 36px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.04);
+    transition:transform .2s ease, box-shadow .25s ease;
+  }
+  figure:hover{ transform:translateY(-3px); box-shadow:0 16px 40px rgba(0,0,0,.55), 0 0 22px rgba(255,215,0,.12)}
+  img{
+    display:block; width:100%; height:240px; object-fit:cover;
+    background:#0a0f18;
+  }
+  figcaption{
+    padding:10px 12px; font-size:13px; color:#bfc7d5; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center; gap:8px;
+  }
+  .name{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .open{
+    font-size:12px; padding:6px 10px; border-radius:999px; text-decoration:none; color:#111;
+    background:linear-gradient(180deg, var(--gold), var(--gold2));
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.15), 0 3px 16px rgba(255,215,0,.35);
+  }
+  .empty, .error{max-width:860px; margin:24px auto; padding:16px 18px; border-radius:12px; border:1px dashed var(--line); background:rgba(255,215,0,.03); color:#cbd5e1; text-align:center}
+  footer{position:sticky; bottom:0; background:rgba(17,19,26,.8); backdrop-filter:blur(10px);
+    border-top:1px solid var(--line); padding:10px 14px; display:flex; justify-content:center}
+  .back{color:var(--gold); text-decoration:none; font-weight:700}
+</style>
+</head>
+<body>
+  <header>
+    <h1>📸 Gallery — LICENSE GỐC™</h1>
+    <div class="hint">Ảnh hiển thị dựa trên <code>assets/list.txt</code>. Sửa file đó để thêm/bớt ảnh.</div>
+  </header>
+
+  <main class="wrap">
+    <div id="status" class="empty">Đang tải danh sách ảnh…</div>
+    <div id="grid" class="grid" hidden></div>
+  </main>
+
+  <footer>
+    <a class="back" href="index.html">← Về trang chủ</a>
+  </footer>
+
+<script>
+async function loadList(){
+  const status = document.getElementById('status');
+  const grid = document.getElementById('grid');
+  try{
+    // tải list.txt (thêm cache buster để luôn lấy bản mới)
+    const res = await fetch('assets/list.txt?ts=' + Date.now());
+    if(!res.ok) throw new Error('Không đọc được assets/list.txt');
+    const text = await res.text();
+
+    // lấy các dòng không rỗng
+    const files = text.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+    if(!files.length){
+      status.className = 'empty';
+      status.textContent = 'Chưa có mục nào trong assets/list.txt';
+      return;
+    }
+
+    // render
+    grid.innerHTML = '';
+    files.forEach(name => {
+      const url = 'assets/' + name;
+      const fig = document.createElement('figure');
+
+      const img = document.createElement('img');
+      img.alt = name;
+      img.loading = 'lazy';
+      img.src = url;
+
+      const cap = document.createElement('figcaption');
+      const span = document.createElement('span');
+      span.className = 'name';
+      span.textContent = name;
+
+      const link = document.createElement('a');
+      link.className = 'open';
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.textContent = 'Mở';
+
+      cap.append(span, link);
+      fig.append(img, cap);
+      grid.append(fig);
+
+      // nếu ảnh lỗi → ẩn thẻ
+      img.addEventListener('error', () => fig.remove());
+    });
+
+    status.hidden = true;
+    grid.hidden = false;
+  }catch(err){
+    status.className = 'error';
+    status.textContent = 'Lỗi: ' + err.message + ' — Hãy kiểm tra assets/list.txt';
+  }
+}
+loadList();
+</script>
+</body>
+</html>
