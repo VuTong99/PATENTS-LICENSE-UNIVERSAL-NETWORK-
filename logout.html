@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Log out • LICENSE GỐC™</title>
+  <style>
+    :root{--bg:#0a0b0f;--text:#eae7dc;--gold:#f5d36a;}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Segoe UI,Roboto,Inter,Arial,sans-serif;display:grid;place-items:center;min-height:100dvh}
+    .card{max-width:720px;padding:24px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:linear-gradient(180deg,#111827,#0b0e14)}
+    h1{margin:0 0 12px;font-size:clamp(22px,4vw,32px)}
+    p{opacity:.9;line-height:1.6}
+    .hint{margin-top:16px;font-size:14px;opacity:.7}
+    .btn{margin-top:20px;display:inline-block;padding:10px 18px;border-radius:10px;border:1px solid rgba(255,255,255,.12);text-decoration:none;color:var(--text)}
+    .gold{color:#111;background:var(--gold);border-color:rgba(245,211,106,.6)}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>You're signed out</h1>
+    <p>Cảm ơn bạn đã sử dụng LICENSE GỐC™. Hẹn gặp lại sớm!</p>
+    <p class="hint">Tự động trở về trang chủ sau <span id="sec">3</span>s…</p>
+    <a class="btn gold" href="index.html">Về trang chủ ngay</a>
+  </div>
+
+  <!-- GOC scripts (đã có trong repo) -->
+  <script src="goc-ui.js"></script>
+  <script src="goc-auth.js"></script>
+
+  <script>
+    // gọi signOut nếu đang đăng nhập
+    if (window.GOC && GOC.auth && typeof GOC.auth.signOut === 'function') {
+      try { GOC.auth.signOut(); } catch(e){}
+    }
+    // đếm ngược rồi quay về trang chủ
+    let t=3, el=document.getElementById('sec');
+    const timer=setInterval(()=>{ t--; el.textContent=t; if(t<=0){clearInterval(timer); location.href='index.html';} },1000);
+  </script>
+</body>
+</html>
