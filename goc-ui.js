@@ -35,7 +35,7 @@
     <a href="licensecoin.html">LICENSECOIN</a>
     <a href="vault.html">Vault</a>
     <a href="submit.html">Submit</a>
-    <a href="payments.html">Pay & Cards</a>
+    <a href="paycards.html">Pay & Cards</a>
     <a href="logout.html">Log out</a>
     <a href="#!" id="openTim">AI TIM ❤️</a>
     <span class="lang-pill">🌐
