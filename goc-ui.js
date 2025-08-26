@@ -30,7 +30,7 @@
   const nav = document.createElement('nav');
   nav.className = 'apps-nav';
   nav.innerHTML = `
-    <a href="index.html">Apps</a>
+    
     <a href="licensenetwork.html">LICENSENETWORK</a>
     <a href="licensecoin.html">LICENSECOIN</a>
     <a href="vault.html">Vault</a>
