@@ -38,7 +38,22 @@
     <a href="paycards.html">Pay & Cards</a>
     <a href="logout.html">Log out</a>
     <a href="#!" id="openTim">AI TIM ❤️</a>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK" 
+      // === Floating App Bar (đã thêm Gallery) ===
+const NAV_HTML = `
+<nav class="apps-nav" role="navigation" aria-label="Quick apps">
+  <a href="index.html">Apps</a>
+  <a href="licensecoin.html">LICENSECOIN</a>
+  <a href="licensenetwork.html">LICENSENETWORK</a>
+  <a href="vault.html">Vault</a>
+  <a href="translate.html">Translate 130+</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="submit.html">SUBMIT</a>
+  <a href="paycards.html">Pay & Cards</a>
+  <a href="logout.html">Log out</a>
+  <a href="#!" id="openTim">AI TIM ❤️</a>
+</nav>
+`;
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK" 
      target="_blank"
      style="
         background:#1877f2;
