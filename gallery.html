@@ -1,238 +1,455 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gallery • LICENSE GỐC™</title>
-<meta name="description" content="Gallery of assets for LICENSE GỐC — secure media library.">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>📸 Gallery — LICENSE GỐC™</title>
+
 <style>
-  :root{
-    --bg:#0a0b0f; --panel:#0f1117; --ink:#eae7dc;
-    --gold:#ffd700; --gold2:#f5d36a; --muted:#a5a08b;
-    --line:rgba(255,215,0,.25); --radius:16px;
+/* ====== Theme Tokens (Dark/Light + Gold) ====== */
+:root{
+  --bg:#0a0b0f;
+  --panel:#0f1117;
+  --ink:#eae7dc;
+  --muted:#a8b3c7;
+  --line:rgba(255, 215, 0, .25);
 
-    /* 👉 GỐC chỉ chỉnh 2 biến này để đổi size & tỉ lệ ô ảnh */
-    --thumb: 140px;           /* 100–200px tùy ý */
-    --ratio: 1 / 1;           /* 1/1 (vuông), 4/3, 16/9, 3/2, 2/3... */
+  /* 24K gold-ish */
+  --gold:#ffd700;         /* base */
+  --gold2:#f5d36a;        /* highlight */
+  --gold3:#b6862e;        /* shadow */
 
-    --gap: 14px;              /* khoảng cách giữa ảnh */
-    --shadow: 0 0 24px rgba(255,215,0,.08), inset 0 1px 0 rgba(255,255,255,.04);
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial,sans-serif}
-  a{color:var(--gold)}
+  --radius:14px;
+  --thumb:240px;          /* thumbnail width (slider điều chỉnh) */
+  --gap:16px;
+  --shadow:0 6px 24px rgba(0,0,0,.35);
+  --glow:0 0 18px rgba(255,215,0,.35);
+}
 
-  .wrap{max-width:1200px;margin:auto;padding:20px}
-  .bar{
-    display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
-    background:rgba(15,17,23,.6);backdrop-filter:blur(10px);
-    border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:16px;
-  }
-  .brand{font-weight:800;letter-spacing:.02em;color:var(--gold)}
-  .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  .pill{
-    display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;
-    border:1px solid var(--line);background:linear-gradient(180deg,#12151c,#0b0d12);color:var(--gold)
-  }
-  .pill select,.pill input{background:transparent;border:none;color:var(--ink);outline:none;font-weight:700}
-  .btn{
-    padding:10px 14px;border-radius:10px;border:1px solid var(--line);
-    background:linear-gradient(180deg,#141822,#0c0f15);color:var(--gold);font-weight:800;cursor:pointer
-  }
+/* Light mode override */
+.theme-light{
+  --bg:#f1f4fb;
+  --panel:#ffffff;
+  --ink:#181a1f;
+  --muted:#475069;
+  --line:rgba(204, 164, 0, .25);
+  --shadow:0 6px 22px rgba(0,0,0,.10);
+  --glow:0 0 14px rgba(204,164,0,.35);
+}
 
-  .panel{
-    background:linear-gradient(180deg,#10131a,#0c0f15);border:1px solid var(--line);
-    border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)
-  }
+/* Transition mượt khi đổi theme */
+html, body, .wrap, .toolbar, .card, .viewer{
+  transition: background .45s ease, color .45s ease, border-color .45s ease, box-shadow .45s ease;
+}
 
-  /* GRID */
-  .grid{
-    display:grid;gap:var(--gap);
-    grid-template-columns:repeat(auto-fill, minmax(var(--thumb),1fr));
-  }
-  .item{
-    position:relative;border:1px solid rgba(255,215,0,.22);border-radius:12px;overflow:hidden;
-    background:#0a0f18;box-shadow:var(--shadow)
-  }
-  .item img{
-    width:100%;display:block;
-    aspect-ratio:var(--ratio);object-fit:cover;transition:transform .25s ease
-  }
-  .item:hover img{transform:scale(1.02)}
-  .cap{
-    position:absolute;left:0;right:0;bottom:0;
-    background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));
-    color:#ddd;padding:8px 10px;font-size:12px
-  }
-  .tools{
-    position:absolute;top:8px;right:8px;display:flex;gap:6px
-  }
-  .ico{cursor:pointer;padding:6px 8px;border-radius:8px;border:1px solid rgba(255,215,0,.25);
-       background:rgba(12,14,18,.7);color:var(--gold);font-size:12px}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  color:var(--ink);
+  font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(255,215,0,.08), transparent 60%),
+    radial-gradient(1000px 600px at 110% 110%, rgba(255,215,0,.06), transparent 60%),
+    var(--bg);
+}
 
-  /* LIGHTBOX */
-  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;z-index:50}
-  .lightbox.open{display:grid;place-items:center}
-  .frame{max-width:92vw;max-height:86vh;display:grid;gap:12px}
-  .frame img{max-width:92vw;max-height:76vh;border-radius:12px;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.6)}
-  .frame .row{display:flex;gap:8px;justify-content:center}
-  .frame .btn{font-weight:800}
-  .meta{color:#bbb;text-align:center}
+/* ====== Header ====== */
+header{
+  position:sticky; top:0; z-index:10;
+  background:linear-gradient(to bottom, rgba(0,0,0,.35), transparent), var(--bg);
+  padding:22px 16px 10px;
+  border-bottom:1px solid var(--line);
+  backdrop-filter:saturate(140%) blur(6px);
+}
+.title{
+  display:flex; align-items:center; gap:10px; margin:0 0 6px;
+  font-weight:800; letter-spacing:.3px;
+  color:var(--gold3);
+  text-shadow: 0 1px 0 rgba(0,0,0,.2), 0 0 14px rgba(255,215,0,.25);
+}
+.title span{
+  font-size: clamp(20px, 3.6vw, 32px);
+  background:linear-gradient(180deg, var(--gold), var(--gold2) 55%, var(--gold3));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.title .dot{ width:10px; height:10px; border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, #fff, var(--gold) 45%, var(--gold3) 80%);
+  box-shadow: var(--glow);
+}
 
-  /* MINI MODE (để nhúng vào trang khác nếu cần) */
-  .grid.mini{gap:10px;grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
-  .grid.mini img{aspect-ratio:1/1}
+/* ====== Toolbar ====== */
+.toolbar{
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+  padding:10px 8px 12px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.toolbar > *{margin-right:6px}
+label{font-size:13px; color:var(--muted)}
+
+.btn{
+  appearance:none; border:1px solid var(--line);
+  padding:8px 12px; border-radius:10px;
+  background:linear-gradient(180deg, rgba(255,215,0,.18), rgba(255,215,0,.08));
+  color:var(--ink); cursor:pointer; font-weight:600;
+}
+.btn:hover{ box-shadow:var(--glow) }
+.switch{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 10px; border:1px solid var(--line);
+  border-radius:12px; cursor:pointer; user-select:none;
+  background:var(--panel);
+}
+.switch input{appearance:none; width:38px; height:22px; border-radius:11px; background:#7774; position:relative; outline:none}
+.switch input::after{
+  content:""; position:absolute; inset:3px; width:16px; height:16px; border-radius:50%; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.35);
+  transform:translateX(0); transition:transform .25s ease;
+}
+.switch input:checked{background:#ffdf80aa}
+.switch input:checked::after{ transform:translateX(16px) }
+
+/* ====== Grid ====== */
+.wrap{max-width:1200px; margin:14px auto; padding:0 14px}
+.grid{
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(var(--thumb), 1fr));
+  gap:var(--gap);
+}
+.card{
+  background:linear-gradient(180deg, rgba(255,215,0,.05), transparent 30%), var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius); overflow:hidden;
+  box-shadow:var(--shadow);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.card:hover{ transform:translateY(-2px); box-shadow:0 10px 32px rgba(0,0,0,.45) }
+.thumb{
+  width:100%; height:220px; object-fit:cover; display:block; background:#0a0f18;
+  filter: var(--filter, none);
+}
+.meta{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:10px 12px;
+  border-top:1px dashed var(--line);
+}
+.name{ font-size:12px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+.actions{ display:flex; gap:8px }
+.icon{
+  border:none; background:transparent; cursor:pointer; font-size:18px; line-height:1;
+  filter: drop-shadow(0 0 2px rgba(0,0,0,.35));
+}
+a.icon{ text-decoration:none }
+
+/* ====== Viewer (Lightbox) ====== */
+.viewer{
+  position:fixed; inset:0; z-index:50; display:none;
+  background:rgba(0,0,0,.75);
+  align-items:center; justify-content:center; padding:24px;
+}
+.viewer.open{ display:flex }
+.box{
+  width:min(96vw, 1200px); max-height:90vh;
+  background:var(--panel); border:1px solid var(--line); border-radius:16px;
+  box-shadow:0 12px 40px rgba(0,0,0,.6); overflow:hidden; display:flex; flex-direction:column;
+}
+.stage{
+  position:relative; display:flex; align-items:center; justify-content:center;
+  background:#000; min-height:50vh;
+}
+.stage img, .stage video{
+  max-width:100%; max-height:70vh; object-fit:contain;
+  filter: var(--filter, none);
+}
+.vbar{
+  display:flex; flex-wrap:wrap; gap:12px; align-items:center; padding:12px; background:linear-gradient(180deg, rgba(255,215,0,.05), transparent), var(--panel);
+  border-top:1px solid var(--line);
+}
+.vbar .grow{ flex:1 }
+.vbar select, .vbar input[type="range"]{
+  accent-color:#d4af37; cursor:pointer;
+}
+.vtitle{ font-weight:700; color:var(--gold3) }
+
+/* nice range */
+input[type="range"]{ width:140px }
+
+/* ====== Small utility ====== */
+.hidden{ display:none !important }
+footer{ text-align:center; color:var(--muted); padding:18px 0 30px; font-size:13px }
+.kbd{padding:2px 6px; border:1px solid var(--line); border-radius:6px; font:12px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
 </style>
 </head>
+
 <body>
-<div class="wrap">
-  <div class="bar">
-    <div class="brand">📁 Gallery — LICENSE GỐC™</div>
-    <div class="controls">
-      <span class="pill">Size <input id="size" type="range" min="90" max="220" step="2" value="140"></span>
-      <span class="pill">Ratio
-        <select id="ratio">
-          <option value="1/1">1:1</option>
-          <option value="4/3">4:3</option>
-          <option value="16/9">16:9</option>
-          <option value="3/2">3:2</option>
-          <option value="2/3">2:3</option>
-        </select>
-      </span>
-      <span class="pill">Sort
-        <select id="sort">
-          <option value="name-asc">Name A→Z</option>
-          <option value="name-desc">Name Z→A</option>
-          <option value="ext">By type</option>
-        </select>
-      </span>
-      <button class="btn" id="toggleMini">Mini grid</button>
-    </div>
-  </div>
+  <header>
+    <div class="wrap">
+      <h1 class="title">
+        <i class="dot"></i>
+        <span>Gallery — LICENSE GỐC™</span>
+      </h1>
 
-  <div class="panel">
-    <div id="grid" class="grid" aria-live="polite"></div>
-    <div id="empty" style="display:none;padding:16px;color:#bbb">
-      No images found. Make sure <code>assets/list.txt</code> exists and contains one filename per line.
-    </div>
-  </div>
-</div>
+      <div class="toolbar" role="group" aria-label="controls">
+        <label class="switch">
+          <input id="themeToggle" type="checkbox" />
+          <span>Dark ↔ Light</span>
+        </label>
 
-<!-- LIGHTBOX -->
-<div id="lightbox" class="lightbox" role="dialog" aria-label="Image viewer">
-  <div class="frame">
-    <img id="lbImg" alt="">
-    <div class="row">
-      <button class="btn" id="copyUrl">Copy URL</button>
-      <a class="btn" id="openRaw" target="_blank" rel="noopener">Open raw</a>
-      <button class="btn" id="closeLb">Close</button>
+        <label>Size:
+          <input id="sizeRange" type="range" min="160" max="360" step="10" value="240">
+        </label>
+
+        <label>Preset:
+          <select id="preset">
+            <option value="none">• None</option>
+            <option value="golden">Golden</option>
+            <option value="noir">Noir</option>
+            <option value="dream">Dream</option>
+            <option value="cinema">Cinema</option>
+          </select>
+        </label>
+
+        <label>Bright
+          <input id="rBright" type="range" min="0.5" max="1.6" step="0.02" value="1">
+        </label>
+        <label>Contrast
+          <input id="rContrast" type="range" min="0.6" max="1.6" step="0.02" value="1">
+        </label>
+        <label>Satur.
+          <input id="rSatur" type="range" min="0" max="2" step="0.02" value="1">
+        </label>
+        <label>Blur
+          <input id="rBlur" type="range" min="0" max="6" step="0.1" value="0">
+        </label>
+
+        <button id="resetFilters" class="btn">Reset Filters</button>
+        <div class="grow"></div>
+        <span class="hint" style="font-size:12px;color:var(--muted)">
+          ⌨️ <span class="kbd">←</span> <span class="kbd">→</span> điều hướng • <span class="kbd">Esc</span> thoát
+        </span>
+      </div>
     </div>
-    <div class="meta" id="lbMeta"></div>
+  </header>
+
+  <main class="wrap">
+    <p class="hint" id="status">Đang tải danh sách…</p>
+    <section id="grid" class="grid hidden" aria-live="polite"></section>
+  </main>
+
+  <footer>© 2025 LICENSE GỐC™ — Gallery module</footer>
+
+  <!-- ====== Lightbox Viewer ====== -->
+  <div id="viewer" class="viewer" role="dialog" aria-modal="true" aria-label="Preview">
+    <div class="box">
+      <div class="stage" id="stage"></div>
+      <div class="vbar">
+        <div class="vtitle" id="vname">—</div>
+        <div class="grow"></div>
+        <a id="openOriginal" class="btn" target="_blank" rel="noopener">Open original</a>
+        <a id="download" class="btn" download>Download</a>
+        <button id="close" class="btn">Close</button>
+      </div>
+    </div>
   </div>
-</div>
 
 <script>
-(async function(){
-  const grid = document.getElementById('grid');
-  const empty = document.getElementById('empty');
-  const size = document.getElementById('size');
-  const ratio = document.getElementById('ratio');
-  const sortSel = document.getElementById('sort');
-  const toggleMini = document.getElementById('toggleMini');
+/* ===========================================================
+   GOC GALLERY – ảnh, video, lightbox, filters, theme
+   Yêu cầu: /assets/list.txt  (mỗi dòng: tên file, ví dụ IMG_7242.png)
+   =========================================================== */
+const LIST_URL = 'assets/list.txt';
+const ASSET_BASE = 'assets/';
+const grid = document.getElementById('grid');
+const statusEl = document.getElementById('status');
 
-  // cập nhật biến CSS
-  const setVar = (k,v)=> document.documentElement.style.setProperty(k, v);
+const themeToggle = document.getElementById('themeToggle');
+const sizeRange   = document.getElementById('sizeRange');
+const presetSel   = document.getElementById('preset');
+const rBright     = document.getElementById('rBright');
+const rContrast   = document.getElementById('rContrast');
+const rSatur      = document.getElementById('rSatur');
+const rBlur       = document.getElementById('rBlur');
+const resetBtn    = document.getElementById('resetFilters');
 
-  // đọc danh sách file từ assets/list.txt
-  let files = [];
-  try{
-    const res = await fetch('assets/list.txt?cache=' + Date.now());
-    if(res.ok){
-      const txt = await res.text();
-      files = txt.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
-    }
-  }catch(e){ /* ignore */ }
+const viewer      = document.getElementById('viewer');
+const stage       = document.getElementById('stage');
+const vname       = document.getElementById('vname');
+const openOriginal= document.getElementById('openOriginal');
+const downloadBtn = document.getElementById('download');
+const closeBtn    = document.getElementById('close');
 
-  if(!files.length){
-    empty.style.display = 'block';
-    return;
-  }
+let items = [];           // [{name, url, type:'image'|'video'}]
+let current = -1;         // index đang xem
 
-  // sắp xếp
-  function extOf(n){ return (n.split('.').pop()||'').toLowerCase(); }
-  function sortNow(){
-    const val = sortSel.value;
-    if(val==='name-asc') files.sort((a,b)=>a.localeCompare(b));
-    else if(val==='name-desc') files.sort((a,b)=>b.localeCompare(a));
-    else if(val==='ext') files.sort((a,b)=> extOf(a).localeCompare(extOf(b)) || a.localeCompare(b));
-    render();
-  }
+/* ---------- Theme state ---------- */
+(function initTheme(){
+  const saved = localStorage.getItem('goc.gallery.theme') || 'dark';
+  document.body.classList.toggle('theme-light', saved==='light');
+  themeToggle.checked = (saved==='light');
+})();
+themeToggle.addEventListener('change', ()=>{
+  const light = themeToggle.checked;
+  document.body.classList.toggle('theme-light', light);
+  // hiệu ứng “bật sáng” nhẹ
+  document.body.animate([{filter:'brightness(1.05)'},{filter:'brightness(1)'}], {duration:500, easing:'ease'});
+  localStorage.setItem('goc.gallery.theme', light?'light':'dark');
+});
 
-  // render grid
-  function render(){
-    grid.innerHTML = '';
-    for(const name of files){
-      const url = `assets/${encodeURIComponent(name)}`;
-      const item = document.createElement('div');
-      item.className = 'item';
-      item.innerHTML = `
-        <img src="${url}" alt="${name}">
-        <div class="tools">
-          <button class="ico" data-url="${url}" data-action="copy">Copy</button>
-          <a class="ico" href="${url}" target="_blank" rel="noopener">Open</a>
-        </div>
-        <div class="cap">${name}</div>
-      `;
-      // lightbox
-      item.querySelector('img').addEventListener('click', ()=> openLightbox(url, name));
-      // copy
-      item.querySelector('[data-action="copy"]').addEventListener('click', async (e)=>{
-        e.stopPropagation();
-        await navigator.clipboard.writeText(location.origin + location.pathname.replace(/[^/]*$/,'') + url);
-        e.target.textContent = 'Copied!';
-        setTimeout(()=> e.target.textContent='Copy', 900);
-      });
-      grid.appendChild(item);
-    }
-  }
+/* ---------- Thumb size ---------- */
+(function initSize(){
+  const saved = localStorage.getItem('goc.gallery.thumb');
+  if(saved){ sizeRange.value = saved }
+  document.documentElement.style.setProperty('--thumb', sizeRange.value+'px');
+})();
+sizeRange.addEventListener('input', ()=>{
+  document.documentElement.style.setProperty('--thumb', sizeRange.value+'px');
+  localStorage.setItem('goc.gallery.thumb', sizeRange.value);
+});
 
-  // lightbox
-  const lb = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lbImg');
-  const lbMeta = document.getElementById('lbMeta');
-  const openRaw = document.getElementById('openRaw');
-  const closeLb = document.getElementById('closeLb');
-  const copyUrl = document.getElementById('copyUrl');
-
-  function openLightbox(url, name){
-    lbImg.src = url; lbImg.alt = name;
-    lbMeta.textContent = name;
-    openRaw.href = url;
-    copyUrl.onclick = async ()=>{
-      await navigator.clipboard.writeText(location.origin + location.pathname.replace(/[^/]*$/,'') + url);
-      copyUrl.textContent = 'Copied!';
-      setTimeout(()=> copyUrl.textContent='Copy URL', 900);
-    };
-    lb.classList.add('open');
-  }
-  function closeLightbox(){ lb.classList.remove('open'); }
-  lb.addEventListener('click', (e)=>{ if(e.target===lb) closeLightbox(); });
-  closeLb.addEventListener('click', closeLightbox);
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
-
-  // điều khiển UI
-  size.addEventListener('input', ()=> setVar('--thumb', size.value+'px'));
-  ratio.addEventListener('change', ()=> setVar('--ratio', ratio.value));
-  sortSel.addEventListener('change', sortNow);
-  toggleMini.addEventListener('click', ()=>{
-    grid.classList.toggle('mini');
+/* ---------- Filters (áp dụng cả Grid & Viewer) ---------- */
+function currentFilter(){
+  const b = parseFloat(rBright.value);
+  const c = parseFloat(rContrast.value);
+  const s = parseFloat(rSatur.value);
+  const blur = parseFloat(rBlur.value);
+  return `brightness(${b}) contrast(${c}) saturate(${s}) blur(${blur}px)`;
+}
+function applyFilter(){
+  const f = currentFilter();
+  document.querySelectorAll('.thumb, .stage img, .stage video').forEach(el=>{
+    el.style.filter = f;
   });
+}
+[rBright, rContrast, rSatur, rBlur].forEach(inp=> inp.addEventListener('input', applyFilter));
+resetBtn.addEventListener('click', ()=>{
+  presetSel.value='none';
+  rBright.value=1; rContrast.value=1; rSatur.value=1; rBlur.value=0;
+  applyFilter();
+});
+presetSel.addEventListener('change', ()=>{
+  const p = presetSel.value;
+  if(p==='golden'){ rBright.value=1.06; rContrast.value=1.08; rSatur.value=1.25; rBlur.value=0.2; }
+  else if(p==='noir'){ rBright.value=1.0; rContrast.value=1.30; rSatur.value=0; rBlur.value=0; }
+  else if(p==='dream'){ rBright.value=1.15; rContrast.value=0.95; rSatur.value=1.1; rBlur.value=1.2; }
+  else if(p==='cinema'){ rBright.value=1.05; rContrast.value=1.18; rSatur.value=1.05; rBlur.value=0; }
+  else { rBright.value=1; rContrast.value=1; rSatur.value=1; rBlur.value=0; }
+  applyFilter();
+});
 
-  // set mặc định theo biến
-  setVar('--thumb', size.value+'px');
-  setVar('--ratio', ratio.value);
+/* ---------- Load list.txt ---------- */
+async function fetchList(){
+  const res = await fetch(LIST_URL, {cache:'no-store'});
+  if(!res.ok) throw new Error('Không tìm thấy assets/list.txt');
+  const text = await res.text();
+  const names = text.split(/\r?\n/).map(s=>s.trim()).filter(s=>s && !s.startsWith('#'));
+  items = names.map(name=>{
+    const url = ASSET_BASE + name;
+    const ext = name.split('.').pop().toLowerCase();
+    const isVideo = ['mp4','webm','ogg','mov'].includes(ext);
+    return {name, url, type: isVideo?'video':'image'};
+  });
+  if(items.length===0) throw new Error('list.txt trống – thêm tên file mỗi dòng');
+}
 
-  sortNow(); // sắp xếp & render
+/* ---------- Render Grid ---------- */
+function cardTpl(item, idx){
+  const open = `data-open="${idx}"`;
+  if(item.type==='image'){
+    return `
+      <article class="card">
+        <img class="thumb" src="${item.url}" alt="${item.name}" loading="lazy" ${open}/>
+        <div class="meta">
+          <div class="name" title="${item.name}">${item.name}</div>
+          <div class="actions">
+            <a class="icon" href="${item.url}" target="_blank" title="Open original" rel="noopener">🔗</a>
+            <a class="icon" href="${item.url}" download title="Download">⬇️</a>
+            <button class="icon" ${open} title="Preview">🔍</button>
+          </div>
+        </div>
+      </article>
+    `;
+  }else{
+    // video thumbnail = chính video (muted) – auto-paused
+    return `
+      <article class="card">
+        <video class="thumb" preload="metadata" ${open} muted playsinline>
+          <source src="${item.url}" type="video/${item.url.split('.').pop()}"/>
+        </video>
+        <div class="meta">
+          <div class="name" title="${item.name}">${item.name}</div>
+          <div class="actions">
+            <a class="icon" href="${item.url}" target="_blank" title="Open original" rel="noopener">🔗</a>
+            <a class="icon" href="${item.url}" download title="Download">⬇️</a>
+            <button class="icon" ${open} title="Preview">▶️</button>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+}
+function render(){
+  grid.innerHTML = items.map(cardTpl).join('');
+  grid.classList.remove('hidden');
+  statusEl.textContent = `Đã tải ${items.length} mục. Nhấn ảnh/biểu tượng để xem.`;
+  applyFilter();
+}
+
+/* ---------- Viewer (Lightbox) ---------- */
+function openViewer(idx){
+  current = idx;
+  const it = items[current];
+  stage.innerHTML = '';
+  let node;
+  if(it.type==='image'){
+    node = new Image();
+    node.src = it.url; node.alt = it.name; node.loading = 'eager';
+  }else{
+    node = document.createElement('video');
+    node.src = it.url; node.controls = true; node.autoplay = true; node.playsInline = true;
+  }
+  stage.appendChild(node);
+  vname.textContent = it.name;
+  openOriginal.href = it.url;
+  downloadBtn.href = it.url;
+  downloadBtn.setAttribute('download', it.name);
+  viewer.classList.add('open');
+  applyFilter();
+}
+function closeViewer(){ viewer.classList.remove('open'); stage.innerHTML=''; current=-1; }
+function step(dir){
+  if(current<0) return;
+  const next = (current + dir + items.length) % items.length;
+  openViewer(next);
+}
+
+/* Delegation: click vào grid / nút */
+grid.addEventListener('click', (e)=>{
+  const el = e.target.closest('[data-open]');
+  if(!el) return;
+  openViewer( parseInt(el.dataset.open,10) );
+});
+closeBtn.addEventListener('click', closeViewer);
+viewer.addEventListener('click', (e)=>{ if(e.target===viewer) closeViewer(); });
+
+/* Keyboard */
+document.addEventListener('keydown', (e)=>{
+  if(!viewer.classList.contains('open')) return;
+  if(e.key==='Escape') closeViewer();
+  if(e.key==='ArrowLeft') step(-1);
+  if(e.key==='ArrowRight') step(1);
+});
+
+/* ---------- Boot ---------- */
+(async function boot(){
+  try{
+    await fetchList();
+    render();
+  }catch(err){
+    statusEl.style.color = '#ff6961';
+    statusEl.innerHTML = 'Lỗi: ' + err.message +
+      '<br>Hãy tạo <b>assets/list.txt</b> (mỗi dòng 1 tên file) và thử lại.';
+  }
 })();
 </script>
 </body>
