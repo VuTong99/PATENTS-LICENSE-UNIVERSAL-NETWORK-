@@ -38,6 +38,17 @@
     <a href="paycards.html">Pay & Cards</a>
     <a href="logout.html">Log out</a>
     <a href="#!" id="openTim">AI TIM ❤️</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK" 
+     target="_blank"
+     style="
+        background:#1877f2;
+        color:white;
+        border-radius:999px;
+        padding:8px 14px;
+        font-weight:bold;
+     ">
+     📣 Share FB
+    </a>
     <span class="lang-pill">🌐
       <select id="langPick" aria-label="Select language">
         <option value="auto|en">English</option>
