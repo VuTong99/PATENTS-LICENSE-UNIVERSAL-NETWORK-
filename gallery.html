@@ -1,60 +1,239 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>📸 Gallery – LICENSE GỐC™</title>
-  <style>
-    body {
-      background: #0a0b0f;
-      color: #ffd700;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-    h1 {
-      margin: 20px;
-      font-size: 28px;
-      text-shadow: 0 0 8px #ffd700;
-    }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
-      padding: 20px;
-    }
-    .gallery img {
-      width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-      transition: transform 0.3s;
-    }
-    .gallery img:hover {
-      transform: scale(1.05);
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gallery • LICENSE GỐC™</title>
+<meta name="description" content="Gallery of assets for LICENSE GỐC — secure media library.">
+<style>
+  :root{
+    --bg:#0a0b0f; --panel:#0f1117; --ink:#eae7dc;
+    --gold:#ffd700; --gold2:#f5d36a; --muted:#a5a08b;
+    --line:rgba(255,215,0,.25); --radius:16px;
+
+    /* 👉 GỐC chỉ chỉnh 2 biến này để đổi size & tỉ lệ ô ảnh */
+    --thumb: 140px;           /* 100–200px tùy ý */
+    --ratio: 1 / 1;           /* 1/1 (vuông), 4/3, 16/9, 3/2, 2/3... */
+
+    --gap: 14px;              /* khoảng cách giữa ảnh */
+    --shadow: 0 0 24px rgba(255,215,0,.08), inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial,sans-serif}
+  a{color:var(--gold)}
+
+  .wrap{max-width:1200px;margin:auto;padding:20px}
+  .bar{
+    display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    background:rgba(15,17,23,.6);backdrop-filter:blur(10px);
+    border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:16px;
+  }
+  .brand{font-weight:800;letter-spacing:.02em;color:var(--gold)}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .pill{
+    display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;
+    border:1px solid var(--line);background:linear-gradient(180deg,#12151c,#0b0d12);color:var(--gold)
+  }
+  .pill select,.pill input{background:transparent;border:none;color:var(--ink);outline:none;font-weight:700}
+  .btn{
+    padding:10px 14px;border-radius:10px;border:1px solid var(--line);
+    background:linear-gradient(180deg,#141822,#0c0f15);color:var(--gold);font-weight:800;cursor:pointer
+  }
+
+  .panel{
+    background:linear-gradient(180deg,#10131a,#0c0f15);border:1px solid var(--line);
+    border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)
+  }
+
+  /* GRID */
+  .grid{
+    display:grid;gap:var(--gap);
+    grid-template-columns:repeat(auto-fill, minmax(var(--thumb),1fr));
+  }
+  .item{
+    position:relative;border:1px solid rgba(255,215,0,.22);border-radius:12px;overflow:hidden;
+    background:#0a0f18;box-shadow:var(--shadow)
+  }
+  .item img{
+    width:100%;display:block;
+    aspect-ratio:var(--ratio);object-fit:cover;transition:transform .25s ease
+  }
+  .item:hover img{transform:scale(1.02)}
+  .cap{
+    position:absolute;left:0;right:0;bottom:0;
+    background:linear-gradient(180deg,transparent,rgba(0,0,0,.65));
+    color:#ddd;padding:8px 10px;font-size:12px
+  }
+  .tools{
+    position:absolute;top:8px;right:8px;display:flex;gap:6px
+  }
+  .ico{cursor:pointer;padding:6px 8px;border-radius:8px;border:1px solid rgba(255,215,0,.25);
+       background:rgba(12,14,18,.7);color:var(--gold);font-size:12px}
+
+  /* LIGHTBOX */
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;z-index:50}
+  .lightbox.open{display:grid;place-items:center}
+  .frame{max-width:92vw;max-height:86vh;display:grid;gap:12px}
+  .frame img{max-width:92vw;max-height:76vh;border-radius:12px;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  .frame .row{display:flex;gap:8px;justify-content:center}
+  .frame .btn{font-weight:800}
+  .meta{color:#bbb;text-align:center}
+
+  /* MINI MODE (để nhúng vào trang khác nếu cần) */
+  .grid.mini{gap:10px;grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
+  .grid.mini img{aspect-ratio:1/1}
+</style>
 </head>
 <body>
-  <h1>📸 LICENSE GỐC™ – Gallery</h1>
-  <div class="gallery" id="gallery"></div>
+<div class="wrap">
+  <div class="bar">
+    <div class="brand">📁 Gallery — LICENSE GỐC™</div>
+    <div class="controls">
+      <span class="pill">Size <input id="size" type="range" min="90" max="220" step="2" value="140"></span>
+      <span class="pill">Ratio
+        <select id="ratio">
+          <option value="1/1">1:1</option>
+          <option value="4/3">4:3</option>
+          <option value="16/9">16:9</option>
+          <option value="3/2">3:2</option>
+          <option value="2/3">2:3</option>
+        </select>
+      </span>
+      <span class="pill">Sort
+        <select id="sort">
+          <option value="name-asc">Name A→Z</option>
+          <option value="name-desc">Name Z→A</option>
+          <option value="ext">By type</option>
+        </select>
+      </span>
+      <button class="btn" id="toggleMini">Mini grid</button>
+    </div>
+  </div>
 
-  <script>
-    // Danh sách ảnh đã upload vào thư mục assets/
-    const images = [
-      "IMG_7741.png",
-      "IMG_7742.png",
-      "IMG_7743.png",
-      "IMG_7744.png",
-      "IMG_7524.png"
-    ];
+  <div class="panel">
+    <div id="grid" class="grid" aria-live="polite"></div>
+    <div id="empty" style="display:none;padding:16px;color:#bbb">
+      No images found. Make sure <code>assets/list.txt</code> exists and contains one filename per line.
+    </div>
+  </div>
+</div>
 
-    const gallery = document.getElementById("gallery");
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox" role="dialog" aria-label="Image viewer">
+  <div class="frame">
+    <img id="lbImg" alt="">
+    <div class="row">
+      <button class="btn" id="copyUrl">Copy URL</button>
+      <a class="btn" id="openRaw" target="_blank" rel="noopener">Open raw</a>
+      <button class="btn" id="closeLb">Close</button>
+    </div>
+    <div class="meta" id="lbMeta"></div>
+  </div>
+</div>
 
-    images.forEach(img => {
-      const imageElement = document.createElement("img");
-      imageElement.src = `assets/${img}`;
-      imageElement.alt = img;
-      gallery.appendChild(imageElement);
-    });
-  </script>
+<script>
+(async function(){
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+  const size = document.getElementById('size');
+  const ratio = document.getElementById('ratio');
+  const sortSel = document.getElementById('sort');
+  const toggleMini = document.getElementById('toggleMini');
+
+  // cập nhật biến CSS
+  const setVar = (k,v)=> document.documentElement.style.setProperty(k, v);
+
+  // đọc danh sách file từ assets/list.txt
+  let files = [];
+  try{
+    const res = await fetch('assets/list.txt?cache=' + Date.now());
+    if(res.ok){
+      const txt = await res.text();
+      files = txt.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+    }
+  }catch(e){ /* ignore */ }
+
+  if(!files.length){
+    empty.style.display = 'block';
+    return;
+  }
+
+  // sắp xếp
+  function extOf(n){ return (n.split('.').pop()||'').toLowerCase(); }
+  function sortNow(){
+    const val = sortSel.value;
+    if(val==='name-asc') files.sort((a,b)=>a.localeCompare(b));
+    else if(val==='name-desc') files.sort((a,b)=>b.localeCompare(a));
+    else if(val==='ext') files.sort((a,b)=> extOf(a).localeCompare(extOf(b)) || a.localeCompare(b));
+    render();
+  }
+
+  // render grid
+  function render(){
+    grid.innerHTML = '';
+    for(const name of files){
+      const url = `assets/${encodeURIComponent(name)}`;
+      const item = document.createElement('div');
+      item.className = 'item';
+      item.innerHTML = `
+        <img src="${url}" alt="${name}">
+        <div class="tools">
+          <button class="ico" data-url="${url}" data-action="copy">Copy</button>
+          <a class="ico" href="${url}" target="_blank" rel="noopener">Open</a>
+        </div>
+        <div class="cap">${name}</div>
+      `;
+      // lightbox
+      item.querySelector('img').addEventListener('click', ()=> openLightbox(url, name));
+      // copy
+      item.querySelector('[data-action="copy"]').addEventListener('click', async (e)=>{
+        e.stopPropagation();
+        await navigator.clipboard.writeText(location.origin + location.pathname.replace(/[^/]*$/,'') + url);
+        e.target.textContent = 'Copied!';
+        setTimeout(()=> e.target.textContent='Copy', 900);
+      });
+      grid.appendChild(item);
+    }
+  }
+
+  // lightbox
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbMeta = document.getElementById('lbMeta');
+  const openRaw = document.getElementById('openRaw');
+  const closeLb = document.getElementById('closeLb');
+  const copyUrl = document.getElementById('copyUrl');
+
+  function openLightbox(url, name){
+    lbImg.src = url; lbImg.alt = name;
+    lbMeta.textContent = name;
+    openRaw.href = url;
+    copyUrl.onclick = async ()=>{
+      await navigator.clipboard.writeText(location.origin + location.pathname.replace(/[^/]*$/,'') + url);
+      copyUrl.textContent = 'Copied!';
+      setTimeout(()=> copyUrl.textContent='Copy URL', 900);
+    };
+    lb.classList.add('open');
+  }
+  function closeLightbox(){ lb.classList.remove('open'); }
+  lb.addEventListener('click', (e)=>{ if(e.target===lb) closeLightbox(); });
+  closeLb.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
+
+  // điều khiển UI
+  size.addEventListener('input', ()=> setVar('--thumb', size.value+'px'));
+  ratio.addEventListener('change', ()=> setVar('--ratio', ratio.value));
+  sortSel.addEventListener('change', sortNow);
+  toggleMini.addEventListener('click', ()=>{
+    grid.classList.toggle('mini');
+  });
+
+  // set mặc định theo biến
+  setVar('--thumb', size.value+'px');
+  setVar('--ratio', ratio.value);
+
+  sortNow(); // sắp xếp & render
+})();
+</script>
 </body>
 </html>
