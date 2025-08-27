@@ -221,5 +221,160 @@
 <script src="goc-ui.js"></script>
 <script src="goc-auth.js"></script>
 <script src="goc-sdk.js"></script>
+<!-- ===== INTRODUCTION • LICENSEGOC — paste block BEFORE </body> ===== -->
+<style>
+  :root{
+    --gold:#f5d36a; --gold-strong:#ffdb6e; --ink:#eaeaea; --bg:#0b0f14;
+  }
+  /* Nút gọi intro (chớp tắt) */
+  .intro-fab{
+    position:fixed; z-index:9999; left:14px; bottom:118px;
+    padding:10px 14px; border-radius:16px;
+    background:rgba(255,213,106,.12); color:var(--gold);
+    border:1px solid rgba(255,213,106,.35);
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    font-weight:700; letter-spacing:.3px; line-height:1;
+    display:flex; align-items:center; gap:8px;
+    box-shadow:0 6px 24px rgba(0,0,0,.35), inset 0 0 1px rgba(255,255,255,.06);
+    cursor:pointer; user-select:none;
+  }
+  .intro-fab .dot{width:8px;height:8px;border-radius:50%;background:var(--gold-strong);
+    box-shadow:0 0 8px var(--gold-strong); animation:blink 1.1s infinite;}
+  @keyframes blink{0%,60%,100%{opacity:1}30%{opacity:.15}}
+
+  /* Lớp phủ toàn trang */
+  .intro-overlay{
+    position:fixed; inset:0; z-index:10000;
+    background:rgba(6,8,12,.72);
+    opacity:0; pointer-events:none; transition:opacity .28s ease;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .intro-overlay.open{opacity:1; pointer-events:auto;}
+  /* Hộp nội dung */
+  .intro-modal{
+    width:min(900px,92vw); height:min(88vh,860px);
+    background:radial-gradient(120% 120% at 10% 0%, #10151c 0%, #0b0f14 60%);
+    border:1px solid rgba(255,213,106,.25); border-radius:18px;
+    box-shadow:0 14px 48px rgba(0,0,0,.55), inset 0 0 1px rgba(255,255,255,.06);
+    display:flex; flex-direction:column; overflow:hidden;
+    color:var(--ink);
+  }
+  .intro-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 16px; border-bottom:1px solid rgba(255,213,106,.18);
+    background:linear-gradient(180deg, rgba(255,213,106,.08), transparent);
+  }
+  .intro-title{font-weight:800; color:var(--gold); letter-spacing:.4px}
+  .intro-close{
+    background:transparent; color:var(--gold); border:1px solid rgba(255,213,106,.4);
+    padding:6px 10px; border-radius:10px; font-weight:700; cursor:pointer;
+  }
+  .intro-content{
+    flex:1; overflow:auto; -webkit-overflow-scrolling:touch; padding:18px 18px 28px;
+  }
+  .intro-content h2{color:var(--gold); margin:.4em 0 .2em}
+  .intro-content p{margin:.7em 0; line-height:1.6}
+  .intro-foot{
+    position:relative; padding:10px 14px; border-top:1px solid rgba(255,213,106,.18);
+    display:flex; align-items:center; gap:10px; color:rgba(234,234,234,.8); font-size:.9rem;
+  }
+  .intro-progress{flex:1; height:4px; background:rgba(255,213,106,.18); border-radius:999px; overflow:hidden}
+  .intro-bar{height:100%; width:0; background:var(--gold-strong); transform-origin:left; transform:scaleX(0)}
+  .intro-tip{opacity:.8}
+  @media (max-width:480px){
+    .intro-fab{bottom:110px}
+    .intro-modal{height:88vh}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .intro-fab .dot{animation:none}
+    .intro-overlay{transition:none}
+  }
+</style>
+
+<!-- Nút chớp tắt gọi phần giới thiệu -->
+<button id="introBtn" class="intro-fab" aria-haspopup="dialog" aria-controls="introOverlay">
+  <span>Introduction: <b>LICENSEGOC</b></span><span class="dot" aria-hidden="true"></span>
+</button>
+
+<!-- Overlay toàn trang -->
+<div id="introOverlay" class="intro-overlay" aria-hidden="true">
+  <section class="intro-modal" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+    <header class="intro-head">
+      <div id="introTitle" class="intro-title">LICENSE GỐC™ — Introduction</div>
+      <button id="introClose" class="intro-close" title="Close">Close ✕</button>
+    </header>
+
+    <main class="intro-content" id="introScroll">
+      <!-- ===== INTRO TEXT START (Gốc có thể thay nội dung bên dưới) ===== -->
+      <h2>Humanity’s New Era Begins With an Idea</h2>
+      <p>Every civilization leap started from a spark. LICENSE GỐC™ is the universal sanctuary where
+      those sparks are protected, nurtured and transformed into real value for mankind.</p>
+
+      <h2>What is LICENSE GỐC™?</h2>
+      <p>An integrated ecosystem that unites Copyright &amp; Patents (USPTO, WIPO, Copyright.gov), Blockchain,
+      and AI — ensuring your ideas are permanently secured, credited, and empowered.</p>
+
+      <h2>From Thought to Reality</h2>
+      <p>Post your idea to the <b>CREATIONS BOARD</b>, receive global collaboration via <b>LICENSENETWORK™</b>,
+      certify it forever, and optionally tokenize it into <b>LICENSECOIN™</b> for storage, exchange, or investment —
+      even while the idea is still in development.</p>
+
+      <h2>A Global Intellectual Society</h2>
+      <p>Learn, co-create, advertise, invest, and trade across all disciplines. AI becomes your trusted
+      collaborator — multiplying human creativity instead of replacing it.</p>
+
+      <h2>Our Declaration</h2>
+      <p><i>“Protecting the roots of creation. Empowering imagination. Unleashing the collective intelligence of
+      mankind.”</i></p>
+
+      <hr style="border:0;border-top:1px solid rgba(255,213,106,.25);margin:16px 0">
+      <p><small>Tip: Use the Translate switch on the site to read this in any language (including Vietnamese).</small></p>
+      <!-- ===== INTRO TEXT END ===== -->
+    </main>
+
+    <footer class="intro-foot">
+      <div class="intro-progress"><div id="introBar" class="intro-bar"></div></div>
+      <div class="intro-tip">Scroll to the end to return</div>
+    </footer>
+  </section>
+</div>
+
+<script>
+(function(){
+  const btn  = document.getElementById('introBtn');
+  const wrap = document.getElementById('introOverlay');
+  const box  = document.getElementById('introScroll');
+  const bar  = document.getElementById('introBar');
+  const closeBtn = document.getElementById('introClose');
+
+  function openIntro(){
+    wrap.classList.add('open');
+    wrap.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+  }
+  function closeIntro(){
+    wrap.classList.remove('open');
+    wrap.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    box.scrollTop = 0; // reset về đầu cho lần sau
+    bar.style.transform = 'scaleX(0)';
+  }
+  btn.addEventListener('click', openIntro);
+  closeBtn.addEventListener('click', closeIntro);
+  // bấm ra ngoài modal để đóng
+  wrap.addEventListener('click', (e)=>{ if(e.target===wrap) closeIntro(); });
+
+  // Auto-close khi đọc hết
+  box.addEventListener('scroll', ()=>{
+    const pct = (box.scrollTop + box.clientHeight) / box.scrollHeight;
+    bar.style.transform = `scaleX(${Math.min(1,pct)})`;
+    if(pct >= 0.999){ setTimeout(closeIntro, 850); }
+  });
+
+  // Tuỳ chọn: tự gợi ý lần đầu truy cập (nhấp nhẹ nút 1 lần)
+  // setTimeout(()=>btn.classList.add('hint'), 2000);
+})();
+</script>
+<!-- ===== /INTRODUCTION BLOCK ===== -->
 </body>
 </html>
