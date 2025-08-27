@@ -50,10 +50,9 @@ document.head.appendChild(style);
     <a href="paycards.html">Pay & Cards</a>
     <a href="commercial.html">🛒 Commercial</a>
     <a href="logout.html">Log out</a>
-    <a href="#!" id="openTim">AI TIM ❤️</
+    <a href="#!" id="openTim">AI TIM ❤️</a>
     <a href="https://www.facebook.com/sharer/sharer.php?u=https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK" 
-     target="_blank"
-     style="
+     📢 Share FB
     </a>
     <span 
       class="lang-pill">🌐
