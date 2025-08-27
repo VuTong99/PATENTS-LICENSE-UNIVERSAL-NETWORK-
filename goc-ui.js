@@ -38,7 +38,7 @@
     <a href="paycards.html">Pay & Cards</a>
     <a href="logout.html">Log out</a>
     <a href="#!" id="openTim">AI TIM ❤️</
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK" 
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK" 
      target="_blank"
      style="
    </a>
@@ -91,4 +91,29 @@
   // ==== (tuỳ chọn) mở AI Tim sau này ====
   const openTim = document.getElementById('openTim');
   if(openTim){ openTim.addEventListener('click', e => { e.preventDefault(); alert('AI Tim coming soon ✨'); }); }
+})();
+
+// ==== Inject "Commercial" button into Floating Bar (avoid duplicates) ====
+(function () {
+  // Tìm thanh bar (tùy trang có id/class khác nhau)
+  const bar =
+    document.querySelector('#floatingBar') ||
+    document.querySelector('.floating-bar') ||
+    document.querySelector('[data-floating-bar]');
+
+  if (!bar) return; // không có bar thì thôi
+
+  // Tránh tạo trùng
+  if (bar.querySelector('[data-nav="commercial"]')) return;
+
+  // Tạo nút
+  const a = document.createElement('a');
+  a.href = 'commercial.html';
+  a.target = '_self';
+  a.className = 'btn pill'; // dùng class nút hiện có của bạn
+  a.dataset.nav = 'commercial';
+  a.innerHTML = '🛍️ <span class="label">Commercial</span>';
+
+  // Gắn vào bar
+  bar.appendChild(a);
 })();
