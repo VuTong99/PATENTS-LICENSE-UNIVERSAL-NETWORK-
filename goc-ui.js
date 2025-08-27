@@ -22,8 +22,20 @@
   .lang-pill select{background:transparent;border:none;color:#ffd54d;font-weight:700;outline:none}
   #google_translate_element{position:absolute;left:-9999px}
   `;
-  const style = document.createElement('style');
-  style.textContent = css;
+  // === FLOAT BAR: cho phép kéo ngang khi nhiều nút ===
+const style = document.createElement('style');
+style.textContent = `
+.apps-nav{
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 10px;
+}
+.apps-nav a{
+  flex: 0 0 auto;
+}
+`;
+document.head.appendChild(style);
   document.head.appendChild(style);
 
 // ==== FLOAT BAR (áp dụng cho mọi trang) ====
@@ -42,8 +54,9 @@
     <a href="https://www.facebook.com/sharer/sharer.php?u=https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK" 
      target="_blank"
      style="
-   </a>
-    <span class="lang-pill">🌐
+    </a>
+    <span 
+      class="lang-pill">🌐
       <select id="langPick" aria-label="Select language">
         <option value="auto|en">English</option>
         <option value="auto|vi" selected>Tiếng Việt</option>
