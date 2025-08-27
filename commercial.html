@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Commercial • LICENSE GỐC™</title>
+  <style>
+    :root{
+      --bg:#0a0b0f; --panel:#0f1117; --gold:#ffd700; --line:rgba(255,215,0,.25); --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#111 10%,#0a0b0f 60%,#07090f 100%);color:#eae7dc;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto}
+    header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,rgba(7,9,15,.9),rgba(7,9,15,.75) 40%,transparent);backdrop-filter:blur(6px);padding:14px 18px;border-bottom:1px solid var(--line)}
+    h1{margin:0;font-size:22px;color:var(--gold)}
+    .wrap{max-width:1200px;margin:0 auto;padding:16px}
+    .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0 6px}
+    .pill{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:linear-gradient(180deg,#0f1117,#0b0d13);box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+    .card{background:linear-gradient(180deg,#0f1117,#0b0d13);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+    .card .thumb{aspect-ratio:16/9;background:#0a0f18}
+    .card img{width:100%;height:100%;object-fit:cover;display:block;loading:lazy}
+    .card .meta{padding:12px;display:grid;gap:8px}
+    .tag{font-size:12px;opacity:.75}
+    .price{color:#9fe870}
+    .btn{cursor:pointer;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,#141824,#0c0f16);color:#fff}
+    .btn.gold{background:linear-gradient(180deg,#3b3200,#2a2300);border-color:#614d00}
+    .center{display:flex;justify-content:center}
+    .see-more{margin:18px 0}
+    /* Cart drawer */
+    .cart{position:fixed;right:16px;bottom:16px;width:320px;max-width:92vw;background:linear-gradient(180deg,#0f1117,#0b0d13);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 80px rgba(0,0,0,.5);padding:12px;display:none}
+    .cart.open{display:block}
+    .cart h3{margin:0 0 8px;color:var(--gold)}
+    .cart ul{list-style:none;margin:0;padding:0;max-height:40vh;overflow:auto}
+    .cart li{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,215,0,.15)}
+    .cart .total{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
+    .cart .pay{width:100%;margin-top:10px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Commercial • LICENSE GỐC™</h1>
+      <div class="toolbar">
+        <div class="pill">Feed cuộn dài • “See more” ở cuối</div>
+        <button id="openCart" class="btn">🛒 Xem giỏ hàng</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="feed" class="grid" aria-live="polite"></section>
+    <div class="center see-more">
+      <button id="seeMore" class="btn gold">See more</button>
+    </div>
+  </main>
+
+  <aside id="cart" class="cart" aria-live="polite">
+    <h3>Giỏ hàng</h3>
+    <ul id="cartList"></ul>
+    <div class="total"><span>Tổng</span><span id="cartTotal">$0</span></div>
+    <button id="payBtn" class="btn gold pay">Pay</button>
+  </aside>
+
+  <script src="goc-commercial.js"></script>
+</body>
+</html>
