@@ -1,0 +1,56 @@
+[
+  {
+    "id": "ad1",
+    "title": "Poster LICENSENETWORK™",
+    "desc": "Thiết kế poster chủ đề sáng tạo toàn cầu.",
+    "img": "assets/IMG_6457.png",
+    "price": 29,
+    "slot": "banner",
+    "link": "https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK-/licensenetwork.html"
+  },
+  {
+    "id": "ad2",
+    "title": "Banner LICENSECOIN™",
+    "desc": "Giới thiệu đồng tiền của sáng tạo.",
+    "img": "assets/IMG_7242.png",
+    "price": 49,
+    "slot": "banner",
+    "link": "https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK-/licensecoin.html"
+  },
+  {
+    "id": "ad3",
+    "title": "Card – AI TIM ❤",
+    "desc": "Thẻ giới thiệu AI TIM hỗ trợ 24/7.",
+    "img": "assets/IMG_7488.png",
+    "price": 19,
+    "slot": "card",
+    "link": "https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK-/"
+  },
+  {
+    "id": "ad4",
+    "title": "Promo Vault",
+    "desc": "Kho giấy phép GỐC – đăng nhập thử.",
+    "img": "assets/IMG_7513.png",
+    "price": 39,
+    "slot": "card",
+    "link": "https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK-/index.html"
+  },
+  {
+    "id": "ad5",
+    "title": "Gallery Spotlight",
+    "desc": "Ảnh nổi bật từ Gallery.",
+    "img": "assets/IMG_7514.png",
+    "price": 25,
+    "slot": "square",
+    "link": "https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK-/gallery.html"
+  },
+  {
+    "id": "ad6",
+    "title": "Community Idea",
+    "desc": "Mời đóng góp ý tưởng LICENSENETWORK™.",
+    "img": "assets/IMG_7515.png",
+    "price": 0,
+    "slot": "square",
+    "link": "https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK-/licensenetwork.html#ideas"
+  }
+]
