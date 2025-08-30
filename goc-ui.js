@@ -46,7 +46,7 @@ document.head.appendChild(style);
     <a href="licensenetwork.html">LICENSENETWORK</a>
     <a href="licensecoin.html">LICENSECOIN</a>
     <a href="vault.html">Vault</a>
-    <a href="creationsroom.html"<CREATIONS ROOM</a>
+    <a href="creationsroom.html"<CREATIONSROOM</a>
     <a href="submit.html">Submit</a>
     <a href="paycards.html">Pay & Cards</a>
     <a href="commercial.html">🛒 Commercial</a>
