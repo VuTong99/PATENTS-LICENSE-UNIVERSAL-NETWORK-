@@ -33,6 +33,33 @@ style.textContent = `
 }
 .apps-nav a{
   flex: 0 0 auto;
+  const style = document.createElement('style');
+style.textContent = `
+.apps-nav {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  background: rgba(10,20,34,0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(120,170,255,.25);
+  padding: 12px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  z-index: 1000;
+}
+.apps-nav a {
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffe;
+  background: linear-gradient(135deg,#0f1d31,#0b1422);
+  border: 1px solid rgba(120,170,255,.3);
+  text-decoration: none;
+}
+`;
+document.head.appendChild(style);
 }
 `;
 document.head.appendChild(style);
