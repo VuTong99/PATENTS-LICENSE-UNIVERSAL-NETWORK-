@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>LICENSENETWORK • Plasma Room (Mobile)</title>
+
+<!-- ===== THEME COLOR (browser UI) ===== -->
+<meta name="theme-color" content="#0a1422" />
+
+<!-- ===== SEO / OPEN GRAPH ===== -->
+<meta name="description" content="Plasma Room • Creations Board di động với AI Tim luôn sẵn sàng: chat, vote, submit cực gọn.">
+<meta property="og:title" content="LICENSENETWORK • Plasma Room" />
+<meta property="og:description" content="Creations Board • Chat • Quick Actions • AI Tim trợ lý • Plasma theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://vutong99.github.io/patents-license-universal-network/Room.html" />
+<meta property="og:image" content="icon-512.png" />
+<meta property="og:image:alt" content="Plasma Room preview" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- ===== ICONS / MANIFEST (PWA ready) ===== -->
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+
+<style>
+/* ====== THEME (Plasma – default dark) ====== */
+:root{
+  --bg:#08111b;--bg-2:#0b1523;
+  --panel:#0f1c2c;--panel-2:#11263b;
+  --line:rgba(120,170,255,.28);
+  --ink:#eaf2ff;--muted:#b9c7e9;
+
+  --p1:#49b3ff;--p2:#7a7dff;--p3:#ffd66b;
+  --ok:#5fe3b5;--warn:#ffb86b;--danger:#ff7f98;
+  --r:16px;--radius:12px;
+}
+/* Light mode (toggled) */
+:root.light{
+  --bg:#f6fbff;--bg-2:#e9f2ff;
+  --panel:#ffffff;--panel-2:#f3f7ff;
+  --line:rgba(12,42,84,.15);
+  --ink:#0a1626;--muted:#465b7a;
+}
+
+/* ====== BASE ====== */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;color:var(--ink);
+  font-family: Inter, SF Pro Text, Segoe UI, Roboto, system-ui, -apple-system, Arial, sans-serif;
+  background:
+    radial-gradient(900px 420px at 50% -10%, rgba(73,179,255,.18), transparent 60%),
+    radial-gradient(700px 360px at 110% 20%, rgba(122,125,255,.12), transparent 60%),
+    radial-gradient(800px 420px at -10% 120%, rgba(255,214,107,.08), transparent 60%),
+    linear-gradient(180deg, var(--bg), var(--bg-2) 55%, var(--bg));
+  min-height:100%;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.safe{padding-bottom: env(safe-area-inset-bottom, 12px)}
+
+/* ====== LAYOUT ====== */
+.app{max-width:520px;margin:0 auto;padding:12px 12px 88px}
+.top{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;margin-bottom:12px;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:linear-gradient(180deg,#0f1d31,#0b1422);
+  backdrop-filter: blur(10px);
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.dot{width:14px;height:14px;border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, #fff, var(--p1) 40%, transparent 70%);
+  box-shadow: 0 0 20px var(--p1);
+}
+.badge{
+  margin-left:auto;padding:8px 10px;border-radius:999px;
+  font-weight:700;font-size:13px;color:#dfe6ff;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#122338,#0a1422);
+}
+.mode{
+  margin-left:8px;padding:6px 10px;border-radius:10px;cursor:pointer;
+  border:1px solid var(--line);font-weight:800;font-size:12px;
+  background:linear-gradient(135deg, rgba(73,179,255,.18), rgba(122,125,255,.14) 55%, rgba(255,214,107,.15));
+}
+
+/* ====== BOARD ====== */
+.panel{
+  border:1px solid var(--line);border-radius:var(--r);
+  background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 10px 30px rgba(0,0,0,.2);
+}
+.panel h3{margin:0;padding:14px;border-bottom:1px solid var(--line);font-size:15px}
+.panel .body{padding:12px}
+
+.stage{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0c1726;position:relative}
+:root.light .stage{background:#f6fbff}
+.stage .hero{
+  aspect-ratio: 16/10;display:grid;place-items:center;position:relative;
+  background:
+    radial-gradient(480px 230px at 50% 0, rgba(73,179,255,.25), transparent 60%),
+    linear-gradient(180deg,#0f1d31,#0a1422);
+}
+:root.light .stage .hero{
+  background:radial-gradient(480px 230px at 50% 0, rgba(73,179,255,.12), transparent 60%),linear-gradient(180deg,#ffffff,#f4f8ff);
+}
+.title{text-align:center;line-height:1.25;font-size:clamp(18px,5.5vw,26px);font-weight:900;text-shadow:0 10px 30px rgba(73,179,255,.35)}
+.sub{color:var(--muted);text-align:center;margin-top:6px}
+
+/* chips */
+.hero .chips{position:absolute;left:10px;bottom:10px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{padding:7px 10px;border-radius:999px;font-weight:700;font-size:12px;color:#cfe0ff;border:1px solid var(--line);background:linear-gradient(180deg,#11263a,#0c1828)}
+:root.light .pill{color:#17304d;background:linear-gradient(180deg,#ffffff,#eef5ff)}
+
+/* ====== ACTIONS + CHAT ====== */
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.btn{
+  padding:10px 12px;border-radius:12px;font-weight:800;text-align:center;
+  border:1px solid var(--line);
+  background:linear-gradient(135deg, rgba(73,179,255,.18), rgba(122,125,255,.14) 55%, rgba(255,214,107,.15));
+  backdrop-filter: blur(6px);cursor:pointer;user-select:none
+}
+.btn:active{transform:scale(.98)}
+.btn:focus-visible{outline:2px solid var(--p1);outline-offset:2px}
+
+.chat{margin-top:10px;display:flex;gap:8px;align-items:center}
+.input{
+  flex:1;border:1px solid var(--line);border-radius:12px;padding:12px;
+  background:linear-gradient(180deg,#0f1d31,#0b1422);color:var(--ink)
+}
+:root.light .input{background:#fff}
+.send{padding:12px 14px;border-radius:12px;font-weight:800;border:0;background:linear-gradient(135deg,var(--p2),var(--p1));color:#001428}
+
+/* ====== FLOATING AI TIM ====== */
+.assistant{position:fixed;right:14px;bottom:94px;z-index:12;display:flex;align-items:center;gap:8px}
+.ai-bubble{padding:8px 12px;border-radius:12px;font-weight:700;font-size:12px;color:#0a1320;border:1px solid var(--line);background:linear-gradient(135deg,#ffd66b,#49b3ff);box-shadow:0 6px 22px rgba(73,179,255,.35)}
+.ai-avatar{width:58px;height:58px;border-radius:50%;border:2px solid rgba(255,214,107,.8);background:radial-gradient(circle at 30% 30%, #fff, #ffe6ad 45%, transparent 70%),linear-gradient(135deg,#ffe6ad,#ffb4c8);position:relative;overflow:hidden}
+.ai-avatar:before{content:"♥";position:absolute;right:6px;bottom:0;font-weight:900;color:#ff6b6b;text-shadow:0 0 14px #ff9aa9}
+
+/* ====== NAVBAR ====== */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:10;border-top:1px solid var(--line);background:linear-gradient(180deg, rgba(15,29,49,.92), rgba(10,20,34,.95));backdrop-filter: blur(10px)}
+:root.light .nav{background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(244,248,255,.95))}
+.nav .row{max-width:520px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;gap:10px;align-items:flex-end}
+.item{flex:1;text-align:center;color:#eaefff;font-size:11px;font-weight:800}
+:root.light .item{color:#15304b}
+.ico{width:30px;height:30px;margin:0 auto 6px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;box-shadow:0 0 16px rgba(73,179,255,.2) inset}
+.item--gold .ico{box-shadow:0 0 16px rgba(255,214,107,.35) inset}
+.ico svg{width:18px;height:18px;display:block;opacity:.95}
+
+.row{display:flex;gap:8px;align-items:center}
+.space{height:10px}
+</style>
+</head>
+<body>
+
+<div class="app safe" id="app">
+
+  <!-- TOP BAR -->
+  <div class="top" role="banner">
+    <div class="brand" aria-label="Brand">
+      <div class="dot" aria-hidden="true"></div>
+      <div>LICENSENETWORK</div>
+    </div>
+    <span class="badge">Plasma Room • Live</span>
+    <button class="mode" id="modeBtn" aria-pressed="false" aria-label="Đổi giao diện">Light</button>
+  </div>
+
+  <!-- CREATIONS BOARD -->
+  <section class="panel" aria-labelledby="boardTitle">
+    <h3 id="boardTitle">Creations Board</h3>
+    <div class="body">
+      <div class="stage" aria-label="Canvas tổng hợp">
+        <div class="hero">
+          <div class="title">Rocket • Car • Ideas — Tổng hợp thiết kế</div>
+          <div class="sub">Tất cả cập nhật sẽ tự đồng bộ vào Vault</div>
+          <div class="chips" aria-label="Tags">
+            <span class="pill">Body</span>
+            <span class="pill">Cockpit</span>
+            <span class="pill">Magnetic Lock</span>
+            <span class="pill">Jet Engine</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="actions" role="group" aria-label="Quick actions">
+        <button class="btn" onclick="toast('👍 Đã Vote!')">Vote</button>
+        <button class="btn" onclick="toast('➕ Thêm phần mới')">Add</button>
+        <button class="btn" onclick="toast('⬆️ Nộp bản nháp')">Submit</button>
+      </div>
+
+      <!-- Chat -->
+      <div class="chat" role="form" aria-label="Chat">
+        <input class="input" id="msg" placeholder="Nhập tin nhắn để chat…" aria-label="Nhập tin nhắn" />
+        <button class="send" onclick="sendMsg()" aria-label="Gửi tin nhắn">Gửi</button>
+      </div>
+      <div id="lastChat" class="sub" style="margin-top:8px"></div>
+    </div>
+  </section>
+
+  <div class="space"></div>
+
+  <!-- SHORT TOOLS -->
+  <section class="panel" aria-labelledby="toolsTitle">
+    <h3 id="toolsTitle">Tools</h3>
+    <div class="body">
+      <div class="row">
+        <button class="btn" onclick="toast('🔄 360° Rotate')">Rotate</button>
+        <button class="btn" onclick="toast('🧲 Magnet Tail on')">Magnet Tail</button>
+        <button class="btn" onclick="toast('🗂 Lưu vào Vault')">Save</button>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /app -->
+
+<!-- FLOATING ASSISTANT -->
+<div class="assistant safe" id="assistant" aria-live="polite">
+  <div class="ai-bubble">AI Tim luôn sẵn sàng</div>
+  <div class="ai-avatar" title="AI Tim"></div>
+</div>
+
+<!-- NAVIGATION -->
+<nav class="nav safe" role="navigation" aria-label="Bottom navigation">
+  <div class="row">
+    <a class="item item--gold" href="#" onclick="toast('🏠 Home');return false;">
+      <div class="ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 10.5 12 3l9 7.5v9H3v-9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </div><div>Home</div>
+    </a>
+    <a class="item" href="#" onclick="toast('🗄️ Vault');return false;">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10h8" stroke="currentColor" stroke-width="2"/></svg></div><div>Vault</div>
+    </a>
+    <a class="item item--gold" href="#" onclick="toast('🪙 Licensecoin');return false;">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 7v10M8.5 9.5h7" stroke="currentColor" stroke-width="2"/></svg></div><div>Licensecoin</div>
+    </a>
+    <a class="item" href="#" onclick="toast('🌐 Network');return false;">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c3 3.5 3 14 0 18M12 3c-3 3.5-3 14 0 18" stroke="currentColor" stroke-width="2"/></svg></div><div>Network</div>
+    </a>
+    <a class="item" href="#" onclick="toast('👤 Account');return false;">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="4" stroke="currentColor" stroke-width="2"/><path d="M4 21c2.5-4 13.5-4 16 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div>Account</div>
+    </a>
+  </div>
+</nav>
+
+<script>
+/* ===== helpers ===== */
+const $ = s => document.querySelector(s);
+
+function toast(txt){
+  const t = document.createElement('div');
+  t.textContent = txt;
+  Object.assign(t.style,{
+    position:'fixed',left:'50%',bottom:'110px',transform:'translateX(-50%)',
+    padding:'10px 14px',border:'1px solid rgba(120,170,255,.3)',
+    borderRadius:'12px',fontWeight:'800',color:'#001428',
+    background:'linear-gradient(135deg,#ffd66b,#49b3ff)',zIndex:40
+  });
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),1400);
+}
+
+function sendMsg(){
+  const i = $('#msg'); const v = i.value.trim();
+  if(!v) return toast('💬 Nhập nội dung trước');
+  const items = JSON.parse(localStorage.getItem('lastChats')||'[]');
+  items.unshift({t:Date.now(),v});
+  localStorage.setItem('lastChats', JSON.stringify(items.slice(0,3)));
+  renderLast();
+  toast('AI Tim: đã nhận — "'+v+'"');
+  i.value = '';
+}
+
+function renderLast(){
+  const items = JSON.parse(localStorage.getItem('lastChats')||'[]');
+  $('#lastChat').textContent = items.length ? ('Gần đây: '+items.map(x=>x.v).join(' • ')) : '';
+}
+
+/* Light/Dark toggle */
+const modeBtn = $('#modeBtn');
+modeBtn.addEventListener('click', ()=>{
+  const light = document.documentElement.classList.toggle('light');
+  modeBtn.textContent = light ? 'Dark' : 'Light';
+  modeBtn.setAttribute('aria-pressed', light ? 'true' : 'false');
+  localStorage.setItem('prefMode', light ? 'light' : 'dark');
+});
+(function init(){
+  renderLast();
+  const pref = localStorage.getItem('prefMode');
+  if(pref==='light'){ document.documentElement.classList.add('light'); modeBtn.textContent='Dark'; modeBtn.setAttribute('aria-pressed','true'); }
+})();
+</script>
+
+</body>
+</html>
