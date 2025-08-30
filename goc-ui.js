@@ -36,18 +36,6 @@ style.textContent = `
   const style = document.createElement('style');
 style.textContent = `
 .apps-nav {
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  background: rgba(10,20,34,0.95);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(120,170,255,.25);
-  padding: 12px 16px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  z-index: 1000;
-}
 .apps-nav a {
   padding: 10px 18px;
   border-radius: 12px;
@@ -73,15 +61,15 @@ document.head.appendChild(style);
     <a href="licensenetwork.html">LICENSENETWORK</a>
     <a href="licensecoin.html">LICENSECOIN</a>
     <a href="vault.html">Vault</a>
-    <a href="creationsroom.html"<CREATIONS ROOM</a>
     <a href="submit.html">Submit</a>
     <a href="paycards.html">Pay & Cards</a>
     <a href="commercial.html">🛒 Commercial</a>
     <a href="logout.html">Log out</a>
     <a href="#!" id="openTim">AI TIM ♥️</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK" 
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK" 
    target="_blank">📢 Share FB</a>
-<span class="lang-pill">🌐
+    <a href="creationsroom.html"<CREATIONS ROOM</a>
+    <span class="lang-pill">🌐
     </a>
     <span 
       class="lang-pill">🌐
