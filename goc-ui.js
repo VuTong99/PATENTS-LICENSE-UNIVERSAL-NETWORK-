@@ -99,4 +99,24 @@ style.textContent = `
   const s=document.createElement('script');
   s.src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
   document.head.appendChild(s);
+  // === FLOAT BAR (thanh menu nổi, thêm Creationsroom) ===
+const onReady = (fn) => (
+  document.readyState === 'loading'
+    ? document.addEventListener('DOMContentLoaded', fn, { once: true })
+    : fn()
+);
+
+onReady(() => {
+  if (document.querySelector('.apps-nav')) return; // tránh tạo trùng
+
+  const nav = document.createElement('nav');
+  nav.className = 'apps-nav';
+  nav.innerHTML = `
+    <a href="index.html">Home</a>
+    <a href="licensenetwork.html">LICENSENETWORK</a>
+    <a href="creationsroom.html">CREATIONSROOM</a>
+    <a href="vault.html">Vault</a>
+  `;
+  document.body.appendChild(nav);
+});
 })();
