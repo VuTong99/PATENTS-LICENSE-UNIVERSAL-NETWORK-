@@ -47,11 +47,10 @@ style.textContent = `
   text-decoration: none;
 }
 `;
-document.head.appendChild(style);
-}
-`;
-document.head.appendChild(style);
-  document.head.appendChild(style);
+
+  document.head.appendChild(style)
+  ';
+  
 
 // ==== FLOAT BAR (áp dụng cho mọi trang) ====
   const nav = document.createElement('nav');
