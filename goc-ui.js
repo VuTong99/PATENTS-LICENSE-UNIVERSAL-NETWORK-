@@ -70,78 +70,7 @@ document.head.appendChild(style);
    target="_blank">📢 Share FB</a>
     <a href="creationsroom.html"<CREATIONS ROOM</a>
     <span class="lang-pill">🌐
-    </a>
-    <span 
-      class="lang-pill">🌐
-      <select id="langPick" aria-label="Select language">
-        <option value="auto|en">English</option>
-        <option value="auto|vi" selected>Tiếng Việt</option>
-        <option value="auto|fr">Français</option>
-        <option value="auto|de">Deutsch</option>
-        <option value="auto|es">Español</option>
-        <option value="auto|pt">Português</option>
-        <option value="auto|it">Italiano</option>
-        <option value="auto|ru">Русский</option>
-        <option value="auto|ja">日本語</option>
-        <option value="auto|ko">한국어</option>
-        <option value="auto|zh-CN">中文(简)</option>
-        <option value="auto|ar">العربية</option>
-        <option value="auto|hi">हिन्दी</option>
-      </select>
-    </span>`;
-  document.body.appendChild(nav);
-
-  // ==== Google Translate (giữ ngôn ngữ theo cookie) ====
-  function setCookie(n,v,d){const t=new Date;t.setTime(t.getTime()+d*864e5);document.cookie=`${n}=${v};expires=${t.toUTCString()};path=/`}
-  function getCookie(n){return (`; ${document.cookie}`).split(`; ${n}=`).pop().split(';')[0]||''}
-  const langPick = nav.querySelector('#langPick');
-  function doGTranslate(val){
-    if(!val) return;
-    const [from,to] = val.split('|');
-    setCookie('googtrans',`/${from}/${to}`,365); // cookie của Google Translate
-    setCookie('goc_lang',val,365);                // cookie của mình
-    location.reload();
-  }
-  if(langPick){
-    langPick.addEventListener('change',e=>doGTranslate(e.target.value));
-    const saved = getCookie('goc_lang'); if(saved) langPick.value = saved;
-  }
-  // element bắt buộc cho Google
-  const gtDiv = document.createElement('div'); gtDiv.id = 'google_translate_element'; document.body.appendChild(gtDiv);
-  window.googleTranslateElementInit = function(){
-    new google.translate.TranslateElement({
-      pageLanguage: 'en',
-      autoDisplay: false
-    }, 'google_translate_element');
-  };
-  const s = document.createElement('script');
-  s.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-  document.head.appendChild(s);
-
-  // ==== (tuỳ chọn) mở AI Tim sau này ====
-  const openTim = document.getElementById('openTim');
-  if(openTim){ openTim.addEventListener('click', e => { e.preventDefault(); alert('AI Tim coming soon ✨'); }); }
-})();
-
-// ==== Inject "Commercial" button into Floating Bar (avoid duplicates) ====
-(function () {
-  // Tìm thanh bar (tùy trang có id/class khác nhau)
-  const bar =
-    document.querySelector('#floatingBar') ||
-    document.querySelector('.floating-bar') ||
-    document.querySelector('[data-floating-bar]');
-
-  if (!bar) return; // không có bar thì thôi
-
-  // Tránh tạo trùng
-  if (bar.querySelector('[data-nav="commercial"]')) return;
-
-  // Tạo nút
-  const a = document.createElement('a');
-  a.href = 'commercial.html';
-  a.target = '_self';
-  a.className = 'btn pill'; // dùng class nút hiện có của bạn
-  a.dataset.nav = 'commercial';
+    </.dataset.nav = 'commercial';
   a.innerHTML = '🛍️ <span class="label">Commercial</span>';
 
   // Gắn vào bar
@@ -238,4 +167,4 @@ document.head.appendChild(style);
     setLanguage(langCode);
   };
 })();
-})();
+
