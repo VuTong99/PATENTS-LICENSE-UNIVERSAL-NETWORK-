@@ -165,5 +165,122 @@ style.textContent = `
     // ví dụ: gocQuickLang('vi') / gocQuickLang('en') / gocQuickLang('ja')
     setLanguage(langCode);
   };
-})();
+<script>
+/* ===== LICENSE GỐC • Global Translate (130+ languages) ===== */
+(function () {
+  if (window.__gocTranslateBooted) return;        // tránh nạp 2 lần
+  window.__gocTranslateBooted = true;
+
+  /* ---------- CSS nhỏ cho nút & khay ---------- */
+  const css = `
+  :root{--gtb:rgba(15,29,49,.95);--gtl:rgba(245,211,100,.35)}
+  .goc-gt-fab, .goc-gt-link{
+    font: 700 12px/1.1 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    border:1px solid var(--gtl); color:#eaf2ff; user-select:none
+  }
+  .goc-gt-link{padding:6px 10px;border-radius:999px;background:linear-gradient(180deg,#13263f,#0a1422)}
+  .goc-gt-fab{
+    position:fixed; right:12px; bottom:86px; z-index:9998;
+    width:44px;height:44px;border-radius:12px;
+    background:linear-gradient(180deg,var(--gtb),rgba(10,20,34,.98));
+    backdrop-filter:blur(8px)
+  }
+  .goc-gt-fab:focus-visible, .goc-gt-link:focus-visible{outline:2px solid #49b3ff;outline-offset:2px}
+  #google_translate_element{
+    position:fixed; right:12px; bottom:136px; z-index:9999;
+    background:linear-gradient(180deg,var(--gtb),rgba(10,20,34,.98));
+    border:1px solid rgba(120,170,255,.28); border-radius:12px;
+    padding:8px 10px; box-shadow:0 10px 30px rgba(0,0,0,.35)
+  }
+  @media (prefers-reduced-motion: reduce){
+    .goc-gt-fab, #google_translate_element{animation:none; transition:none}
+  }`;
+  const st = document.createElement('style');
+  st.textContent = css; document.head.appendChild(st);
+
+  /* ---------- Helpers ---------- */
+  function setGTcookie(lang) {
+    // ví dụ lang = 'vi' / 'en' / 'ja' ...
+    const v = `/auto/${lang}`;
+    const d = new Date(); d.setTime(d.getTime()+365*24*60*60*1000);
+    document.cookie = `googtrans=${v};expires=${d.toUTCString()};path=/`;
+    document.cookie = `googtrans=${v};domain=.${location.hostname};expires=${d.toUTCString()};path=/`;
+    localStorage.setItem('goc_lang', lang);
+  }
+
+  // API public (có thể gọi từ nơi khác: window.gocSetLang('ja'))
+  window.gocSetLang = function (lang){
+    try { setGTcookie(lang); location.reload(); } catch(e){}
+  };
+
+  /* ---------- Tạo khay Translate cho widget ---------- */
+  let tray = document.getElementById('google_translate_element');
+  if (!tray){
+    tray = document.createElement('div');
+    tray.id = 'google_translate_element';
+    tray.style.display = 'none';
+    tray.setAttribute('aria-live','polite');
+    document.body.appendChild(tray);
+  }
+
+  /* ---------- Nút trên Floating Bar hoặc FAB nổi ---------- */
+  function mountTrigger() {
+    // ưu tiên chèn vào floating bar nếu có
+    const bar = document.querySelector('.apps--nav');
+    if (bar && !bar.querySelector('[data-gt]')) {
+      const a = document.createElement('a');
+      a.href = '#'; a.dataset.gt = '1'; a.className = 'goc-gt-link';
+      a.setAttribute('aria-label','Translate this page');
+      a.innerHTML = '🌐 Translate';
+      a.addEventListener('click', e => { e.preventDefault(); toggleTray(); });
+      bar.appendChild(a);
+      return;
+    }
+    // nếu không có bar -> hiện FAB
+    if (!document.querySelector('.goc-gt-fab')) {
+      const b = document.createElement('button');
+      b.type='button'; b.className='goc-gt-fab'; b.title='Translate';
+      b.setAttribute('aria-label','Translate this page'); b.textContent='🌐';
+      b.addEventListener('click', toggleTray);
+      document.body.appendChild(b);
+    }
+  }
+
+  function toggleTray(){
+    tray.style.display = (tray.style.display === 'none') ? 'block' : 'none';
+  }
+
+  // Quan sát DOM: nếu bar xuất hiện trễ sẽ tự gắn nút
+  const mo = new MutationObserver(() => mountTrigger());
+  mo.observe(document.documentElement, {childList:true, subtree:true});
+  mountTrigger();  // thử gắn ngay lần đầu
+
+  /* ---------- Google Translate bootstrap ---------- */
+  window.googleTranslateElementInit = function (){
+    try {
+      new google.translate.TranslateElement({
+        pageLanguage: 'auto',
+        includedLanguages: '',        // rỗng = tất cả
+        autoDisplay: false,
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+
+      // khôi phục ngôn ngữ đã lưu (nếu có)
+      const saved = localStorage.getItem('goc_lang');
+      if (saved){
+        setTimeout(() => setGTcookie(saved), 300);
+      }
+    } catch(e){}
+  };
+
+  // Nạp script Google 1 lần
+  (function loadGT(){
+    if (window.__gocGTLoaded) return;
+    const s = document.createElement('script');
+    s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    s.async = true; s.onerror = () => console.warn('Translate load failed');
+    document.head.appendChild(s);
+    window.__gocGTLoaded = true;
+  })();
+
 
