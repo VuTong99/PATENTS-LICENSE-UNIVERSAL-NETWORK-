@@ -22,6 +22,7 @@
   .lang-pill select{background:transparent;border:none;color:#ffd54d;font-weight:700;outline:none}
   #google_translate_element{position:absolute;left:-9999px}
   `;
+  
   // === FLOAT BAR: cho phép kéo ngang khi nhiều nút ===
 const style = document.createElement('style');
 style.textContent = `
@@ -47,6 +48,7 @@ style.textContent = `
   text-decoration: none;
 }
 `;
+
  document.head.appendChild(style)
   /* ====== GLOBAL TRANSLATE (130+ languages) — pill nổi bên phải ====== */
 (function () {
@@ -158,6 +160,7 @@ style.textContent = `
     document.head.appendChild(s);
     window.__gocGTLoaded = true;
   })();
+  
   // ==== FLOAT BAR (áp dụng cho mọi trang) ====
   const nav = document.createElement('nav');
   nav.className = 'apps-nav';
