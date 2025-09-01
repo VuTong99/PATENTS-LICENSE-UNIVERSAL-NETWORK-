@@ -85,7 +85,44 @@
   footer{color:#aaa; text-align:center; padding:24px 12px; border-top:1px solid rgba(255,255,255,.06)}
 </style>
 </head>
-<body>
+<script>
+/* ===== Floating App Bar + Translate (drop-in) ===== */
+
+// Tạo Floating Bar (apps-nav)
+(function makeNav(){
+  if (document.querySelector('.apps-nav')) return;
+  const nav = document.createElement('nav');
+  nav.className = 'apps-nav';
+  nav.innerHTML = `
+    <a href="/index.html">Home</a>
+    <a href="/creationsroom.html">Creations Room</a>
+    <a href="/paycards.html">Pay & Cards</a>
+    <span class="lang-pill">🌐 <select id="goc-lang"></select></span>
+  `;
+  document.body.appendChild(nav);
+})();
+
+// Fallback: nếu vì lý do gì đó bar không tạo được → hiện nút 🌐 nhỏ
+(function fabFallback(){
+  if (document.querySelector('.apps-nav')) return;
+  const fab = document.createElement('button');
+  fab.type = 'button';
+  fab.title = 'Translate';
+  fab.textContent = '🌐';
+  fab.style.cssText = `
+    position:fixed;right:12px;bottom:82px;width:44px;height:44px;
+    border:1px solid rgba(245,211,106,.35);
+    background:linear-gradient(180deg,#ffd66b,#f5c64a);
+    border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.35);
+    font-weight:800;cursor:pointer;z-index:2147483647;
+  `;
+  fab.addEventListener('click', () => {
+    const tray = document.getElementById('google_translate_element');
+    if (tray) tray.style.display = (tray.style.display === 'none' ? 'block' : 'none');
+  });
+  document.body.appendChild(fab);
+})();
+</script><body>
 
 <div class="wrap">
   <!-- HERO -->
