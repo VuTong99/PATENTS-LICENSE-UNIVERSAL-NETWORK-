@@ -146,4 +146,96 @@ document.head.appendChild(style);
 
   // Gắn vào bar
   bar.appendChild(a);
+  /* ===== Global Translate 130+ for all pages ===== */
+(function () {
+  if (window.__gocTranslateLoaded) return;
+  window.__gocTranslateLoaded = true;
+
+  // 1) Hộp Translate (ẩn mặc định)
+  const tray = document.createElement('div');
+  tray.id = 'google_translate_element';
+  tray.style.cssText = [
+    'position:fixed','right:12px','bottom:78px','z-index:9999',
+    'background:rgba(15,29,49,.95)','border:1px solid rgba(245,211,106,.35)',
+    'border-radius:12px','padding:8px 10px','display:none',
+    'backdrop-filter:blur(8px)','box-shadow:0 10px 28px rgba(0,0,0,.45)'
+  ].join(';');
+  document.addEventListener('DOMContentLoaded', ()=> document.body.appendChild(tray));
+
+  // 2) Nút 🌐 trên Floating Bar (nếu có .appbar), nếu không thì tạo 1 nút nhỏ ở góc
+  function addTranslateTrigger() {
+    const toggle = (e) => { e && e.preventDefault?.(); tray.style.display = (tray.style.display === 'none' || !tray.style.display) ? 'block' : 'none'; };
+    const appbar = document.querySelector('.appbar, nav.appbar, nav.apps-nav');
+    if (appbar) {
+      const a = document.createElement('a');
+      a.href = '#';
+      a.innerHTML = '🌐 Translate';
+      a.style.whiteSpace = 'nowrap';
+      a.addEventListener('click', toggle);
+      appbar.appendChild(a);
+    } else {
+      const fab = document.createElement('button');
+      fab.type = 'button';
+      fab.title = 'Translate';
+      fab.textContent = '🌐';
+      fab.style.cssText = [
+        'position:fixed','right:12px','bottom:18px','z-index:9998',
+        'width:44px','height:44px','border-radius:50%','cursor:pointer',
+        'border:1px solid rgba(245,211,106,.35)',
+        'background:linear-gradient(180deg,#121a2a,#0b1220)'
+      ].join(';');
+      fab.addEventListener('click', toggle);
+      document.addEventListener('DOMContentLoaded', ()=> document.body.appendChild(fab));
+    }
+  }
+  addTranslateTrigger();
+
+  // 3) Hàm setLanguage: ghi cookie + nhớ localStorage (để giữ ngôn ngữ cho toàn site)
+  function setLanguage(lang) {
+    try {
+      localStorage.setItem('goc_lang', lang);
+      const host = location.hostname;
+      // cookie cần đặt cả với domain có/không dấu chấm tùy môi trường
+      document.cookie = `googtrans=/auto/${lang};domain=.${host};path=/`;
+      document.cookie = `googtrans=/auto/${lang};path=/`;
+      // reload để áp dụng toàn trang
+      location.reload();
+    } catch(e) {}
+  }
+  window.gocSetLang = setLanguage; // tiện gọi từ console nếu cần
+
+  // 4) Tự khởi tạo Google Translate (130+ ngôn ngữ — để trống includedLanguages cho full)
+  window.googleTranslateElementInit = function() {
+    try {
+      new google.translate.TranslateElement({
+        pageLanguage: 'auto',
+        includedLanguages: '', // để trống = full list 100+ ngôn ngữ
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+
+      // Khôi phục ngôn ngữ đã chọn trước đó
+      const saved = localStorage.getItem('goc_lang');
+      if (saved) {
+        // đợi widget render xong rồi set cookie
+        setTimeout(() => {
+          document.cookie = `googtrans=/auto/${saved};domain=.${location.hostname};path=/`;
+          document.cookie = `googtrans=/auto/${saved};path=/`;
+          // không reload ngay để tránh vòng lặp; trang sau sẽ giữ ngôn ngữ
+        }, 900);
+      }
+    } catch (e) {}
+  };
+
+  // 5) Tải script Google 1 lần
+  const s = document.createElement('script');
+  s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+  document.head.appendChild(s);
+
+  // 6) (Tuỳ chọn) Nhóm 5 ngôn ngữ “phổ biến” để chọn nhanh (gọi từ console nếu muốn)
+  window.gocQuickLang = function(langCode){
+    // ví dụ: gocQuickLang('vi') / gocQuickLang('en') / gocQuickLang('ja')
+    setLanguage(langCode);
+  };
+})();
 })();
