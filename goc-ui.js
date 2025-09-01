@@ -55,10 +55,7 @@ style.textContent = `
   if (window.__gocTranslatePill) return; // tránh nạp trùng
   window.__gocTranslatePill = true;/* ====== GLOBAL TRANSLATE (130+) – floating pill for all pages ====== */
 (function () {
-  if (window.__gocTranslatePill) return;            // chống nạp 2 lần
-  window.__gocTranslatePill = true;
-
-  // 1) CSS cho pill + khay
+ // 1) CSS cho pill + khay
   const css = `
   #goc-gt-pill{position:fixed;right:12px;bottom:96px;z-index:9999;
     padding:10px 14px;border-radius:14px;font-weight:800;font-size:13px;
@@ -145,8 +142,6 @@ style.textContent = `
       a.textContent = '🌐 Translate';
       a.addEventListener('click', toggleTray);
       bar.appendChild(a);
-    }
-  });
 })();
 
   // 1) CSS tối giản (nút + khay chọn)
