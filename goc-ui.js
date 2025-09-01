@@ -53,7 +53,101 @@ style.textContent = `
   /* ====== GLOBAL TRANSLATE (130+ languages) — pill nổi bên phải ====== */
 (function () {
   if (window.__gocTranslatePill) return; // tránh nạp trùng
+  window.__gocTranslatePill = true;/* ====== GLOBAL TRANSLATE (130+) – floating pill for all pages ====== */
+(function () {
+  if (window.__gocTranslatePill) return;            // chống nạp 2 lần
   window.__gocTranslatePill = true;
+
+  // 1) CSS cho pill + khay
+  const css = `
+  #goc-gt-pill{position:fixed;right:12px;bottom:96px;z-index:9999;
+    padding:10px 14px;border-radius:14px;font-weight:800;font-size:13px;
+    color:#001428;border:1px solid rgba(255,213,77,.6);
+    background:linear-gradient(135deg,#ffd66b,#49b3ff);
+    box-shadow:0 8px 26px rgba(73,179,255,.35);
+    animation:gocBlink 2s ease-in-out infinite; -webkit-tap-highlight-color:transparent}
+  @keyframes gocBlink{0%,60%{box-shadow:0 0 0 0 rgba(73,179,255,.45)}
+    80%{box-shadow:0 0 0 8px rgba(73,179,255,.08)}100%{box-shadow:0 0 0 0 rgba(73,179,255,.08)}}
+  #goc-gt-tray{position:fixed;right:12px;bottom:150px;z-index:10000;
+    background:rgba(15,29,49,.95);backdrop-filter:blur(8px);
+    border:1px solid rgba(120,170,255,.35);padding:8px 10px;border-radius:12px;display:none}
+  #goc-gt-tray .close{margin-left:8px;font-weight:700;cursor:pointer}
+  .apps-nav a[data-nav="translate"]{display:none} /* tránh trùng nếu đã có trên bar */
+  `;
+  const st = document.createElement('style'); st.textContent = css;
+  document.head.appendChild(st);
+
+  // 2) Tạo pill nổi + khay widget
+  const pill = document.createElement('button');
+  pill.id = 'goc-gt-pill';
+  pill.type = 'button';
+  pill.setAttribute('aria-label','Translate 130+ languages');
+  pill.textContent = '🌐 Translate';
+  const tray = document.createElement('div');
+  tray.id = 'goc-gt-tray';
+  tray.innerHTML = `<span style="color:#eaf2ff;font-weight:700;margin-right:8px">Translate</span>
+                    <span class="close" style="color:#ffd66b">✕</span>
+                    <div id="google_translate_element" style="display:inline-block"></div>`;
+  document.body.appendChild(pill);
+  document.body.appendChild(tray);
+
+  function toggleTray(e){ e && e.preventDefault(); 
+    tray.style.display = (tray.style.display==='none' || !tray.style.display) ? 'block' : 'none';
+  }
+  pill.addEventListener('click', toggleTray);
+  tray.querySelector('.close').addEventListener('click', toggleTray);
+
+  // 3) Helper set ngôn ngữ + nhớ lựa chọn
+  function setGT(lang){
+    try{
+      localStorage.setItem('gocLang', lang);
+      document.cookie = 'googtrans=/auto/'+lang+'; path=/';
+      location.reload();
+    }catch(e){}
+  }
+  window.gocSetLang = setGT;
+
+  // 4) Callback của Google (được gọi khi script tải xong)
+  window.googleTranslateElementInit = function(){
+    try{
+      new google.translate.TranslateElement({
+        pageLanguage:'auto',
+        includedLanguages:'',        // để trống = 130+
+        autoDisplay:false,
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+
+      // khôi phục ngôn ngữ đã lưu (nếu có)
+      const saved = localStorage.getItem('gocLang');
+      if (saved){
+        setTimeout(()=>{ document.cookie='googtrans=/auto/'+saved+'; path=/'; }, 300);
+      }
+    }catch(e){}
+  };
+
+  // 5) Nạp script Google đúng 1 lần cho toàn site
+  (function loadGT(){
+    if (window.__gocGTLoaded) return;
+    const s = document.createElement('script');
+    s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    s.async = true;
+    s.onerror = () => console.warn('[Translate] Không tải được script Google.');
+    document.head.appendChild(s);
+    window.__gocGTLoaded = true;
+  })();
+
+  // 6) Nếu trang có Floating Bar .apps-nav thì thêm 1 link vào đó (tuỳ chọn)
+  document.addEventListener('DOMContentLoaded', () => {
+    const bar = document.querySelector('.apps-nav');
+    if (bar && !bar.querySelector('[data-nav="translate"]')) {
+      const a = document.createElement('a');
+      a.href = '#'; a.dataset.nav = 'translate';
+      a.textContent = '🌐 Translate';
+      a.addEventListener('click', toggleTray);
+      bar.appendChild(a);
+    }
+  });
+})();
 
   // 1) CSS tối giản (nút + khay chọn)
   const css = `
