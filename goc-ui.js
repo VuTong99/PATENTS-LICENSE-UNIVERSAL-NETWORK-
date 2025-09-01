@@ -47,12 +47,118 @@ style.textContent = `
   text-decoration: none;
 }
 `;
+ document.head.appendChild(style)
+  /* ====== GLOBAL TRANSLATE (130+ languages) — pill nổi bên phải ====== */
+(function () {
+  if (window.__gocTranslatePill) return; // tránh nạp trùng
+  window.__gocTranslatePill = true;
 
-  document.head.appendChild(style)
-  ';
-  
+  // 1) CSS tối giản (nút + khay chọn)
+  const css = `
+  #goc-tbtn{
+    position:fixed; right:14px; z-index:9999;
+    bottom: var(--goc-trans-bottom, 20px);
+    padding:10px 12px; border-radius:999px;
+    font-weight:800; font-size:13px; color:#0a1320;
+    border:1px solid rgba(245,211,100,.35);
+    background:linear-gradient(135deg,#ffd66b,#49b3ff);
+    box-shadow:0 8px 24px rgba(73,179,255,.35);
+    animation:gocPulse 1.8s infinite;
+  }
+  @keyframes gocPulse {
+    0%,100% { box-shadow:0 0 0 0 rgba(73,179,255,.45) }
+    50%     { box-shadow:0 0 0 10px rgba(73,179,255,0) }
+  }
+  #google_translate_element{
+    position:fixed; right:14px; z-index:9999;
+    bottom: calc(var(--goc-trans-bottom, 20px) + 56px);
+    display:none;
+    background:rgba(15,29,49,.95);
+    border:1px solid rgba(120,170,255,.35);
+    border-radius:12px; padding:8px 10px;
+    backdrop-filter:blur(8px)
+  }
+  .goog-te-combo{
+    background:#0b1523; color:#eaf2ff;
+    border:1px solid rgba(120,170,255,.35);
+    border-radius:8px; padding:8px
+  }
+  /* Ẩn banner/tooltip mặc định của Google */
+  #goog-gt-tt, .goog-te-banner-frame, .goog-logo-link, .goog-te-gadget img { display:none !important }
+  .skiptranslate { height:auto !important }`;
+  const st = document.createElement('style');
+  st.textContent = css;
+  document.head.appendChild(st);
 
-// ==== FLOAT BAR (áp dụng cho mọi trang) ====
+  // 2) Điều chỉnh vị trí nếu trang có floating bar .apps–nav
+  const hasAppBar = !!document.querySelector('.apps-nav');
+  document.documentElement.style.setProperty(
+    '--goc-trans-bottom',
+    hasAppBar ? '94px' : '20px'
+  );
+
+  // 3) Tạo nút 🌐 và khay Translate
+  const tray = document.createElement('div');
+  tray.id = 'google_translate_element';
+  const btn = document.createElement('button');
+  btn.id = 'goc-tbtn';
+  btn.type = 'button';
+  btn.title = 'Translate 130+ languages';
+  btn.textContent = '🌐 Translate';
+  btn.addEventListener('click', () => {
+    tray.style.display = tray.style.display === 'none' ? 'block' : 'none';
+  });
+  document.body.appendChild(tray);
+  document.body.appendChild(btn);
+
+  // 4) Hàm lưu/ngắt ngôn ngữ
+  function saveLang(code){
+    try{
+      localStorage.setItem('gocLang', code);
+      // cookie của Google Translate
+      document.cookie = 'googtrans=/auto/'+code+';path=/';
+      document.cookie = 'googtrans=/auto/'+code+';path=/;domain='+location.hostname.replace(/^www\./,'');
+    }catch(_){}
+  }
+
+  // 5) Callback khởi tạo widget Google
+  window.googleTranslateElementInit = function(){
+    try{
+      new google.translate.TranslateElement({
+        pageLanguage: 'auto',
+        includedLanguages: '',    // để trống = full 130+
+        autoDisplay: false,
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+
+      // Gắn listener để lưu lựa chọn
+      setTimeout(() => {
+        const sel = tray.querySelector('.goog-te-combo');
+        if (sel){
+          // khôi phục nếu đã lưu
+          const saved = localStorage.getItem('gocLang');
+          if (saved){
+            saveLang(saved);
+            sel.value = saved;
+            sel.dispatchEvent(new Event('change'));
+          }
+          sel.addEventListener('change', () => saveLang(sel.value));
+        }
+      }, 500);
+    }catch(e){}
+  };
+
+  // 6) Nạp script Google đúng chuẩn (1 lần)
+  (function loadGT(){
+    if (window.__gocGTLoaded) return;
+    const s = document.createElement('script');
+    s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    s.async = true;
+    s.onerror = () => console.warn('Translate script failed to load');
+    document.head.appendChild(s);
+    window.__gocGTLoaded = true;
+  })();
+  // ==== FLOAT BAR (áp dụng cho mọi trang) ====
   const nav = document.createElement('nav');
   nav.className = 'apps-nav';
   nav.innerHTML = `
