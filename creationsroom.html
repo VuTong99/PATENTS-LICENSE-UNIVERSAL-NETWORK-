@@ -263,7 +263,7 @@ function toast(txt){
   const t = document.createElement('div');
   t.textContent = txt;
   Object.assign(t.style,{
-    position:'fixed',left:'50%',bottom:'110px',transform:'translateX(-50%)',
+    position:'fixed',left:'50%',bottom:'calc(var(--goc-space-bottom) + 16px)', transform:'translateX(-50%)',
     padding:'10px 14px',border:'1px solid rgba(120,170,255,.3)',
     borderRadius:'12px',fontWeight:'800',color:'#001428',
     background:'linear-gradient(135deg,#ffd66b,#49b3ff)',zIndex:40
