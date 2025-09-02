@@ -1,224 +1,164 @@
-/* ===== GOC GLOBAL UI (Floating Bar Clear + Translate + LICENSEGOC Panel) =====
-   Paste as /goc-ui.js  —  Include once on every page: <script src="/goc-ui.js" defer></script>
-   All links/texts edit in CONFIG below. No other page changes needed. */
+<script>
+// ============== GOC UI (Floating Bar Clear) ==============
+// One file: Floating bar + Translate + Theme (dark/light/color) + LICENSEGOC panel + Quick links
+(function(){
+  if (window.__GOC_UI__) return; window.__GOC_UI__=true;
 
-(function () {
-  // ---------- CONFIG (edit me later, one place for all pages) ----------
-  const CONFIG = {
-    brand: "LICENSE GỐC™",
-    repoUrl: "https://github.com/vutong99/PATENTS-LICENSE-UNIVERSAL-NETWORK-", // link tạm tới repo hiện tại
-    links: [
-      { text: "Home", href: "/index.html" },
-      { text: "Creations Room", href: "/creationsroom.html" },
-      { text: "Pay & Cards", href: "/paycards.html" },
-      { text: "Submit", href: "/submit.html" },
-      { text: "Gallery", href: "/gallery.html" },
-      { text: "Commercial", href: "/commercial.html" },
-    ],
-    // Nút đặc biệt xuất hiện đầu thanh: LICENSEGOC (mở panel giới thiệu + future news, pictures, arts…)
-    licensegocButtonText: "LICENSEGOC",
-    // Nội dung panel có thể mở rộng vô hạn (thêm section mới là được)
-    panel: {
-      title: "LICENSE GỐC™ — Protect the Roots. Empower Humanity.",
-      sections: [
-        {
-          heading: "Introduction",
-          html: `
-            LICENSE GỐC™ là nền tảng toàn cầu kết hợp: Copyright + Patents,
-            Social Media, Blockchain & AI, và Creative Economy.`
-        },
-        {
-          heading: "Ecosystem",
-          html: `
-            <ul>
-              <li>LICENSENETWORK™ — mạng xã hội bản quyền toàn cầu</li>
-              <li>LICENSECOIN™ — token kinh tế sáng tạo</li>
-              <li>Vault — Lưu trữ & đóng dấu ý tưởng</li>
-              <li>Marketplace / Commercial — giao dịch minh bạch</li>
-            </ul>`
-        },
-        {
-          heading: "Strategy (2025 →)",
-          html: `
-            <ol>
-              <li>Triển khai hạ tầng (Vercel + Supabase + GitHub)</li>
-              <li>Ra mắt LICENSECOIN™ & Copyright Vault</li>
-              <li>Đa ngôn ngữ & kết nối USPTO/WIPO</li>
-            </ol>`
-        },
-        {
-          heading: "Official Links",
-          html: `
-            <p>Website: <a href="https://thelicenseuniversal.com" target="_blank">thelicenseuniversal.com</a></p>
-            <p>GitHub (repo hiện tại): <a href="${location.origin}${CONFIG?.repoUrl ? '' : ''}" target="_blank">${CONFIG.repoUrl}</a></p>`
-        },
-        {
-          heading: "News / Pictures / Arts / Movies",
-          html: `<p>Chỗ này để đăng tin, ảnh, video nghệ thuật… Sau này chỉ sửa phần CONFIG là cập nhật toàn site.</p>`
-        }
-      ]
-    },
-    // Ngôn ngữ Google Translate (có thể thêm mã khác, cách nhau bằng dấu phẩy)
-    translateIncludedLangs: "en,vi,fr,ja,ko,zh-CN,es,pt,ru,de"
-  };
+  // ---------- CSS (always on top, super high z-index) ----------
+  const css=`
+    :root{
+      --goc-bg:#0a0b0f; --goc-panel:#101319; --goc-ink:#eae7dc; --goc-muted:#a8b3c7;
+      --goc-line:rgba(255,215,0,.26); --goc-gold:#f5d36a; --goc-accent:#ffd66b;
+      --goc-fab:92px;
+      --goc-space-bottom: 94px; /* chừa chỗ cho bar */
+    }
+    html,body{background:var(--goc-bg); color:var(--goc-ink)}
+    /* tránh bar che footer */
+    footer,.space,[data-goc-space]{min-height:var(--goc-space-bottom)}
 
-  // ---------- CSS (tự chèn) ----------
-  const css = `
-:root{
-  --ink:#eae7dc;--muted:#a8b3c7;--line:rgba(255,215,0,.20);
-  --panel:rgba(15,17,23,.8);--bg:#0a0b0f;
-}
-html,body{background:#0a0b0f;color:var(--ink)}
-/* Floating Bar Clear */
-.goc-bar{position:fixed;left:12px;right:12px;bottom:12px;z-index:999999;
-  display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center;
-  padding:10px;border-radius:16px;border:1px solid var(--line);
-  background:linear-gradient(180deg,rgba(20,22,28,.65),rgba(10,11,15,.65));
-  backdrop-filter:blur(8px); box-shadow:0 10px 40px rgba(0,0,0,.45);
-}
-.goc-pill{appearance:none;border:none;cursor:pointer;font:600 14px/1.1 system-ui,-apple-system,Segoe UI,Roboto;
-  padding:10px 14px;border-radius:12px;white-space:nowrap;color:#111;
-  background:linear-gradient(180deg,#ffd66b,#f4c84f); box-shadow:inset 0 0 0 1px rgba(255,255,255,.25), 0 4px 18px rgba(0,0,0,.35);
-  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
-}
-.goc-pill.trans{background:linear-gradient(180deg,#ffffff,#eaeaea)}
-.goc-pill.dark{color:var(--ink);background:linear-gradient(180deg,#1a1f2a,#0f131a)}
-.goc-brand{margin-right:6px;font-weight:800;letter-spacing:.3px}
-.goc-ghost{border:1px solid var(--line);background:transparent;color:var(--ink)}
-/* LICENSEGOC Panel */
-#goc-panel{position:fixed;inset:0;z-index:999998;display:none;align-items:center;justify-content:center}
-#goc-panel.open{display:flex}
-.goc-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(2px)}
-.goc-sheet{position:relative;max-width:min(920px,92vw);max-height:86vh;overflow:auto;
-  width:920px;background:linear-gradient(180deg,#12151b,#0d1015);border:1px solid var(--line);
-  border-radius:16px;box-shadow:0 20px 80px rgba(0,0,0,.55);padding:20px 18px}
-.goc-sheet h2{margin:6px 0 14px;font:800 22px/1.2 system-ui}
-.goc-sec{border-top:1px dashed var(--line);padding:14px 0}
-.goc-sec h3{margin:0 0 6px;font:700 16px/1.2 system-ui}
-.goc-close{position:absolute;top:10px;right:10px}
-#goc-trans-tray{position:fixed;right:12px;bottom:78px;z-index:999997;
-  background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;display:none}
-#goc-trans-tray.open{display:block}
-#goc-trans-title{font:700 12px/1 system-ui;margin:0 0 8px;color:var(--muted)}
-#google_translate_element{transform:translateZ(0)}
-@media (max-width:600px){ .goc-pill{padding:10px 12px;font-size:13px} }
+    /* ---------- Floating Bar ---------- */
+    .goc-bar{position:fixed; left:0; right:0; bottom:0; z-index:2147483646;
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:center;
+      padding:10px; background:rgba(13,13,15,.55); backdrop-filter:blur(10px);
+      border-top:1px solid var(--goc-line); box-shadow:0 -8px 28px rgba(0,0,0,.35)}
+    .goc-bar a,.goc-bar button{appearance:none; border:1px solid rgba(245,211,106,.35);
+      background:linear-gradient(180deg,#1a1f29,#0f1117);
+      color:var(--goc-ink); font-weight:700; border-radius:999px; padding:10px 16px;
+      text-decoration:none; cursor:pointer}
+    .goc-bar a:hover,.goc-bar button:hover{box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),
+      0 8px 22px rgba(0,0,0,.35)}
+    .goc-pill{display:inline-flex; align-items:center; gap:8px}
+    .goc-sel{background:transparent; border:none; color:inherit; font-weight:700}
+
+    /* ---------- Theme badges ---------- */
+    .goc-theme{display:inline-flex; gap:6px; align-items:center}
+    .goc-dot{width:12px;height:12px;border-radius:50%}
+    .goc-dark .goc-dot{background:#222}
+    .goc-light .goc-dot{background:#ddd}
+    .goc-color .goc-dot{background:linear-gradient(45deg,#ffd66b,#88e);}
+
+    /* ---------- LICENSEGOC Panel ---------- */
+    .goc-panel{position:fixed; right:12px; bottom:calc(var(--goc-space-bottom) + 12px);
+      z-index:2147483647; width:min(92vw,680px); max-height:min(76vh,700px);
+      overflow:auto; padding:18px; background:linear-gradient(180deg,#0f1117,#0a0b0f);
+      border:1px solid var(--goc-line); border-radius:16px; box-shadow:0 12px 38px rgba(0,0,0,.45);
+      display:none}
+    .goc-panel.open{display:block}
+    .goc-panel h3{margin:0 0 8px}
+    .goc-panel .row{display:grid; grid-template-columns:140px 1fr; gap:10px; padding:8px 0;
+      border-top:1px dashed var(--goc-line)}
+    .goc-x{position:absolute; top:8px; right:10px; border:none; background:transparent;
+      color:var(--goc-ink); font-size:22px; cursor:pointer}
+    /* ---------- Translate tray minimal ---------- */
+    #google_translate_element{position:fixed; right:12px; bottom:calc(var(--goc-space-bottom) + 12px);
+      z-index:2147483647; background:linear-gradient(180deg,#0f1117,#0a0b0f);
+      border:1px solid var(--goc-line); border-radius:12px; padding:12px; display:none}
   `;
-  const style = document.createElement('style');
-  style.textContent = css;
-  document.head.appendChild(style);
+  const style=document.createElement('style'); style.textContent=css; document.head.appendChild(style);
 
-  // ---------- Helpers ----------
-  const el = (tag, props = {}, html = "") => {
-    const n = document.createElement(tag);
-    Object.assign(n, props);
-    if (html) n.innerHTML = html;
-    return n;
+  // ---------- Theme engine ----------
+  const THEMES={dark:1, light:1, color:1};
+  const applyTheme=(t)=>{
+    const r=document.documentElement; r.dataset.gocTheme=t;
+    if(t==='light'){ r.style.setProperty('--goc-bg','#f7f8fc'); r.style.setProperty('--goc-panel','#ffffff'); r.style.setProperty('--goc-ink','#11151c'); r.style.setProperty('--goc-line','rgba(0,0,0,.12)');}
+    else if(t==='color'){ r.style.setProperty('--goc-bg','#0b0e18'); r.style.setProperty('--goc-panel','#0e1220'); r.style.setProperty('--goc-ink','#f3f5ff'); r.style.setProperty('--goc-line','rgba(156,120,255,.3)');}
+    else{ r.style.setProperty('--goc-bg','#0a0b0f'); r.style.setProperty('--goc-panel','#101319'); r.style.setProperty('--goc-ink','#eae7dc'); r.style.setProperty('--goc-line','rgba(255,215,0,.26)');}
+    localStorage.setItem('goc.theme',t);
   };
-  const linkBtn = (text, href, extraClass = "") =>
-    Object.assign(el('a', { className: `goc-pill ${extraClass}`, href }), { textContent: text });
+  applyTheme(localStorage.getItem('goc.theme')||'dark');
 
-  // ---------- Translate Tray (Google) ----------
-  const transTray = el('div', { id: 'goc-trans-tray' });
-  transTray.innerHTML = `
-    <div id="goc-trans-title">Translate</div>
-    <div id="google_translate_element"></div>
-  `;
-  document.body.appendChild(transTray);
+  // ---------- Floating Bar DOM ----------
+  function ensureBar(){
+    if(document.querySelector('.goc-bar')) return;
+    const bar=document.createElement('nav');
+    bar.className='goc-bar';
+    bar.innerHTML=`
+      <a href="/index.html"><b>Home</b></a>
+      <a href="/creationsroom.html"><b>Creations Room</b></a>
+      <a href="/paycards.html"><b>Pay & Cards</b></a>
+      <a href="/vault.html"><b>Vault</b></a>
+      <a href="/submit.html"><b>Submit</b></a>
+      <a href="https://github.com/vutong99" target="_blank" rel="noopener"><b>GitHub</b></a>
 
-  function loadGoogleTranslate() {
-    if (window._gtrLoaded) return;
-    window._gtrLoaded = true;
-    window.googleTranslateElementInit = function () {
-      /* global google */
-      new google.translate.TranslateElement(
-        {
-          pageLanguage: document.documentElement.lang || "vi",
-          includedLanguages: CONFIG.translateIncludedLangs,
-          autoDisplay: false,
-          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        },
-        "google_translate_element"
-      );
-    };
-    const s = document.createElement("script");
-    s.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    s.async = true;
-    document.head.appendChild(s);
-  }
+      <button id="goc-open-panel" class="goc-pill"><span>LICENSEGOC</span></button>
 
-  // ---------- LICENSEGOC Panel ----------
-  const panel = el('div', { id: 'goc-panel' });
-  panel.innerHTML = `
-    <div class="goc-backdrop"></div>
-    <div class="goc-sheet" role="dialog" aria-modal="true" aria-label="LICENSEGOC">
-      <button class="goc-pill goc-ghost goc-close">✕</button>
-      <h2>🌐 ${CONFIG.panel.title}</h2>
-      <div id="goc-panel-body"></div>
-    </div>`;
-  document.body.appendChild(panel);
+      <span class="goc-theme">
+        <button class="goc-dark"  title="Dark"><span class="goc-dot"></span>Dark</button>
+        <button class="goc-light" title="Light"><span class="goc-dot"></span>Light</button>
+        <button class="goc-color" title="Color"><span class="goc-dot"></span>Colors</button>
+      </span>
 
-  function fillPanel() {
-    const body = panel.querySelector('#goc-panel-body');
-    body.innerHTML = "";
-    CONFIG.panel.sections.forEach(sec => {
-      const wrap = el('section', { className: 'goc-sec' });
-      wrap.appendChild(el('h3', { textContent: sec.heading }));
-      const c = el('div');
-      c.innerHTML = sec.html;
-      wrap.appendChild(c);
-      body.appendChild(wrap);
-    });
-  }
-
-  // ---------- Floating Bar ----------
-  function makeBar() {
-    if (document.querySelector('.goc-bar')) return;
-
-    const bar = el('div', { className: 'goc-bar', role: 'navigation' });
-
-    // Brand
-    const brand = el('span', { className: 'goc-pill dark goc-brand' }, `🌍 ${CONFIG.brand}`);
-    brand.style.pointerEvents = 'none';
-    bar.appendChild(brand);
-
-    // LICENSEGOC special button (opens panel)
-    const lcBtn = linkBtn(CONFIG.licensegocButtonText, "#", "dark");
-    lcBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      fillPanel();
-      panel.classList.add('open');
-    });
-    bar.appendChild(lcBtn);
-
-    // Standard links
-    CONFIG.links.forEach(({ text, href }) => {
-      bar.appendChild(linkBtn(text, href));
-    });
-
-    // Repo link (will swap later when có domain riêng)
-    const repo = linkBtn("GitHub", CONFIG.repoUrl, "goc-ghost");
-    bar.appendChild(repo);
-
-    // Translate toggle
-    const trans = linkBtn("🌐 Translate", "#", "trans");
-    trans.addEventListener('click', (e) => {
-      e.preventDefault();
-      loadGoogleTranslate();
-      transTray.classList.toggle('open');
-    });
-    bar.appendChild(trans);
-
+      <span class="goc-pill">🌐
+        <select id="goc-lang" class="goc-sel">
+          <option value="">Translate</option>
+          <option value="en">English</option>
+          <option value="vi">Tiếng Việt</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+          <option value="zh-CN">简体中文</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="es">Español</option>
+        </select>
+      </span>
+    `;
     document.body.appendChild(bar);
+
+    // theme buttons
+    bar.querySelector('.goc-dark').onclick = ()=>applyTheme('dark');
+    bar.querySelector('.goc-light').onclick= ()=>applyTheme('light');
+    bar.querySelector('.goc-color').onclick= ()=>applyTheme('color');
+
+    // panel
+    document.getElementById('goc-open-panel').onclick=()=>togglePanel(true);
   }
 
-  // Close handlers
-  panel.addEventListener('click', (e) => {
-    if (e.target.classList.contains('goc-backdrop') ||
-        e.target.classList.contains('goc-close')) {
-      panel.classList.remove('open');
+  // ---------- LICENSEGOC panel ----------
+  function makePanel(){
+    if(document.querySelector('.goc-panel')) return;
+    const p=document.createElement('aside');
+    p.className='goc-panel';
+    p.innerHTML=`
+      <button class="goc-x" aria-label="Close">×</button>
+      <h3>LICENSE GÓC™ — Overview</h3>
+      <div class="row"><b>LICENSENETWORK</b><span>Global copyright social network</span></div>
+      <div class="row"><b>Pay & Cards</b><span>Tokenized cards, invoices, disputes</span></div>
+      <div class="row"><b>Submit Idea / Work</b><span>Timestamp + protection</span></div>
+      <div class="row"><b>Vault</b><span>Identity & wallets (demo/local)</span></div>
+      <div class="row"><b>Apps</b><span>Integrations & community tools</span></div>
+      <div class="row"><b>News/Media</b><span>Pictures, videos, arts (editable later)</span></div>
+    `;
+    p.querySelector('.goc-x').onclick=()=>togglePanel(false);
+    document.body.appendChild(p);
+  }
+  function togglePanel(open){
+    const p=document.querySelector('.goc-panel'); if(!p) return;
+    p.classList.toggle('open',open);
+  }
+
+  // ---------- Translate (Google widget) ----------
+  function ensureTranslate(){
+    if (document.getElementById('google_translate_element')) return;
+    const box=document.createElement('div'); box.id='google_translate_element'; document.body.appendChild(box);
+    const s=document.createElement('script');
+    s.src='https://translate.google.com/translate_a/element.js?cb=__gocInitTranslate'; document.head.appendChild(s);
+    window.__gocInitTranslate=function(){
+      new google.translate.TranslateElement({pageLanguage:'vi', includedLanguages:'en,vi,ja,ko,zh-CN,fr,de,es'}, 'google_translate_element');
+      // mở hộp khi chọn
+      const sel=document.getElementById('goc-lang');
+      if(sel){ sel.onchange=()=>{ box.style.display='block'; }; }
+    };
+  }
+
+  // ---------- Boot ----------
+  window.addEventListener('DOMContentLoaded', ()=>{
+    ensureBar();
+    makePanel();
+    ensureTranslate();
+    // chừa khoảng dưới cho bar
+    if(!document.querySelector('[data-goc-space]')){
+      const sp=document.createElement('div'); sp.setAttribute('data-goc-space',''); document.body.appendChild(sp);
     }
   });
-
-  // Init
-  document.addEventListener('DOMContentLoaded', makeBar, { once: true });
 })();
+</script>
