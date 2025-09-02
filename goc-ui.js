@@ -78,9 +78,6 @@
       <a href="paycards.html"><b>Pay & Cards</b></a>
       <a href="vault.html"><b>Vault</b></a>
       <a href="submit.html"><b>Submit</b></a>
-      <a href="licensenetwork.html"><b>LICENSENETWORK</b></a>
-      <a href="#" id="goc-tim"><b>AI Tim ❤️</b></a>
-      <span class="goc-pill" id="translate"></span>
 `;
       <button id="goc-open-panel" class="goc-pill"><span>LICENSEGOC</span></button>
       
