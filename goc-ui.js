@@ -73,11 +73,11 @@
     const bar=document.createElement('nav');
     bar.className='goc-bar';
     bar.innerHTML=`
-      <a href="/index.html"><b>Home</b></a>
-      <a href="/creationsroom.html"><b>Creations Room</b></a>
-      <a href="/paycards.html"><b>Pay & Cards</b></a>
-      <a href="/vault.html"><b>Vault</b></a>
-      <a href="/submit.html"><b>Submit</b></a>
+      <a href="index.html"><b>Home</b></a>
+      <a href="creationsroom.html"><b>Creations Room</b></a>
+      <a href="paycards.html"><b>Pay & Cards</b></a>
+      <a href="vault.html"><b>Vault</b></a>
+      <a href="submit.html"><b>Submit</b></a>
       <a href="https://github.com/vutong99" target="_blank" rel="noopener"><b>GitHub</b></a>
 
       <button id="goc-open-panel" class="goc-pill"><span>LICENSEGOC</span></button>
