@@ -1,4 +1,4 @@
-<script>
+
 // ============== GOC UI (Floating Bar Clear) ==============
 // One file: Floating bar + Translate + Theme (dark/light/color) + LICENSEGOC panel + Quick links
 (function(){
@@ -161,4 +161,4 @@
     }
   });
 })();
-</script>
+
