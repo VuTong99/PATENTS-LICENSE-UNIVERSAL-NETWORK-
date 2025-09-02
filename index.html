@@ -83,6 +83,7 @@
         <a class="btn" href="creationsroom.html">Apps</a>
         <a class="btn" href="licensecoin.html">LICENSECOIN</a>
         <a class="btn" href="vault.html">Vault</a>
+        <a class="btn" href="aitim.html">AI TIM</a>
       </div>
     </section>
 
@@ -176,5 +177,16 @@
 
   <!-- nạp Floating Bar + Translate + Theme -->
   <script src="goc-ui.js?v=9" defer></script>
+  // Khởi động
+  if(localStorage.getItem(balKey())===null){ saveBal(150) } // seed demo
+  refresh();
+  </script>
+
+  <!-- (Tùy chọn) Global UI nếu có sẵn trong repo -->
+  
+  <script src="goc-ui.js"></script>
+  <script src="goc-auth.js"></script>
+  <script src="goc-sdk.js"></script>
+  <div id="google_translate_element" style="position:absolute;left:-9999px"></div>
 </body>
 </html>
