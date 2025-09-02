@@ -78,15 +78,9 @@
       <a href="paycards.html"><b>Pay & Cards</b></a>
       <a href="vault.html"><b>Vault</b></a>
       <a href="submit.html"><b>Submit</b></a>
-      <a href="https://github.com/vutong99" target="_blank" rel="noopener"><b>GitHub</b></a>
-
+      
       <button id="goc-open-panel" class="goc-pill"><span>LICENSEGOC</span></button>
-
-      <span class="goc-theme">
-        <button class="goc-dark"  title="Dark"><span class="goc-dot"></span>Dark</button>
-        <button class="goc-light" title="Light"><span class="goc-dot"></span>Light</button>
-        <button class="goc-color" title="Color"><span class="goc-dot"></span>Colors</button>
-      </span>
+      
 
       <span class="goc-pill">🌐
         <select id="goc-lang" class="goc-sel">
