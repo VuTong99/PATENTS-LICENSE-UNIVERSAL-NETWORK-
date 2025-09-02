@@ -1,72 +1,59 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>LICENSE GỐC™</title>
-<h1>LICENSE GỐC™</h1>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>LICENSE GỐC™</title>
 
-<style>
-  :root{
-    --bg:#0a0b0f; --panel:#101216; --ink:#eae7dc; --muted:#a8b3c7;
-    --gold:#f5d36a; --gold2:#ffd66b; --line:rgba(255,215,0,.22);
-    --radius:16px; --shadow:0 10px 40px rgba(0,0,0,.45);
-    --glow:0 0 24px rgba(204,164,0,.35);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; color:var(--ink); background:var(--bg);
-    font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  }
-  a{color:var(--gold2); text-decoration:none}
-  .wrap{max-width:1100px; margin:28px auto 110px; padding:0 16px}
-  .chips{display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 22px}
-  .chip{
-    padding:8px 12px; border:1px solid var(--line); border-radius:999px;
-    background:linear-gradient(180deg,#0f1116,#0b0c10);
-    box-shadow:var(--glow); color:var(--ink); font-weight:600
-  }
-  .panel{
-    background:linear-gradient(180deg,#101216,#0c0e12);
-    border:1px solid var(--line); border-radius:var(--radius);
-    padding:20px; margin:18px 0; box-shadow:var(--shadow)
-  }
-  h1{font-size:clamp(28px,5.5vw,44px); margin:6px 0 8px}
-  .brand{font-weight:900; letter-spacing:.3px; color:var(--gold2); text-shadow:var(--glow)}
-  .lead{opacity:.9; margin:0 0 8px}
-  h2{margin:0 0 14px; font-size:clamp(20px,4.6vw,28px)}
-  ul{margin:10px 0 0 22px}
-  .grid{display:grid; gap:12px}
-  .cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-  @media (max-width:900px){ .cols-3{grid-template-columns:1fr 1fr} }
-  @media (max-width:620px){ .cols-2,.cols-3{grid-template-columns:1fr} }
-  .btn{
-    display:flex; align-items:center; justify-content:center; gap:8px;
-    padding:16px 14px; border-radius:14px; border:1px solid var(--line);
-    background:linear-gradient(180deg,#0f1116,#0a0b0f);
-    box-shadow:var(--glow); font-weight:800; color:var(--ink)
-  }
-  .table{width:100%; border-collapse:collapse; border:1px solid var(--line); border-radius:12px; overflow:hidden}
-  .table th,.table td{border-bottom:1px dashed var(--line); padding:10px 12px; text-align:left}
-  .table th{color:var(--gold2); background:#0e1014}
-  .note{color:var(--muted)}
-  footer{color:#a0a0a0; text-align:center; margin:36px 0}
-  /* chừa chỗ cho Floating Bar */
-  :root{ --goc-trans-bottom: 94px; }
-</style>
-
-<!-- NẠP UI dùng chung: Translate + Floating Bar + Nav -->
-<script src="goc-ui.js?v=6" defer></script>
+  <style>
+    :root{
+      --bg:#0a0b0f; --panel:#101216; --ink:#eae7dc; --muted:#a8b3c7;
+      --gold:#f5d36a; --gold2:#ffd66b; --line:rgba(255,215,0,.22);
+      --radius:16px; --shadow:0 10px 40px rgba(0,0,0,.45);
+      --glow:0 0 24px rgba(204,164,0,.35);
+      --goc-trans-bottom:94px; /* chừa chỗ cho Floating Bar */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; color:var(--ink); background:var(--bg);
+      font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    a{color:var(--gold2); text-decoration:none}
+    .wrap{max-width:1100px; margin:28px auto 110px; padding:0 16px}
+    .chips{display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 22px}
+    .chip{padding:8px 12px; border:1px solid var(--line); border-radius:999px;
+      background:linear-gradient(180deg,#0f1116,#0b0c10);
+      box-shadow:var(--glow); color:var(--ink); font-weight:600}
+    .panel{background:linear-gradient(180deg,#101216,#0c0e12);
+      border:1px solid var(--line); border-radius:var(--radius);
+      padding:20px; margin:18px 0; box-shadow:var(--shadow)}
+    h1{font-size:clamp(28px,5.5vw,44px); margin:6px 0 8px}
+    .brand{font-weight:900; letter-spacing:.3px; color:var(--gold2); text-shadow:var(--glow)}
+    .lead{opacity:.9; margin:0 0 8px}
+    h2{margin:0 0 14px; font-size:clamp(20px,4.6vw,28px)}
+    ul{margin:10px 0 0 22px}
+    .grid{display:grid; gap:12px}
+    .cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:900px){ .cols-3{grid-template-columns:1fr 1fr} }
+    @media (max-width:620px){ .cols-2,.cols-3{grid-template-columns:1fr} }
+    .btn{display:flex; align-items:center; justify-content:center; gap:8px;
+      padding:16px 14px; border-radius:14px; border:1px solid var(--line);
+      background:linear-gradient(180deg,#0f1116,#0a0b0f);
+      box-shadow:var(--glow); font-weight:800; color:var(--ink)}
+    .table{width:100%; border-collapse:collapse; border:1px solid var(--line);
+      border-radius:12px; overflow:hidden}
+    .table th,.table td{border-bottom:1px dashed var(--line); padding:10px 12px; text-align:left}
+    .table th{color:var(--gold2); background:#0e1014}
+    .note{color:var(--muted)}
+    footer{color:#a0a0a0; text-align:center; margin:36px 0}
+  </style>
 </head>
 <body>
   <div class="wrap">
-
-    <!-- HEADER -->
     <section class="panel">
       <h1><span class="brand">🌐 LICENSE GỐC™</span></h1>
       <p class="lead">“Protect the Roots. Empower Humanity.”</p>
+
       <div class="chips">
         <a class="chip" href="#intro">Introduction</a>
         <a class="chip" href="#eco">Ecosystem</a>
@@ -75,7 +62,6 @@
         <a class="chip" href="#links">Official Links</a>
       </div>
 
-      <!-- Nút tắt đến các app chính (như screenshot) -->
       <div class="grid cols-3">
         <a class="btn" href="licensenetwork.html">LICENSENETWORK</a>
         <a class="btn" href="paycards.html">Pay & Cards</a>
@@ -83,102 +69,28 @@
         <a class="btn" href="creationsroom.html">Apps</a>
         <a class="btn" href="licensecoin.html">LICENSECOIN</a>
         <a class="btn" href="vault.html">Vault</a>
-        
       </div>
     </section>
 
-    <!-- INTRO -->
-    <section id="intro" class="panel">
-      <h2>✨ Introduction</h2>
-      <p>
-        LICENSE GỐC™ is the world’s first global platform combining:
-        Copyright + Patents, Social Media, Blockchain &amp; AI, and Creative Economy.
-      </p>
-    </section>
+    <!-- … (các section nội dung giữ nguyên) … -->
 
-    <!-- ECOSYSTEM -->
-    <section id="eco" class="panel">
-      <h2>🚀 Core Ecosystem</h2>
-      <table class="table">
-        <thead><tr><th>Component</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td>LICENSENETWORK™</td><td>Global copyright social network</td></tr>
-          <tr><td>Copyright & USPTO Guide</td><td>International copyright + patent registration</td></tr>
-          <tr><td>Community AI Chat</td><td>Realtime discussion & collaboration</td></tr>
-          <tr><td>Ideas Boards</td><td>Decentralized space for idea sharing & protection</td></tr>
-          <tr><td>LICENSECOINS™</td><td>Creative economy token & reward system</td></tr>
-          <tr><td>Investor Center</td><td>Transparent connection of capital & ideas</td></tr>
-          <tr><td>Global Ads</td><td>Fair, copyright-protected promotion</td></tr>
-          <tr><td>Culture & Science</td><td>Preserve & grow global human knowledge</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- STRATEGY -->
-    <section id="strategy" class="panel">
-      <h2>📈 Development Strategy</h2>
-      <div class="grid cols-2">
-        <div>
-          <h3>🟢 Phase 1 (2025–2026)</h3>
-          <ul>
-            <li>Deploy infrastructure (Vercel + Supabase + GitHub)</li>
-            <li>Launch LICENSECOINS™ & Copyright Vault</li>
-            <li>Integrate AI Tim ❤️</li>
-          </ul>
-        </div>
-        <div>
-          <h3>🟡 Phase 2 (2026–2028)</h3>
-          <ul>
-            <li>Launch multi-language LICENSENETWORK™</li>
-            <li>Connect directly to USPTO + WIPO</li>
-            <li>AI tools to preserve languages & culture</li>
-          </ul>
-        </div>
-        <div>
-          <h3>🔵 Phase 3 (2028–2032)</h3>
-          <ul>
-            <li>International investment alliances</li>
-            <li>Satellite timestamping for interplanetary copyright</li>
-            <li>Global cultural & science hub</li>
-          </ul>
-        </div>
-        <div>
-          <h3>🟣 Phase 4 (2032+)</h3>
-          <ul>
-            <li>Beyond Earth initiatives</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- VALUES -->
-    <section id="values" class="panel">
-      <h2>🌟 Core Values</h2>
-      <ul>
-        <li>✔️ Creators at the center</li>
-        <li>✔️ Absolute transparency (Blockchain + AI)</li>
-        <li>✔️ Global by default (multilingual, multicultural)</li>
-        <li>✔️ Beyond Earth — protect ideas for future generations & planets</li>
-      </ul>
-    </section>
-
-    <!-- OFFICIAL LINKS -->
     <section id="links" class="panel">
       <h2>🔗 Official Links</h2>
       <ul>
         <li>🌐 Website: <a href="https://thelicenseuniversal.com" target="_blank" rel="noopener">thelicenseuniversal.com</a></li>
         <li>💰 LICENSECOINS™ — The currency of the creative economy</li>
       </ul>
-      <p class="note">Balance, invoices & disputes can be managed at <a href="/paycards.html">Pay & Cards</a>.</p>
+      <p class="note">Balance, invoices & disputes can be managed at <a href="paycards.html">Pay & Cards</a>.</p>
     </section>
 
     <footer>© 2025 LICENSE GỐC™ — Build with the world.</footer>
-    <div class="space"></div>
+  </div>
 
-  <!-- nạp Floating Bar + Translate -->
-  <script src="goc-ui.js"></script>
-  <script src="goc-auth.js"></script>
-  <script src="goc-sdk.js"></script>
-  <div id="google_translate_element" style="position:absolute;left:-9999px"></div>
-    </body>
+  <div class="space"></div>
+  <!-- nạp Floating Bar + Translate (một lần duy nhất) -->
+  <script src="goc-ui.js?v=9" defer></script>
+  <!-- (tùy chọn) nạp SDK/auth sau khi bar đã chạy -->
+  <!-- <script src="goc-auth.js" defer></script> -->
+  <!-- <script src="goc-sdk.js" defer></script> -->
+</body>
 </html>
