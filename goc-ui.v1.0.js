@@ -24,7 +24,34 @@
   .goc-pill{display:inline-flex;align-items:center;gap:8px}
   .goc-hidden{display:none!important}
   .goc-collapse{border-radius:999px;padding:10px 12px;margin-right:6px;font-weight:900}
+  
+  /* nhấp nháy nhẹ cho nút thu gọn */
+@keyframes gocBlink {
+  0%, 60% { opacity: 1; transform: scale(1); }
+  30%     { opacity: .55; }
+  100%    { transform: scale(1.06); }
+}
+.goc-blink{ animation: gocBlink 2.2s ease-in-out infinite; }
 
+/* pulse nhẹ quanh bubble khi đang thu gọn */
+@keyframes gocPulse {
+  0%, 70% { opacity: 0; transform: scale(1); }
+  85%     { opacity: .7; transform: scale(1.06); }
+  100%    { opacity: 0; transform: scale(1); }
+}
+.goc-bubble::after{
+  content:""; position:absolute; inset:-6px; border-radius:14px;
+  box-shadow:0 0 18px rgba(255,214,107,.45); opacity:0;
+  animation:gocPulse 2.8s ease-out infinite;
+}
+
+.goc-bubble{position:fixed;left:12px;bottom:12px;z-index:2147483647;
+  width:48px;height:48px;border-radius:12px;cursor:pointer;
+  border:1px solid rgba(245,211,106,.35);
+  background:linear-gradient(180deg,#1a1f29,#0f1117);
+  color:#ffd66b;font-weight:900;box-shadow:0 10px 28px rgba(0,0,0,.45);
+  display:none;align-items:center;justify-content:center;}
+.goc-bubble.show{display:flex}
   .goc-bubble{position:fixed;left:12px;bottom:12px;z-index:2147483647;
     width:48px;height:48px;border-radius:12px;cursor:pointer;display:none;
     border:1px solid rgba(245,211,106,.35);
@@ -87,7 +114,7 @@
     const bar = document.createElement('nav');
     bar.className = 'goc-bar';
     bar.innerHTML = `
-      <button type="button" class="goc-collapse" id="goc-collapse" title="Thu gọn menu">≡</button>
+      <button type="button" class="goc-collapse" id="goc-collapse" title="Thu gọn menu">🎇</button>
       <a href="index.html"><b>Home</b></a>
       <a href="licensenetwork.html"><b>LICENSENETWORK</b></a>
       <a href="creationsroom.html"><b>Creations Room</b></a>
@@ -117,7 +144,7 @@
     if(!bubble){
       bubble = document.createElement('button');
       bubble.className = 'goc-bubble'; bubble.id = 'goc-bubble';
-      bubble.title = 'Mở menu'; bubble.textContent = '≡';
+      bubble.title = 'Mở menu'; bubble.textContent = '🎇';
       document.body.appendChild(bubble);
     }
 
