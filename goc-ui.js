@@ -1,13 +1,13 @@
 // ============== GOC UI (Floating Bar Clear) ==============
-// avoid multiple loads of Floating Bar Clear
-if (window.__GOC_UI__) {
-  console.log("GOC UI already loaded, skip duplicate.");
-  return;
-}
-window.__GOC_UI__ = true;
+(function () {
+  // tránh nạp trùng
+  if (window.__GOC_UI__) {
+    console.log("GOC UI already loaded, skip duplicate.");
+    return;
+  }
+  window.__GOC_UI__ = true;
 
-// One file: Floating bar + Translate + Theme + LICENSEGOC panel + Quick links
-(function(){
+  // --- phần code tiếp theo của bạn giữ nguyên ở dưới ---
 
 
   // ---------- CSS ----------
