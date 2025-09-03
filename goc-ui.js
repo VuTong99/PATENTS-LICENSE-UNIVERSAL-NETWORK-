@@ -1,4 +1,4 @@
-<script>
+
 /* ============== GOC UI (Floating Bar Clear) — One file ============== */
 (function () {
   /* --------- De-dupe --------- */
@@ -475,4 +475,3 @@
     if (collapsed && bar && bub){ bar.classList.add('goc-hidden'); bub.classList.add('show'); }
   });
 })();
-</script>
