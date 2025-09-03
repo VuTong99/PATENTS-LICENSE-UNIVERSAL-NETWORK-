@@ -1,421 +1,139 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LICENSENETWORK™</title>
-<h1>LICENSENETWORK™</h1>
-<meta name="description" content="The global room for ideas. Create in Boards, collaborate in Chat, capture provenance, and reward contributors — powered by LICENSE GỐC™.">
-<style>
-  :root{
-    --bg:#0a0b0f; --panel:#0f1116; --text:#eae7dc; --muted:#b7b3a3;
-    --gold:#f5d36a; --gold-2:#ffd54d; --line:rgba(245,211,106,.22);
-    --radius:16px; --shadow:0 0 24px rgba(255,213,77,.10), inset 0 0 18px rgba(255,213,77,.06);
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);
-       font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
-  a{color:var(--gold-2);text-decoration:none}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>LICENSENETWORK™ — Global Ideas Network</title>
+  <meta name="description" content="Phòng mạng sáng tạo toàn cầu: Boards • Chat • Bảo hộ tác quyền • Phần thưởng cộng đồng — thuộc hệ sinh thái LICENSE GỐC™.">
+  <meta name="theme-color" content="#0a0b0f" />
 
-  .wrap{max-width:1100px;margin:22px auto;padding:0 16px}
+  <!-- Open Graph (khi share link) -->
+  <meta property="og:title" content="LICENSENETWORK™ — Global Ideas Network">
+  <meta property="og:description" content="Boards • Chat • Bảo hộ tác quyền • Phần thưởng cộng đồng.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK/licensenetwork.html">
 
-  /* HERO */
-  .hero{
-    border:1px solid var(--line); border-radius:var(--radius);
-    background:linear-gradient(180deg,#0f1117,#0b0d12);
-    padding:24px 18px; box-shadow:var(--shadow);
-    position:relative; overflow:hidden;
-  }
-  .hero h1{margin:0 0 6px; font-size:clamp(26px,4vw,36px); color:#fff}
-  .hero p{margin:6px 0 0; color:var(--muted)}
-  .brandline{height:1px; margin:12px 0; background:linear-gradient(90deg,#6b5b2a,#ffd54d,#6b5b2a); border-radius:999px}
+  <style>
+    :root{
+      --bg:#0a0b0f; --panel:#101319; --ink:#eae7dc; --muted:#a8b3c7;
+      --line:rgba(245,211,106,.22); --gold:#ffd66b;
+      --r:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+    }
+    a{color:var(--gold); text-decoration:none}
+    .wrap{max-width:1100px; margin:24px auto; padding:0 16px}
 
-  /* PANELS */
-  .panel{
-    margin:16px 0; padding:18px; border-radius:14px;
-    background:linear-gradient(180deg,#0f1116,#0a0c10);
-    border:1px solid var(--line); box-shadow:var(--shadow);
-  }
-  .panel h2{margin:0 0 12px; color:var(--gold-2)}
-  .note{color:var(--muted); font-size:14px}
-  .grid{display:grid; gap:12px}
-  @media(min-width:900px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} .grid.cols-2{grid-template-columns:repeat(2,1fr)} }
+    /* Hero */
+    .hero{
+      border:1px solid var(--line); border-radius:var(--r);
+      background:linear-gradient(180deg,#111520,#0c0f17);
+      box-shadow:0 10px 40px rgba(0,0,0,.45);
+      padding:22px 18px; position:relative; overflow:hidden;
+    }
+    .hero h1{margin:0 0 8px; font-size:clamp(26px,5.5vw,40px)}
+    .hero p{margin:6px 0 0; color:var(--muted)}
+    .brandline{height:1px; margin:12px 0; border-radius:999px;
+      background:linear-gradient(90deg,#6b5b2a,#ffd66b,#6b5b2a)}
 
-  .card{padding:14px;border:1px solid var(--line);border-radius:12px;
-        background:linear-gradient(180deg,#10131a,#0c0f14)}
+    /* Panels */
+    .panel{
+      margin:16px 0; padding:18px; border-radius:14px;
+      background:linear-gradient(180deg,#101319,#0b0e14);
+      border:1px solid var(--line); box-shadow:0 10px 40px rgba(0,0,0,.35);
+    }
+    .panel h2{margin:0 0 12px; color:var(--gold)}
+    .note{color:var(--muted); font-size:14px}
 
-  .badge{display:inline-block;padding:6px 10px;border-radius:999px;
-         border:1px solid rgba(229,200,107,.35);color:#ffd54d;font-weight:700;margin-bottom:6px}
+    /* Grid cards */
+    .grid{display:grid; gap:12px}
+    @media (min-width:900px){ .cols-3{grid-template-columns:repeat(3,1fr)} .cols-2{grid-template-columns:repeat(2,1fr)} }
+    .card{
+      padding:14px; border-radius:12px; border:1px solid var(--line);
+      background:linear-gradient(180deg,#0f131b,#0b0f16);
+    }
+    .badge{display:inline-block; padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(245,211,106,.35); color:var(--gold); font-weight:800; margin-bottom:6px}
 
-  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  .ipt{
-    background:#0c0e12; border:1px solid rgba(255,255,255,.08);
-    color:var(--text); padding:10px 12px; border-radius:10px;
-  }
-  .btn{
-    padding:10px 14px; border-radius:10px; border:1px solid rgba(229,200,107,.35);
-    background:linear-gradient(180deg,#171a22,#0d1016); color:#ffd54d; font-weight:700; cursor:pointer;
-    box-shadow:0 10px 20px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.05);
-  }
+    /* Inputs */
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .ipt{
+      background:#0c0f15; border:1px solid rgba(255,255,255,.08);
+      color:var(--ink); padding:10px 12px; border-radius:10px;
+    }
+    .btn{
+      padding:10px 14px; border-radius:10px; border:1px solid rgba(245,211,106,.35);
+      background:linear-gradient(180deg,#151924,#0f121a);
+      color:var(--gold); font-weight:800; cursor:pointer;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.05), 0 10px 22px rgba(0,0,0,.35);
+    }
 
-  /* AI TIM FAB */
-  .tim-fab{
-    position:fixed; right:18px; bottom:86px; z-index:40;
-    width:64px; height:64px; border-radius:50%;
-    border:1px solid rgba(229,200,107,.35);
-    background:linear-gradient(180deg,#1b1f2a,#10131a);
-    box-shadow:0 12px 30px rgba(0,0,0,.45), 0 0 0 3px rgba(245,211,106,.12);
-    display:grid; place-items:center; overflow:hidden; cursor:pointer;
-  }
-  .tim-fab img{width:100%;height:100%;object-fit:cover}
-  .tim-chat{
-    position:fixed; right:18px; bottom:158px; width:min(420px,92vw);
-    background:rgba(17,17,19,.92); border:1px solid var(--line);
-    border-radius:16px; box-shadow:0 18px 40px rgba(0,0,0,.55);
-    display:none; flex-direction:column; overflow:hidden; z-index:50; backdrop-filter:blur(12px);
-  }
-  .tim-chat header{display:flex; align-items:center; gap:8px; padding:10px 12px; background:#0f1116; border-bottom:1px solid var(--line)}
-  .tim-chat header b{color:#ffd54d}
-  .tim-chat .body{padding:12px; max-height:40vh; overflow:auto; font-size:15px}
-  .tim-chat textarea{
-    width:100%; min-height:70px; resize:vertical; background:#0c0e12; color:var(--text);
-    border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:10px;
-  }
-  .tim-chat .row{display:flex; gap:8px; padding:12px; border-top:1px solid var(--line)}
-
-  footer{color:#aaa; text-align:center; padding:24px 12px; border-top:1px solid rgba(255,255,255,.06)}
-</style>
+    footer{color:#a9a9a9; text-align:center; padding:28px 12px; border-top:1px solid rgba(255,255,255,.06)}
+  </style>
 </head>
-<script>
-/* ===== Floating App Bar + Translate (drop-in) ===== */
+<body>
 
-// Tạo Floating Bar (apps-nav)
-(function makeNav(){
-  if (document.querySelector('.apps-nav')) return;
-  const nav = document.createElement('nav');
-  nav.className = 'apps-nav';
-  nav.innerHTML = `
-    <a href="index.html">Home</a>
-    <a href="creationsroom.html">Creations Room</a>
-    <a href="paycards.html">Pay & Cards</a>
-    <span class="lang-pill">🌐 <select id="goc-lang"></select></span>
-  `;
-  document.body.appendChild(nav);
-})();
+  <div class="wrap">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="title">
+      <h1 id="title">LICENSENETWORK™ — The Global Room for Ideas</h1>
+      <div class="brandline"></div>
+      <p>Boards • Chat • Bảo hộ tác quyền • Phần thưởng cộng đồng — thuộc hệ sinh thái LICENSE GỐC™.</p>
+    </section>
 
-// Fallback: nếu vì lý do gì đó bar không tạo được → hiện nút 🌐 nhỏ
-(function fabFallback(){
-  if (document.querySelector('.apps-nav')) return;
-  const fab = document.createElement('button');
-  fab.type = 'button';
-  fab.title = 'Translate';
-  fab.textContent = '🌐';
-  fab.style.cssText = `
-    position:fixed;right:12px;bottom:82px;width:44px;height:44px;
-    border:1px solid rgba(245,211,106,.35);
-    background:linear-gradient(180deg,#ffd66b,#f5c64a);
-    border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.35);
-    font-weight:800;cursor:pointer;z-index:2147483647;
-  `;
-  fab.addEventListener('click', () => {
-    const tray = document.getElementById('google_translate_element');
-    if (tray) tray.style.display = (tray.style.display === 'none' ? 'block' : 'none');
-  });
-  document.body.appendChild(fab);
-})();
-</script><body>
-
-<div class="wrap">
-  <!-- HERO -->
-  <section class="hero">
-    <h1>LICENSENETWORK™ — The Global Room for Ideas</h1>
-    <div class="brandline"></div>
-    <p>Create in Boards • Collaborate in Chat • Capture provenance • Reward contributors.</p>
-  </section>
-
-  <!-- PILLARS -->
-  <section class="panel">
-    <h2>Pillars</h2>
-    <div class="grid cols-3">
-      <div class="card">
-        <div class="badge">Boards</div>
-        <h3 style="margin:6px 0;color:#fff">Creation Boards</h3>
-        <p class="note">Break ideas into tasks, pin proofs, assign shared rewards.</p>
+    <!-- ROOMS (thư mục phòng) -->
+    <section class="panel" aria-labelledby="rooms">
+      <h2 id="rooms">Rooms</h2>
+      <div class="grid cols-3">
+        <a class="card" href="creationsroom.html">
+          <div class="badge">Boards</div>
+          <h3 style="margin:6px 0">Creations Room</h3>
+          <p class="note">Tạo thẻ công việc, chia lane (To-do / Doing / Done), chia sẻ minh chứng.</p>
+        </a>
+        <a class="card" href="submit.html">
+          <div class="badge">Protect</div>
+          <h3 style="margin:6px 0">Submit Idea / Work</h3>
+          <p class="note">Time-stamp & bảo hộ nội dung. Export JSON minh bạch.</p>
+        </a>
+        <a class="card" href="paycards.html">
+          <div class="badge">Economy</div>
+          <h3 style="margin:6px 0">Pay & Cards</h3>
+          <p class="note">Thanh toán, invoice, tranh chấp — kết nối LICENSECOIN sau này.</p>
+        </a>
       </div>
-      <div class="card">
-        <div class="badge">Chat</div>
-        <h3 style="margin:6px 0;color:#fff">Community Room</h3>
-        <p class="note">Mentors & reviewers co‑design. AI summarizes and extracts next steps.</p>
+    </section>
+
+    <!-- HOW-TO -->
+    <section class="panel" aria-labelledby="howto">
+      <h2 id="howto">How it works</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3 style="margin:0 0 6px">1) Tạo / Góp ý</h3>
+          <p class="note">Dùng Creations Room để tạo thẻ, gán người, đẩy tiến độ. Chat cộng đồng hỗ trợ theo thời gian thực.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 6px">2) Bảo hộ</h3>
+          <p class="note">Nộp bản mô tả/ảnh/video vào trang Submit để ghi dấu thời gian và lưu bằng chứng.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 6px">3) Kinh tế sáng tạo</h3>
+          <p class="note">Kết nối Pay & Cards và LICENSECOIN (sau) để thưởng — minh bạch đóng góp.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 6px">4) Mở rộng</h3>
+          <p class="note">Hỗ trợ đa ngôn ngữ (nút 🌐 Translate), đổi giao diện Dark/Light/Color ngay trên thanh nổi.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="badge">Protection</div>
-        <h3 style="margin:6px 0;color:#fff">Provenance & IP</h3>
-        <p class="note">Timestamps, authorship, and legal pathways (Copyright / USPTO / WIPO).</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- MINI BOARDS DEMO (client-side sample) -->
-  <section class="panel" id="boards">
-    <h2>Creation Boards — Demo</h2>
-    <p class="note">Client-side prototype: add cards (todo → doing → done). Real-time + server sync sẽ triển khai sau.</p>
-
-    <div class="row" style="margin:8px 0;">
-      <input id="b_title" class="ipt" placeholder="Card title" style="flex:1;min-width:220px;">
-      <input id="b_owner" class="ipt" placeholder="Owner (email or name)" style="flex:1;min-width:220px;">
-      <select id="b_lane" class="ipt">
-        <option value="todo">To‑do</option>
-        <option value="doing">Doing</option>
-        <option value="done">Done</option>
-      </select>
-      <button class="btn" id="b_add">Add card</button>
-      <button class="btn" id="b_export">Export JSON</button>
-    </div>
-
-    <div class="grid cols-3" style="margin-top:12px">
-      <div class="card"><h3 style="margin:0 0 8px;color:#fff">To‑do</h3><div id="lane_todo"></div></div>
-      <div class="card"><h3 style="margin:0 0 8px;color:#fff">Doing</h3><div id="lane_doing"></div></div>
-      <div class="card"><h3 style="margin:0 0 8px;color:#fff">Done</h3><div id="lane_done"></div></div>
-    </div>
-  </section>
-
-  <!-- SUBMIT MINI (nhúng giống LICENSECOIN) -->
-  <section class="panel" id="submit-mini">
-    <h2>Submit your Work / Idea</h2>
-
-    <div class="row" style="margin:8px 0;">
-      <input id="s_name" class="ipt" placeholder="Your name" style="flex:1;">
-      <input id="s_email" class="ipt" placeholder="Email (acts as ID)" style="flex:1;">
-    </div>
-
-    <input id="s_title" class="ipt" placeholder="Title" style="width:100%;margin:8px 0;">
-    <textarea id="s_desc" class="ipt" placeholder="Short description" rows="4" style="width:100%;margin:8px 0;"></textarea>
-
-    <div class="row" style="margin:8px 0;">
-      <select id="s_cat" class="ipt" aria-label="Category">
-        <option value="ai">AI / Tools</option>
-        <option value="art">Art / Design</option>
-        <option value="science">Science / Education</option>
-        <option value="culture">Culture / Language</option>
-        <option value="other" selected>Other</option>
-      </select>
-      <input id="s_tags" class="ipt" placeholder="Tags (comma)" style="flex:1;min-width:220px;">
-    </div>
-
-    <!-- CAPTCHA -->
-    <div class="row" style="align-items:center;margin:8px 0;">
-      <span id="capQ" style="opacity:.85"></span>
-      <input id="capA" class="ipt" inputmode="numeric" style="width:120px" placeholder="Answer">
-      <button id="capRefresh" class="btn" type="button">↻</button>
-    </div>
-
-    <div class="row" style="margin:12px 0;">
-      <button id="s_submit" class="btn" type="button">Submit</button>
-      <button id="s_export" class="btn" type="button">Export JSON</button>
-    </div>
-
-    <p id="s_msg" class="note"></p>
-  </section>
-</div>
-
-<!-- AI TIM FAB + CHAT (demo) -->
-<button class="tim-fab" id="timFab" aria-label="Chat with Tim">
-  <img src="assets/ai-tim.png" alt="AI Tim ♥️">
-</button>
-<div class="tim-chat" id="timChat" role="dialog" aria-label="AI Tim chat">
-  <header>
-    <b>AI Tim</b><span style="opacity:.7"> — your creative assistant</span>
-    <div style="margin-left:auto"><button class="btn" id="closeTim">Close</button></div>
-  </header>
-  <div class="body" id="timBody">
-    Xin chào 👋 — Hãy nhập câu hỏi, mình sẽ gợi ý hoặc điều hướng đến ứng dụng phù hợp.
+    <footer>© 2025 LICENSENETWORK™ — Build with the world.</footer>
   </div>
-  <div class="row">
-    <textarea id="timInput" placeholder="Ví dụ: tạo card To‑do, dẫn mình tới LICENSECOIN…"></textarea>
-    <button class="btn" id="timSend">Send</button>
-  </div>
-</div>
 
-<footer>© 2025 LICENSENETWORK™ — Build with the world.</footer>
-
-<!-- PAGE LOGIC: Boards + Submit mini + AI Tim demo -->
-<script>
-/* ===== Boards (client-side) ===== */
-(function(){
-  const LKEY='goc_boards_v1';
-  const $ = s => document.querySelector(s);
-  const lanes = { todo: $('#lane_todo'), doing: $('#lane_doing'), done: $('#lane_done') };
-
-  function load(){
-    try{ return JSON.parse(localStorage.getItem(LKEY)||'[]'); }catch(e){ return []; }
-  }
-  function save(list){ localStorage.setItem(LKEY, JSON.stringify(list)); render(list); }
-
-  function cardHTML(c){
-    return `<div style="border:1px solid rgba(245,211,106,.22);border-radius:10px;padding:10px;margin:8px 0;">
-      <div style="font-weight:800;color:#fff">${c.title}</div>
-      <div class="note" style="margin-top:4px">Owner: ${c.owner||'—'}</div>
-      <div class="row" style="margin-top:8px">
-        <button class="btn" data-mv="left" data-id="${c.id}">◀</button>
-        <button class="btn" data-mv="right" data-id="${c.id}">▶</button>
-        <button class="btn" data-del="1" data-id="${c.id}">Delete</button>
-      </div>
-    </div>`;
-  }
-
-  function render(list){
-    Object.values(lanes).forEach(el=>el.innerHTML='');
-    list.forEach(c=>{
-      (lanes[c.lane]||lanes.todo).insertAdjacentHTML('beforeend', cardHTML(c));
-    });
-  }
-
-  function moveLane(lane, dir){
-    const order = ['todo','doing','done'];
-    const i = order.indexOf(lane);
-    const ni = i + (dir==='left' ? -1 : +1);
-    if(ni<0 || ni>=order.length) return lane;
-    return order[ni];
-  }
-
-  const title = document.getElementById('b_title');
-  const owner = document.getElementById('b_owner');
-  const lane  = document.getElementById('b_lane');
-  document.getElementById('b_add').onclick = ()=>{
-    const t = title.value.trim(); if(!t) return;
-    const list = load();
-    list.unshift({ id: 'C'+Math.random().toString(36).slice(2,8).toUpperCase(),
-                   title:t, owner:owner.value.trim(), lane: lane.value });
-    save(list); title.value=''; owner.value='';
-  };
-
-  document.getElementById('b_export').onclick = ()=>{
-    const data = load();
-    const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `boards_${new Date().toISOString().slice(0,10)}.json`;
-    document.body.appendChild(a); a.click(); URL.revokeObjectURL(a.href); a.remove();
-  };
-
-  // Delegation for lane buttons
-  document.getElementById('boards').addEventListener('click', (e)=>{
-    const id = e.target.getAttribute('data-id'); if(!id) return;
-    const list = load();
-    const ix = list.findIndex(c=>c.id===id); if(ix<0) return;
-
-    if(e.target.hasAttribute('data-del')){ list.splice(ix,1); save(list); return; }
-    if(e.target.getAttribute('data-mv')==='left'){ list[ix].lane = moveLane(list[ix].lane,'left'); save(list); return; }
-    if(e.target.getAttribute('data-mv')==='right'){ list[ix].lane = moveLane(list[ix].lane,'right'); save(list); return; }
-  });
-
-  render(load());
-})();
-
-/* ===== Submit mini (reused logic) ===== */
-(function(){
-  const SUB_KEY = 'goc_submissions';
-  const BONUS = { ai:100, art:50, science:80, culture:40, other:25 };
-  const $ = id => document.getElementById(id);
-  const msg = (t, ok=true)=> { const m=$('s_msg'); m.textContent=t; m.style.color = ok ? '#9be37e':'#ff6b6b'; };
-
-  let a=0,b=0;
-  function newCap(){ a=1+Math.floor(Math.random()*9); b=1+Math.floor(Math.random()*9);
-    $('capQ').textContent = `Are you human?  ${a} + ${b} = ?`; $('capA').value=''; }
-  $('capRefresh').onclick = newCap; newCap();
-
-  function loadSubs(){ try{ return JSON.parse(localStorage.getItem(SUB_KEY)||'[]'); }catch(e){ return []; } }
-  function saveSubs(list){ localStorage.setItem(SUB_KEY, JSON.stringify(list)); }
-
-  function awardBonus(cat){
-    const bonus = BONUS[cat] ?? BONUS.other;
-    try{
-      const u = (window.getUser && window.getUser()) || null;
-      const key = u ? `lcn_balance_${u.id}` : 'lcn_balance_guest';
-      const curr = parseInt(localStorage.getItem(key)||'0',10);
-      localStorage.setItem(key, curr + bonus);
-      localStorage.setItem(u ? `lcn_last_${u.id}` : 'lcn_last_guest', bonus);
-    }catch(e){}
-    return bonus;
-  }
-
-  $('s_submit').onclick = ()=>{
-    const name=$('s_name').value.trim();
-    const email=$('s_email').value.trim();
-    const title=$('s_title').value.trim();
-    const desc=$('s_desc').value.trim();
-    const cat=$('s_cat').value;
-    const tags=$('s_tags').value.trim();
-
-    if(!name || !email || !title){ msg('Please fill name, email, title.', false); return; }
-    const ans = parseInt($('capA').value||'NaN',10);
-    if(ans !== (a+b)){ msg('Wrong CAPTCHA answer.', false); newCap(); return; }
-
-    const now = new Date().toISOString();
-    const sub = {
-      id:'SUB_'+Math.random().toString(36).slice(2,8).toUpperCase(),
-      name,email,title,desc,cat,tags:tags.split(',').map(s=>s.trim()).filter(Boolean),
-      ts:now
-    };
-    const list=loadSubs(); list.unshift(sub); saveSubs(list);
-    const got = awardBonus(cat);
-    msg(`Saved! (ID ${sub.id}) +${got} LCN bonus for ${cat}.`);
-    newCap();
-  };
-
-  $('s_export').onclick = ()=>{
-    const data = loadSubs();
-    const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `submissions_${new Date().toISOString().slice(0,10)}.json`;
-    document.body.appendChild(a); a.click(); URL.revokeObjectURL(a.href); a.remove();
-  };
-
-  // Autofill từ Wallet (nếu đã sign-in ở trang coin)
-  try{
-    const u = (window.getUser && window.getUser()) || null;
-    if(u){ document.getElementById('s_email').value = u.email || u.id || ''; }
-  }catch(e){}
-})();
-
-/* ===== AI TIM (demo) ===== */
-(function(){
-  const fab = document.getElementById('timFab');
-  const chat= document.getElementById('timChat');
-  const closeBtn = document.getElementById('closeTim');
-  const sendBtn  = document.getElementById('timSend');
-  const input    = document.getElementById('timInput');
-  const body     = document.getElementById('timBody');
-
-  function toggle(show){ chat.style.display = show ? 'flex' : 'none'; }
-  fab&& (fab.onclick = ()=>toggle(true));
-  closeBtn&&(closeBtn.onclick = ()=>toggle(false));
-
-  const routes = [
-    ['coin','licensecoin.html'],['vault','vault.html'],['submit','submit.html'],['home','index.html']
-  ];
-
-  sendBtn&&(sendBtn.onclick = ()=>{
-    const q=(input.value||'').toLowerCase().trim();
-    if(!q) return;
-    body.innerHTML += `<div style="margin-top:8px;opacity:.8">You: ${q}</div>`;
-    const hit = routes.find(([k])=> q.includes(k));
-    setTimeout(()=>{ if(hit){ window.location.href = hit[1]; }
-      else{
-        body.innerHTML += `<div style="margin-top:6px">Tim: Try words: coin, vault, submit, home…</div>`;
-      }
-    },200);
-  });
-})();
-   <div class="space"></div>
-
-  <!-- nạp Floating Bar + Translate + Theme -->
-  <script src="goc-ui.js"></script>
-  <script src="goc-auth.js"></script>
-  <script src="goc-sdk.js"></script>
-  <div id="google_translate_element" style="position:absolute;left:-9999px"></div>
-  
+  <!-- NẠP UI CHUNG: Floating Bar + Translate + Theme + LICENSEGOC panel -->
+  <script src="goc-ui.js?v=10" defer></script>
 </body>
 </html>
-
