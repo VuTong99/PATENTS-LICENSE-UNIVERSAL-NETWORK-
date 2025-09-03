@@ -1,79 +1,49 @@
 // ============== GOC UI (Floating Bar Clear) ==============
 (function () {
-  // tránh nạp trùng
-  if (window.__GOC_UI__) {
-    console.log("GOC UI already loaded, skip duplicate.");
-    return;
-  }
+  if (window.__GOC_UI__) return;            // tránh nạp trùng
   window.__GOC_UI__ = true;
-
-  // --- phần code tiếp theo của bạn giữ nguyên ở dưới ---
-
 
   // ---------- CSS ----------
   const css = `
-    :root{
-      --goc-bg:#0a0b0f; --goc-panel:#101319; --goc-ink:#eae7dc; --goc-muted:#a8b3c7;
-      --goc-line:rgba(255,215,0,.26); --goc-gold:#f5d36a; --goc-accent:#ffd66b;
-      --goc-space-bottom:94px; /* chừa chỗ cho bar */
-    }
-    html,body{background:var(--goc-bg); color:var(--goc-ink)}
-    footer,.space,[data-goc-space]{min-height:var(--goc-space-bottom)}
+  :root{
+    --goc-bg:#0a0b0f; --goc-panel:#101319; --goc-ink:#eae7dc; --goc-muted:#a8b3c7;
+    --goc-line:rgba(255,215,0,.26); --goc-space-bottom:94px;
+  }
+  html,body{background:var(--goc-bg); color:var(--goc-ink)}
+  footer,.space,[data-goc-space]{min-height:var(--goc-space-bottom)}
 
-    /* Floating Bar */
-    .goc-bar{
-      position:fixed; left:0; right:0; bottom:0; z-index:2147483646;
-      display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:center;
-      padding:10px; background:rgba(13,13,15,.55); backdrop-filter:blur(10px);
-      border-top:1px solid var(--goc-line); box-shadow:0 -8px 28px rgba(0,0,0,.35)
-    }
-    .goc-bar a,.goc-bar button{
-      appearance:none; border:1px solid rgba(245,211,106,.35);
-      background:linear-gradient(180deg,#1a1f29,#0f1117); color:var(--goc-ink);
-      font-weight:700; border-radius:999px; padding:10px 16px; text-decoration:none; cursor:pointer
-    }
-    .goc-bar a:hover,.goc-bar button:hover{
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 8px 22px rgba(0,0,0,.35)
-    }
-    .goc-pill{display:inline-flex; align-items:center; gap:8px}
-    .goc-sel{background:transparent; border:none; color:inherit; font-weight:700}
-    .goc-hidden{display:none!important}
+  .goc-bar{position:fixed;left:0;right:0;bottom:0;z-index:2147483646;
+    display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center;
+    padding:10px;background:rgba(13,13,15,.55);backdrop-filter:blur(10px);
+    border-top:1px solid var(--goc-line);box-shadow:0 -8px 28px rgba(0,0,0,.35)}
+  .goc-bar a,.goc-bar button{appearance:none;border:1px solid rgba(245,211,106,.35);
+    background:linear-gradient(180deg,#1a1f29,#0f1117);color:var(--goc-ink);
+    font-weight:700;border-radius:999px;padding:10px 16px;text-decoration:none;cursor:pointer}
+  .goc-bar a:hover,.goc-bar button:hover{box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 8px 22px rgba(0,0,0,.35)}
+  .goc-sel{background:transparent;border:none;color:inherit;font-weight:700}
+  .goc-pill{display:inline-flex;align-items:center;gap:8px}
+  .goc-hidden{display:none!important}
+  .goc-collapse{border-radius:999px;padding:10px 12px;margin-right:6px;font-weight:900}
 
-    /* Collapse button */
-    .goc-collapse{border-radius:999px; padding:10px 12px; margin-right:6px; font-weight:900}
+  .goc-bubble{position:fixed;left:12px;bottom:12px;z-index:2147483647;
+    width:48px;height:48px;border-radius:12px;cursor:pointer;display:none;
+    border:1px solid rgba(245,211,106,.35);
+    background:linear-gradient(180deg,#1a1f29,#0f1117);color:#ffd66b;font-weight:900;
+    box-shadow:0 10px 28px rgba(0,0,0,.45);align-items:center;justify-content:center}
+  .goc-bubble.show{display:flex}
 
-    /* Bubble khi đã thu gọn */
-    .goc-bubble{
-      position:fixed; left:12px; bottom:12px; z-index:2147483647;
-      width:48px; height:48px; border-radius:12px; cursor:pointer;
-      border:1px solid rgba(245,211,106,.35);
-      background:linear-gradient(180deg,#1a1f29,#0f1117);
-      color:#ffd66b; font-weight:900; box-shadow:0 10px 28px rgba(0,0,0,.45);
-      display:none; align-items:center; justify-content:center;
-    }
-    .goc-bubble.show{display:flex}
+  .goc-panel{position:fixed;right:12px;bottom:calc(var(--goc-space-bottom) + 12px);
+    z-index:2147483647;width:min(92vw,680px);max-height:min(76vh,700px);overflow:auto;
+    padding:18px;background:linear-gradient(180deg,#0f1117,#0a0b0f);
+    border:1px solid var(--goc-line);border-radius:16px;box-shadow:0 12px 38px rgba(0,0,0,.45);display:none}
+  .goc-panel.open{display:block}
+  .goc-panel h3{margin:0 0 8px}
+  .goc-panel .row{display:grid;grid-template-columns:140px 1fr;gap:10px;padding:8px 0;border-top:1px dashed var(--goc-line)}
+  .goc-x{position:absolute;top:8px;right:10px;border:none;background:transparent;color:var(--goc-ink);font-size:22px;cursor:pointer}
 
-    /* LICENSEGOC Panel */
-    .goc-panel{
-      position:fixed; right:12px; bottom:calc(var(--goc-space-bottom) + 12px);
-      z-index:2147483647; width:min(92vw,680px); max-height:min(76vh,700px); overflow:auto;
-      padding:18px; background:linear-gradient(180deg,#0f1117,#0a0b0f);
-      border:1px solid var(--goc-line); border-radius:16px; box-shadow:0 12px 38px rgba(0,0,0,.45);
-      display:none
-    }
-    .goc-panel.open{display:block}
-    .goc-panel h3{margin:0 0 8px}
-    .goc-panel .row{
-      display:grid; grid-template-columns:140px 1fr; gap:10px; padding:8px 0; border-top:1px dashed var(--goc-line)
-    }
-    .goc-x{position:absolute; top:8px; right:10px; border:none; background:transparent; color:var(--goc-ink); font-size:22px; cursor:pointer}
-
-    /* Translate tray (ẩn cho đến khi chọn) */
-    #google_translate_element{
-      position:fixed; right:12px; bottom:calc(var(--goc-space-bottom) + 12px);
-      z-index:2147483647; background:linear-gradient(180deg,#0f1117,#0a0b0f);
-      border:1px solid var(--goc-line); border-radius:12px; padding:12px; display:none
-    }
+  #google_translate_element{position:fixed;right:12px;bottom:calc(var(--goc-space-bottom) + 12px);
+    z-index:2147483647;background:linear-gradient(180deg,#0f1117,#0a0b0f);
+    border:1px solid var(--goc-line);border-radius:12px;padding:12px;display:none}
   `;
   const style = document.createElement('style'); style.textContent = css; document.head.appendChild(style);
 
@@ -86,37 +56,34 @@
     }else if(t==='color'){
       r.style.setProperty('--goc-bg','#0b0e18'); r.style.setProperty('--goc-panel','#0e1220');
       r.style.setProperty('--goc-ink','#f3f5ff'); r.style.setProperty('--goc-line','rgba(156,120,255,.3)');
-    }else{ // dark
+    }else{
       r.style.setProperty('--goc-bg','#0a0b0f'); r.style.setProperty('--goc-panel','#101319');
       r.style.setProperty('--goc-ink','#eae7dc'); r.style.setProperty('--goc-line','rgba(255,215,0,.26)');
     }
     localStorage.setItem('goc.theme', t);
   }
   applyTheme(localStorage.getItem('goc.theme') || 'dark');
-  window.gocApplyTheme = applyTheme; // expose nếu trang muốn gọi
+  window.gocApplyTheme = applyTheme;
 
   // ---------- Collapse / Expand ----------
   function collapseBar(){
     const bar = document.querySelector('.goc-bar');
     const bub = document.getElementById('goc-bubble');
-    if(!bar || !bub) return;
-    bar.classList.add('goc-hidden');
-    bub.classList.add('show');
+    if(!bar||!bub) return;
+    bar.classList.add('goc-hidden'); bub.classList.add('show');
     localStorage.setItem('goc.bar.collapsed','1');
   }
   function expandBar(){
     const bar = document.querySelector('.goc-bar');
     const bub = document.getElementById('goc-bubble');
-    if(!bar || !bub) return;
-    bar.classList.remove('goc-hidden');
-    bub.classList.remove('show');
+    if(!bar||!bub) return;
+    bar.classList.remove('goc-hidden'); bub.classList.remove('show');
     localStorage.removeItem('goc.bar.collapsed');
   }
 
   // ---------- Floating Bar ----------
   function ensureBar(){
     if (document.querySelector('.goc-bar')) return;
-
     const bar = document.createElement('nav');
     bar.className = 'goc-bar';
     bar.innerHTML = `
@@ -146,32 +113,26 @@
     `;
     document.body.appendChild(bar);
 
-    // bubble (icon nổi khi bar bị thu gọn)
     let bubble = document.querySelector('.goc-bubble');
     if(!bubble){
       bubble = document.createElement('button');
-      bubble.className = 'goc-bubble';
-      bubble.id = 'goc-bubble';
-      bubble.title = 'Mở menu';
-      bubble.textContent = '≡';
+      bubble.className = 'goc-bubble'; bubble.id = 'goc-bubble';
+      bubble.title = 'Mở menu'; bubble.textContent = '≡';
       document.body.appendChild(bubble);
     }
 
-    // events
     const btnCollapse = document.getElementById('goc-collapse');
-    btnCollapse && (btnCollapse.onclick = collapseBar);
-    bubble && (bubble.onclick = expandBar);
+    if (btnCollapse) btnCollapse.onclick = collapseBar;
+    if (bubble) bubble.onclick = expandBar;
 
-    // open LICENSEGOC panel
     const op = document.getElementById('goc-open-panel');
-    op && op.addEventListener('click', ()=>togglePanel(true));
+    if (op) op.addEventListener('click', ()=>togglePanel(true));
 
-    // AI Tim: tạm điều hướng tới trang có chat (đặt anchor tùy trang)
     const ai = document.getElementById('goc-ai');
-    ai && ai.addEventListener('click', ()=>{ location.href = 'licensenetwork.html#aitim'; });
+    if (ai) ai.addEventListener('click', ()=>{ location.href = 'licensenetwork.html#aitim'; });
   }
 
-  // ---------- LICENSEGOC panel ----------
+  // ---------- Panel ----------
   function makePanel(){
     if (document.querySelector('.goc-panel')) return;
     const p = document.createElement('aside');
@@ -184,7 +145,7 @@
       <div class="row"><b>Submit Idea / Work</b><span>Timestamp + protection</span></div>
       <div class="row"><b>Vault</b><span>Identity &amp; wallets (demo/local)</span></div>
       <div class="row"><b>Apps</b><span>Integrations &amp; community tools</span></div>
-      <div class="row"><b>News/Media</b><span>Pictures, videos, arts (editable later)</span></div>
+      <div class="row"><b>News/Media</b><span>Pictures, videos, arts</span></div>
     `;
     p.querySelector('.goc-x').addEventListener('click', ()=>togglePanel(false));
     document.body.appendChild(p);
@@ -197,14 +158,10 @@
   // ---------- Translate ----------
   function ensureTranslate(){
     if (document.getElementById('google_translate_element')) return;
-    const box = document.createElement('div');
-    box.id = 'google_translate_element';
-    document.body.appendChild(box);
-
+    const box = document.createElement('div'); box.id = 'google_translate_element'; document.body.appendChild(box);
     const s = document.createElement('script');
     s.src = 'https://translate.google.com/translate_a/element.js?cb=__gocInitTranslate';
     document.head.appendChild(s);
-
     window.__gocInitTranslate = function(){
       new google.translate.TranslateElement(
         {pageLanguage:'vi', includedLanguages:'en,vi,ja,ko,zh-CN,fr,de,es'},
@@ -217,24 +174,14 @@
 
   // ---------- Boot ----------
   window.addEventListener('DOMContentLoaded', ()=>{
-    ensureBar();
-    makePanel();
-    ensureTranslate();
+    ensureBar(); makePanel(); ensureTranslate();
 
-    // chừa khoảng dưới cho bar nếu trang chưa có
     if (!document.querySelector('[data-goc-space]')){
-      const sp = document.createElement('div');
-      sp.setAttribute('data-goc-space','');
-      document.body.appendChild(sp);
+      const sp = document.createElement('div'); sp.setAttribute('data-goc-space',''); document.body.appendChild(sp);
     }
-
-    // áp trạng thái thu gọn nếu có
-    (function(){
-      const collapsed = localStorage.getItem('goc.bar.collapsed') === '1';
-      const bar = document.querySelector('.goc-bar');
-      const bub = document.getElementById('goc-bubble');
-      if(!bar || !bub) return;
-      if(collapsed){ bar.classList.add('goc-hidden'); bub.classList.add('show'); }
-    })();
+    const collapsed = localStorage.getItem('goc.bar.collapsed') === '1';
+    const bar = document.querySelector('.goc-bar');
+    const bub = document.getElementById('goc-bubble');
+    if (collapsed && bar && bub){ bar.classList.add('goc-hidden'); bub.classList.add('show'); }
   });
 })();
