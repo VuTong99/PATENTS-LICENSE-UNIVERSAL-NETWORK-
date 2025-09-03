@@ -42,7 +42,7 @@
 .goc-bubble::after{
   content:""; position:absolute; inset:-6px; border-radius:14px;
   box-shadow:0 0 18px rgba(255,214,107,.45); opacity:0;
-  animation:gocPulse 2.8s ease-out infinite;
+  animation:gocPulse 4.8s ease-out infinite;
 }
 .goc-bubble{position:fixed;left:12px;bottom:12px;z-index:2147483647;
   width:48px;height:48px;border-radius:12px;cursor:pointer;
