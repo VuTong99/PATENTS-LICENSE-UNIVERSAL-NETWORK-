@@ -1,81 +1,368 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Creations Room – Gallery</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Creations Room — Live Collaboration (DEMO)</title>
 <style>
-  body{
-    margin:0; background:#0a0b0f; color:#fff;
-    font-family:system-ui, Arial, sans-serif;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    min-height:100vh;
+  :root{
+    --bg:#0a0f1a; --panel:#0f1422; --ink:#e8f0ff; --muted:#9fb0d1;
+    --line:rgba(120,160,255,.25); --brand:#6fd3ff; --gold:#ffd66b; --ok:#62f1a1;
   }
-  h1{margin:16px 0;}
-  .gallery{
-    position:relative; max-width:900px; width:100%; overflow:hidden; border-radius:14px;
-    box-shadow:0 12px 28px rgba(0,0,0,.5);
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;background:radial-gradient(1200px 800px at 50% -200px, #122040 0%, #0b1120 45%, #05080f 100%);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  a{color:var(--brand);text-decoration:none}
+  .wrap{min-height:100vh;display:grid;grid-template-rows:72px 1fr;gap:12px;padding:12px 12px 110px}
+  .glass{background:linear-gradient(180deg, #10182b, #0a1020); border:1px solid var(--line); border-radius:16px; box-shadow:0 12px 40px rgba(0,0,0,.45);}
+
+  /* Header */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;position:sticky;top:0;z-index:2}
+  .logo{display:flex;align-items:center;gap:12px;font-weight:800}
+  .logo .dot{width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 40% 40%, #7ef, #19a7ff)}
+  .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);padding:10px 14px;border-radius:999px;background:linear-gradient(180deg,#15213a,#0f172a)}
+  .tabs{display:flex;gap:10px}
+  .tabs button{all:unset;cursor:pointer}
+  .tabs .on{box-shadow:inset 0 0 0 2px rgba(111,211,255,.35)}
+  .hint{color:var(--muted);font-size:14px}
+
+  /* Layout */
+  .main{display:grid;grid-template-columns:260px 1fr 280px;gap:12px;min-height:72vh}
+  .col{padding:14px}
+  .title{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .title h3{margin:0;font-size:16px;letter-spacing:.2px;color:#cfe2ff}
+  .btn{appearance:none;border:1px solid var(--line);background:linear-gradient(180deg,#172342,#0c142a);color:var(--ink);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:700}
+  .btn:active{transform:translateY(1px)}
+
+  /* Rooms list */
+  .rooms ul,.members ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .rooms li,.members li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,#0f162c,#0b1224)}
+  .rooms li.on{outline:2px solid rgba(111,211,255,.35)}
+  .rooms .meta{font-size:12px;color:var(--muted)}
+
+  /* Board */
+  .board{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .lane{border:1px dashed var(--line);border-radius:14px;background:linear-gradient(180deg,#0e1630,#0a0f22);padding:12px;min-height:220px}
+  .lane h4{margin:0 0 10px 0;color:#bcd9ff;letter-spacing:.3px}
+  .card{user-select:none;cursor:grab;border:1px solid rgba(255,255,255,.06);background:linear-gradient(180deg,#142043,#0d152b);padding:10px;border-radius:12px;margin:10px 0;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .card:active{cursor:grabbing}
+  .lane.dragover{outline:2px solid rgba(98,241,161,.35)}
+  .add{display:flex;gap:8px}
+
+  /* Chat */
+  .chat{display:grid;grid-template-rows:1fr auto;gap:10px;height:100%}
+  .chatlog{overflow:auto;border:1px solid var(--line);border-radius:12px;padding:10px;background:linear-gradient(180deg,#0e152b,#0a0f20)}
+  .msg{margin:8px 0}
+  .msg b{color:#9fe1ff}
+  .me b{color:#62f1a1}
+  .composer{display:flex;gap:8px}
+  .composer input{flex:1;border:1px solid var(--line);border-radius:10px;background:#0b1224;color:var(--ink);padding:10px}
+
+  /* Profile menu */
+  .profile{position:relative}
+  .avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:linear-gradient(180deg,#16274a,#0b1730);border:1px solid var(--line);cursor:pointer}
+  .menu{position:absolute;right:0;top:52px;width:220px;display:none;background:linear-gradient(180deg,#0f162b,#0a1122);border:1px solid var(--line);border-radius:12px;box-shadow:0 16px 44px rgba(0,0,0,.45);overflow:hidden}
+  .menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.05)}
+  .menu a:hover{background:rgba(255,255,255,.04)}
+  .profile.open .menu{display:block}
+
+  /* Tiny badges */
+  .badge{font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);background:linear-gradient(180deg,#14234a,#0c142b);color:#cfe2ff}
+  .online{color:#9fffb9}
+  .dot2{width:8px;height:8px;border-radius:50%;background:#62f1a1;display:inline-block;margin-right:6px}
+
+  /* Responsive */
+  @media (max-width: 1024px){
+    .main{grid-template-columns:1fr;grid-auto-rows:auto}
+    .chat{height:auto}
   }
-  .slides{
-    display:flex; transition:transform .4s ease-in-out;
-  }
-  .slides img{
-    width:100%; border-radius:14px; flex-shrink:0;
-  }
-  .nav{
-    position:absolute; top:50%; transform:translateY(-50%);
-    font-size:32px; color:#ffd66b; cursor:pointer;
-    background:rgba(0,0,0,.4); padding:10px; border-radius:50%;
-    user-select:none;
-  }
-  .prev{left:10px;}
-  .next{right:10px;}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<h1>📸 Creations Room – Gallery</h1>
+  <!-- Header -->
+  <header class="top glass">
+    <div class="logo pill">
+      <span class="dot"></span>
+      <div>
+        <div style="font-weight:900;letter-spacing:.4px">CREATIONS ROOM</div>
+        <div class="hint">Live collaboration • Idea → Review → Protect → Coin</div>
+      </div>
+    </div>
 
-<div class="gallery" id="gallery">
-  <div class="slides" id="slides">
-    <img src="assets/img1.jpg" alt="Gallery 1">
-    <img src="assets/img2.jpg" alt="Gallery 2">
-    <img src="assets/img3.jpg" alt="Gallery 3">
-    <img src="assets/img4.jpg" alt="Gallery 4">
-  </div>
-  <span class="nav prev" onclick="move(-1)">❮</span>
-  <span class="nav next" onclick="move(1)">❯</span>
+    <div class="tabs">
+      <button class="pill btn tab on" data-tab="idea">💡 Idea</button>
+      <button class="pill btn tab" data-tab="review">🧪 Review</button>
+      <button class="pill btn tab" data-tab="protect">🛡 Protect</button>
+      <button class="pill btn tab" data-tab="coin">🪙 Coin</button>
+    </div>
+
+    <div class="profile">
+      <div id="avatar" class="avatar">U</div>
+      <nav class="menu glass">
+        <a href="#" id="menu-settings">⚙️ Settings</a>
+        <a href="#" id="menu-ideas">🗂 My Ideas</a>
+        <a href="#" id="menu-wallet">💳 Wallet</a>
+        <a href="#" id="menu-logout">🚪 Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <section class="main">
+    <!-- Left: Rooms -->
+    <aside class="col glass rooms">
+      <div class="title">
+        <h3>Rooms</h3>
+        <button class="btn" id="newRoom">＋ New</button>
+      </div>
+      <ul id="roomList"></ul>
+    </aside>
+
+    <!-- Center: Board -->
+    <main class="col glass center">
+      <div class="title">
+        <h3 id="roomTitle">Room: Common</h3>
+        <div class="badge" id="tableBadge">Table: Idea</div>
+      </div>
+
+      <div class="board" id="board">
+        <div class="lane" data-lane="todo">
+          <h4>To-Do</h4>
+          <div class="add">
+            <input id="newCard" placeholder="Thêm thẻ mới… (Enter)"/>
+          </div>
+          <div class="lane-body" id="todo"></div>
+        </div>
+        <div class="lane" data-lane="doing">
+          <h4>Doing</h4>
+          <div class="lane-body" id="doing"></div>
+        </div>
+        <div class="lane" data-lane="done">
+          <h4>Done</h4>
+          <div class="lane-body" id="done"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right: Members + Chat -->
+    <aside class="col glass members">
+      <div class="title">
+        <h3>Members Online</h3>
+        <span class="badge"><span class="dot2"></span>live</span>
+      </div>
+      <ul id="memberList"></ul>
+
+      <div style="height:14px"></div>
+      <div class="title"><h3>Room Chat</h3></div>
+      <div class="chat">
+        <div class="chatlog" id="chatlog"></div>
+        <div class="composer">
+          <input id="chatmsg" placeholder="Gõ tin nhắn… (Enter)"/>
+          <button class="btn" id="send">Gửi</button>
+        </div>
+      </div>
+    </aside>
+  </section>
 </div>
 
+<!-- GOC Floating Bar Clear (đã có trong site) -->
+<script src="goc-ui.js?v=9" defer></script>
+
 <script>
-let index = 0;
-const slides=document.getElementById('slides');
-const total=slides.children.length;
+(function(){
+  // --------- Small store helpers ---------
+  const bc = ('BroadcastChannel' in window) ? new BroadcastChannel('goc-creations') : null;
+  const NOW = ()=>Date.now();
+  const uid = ()=>Math.random().toString(36).slice(2,9);
+  const LS = {
+    get:(k,def)=>{ try{ return JSON.parse(localStorage.getItem(k)) ?? def; }catch{return def}},
+    set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))
+  };
 
-function move(step){
-  index=(index+step+total)%total;
-  slides.style.transform=`translateX(-${index*100}%)`;
-}
+  // --------- User profile (local demo) ---------
+  const USERKEY='goc.user';
+  let me = LS.get(USERKEY);
+  if(!me){
+    const nick = prompt('Tên hiển thị của bạn?', 'User'+Math.floor(Math.random()*999));
+    me = { id: uid(), name: nick || 'User'+uid(), color: `hsl(${Math.floor(Math.random()*360)} 70% 55%)` };
+    LS.set(USERKEY, me);
+  }
+  const avatar = document.getElementById('avatar');
+  avatar.textContent = me.name.slice(0,1).toUpperCase();
+  avatar.style.background = `radial-gradient(circle at 35% 30%, #1b2b55, #0c1835)`;
+  avatar.style.borderColor = 'rgba(111,211,255,.35)';
+  avatar.title = me.name;
 
-// ---- Swipe / Drag ----
-let startX=0;
-const gallery=document.getElementById('gallery');
+  // profile dropdown
+  avatar.addEventListener('click', ()=>{
+    avatar.parentElement.classList.toggle('open');
+  });
+  document.addEventListener('click', e=>{
+    if(!avatar.parentElement.contains(e.target)) avatar.parentElement.classList.remove('open');
+  });
+  document.getElementById('menu-settings').onclick = ()=>alert('Settings (demo)');
+  document.getElementById('menu-ideas').onclick = ()=>alert('My Ideas (demo)');
+  document.getElementById('menu-wallet').onclick = ()=>alert('Wallet (demo)');
+  document.getElementById('menu-logout').onclick = ()=>{ localStorage.removeItem(USERKEY); location.reload(); };
 
-// chuột
-gallery.addEventListener('mousedown', e => startX=e.pageX);
-gallery.addEventListener('mouseup', e =>{
-  if(startX-e.pageX>50) move(1);
-  else if(e.pageX-startX>50) move(-1);
-});
+  // --------- Rooms / Tables ---------
+  const ROOMSKEY='goc.rooms';
+  let rooms = LS.get(ROOMSKEY, [
+    {id:'common', name:'Common', created:NOW()},
+    {id:'design', name:'Design', created:NOW()},
+    {id:'invest', name:'Investors', created:NOW()}
+  ]);
+  let currentRoom = LS.get('goc.currentRoom','common');
+  const tables = ['idea','review','protect','coin'];
+  let currentTable = LS.get('goc.currentTable','idea');
 
-// cảm ứng
-gallery.addEventListener('touchstart', e => startX=e.touches[0].clientX);
-gallery.addEventListener('touchend', e =>{
-  const endX=e.changedTouches[0].clientX;
-  if(startX-endX>50) move(1);
-  else if(endX-startX>50) move(-1);
-});
+  const roomList = document.getElementById('roomList');
+  const roomTitle = document.getElementById('roomTitle');
+  const tableBadge = document.getElementById('tableBadge');
+
+  function renderRooms(){
+    roomList.innerHTML='';
+    rooms.forEach(r=>{
+      const li=document.createElement('li');
+      li.className = (r.id===currentRoom)?'on':'';
+      li.innerHTML = `<div><b>${r.name}</b><div class="meta">id:${r.id}</div></div>
+                      <button class="btn" data-join="${r.id}">Join</button>`;
+      roomList.appendChild(li);
+    });
+  }
+  function switchRoom(id){
+    currentRoom=id; LS.set('goc.currentRoom',id);
+    roomTitle.textContent = 'Room: '+ rooms.find(x=>x.id===id)?.name;
+    loadBoard(); loadChat(); presenceJoin();
+    bc && bc.postMessage({type:'room',room:id});
+    renderMembers();
+  }
+  document.getElementById('newRoom').onclick=()=>{
+    const name=prompt('Tên room mới?','My Room');
+    if(!name) return;
+    const id=(name.toLowerCase().replace(/[^a-z0-9]+/g,'-')||'room')+'-'+uid();
+    rooms.push({id,name,created:NOW()});
+    LS.set(ROOMSKEY,rooms); renderRooms(); switchRoom(id);
+  };
+  roomList.addEventListener('click', e=>{
+    const id=e.target.getAttribute('data-join');
+    if(id) switchRoom(id);
+  });
+
+  // --------- Tabs (tables) ---------
+  document.querySelectorAll('.tab').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+      btn.classList.add('on');
+      currentTable=btn.dataset.tab; LS.set('goc.currentTable',currentTable);
+      tableBadge.textContent='Table: '+btn.textContent.replace(/^[^\s]+\s/,'');
+      loadBoard();
+    });
+  });
+  function setTabVisual(){
+    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on', x.dataset.tab===currentTable));
+    tableBadge.textContent = 'Table: ' + document.querySelector('.tab.on').textContent.replace(/^[^\s]+\s/,'');
+  }
+
+  // --------- Board data ---------
+  function keyBoard(){ return `goc.board.${currentRoom}.${currentTable}` }
+  function getBoard(){ return LS.get(keyBoard(), {todo:[],doing:[],done:[]}) }
+  function saveBoard(b){ LS.set(keyBoard(), b); }
+  function cardEl(card){
+    const div=document.createElement('div');
+    div.className='card'; div.draggable=true; div.dataset.id=card.id;
+    div.innerHTML=`<b style="color:${me.color}">#${card.id.slice(0,4)}</b> ${card.text}`;
+    div.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain',card.id); });
+    return div;
+  }
+  function loadBoard(){
+    const b=getBoard();
+    ['todo','doing','done'].forEach(l=>{
+      const box=document.getElementById(l);
+      box.innerHTML='';
+      b[l].forEach(c=>box.appendChild(cardEl(c)));
+    });
+  }
+  // lanes drag
+  document.querySelectorAll('.lane').forEach(lane=>{
+    lane.addEventListener('dragover',e=>{e.preventDefault(); lane.classList.add('dragover')});
+    lane.addEventListener('dragleave',()=>lane.classList.remove('dragover'));
+    lane.addEventListener('drop',e=>{
+      e.preventDefault(); lane.classList.remove('dragover');
+      const id=e.dataTransfer.getData('text/plain'); if(!id) return;
+      const b=getBoard();
+      ['todo','doing','done'].forEach(k=>b[k]=b[k].filter(c=>c.id!==id));
+      const all=[...b.todo,...b.doing,...b.done]; const card=all.find(c=>c.id===id);
+      if(card){ b[lane.dataset.lane].push(card); saveBoard(b); loadBoard(); bc && bc.postMessage({type:'board',room:currentRoom,table:currentTable}); }
+    });
+  });
+  // new card
+  document.getElementById('newCard').addEventListener('keydown',e=>{
+    if(e.key!=='Enter') return;
+    const text=e.target.value.trim(); if(!text) return;
+    const b=getBoard(); b.todo.push({id:uid(),text}); saveBoard(b); e.target.value=''; loadBoard();
+    bc && bc.postMessage({type:'board',room:currentRoom,table:currentTable});
+  });
+
+  // --------- Chat ---------
+  function keyChat(){ return `goc.chat.${currentRoom}` }
+  function getChat(){ return LS.get(keyChat(),[]) }
+  function pushChat(msg){ const arr=getChat(); arr.push(msg); LS.set(keyChat(),arr) }
+  const chatlog=document.getElementById('chatlog');
+  function renderChat(){
+    chatlog.innerHTML = getChat().slice(-200).map(m=>{
+      const cls = (m.uid===me.id)?'msg me':'msg';
+      const t = new Date(m.ts).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+      return `<div class="${cls}"><b>${m.name}</b> <span class="hint">• ${t}</span><div>${m.text}</div></div>`;
+    }).join('');
+    chatlog.scrollTop=chatlog.scrollHeight;
+  }
+  function sendChat(){
+    const ip=document.getElementById('chatmsg'); const text=ip.value.trim(); if(!text) return;
+    pushChat({uid:me.id,name:me.name,text,ts:NOW()}); ip.value=''; renderChat();
+    bc && bc.postMessage({type:'chat',room:currentRoom});
+  }
+  document.getElementById('send').onclick=sendChat;
+  document.getElementById('chatmsg').addEventListener('keydown',e=>{ if(e.key==='Enter') sendChat(); });
+
+  // --------- Presence (members online) ---------
+  function keyPresence(){ return `goc.presence.${currentRoom}` }
+  function touchPresence(){
+    const now=NOW(); const p=LS.get(keyPresence(),{});
+    p[me.id]={name:me.name,color:me.color,ts:now}; LS.set(keyPresence(),p);
+  }
+  function presenceJoin(){ touchPresence(); bc && bc.postMessage({type:'presence',room:currentRoom}); }
+  setInterval(()=>{ touchPresence(); }, 8000);
+  window.addEventListener('beforeunload',()=>{
+    const p=LS.get(keyPresence(),{}); delete p[me.id]; LS.set(keyPresence(),p);
+  });
+  function renderMembers(){
+    const box=document.getElementById('memberList'); box.innerHTML='';
+    const p=LS.get(keyPresence(),{}); const now=NOW();
+    const rows=Object.entries(p).filter(([id,info])=>now-info.ts < 20000); // 20s alive
+    LS.set(keyPresence(), Object.fromEntries(rows));
+    rows.sort((a,b)=>b[1].ts-a[1].ts).forEach(([id,info])=>{
+      const li=document.createElement('li');
+      li.innerHTML=`<div><b style="color:${info.color}">${info.name}</b><div class="meta">online</div></div><span class="badge">●</span>`;
+      box.appendChild(li);
+    });
+  }
+  setInterval(renderMembers, 5000);
+
+  // --------- Broadcast sync ---------
+  bc && bc.addEventListener('message', e=>{
+    const m=e.data;
+    if(m.room && m.room!==currentRoom) return;
+    if(m.type==='chat') renderChat();
+    if(m.type==='board' && m.table===currentTable) loadBoard();
+    if(m.type==='presence') renderMembers();
+    if(m.type==='room'){ renderMembers(); renderChat(); loadBoard(); }
+  });
+
+  // --------- Boot ---------
+  renderRooms(); setTabVisual(); switchRoom(currentRoom);
+})();
 </script>
-
-</body>
+<script src="goc-ui.js?v=10" defer></script></body>
 </html>
