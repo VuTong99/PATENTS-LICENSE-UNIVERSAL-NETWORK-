@@ -1,257 +1,308 @@
 <!doctype html>
 <html lang="vi">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Creations Room – Live Collaboration</title>
-<meta name="description" content="Phòng sáng tạo tương lai: Boards • Chat realtime • Menu hệ sinh thái LICENSE GỐC™">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Creations Room</title>
+<h1>Creations Room</h1>
+
+<!-- ===== THEME COLOR (browser UI) ===== -->
+<meta name="theme-color" content="#0a1422" />
+
+<!-- ===== SEO / OPEN GRAPH ===== -->
+<meta name="description" content="Plasma Room • Creations Board di động với AI Tim luôn sẵn sàng: chat, vote, submit cực gọn.">
+<meta property="og:title" content="LICENSENETWORK • Plasma Room" />
+<meta property="og:description" content="Creations Board • Chat • Quick Actions • AI Tim trợ lý • Plasma theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://vutong99.github.io/patents-license-universal-network/Room.html" />
+<meta property="og:image" content="icon-512.png" />
+<meta property="og:image:alt" content="Plasma Room preview" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- ===== ICONS / MANIFEST (PWA ready) ===== -->
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
 
 <style>
+/* ====== THEME (Plasma – default dark) ====== */
 :root{
-  --bg:#070b12; --ink:#eaf2ff; --muted:#a9b6d1; --line:rgba(120,170,255,.22);
-  --neon:#49b3ff; --neo2:#7a7dff; --gold:#ffd66b; --panel:#0c1320; --glass:#0d1a2e;
+  --bg:#08111b;--bg-2:#0b1523;
+  --panel:#0f1c2c;--panel-2:#11263b;
+  --line:rgba(120,170,255,.28);
+  --ink:#eaf2ff;--muted:#b9c7e9;
+
+  --p1:#49b3ff;--p2:#7a7dff;--p3:#ffd66b;
+  --ok:#5fe3b5;--warn:#ffb86b;--danger:#ff7f98;
+  --r:16px;--radius:12px;
 }
-*{box-sizing:border-box} html,body{height:100%}
-body{margin:0;color:var(--ink);font:15.5px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+/* Light mode (toggled) */
+:root.light{
+  --bg:#f6fbff;--bg-2:#e9f2ff;
+  --panel:#ffffff;--panel-2:#f3f7ff;
+  --line:rgba(12,42,84,.15);
+  --ink:#0a1626;--muted:#465b7a;
+}
+
+/* ====== BASE ====== */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;color:var(--ink);
+  font-family: Inter, SF Pro Text, Segoe UI, Roboto, system-ui, -apple-system, Arial, sans-serif;
   background:
     radial-gradient(900px 420px at 50% -10%, rgba(73,179,255,.18), transparent 60%),
     radial-gradient(700px 360px at 110% 20%, rgba(122,125,255,.12), transparent 60%),
     radial-gradient(800px 420px at -10% 120%, rgba(255,214,107,.08), transparent 60%),
-    linear-gradient(180deg,#080f19,#0a1422 55%, #08111b);}
+    linear-gradient(180deg, var(--bg), var(--bg-2) 55%, var(--bg));
+  min-height:100%;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.safe{padding-bottom: env(safe-area-inset-bottom, 12px)}
 
-/* khung toàn trang */
-.wrap{max-width:1200px;margin:20px auto 120px;padding:0 16px}
+/* ====== LAYOUT ====== */
+.app{max-width:520px;margin:0 auto;padding:12px 12px 88px}
+.top{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;margin-bottom:12px;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:linear-gradient(180deg,#0f1d31,#0b1422);
+  backdrop-filter: blur(10px);
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.dot{width:14px;height:14px;border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, #fff, var(--p1) 40%, transparent 70%);
+  box-shadow: 0 0 20px var(--p1);
+}
+.badge{
+  margin-left:auto;padding:8px 10px;border-radius:999px;
+  font-weight:700;font-size:13px;color:#dfe6ff;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#122338,#0a1422);
+}
+.mode{
+  margin-left:8px;padding:6px 10px;border-radius:10px;cursor:pointer;
+  border:1px solid var(--line);font-weight:800;font-size:12px;
+  background:linear-gradient(135deg, rgba(73,179,255,.18), rgba(122,125,255,.14) 55%, rgba(255,214,107,.15));
+}
 
-/* thanh trên: profile menu + nút snapshot */
-.topbar{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.brand{font-weight:900;letter-spacing:.3px}
-.pulse{color:var(--gold);text-shadow:0 0 8px rgba(255,214,107,.35)}
-.btn{padding:10px 14px;border-radius:12px;border:1px solid var(--line);
-  background:linear-gradient(180deg,#111a2a,#0b1422);color:var(--ink);font-weight:800;cursor:pointer}
+/* ====== BOARD ====== */
+.panel{
+  border:1px solid var(--line);border-radius:var(--r);
+  background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 10px 30px rgba(0,0,0,.2);
+}
+.panel h3{margin:0;padding:14px;border-bottom:1px solid var(--line);font-size:15px}
+.panel .body{padding:12px}
+
+.stage{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0c1726;position:relative}
+:root.light .stage{background:#f6fbff}
+.stage .hero{
+  aspect-ratio: 16/10;display:grid;place-items:center;position:relative;
+  background:
+    radial-gradient(480px 230px at 50% 0, rgba(73,179,255,.25), transparent 60%),
+    linear-gradient(180deg,#0f1d31,#0a1422);
+}
+:root.light .stage .hero{
+  background:radial-gradient(480px 230px at 50% 0, rgba(73,179,255,.12), transparent 60%),linear-gradient(180deg,#ffffff,#f4f8ff);
+}
+.title{text-align:center;line-height:1.25;font-size:clamp(18px,5.5vw,26px);font-weight:900;text-shadow:0 10px 30px rgba(73,179,255,.35)}
+.sub{color:var(--muted);text-align:center;margin-top:6px}
+
+/* chips */
+.hero .chips{position:absolute;left:10px;bottom:10px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{padding:7px 10px;border-radius:999px;font-weight:700;font-size:12px;color:#cfe0ff;border:1px solid var(--line);background:linear-gradient(180deg,#11263a,#0c1828)}
+:root.light .pill{color:#17304d;background:linear-gradient(180deg,#ffffff,#eef5ff)}
+
+/* ====== ACTIONS + CHAT ====== */
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.btn{
+  padding:10px 12px;border-radius:12px;font-weight:800;text-align:center;
+  border:1px solid var(--line);
+  background:linear-gradient(135deg, rgba(73,179,255,.18), rgba(122,125,255,.14) 55%, rgba(255,214,107,.15));
+  backdrop-filter: blur(6px);cursor:pointer;user-select:none
+}
 .btn:active{transform:scale(.98)}
+.btn:focus-visible{outline:2px solid var(--p1);outline-offset:2px}
 
-/* profile menu (góc phải trên khu vực nội dung) */
-.profile{margin-left:auto;position:relative}
-.avatar{width:38px;height:38px;border-radius:50%;border:2px solid rgba(255,214,107,.6);
-  background:radial-gradient(circle at 30% 30%,#fff,#ffe6ad 45%,transparent 70%),linear-gradient(135deg,#ffe6ad,#ffb4c8);
-  cursor:pointer;box-shadow:0 0 0 3px rgba(73,179,255,.15)}
-.menu{position:absolute;right:0;top:48px;min-width:200px;background:linear-gradient(180deg,#0f1d31,#0a1422);
-  border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,.45);display:none;overflow:hidden}
-.menu a{display:flex;gap:10px;align-items:center;padding:10px 12px;text-decoration:none;color:var(--ink);border-top:1px dashed rgba(255,255,255,.06)}
-.menu a:first-child{border-top:0}
-.menu a:hover{background:#0c1828}
+.chat{margin-top:10px;display:flex;gap:8px;align-items:center}
+.input{
+  flex:1;border:1px solid var(--line);border-radius:12px;padding:12px;
+  background:linear-gradient(180deg,#0f1d31,#0b1422);color:var(--ink)
+}
+:root.light .input{background:#fff}
+.send{padding:12px 14px;border-radius:12px;font-weight:800;border:0;background:linear-gradient(135deg,var(--p2),var(--p1));color:#001428}
 
-/* phòng tròn kính */
-.room{
-  position:relative; margin:8px auto; padding:22px; border:1px solid var(--line); border-radius:18px;
-  background:linear-gradient(180deg,rgba(11,21,35,.85),rgba(9,17,29,.9));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 20px 60px rgba(0,0,0,.45);
-}
-.stage{
-  position:relative; aspect-ratio:16/9; border:1px solid var(--line); border-radius:22px; overflow:hidden;
-  background:
-    radial-gradient(1200px 600px at 50% 105%, rgba(73,179,255,.18), transparent 60%),
-    linear-gradient(180deg,#0b1523,#09111c);
-}
-.city{
-  position:absolute; inset:0; pointer-events:none; opacity:.28;
-  background:
-    radial-gradient(800px 300px at 50% 10%, rgba(122,125,255,.12), transparent 60%),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 2px, transparent 2px 10px);
-  mix-blend-mode:screen; filter:blur(1px);
-}
+/* ====== FLOATING AI TIM ====== */
+.assistant{position:fixed;right:14px;bottom:94px;z-index:12;display:flex;align-items:center;gap:8px}
+.ai-bubble{padding:8px 12px;border-radius:12px;font-weight:700;font-size:12px;color:#0a1320;border:1px solid var(--line);background:linear-gradient(135deg,#ffd66b,#49b3ff);box-shadow:0 6px 22px rgba(73,179,255,.35)}
+.ai-avatar{width:58px;height:58px;border-radius:50%;border:2px solid rgba(255,214,107,.8);background:radial-gradient(circle at 30% 30%, #fff, #ffe6ad 45%, transparent 70%),linear-gradient(135deg,#ffe6ad,#ffb4c8);position:relative;overflow:hidden}
+.ai-avatar:before{content:"♥";position:absolute;right:6px;bottom:0;font-weight:900;color:#ff6b6b;text-shadow:0 0 14px #ff9aa9}
 
-/* bàn oval trung tâm */
-.table{
-  position:absolute; left:50%; top:54%; transform:translate(-50%,-50%); width:min(72%,820px); height:220px;
-  background:radial-gradient(120% 120% at 50% 50%, rgba(73,179,255,.22), rgba(10,20,34,.85) 60%);
-  border:1px solid var(--line); border-radius:999px; box-shadow:0 8px 60px rgba(73,179,255,.25), inset 0 0 60px rgba(73,179,255,.12);
-}
-.table:after{content:""; position:absolute; inset:8px; border-radius:999px; border:1px dashed rgba(255,255,255,.12);}
+/* ====== NAVBAR ====== */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:10;border-top:1px solid var(--line);background:linear-gradient(180deg, rgba(15,29,49,.92), rgba(10,20,34,.95));backdrop-filter: blur(10px)}
+:root.light .nav{background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(244,248,255,.95))}
+.nav .row{max-width:520px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;gap:10px;align-items:flex-end}
+.item{flex:1;text-align:center;color:#eaefff;font-size:11px;font-weight:800}
+:root.light .item{color:#15304b}
+.ico{width:30px;height:30px;margin:0 auto 6px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;box-shadow:0 0 16px rgba(73,179,255,.2) inset}
+.item--gold .ico{box-shadow:0 0 16px rgba(255,214,107,.35) inset}
+.ico svg{width:18px;height:18px;display:block;opacity:.95}
 
-/* mini boards trên mặt bàn */
-.boards{position:absolute; inset:22px; display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
-.board{background:linear-gradient(180deg,#0f1d31,#0b1422); border:1px solid var(--line); border-radius:12px; padding:10px}
-.board h4{margin:0 0 8px}
-.card{border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:8px; margin:8px 0; background:#0c1526}
-
-/* màn hình treo tường */
-.wall{
-  position:absolute; left:50%; top:8%; transform:translateX(-50%); width:min(82%,980px);
-  background:linear-gradient(180deg,#0f1d31,#0b1422); border:1px solid var(--line); border-radius:14px; padding:12px;
-  text-align:center; box-shadow:0 14px 40px rgba(0,0,0,.45);
-}
-.wall b{font-size:clamp(16px,2.6vw,22px)}
-.online{margin-top:6px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
-.dot{width:24px;height:24px;border-radius:50%; border:2px solid rgba(255,214,107,.6);
-  background:radial-gradient(circle at 30% 30%,#fff,#ffe6ad 45%,transparent 70%),linear-gradient(135deg,#ffe6ad,#ffb4c8)}
-
-/* menu trái/phải xung quanh */
-.side{position:absolute; top:50%; transform:translateY(-50%); display:grid; gap:10px}
-.left{left:18px} .right{right:18px}
-.side .btn{border-color:rgba(73,179,255,.35)}
-.side .btn:hover{box-shadow:0 10px 22px rgba(73,179,255,.25)}
-
-/* icon bay quanh mép phòng */
-.floaters{pointer-events:none}
-.icon{
-  position:absolute; width:42px;height:42px;border-radius:12px;border:1px solid var(--line);
-  background:linear-gradient(180deg,#11263a,#0c1828); box-shadow:0 8px 20px rgba(0,0,0,.35);
-  display:grid;place-items:center; opacity:.85; animation:orbit 18s linear infinite;
-}
-.icon i{filter:drop-shadow(0 0 8px rgba(73,179,255,.45))}
-.icon:nth-child(1){left:6%; top:14%}
-.icon:nth-child(2){left:84%; top:10%; animation-duration:22s}
-.icon:nth-child(3){left:4%; bottom:12%; animation-duration:26s}
-.icon:nth-child(4){right:4%; bottom:16%; animation-duration:20s}
-@keyframes orbit{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
-  100%{transform:translateY(0)}
-}
-
-/* chat góc dưới */
-.chat{
-  position:fixed; right:18px; bottom:110px; width:min(420px,92vw);
-  background:rgba(15,25,40,.92); border:1px solid var(--line); border-radius:16px;
-  box-shadow:0 18px 40px rgba(0,0,0,.55); overflow:hidden; display:flex; flex-direction:column
-}
-.chat header{display:flex;gap:8px;align-items:center;padding:10px 12px;background:#0f1d31;border-bottom:1px solid var(--line)}
-.chat .body{padding:12px;max-height:34vh;overflow:auto}
-.msg{background:#0b1422;border:1px solid rgba(255,255,255,.08);padding:8px;border-radius:10px;margin:6px 0}
-.chat .row{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}
-.chat input{flex:1;background:#0b1422;color:var(--ink);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px}
-
-/* responsive nhẹ */
-@media(max-width:900px){
-  .boards{grid-template-columns:1fr}
-  .side{display:none}
-}
-</style>
+.row{display:flex;gap:8px;align-items:center}
+.space{height:10px}
+.hero-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.35);
+  margin-bottom: 10px;
+}</style>
 </head>
 <body>
 
-<div class="wrap" id="viewport">
-  <div class="topbar">
-    <div class="brand">CREATIONS ROOM <span class="pulse">• Live</span></div>
-    <button class="btn" id="btnShot">📸 Tải ảnh PNG</button>
+<div class="app safe" id="app">
 
-    <!-- Profile -->
-    <div class="profile">
-      <div class="avatar" id="avatar" title="Open profile"></div>
-      <nav class="menu" id="menu">
-        <a href="#"><span>⚙️</span> Settings</a>
-        <a href="#"><span>🧩</span> My Ideas</a>
-        <a href="vault.html"><span>👛</span> Wallet</a>
-        <a href="#"><span>🚪</span> Logout</a>
-      </nav>
+  <!-- TOP BAR -->
+  <div class="top" role="banner">
+    <div class="brand" aria-label="Brand">
+      <div class="dot" aria-hidden="true"></div>
+      <div>LICENSENETWORK</div>
     </div>
+    <span class="badge">Plasma Room • Live</span>
+    <button class="mode" id="modeBtn" aria-pressed="false" aria-label="Đổi giao diện">Light</button>
   </div>
 
-  <!-- Phòng tròn kính -->
-  <section class="room">
-    <div class="stage">
-      <div class="city"></div>
-
-      <!-- Màn hình tường -->
-      <div class="wall">
-        <b>Creations Room — Live Collaboration</b>
-        <div class="online">
-          <div class="dot" title="Peter"></div>
-          <div class="dot" title="Jackson"></div>
-          <div class="dot" title="Lisa"></div>
-          <div class="dot" title="Aganasaki"></div>
-          <div class="dot" title="Thanh Vo"></div>
-          <div class="dot" title="Muhammad D."></div>
-        </div>
-      </div>
-
-      <!-- Bàn oval + mini Boards -->
-      <div class="table">
-        <div class="boards">
-          <div class="board">
-            <h4>To-do</h4>
-            <div class="card">Thiết kế cockpit</div>
-            <div class="card">UI chat realtime</div>
-          </div>
-          <div class="board">
-            <h4>Doing</h4>
-            <div class="card">Magnetic lock prototype</div>
-          </div>
-          <div class="board">
-            <h4>Done</h4>
-            <div class="card">Wireframe menu trái/phải</div>
+  <!-- CREATIONS BOARD -->
+  <section class="panel" aria-labelledby="boardTitle">
+    <h3 id="boardTitle">Creations Board</h3>
+    <div class="body">
+      <div class="stage" aria-label="Canvas tổng hợp">
+        <div class="hero"><img src="assets/IMG_6457.png" alt="Concept Preview" class="hero-img">
+          <div class="title">Rocket • Car • Ideas — Tổng hợp thiết kế</div>
+          <div class="sub">Tất cả cập nhật sẽ tự đồng bộ vào Vault</div>
+          <div class="chips" aria-label="Tags">
+            <span class="pill">Body</span>
+            <span class="pill">Cockpit</span>
+            <span class="pill">Magnetic Lock</span>
+            <span class="pill">Jet Engine</span>
           </div>
         </div>
       </div>
 
-      <!-- Menu trái/phải -->
-      <div class="side left">
-        <a class="btn" href="vault.html">📂 Vault Access</a>
-        <a class="btn" href="submit.html">📝 Submit Idea</a>
-        <a class="btn" href="paycards.html">💳 Pay & Cards</a>
-      </div>
-      <div class="side right">
-        <a class="btn" href="licensenetwork.html">🌐 Licensenetwork</a>
-        <a class="btn" href="licensecoin.html">💰 Licensecoin</a>
-        <a class="btn" href="licensenetwork.html#aitim">🤖 AI Tim ❤️</a>
+      <!-- Quick actions -->
+      <div class="actions" role="group" aria-label="Quick actions">
+        <button class="btn" onclick="toast('👍 Đã Vote!')">Vote</button>
+        <button class="btn" onclick="toast('➕ Thêm phần mới')">Add</button>
+        <button class="btn" onclick="toast('⬆️ Nộp bản nháp')">Submit</button>
       </div>
 
-      <!-- Icon bay quanh -->
-      <div class="floaters">
-        <div class="icon"><i>💡</i></div>
-        <div class="icon"><i>🧭</i></div>
-        <div class="icon"><i>🧲</i></div>
-        <div class="icon"><i>🚀</i></div>
+      <!-- Chat -->
+      <div class="chat" role="form" aria-label="Chat">
+        <input class="input" id="msg" placeholder="Nhập tin nhắn để chat…" aria-label="Nhập tin nhắn" />
+        <button class="send" onclick="sendMsg()" aria-label="Gửi tin nhắn">Gửi</button>
+      </div>
+      <div id="lastChat" class="sub" style="margin-top:8px"></div>
+    </div>
+  </section>
+
+  <div class="space"></div>
+
+  <!-- SHORT TOOLS -->
+  <section class="panel" aria-labelledby="toolsTitle">
+    <h3 id="toolsTitle">Tools</h3>
+    <div class="body">
+      <div class="row">
+        <button class="btn" onclick="toast('🔄 360° Rotate')">Rotate</button>
+        <button class="btn" onclick="toast('🧲 Magnet Tail on')">Magnet Tail</button>
+        <button class="btn" onclick="toast('🗂 Lưu vào Vault')">Save</button>
       </div>
     </div>
   </section>
+
+</div><!-- /app -->
+
+<!-- FLOATING ASSISTANT -->
+<div class="assistant safe" id="assistant" aria-live="polite">
+  <div class="ai-bubble">AI Tim luôn sẵn sàng</div>
+  <div class="ai-avatar" title="AI Tim"></div>
 </div>
 
-<!-- Chat nhỏ góc dưới -->
-<div class="chat" id="chat">
-  <header>💬 Room chat — realtime</header>
-  <div class="body" id="chatBody">
-    <div class="msg">Lisa: Push màu plasma đẹp đó!</div>
-    <div class="msg">Peter: Mình sẽ thêm 360° view cho model.</div>
-  </div>
+<!-- NAVIGATION -->
+<nav class="nav safe" role="navigation" aria-label="Bottom navigation">
   <div class="row">
-    <input id="chatInput" placeholder="Nhập tin nhắn…">
-    <button class="btn" id="btnSend">Gửi</button>
+    <a class="item item--gold" href="#" onclick="toast('🏠 Home');return false;">
+      <div class="ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 10.5 12 3l9 7.5v9H3v-9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </div><div>Home</div>
+    </a>
+    <a class="item" href="#" onclick="toast('🗄️ Vault');return false;">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10h8" stroke="currentColor" stroke-width="2"/></svg></div><div>Vault</div>
+    </a>
+    <a class="item item--gold" href="#" onclick="toast('🪙 Licensecoin');return false;">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 7v10M8.5 9.5h7" stroke="currentColor" stroke-width="2"/></svg></div><div>Licensecoin</div>
+    </a>
+    <a class="item" href="#" onclick="toast('🌐 Network');return false;">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c3 3.5 3 14 0 18M12 3c-3 3.5-3 14 0 18" stroke="currentColor" stroke-width="2"/></svg></div><div>Network</div>
+    </a>
+    <a class="item" href="#" onclick="toast('👤 Account');return false;">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="4" stroke="currentColor" stroke-width="2"/><path d="M4 21c2.5-4 13.5-4 16 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div>Account</div>
+    </a>
   </div>
-</div>
+</nav>
 
-<!-- Scripts: html2canvas (snapshot) + UI nhỏ -->
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
 <script>
-  // Profile dropdown
-  const avatar = document.getElementById('avatar');
-  const menu = document.getElementById('menu');
-  avatar.addEventListener('click', ()=>{ menu.style.display = (menu.style.display==='block'?'none':'block'); });
-  document.addEventListener('click', (e)=>{ if(!e.target.closest('.profile')) menu.style.display='none'; });
+/* ===== helpers ===== */
+const $ = s => document.querySelector(s);
 
-  // Chat mock (local only)
-  const chatInput = document.getElementById('chatInput');
-  const chatBody  = document.getElementById('chatBody');
-  document.getElementById('btnSend').onclick = ()=>{
-    const t = chatInput.value.trim(); if(!t) return;
-    const m = document.createElement('div'); m.className='msg'; m.textContent='You: ' + t;
-    chatBody.appendChild(m); chatInput.value='';
-    chatBody.scrollTop = chatBody.scrollHeight;
-  };
+function toast(txt){
+  const t = document.createElement('div');
+  t.textContent = txt;
+  Object.assign(t.style,{
+    position:'fixed',left:'50%',bottom:'calc(var(--goc-space-bottom) + 16px)', transform:'translateX(-50%)',
+    padding:'10px 14px',border:'1px solid rgba(120,170,255,.3)',
+    borderRadius:'12px',fontWeight:'800',color:'#001428',
+    background:'linear-gradient(135deg,#ffd66b,#49b3ff)',zIndex:40
+  });
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),1400);
+}
 
-  // Snapshot PNG
-  document.getElementById('btnShot').onclick = async ()=>{
-    const node = document.getElementById('viewport');
-    const canvas = await html2canvas(node, {backgroundColor: null});
-    const link = document.createElement('a');
-    link.download = 'creations-room.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-  };
+function sendMsg(){
+  const i = $('#msg'); const v = i.value.trim();
+  if(!v) return toast('💬 Nhập nội dung trước');
+  const items = JSON.parse(localStorage.getItem('lastChats')||'[]');
+  items.unshift({t:Date.now(),v});
+  localStorage.setItem('lastChats', JSON.stringify(items.slice(0,3)));
+  renderLast();
+  toast('AI Tim: đã nhận — "'+v+'"');
+  i.value = '';
+}
+
+function renderLast(){
+  const items = JSON.parse(localStorage.getItem('lastChats')||'[]');
+  $('#lastChat').textContent = items.length ? ('Gần đây: '+items.map(x=>x.v).join(' • ')) : '';
+}
+
+/* Light/Dark toggle */
+const modeBtn = $('#modeBtn');
+modeBtn.addEventListener('click', ()=>{
+  const light = document.documentElement.classList.toggle('light');
+  modeBtn.textContent = light ? 'Dark' : 'Light';
+  modeBtn.setAttribute('aria-pressed', light ? 'true' : 'false');
+  localStorage.setItem('prefMode', light ? 'light' : 'dark');
+});
+(function init(){
+  renderLast();
+  const pref = localStorage.getItem('prefMode');
+  if(pref==='light'){ document.documentElement.classList.add('light'); modeBtn.textContent='Dark'; modeBtn.setAttribute('aria-pressed','true'); }
+})();
 </script>
 
-<!-- Floating Bar Clear dùng chung (nếu đã có) -->
-<script src="goc-ui.js?v=12" defer></script>
+<script src="goc-ui.js"></script>
 </body>
 </html>
