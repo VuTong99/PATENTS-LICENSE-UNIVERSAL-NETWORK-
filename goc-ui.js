@@ -125,71 +125,67 @@
     bar.classList.remove('goc-hidden'); bub.classList.remove('show');
     localStorage.removeItem('goc.bar.collapsed');
   }
+  // ---------- Floating Bar ----------
+function ensureBar(){
+  if (document.querySelector('.goc-bar')) return;
+  const bar = document.createElement('nav');
+  bar.className = 'goc-bar';
+  bar.innerHTML = `
+    <button type="button" class="goc-collapse goc-blink" id="goc-collapse" title="Thu gọn menu">🎇</button>
+    <a href="index.html"><b>Home</b></a>
+    <a href="licensenetwork.html"><b>LICENSENETWORK</b></a>
+    <a href="creationsroom.html"><b>Creations Room</b></a>
+    <a href="musicroom.html"><b>🎧 Music Room</b></a>
+    <a href="licensecoin.html"><b>LICENSECOIN</b></a>
+    <a href="paycards.html"><b>Pay &amp; Cards</b></a>
+    <a href="vault.html"><b>Vault</b></a>
+    <a href="submit.html"><b>Submit</b></a>
 
-  /* --------- Floating Bar --------- */
-  function ensureBar(){
-    if (document.querySelector('.goc-bar')) return;
-    const bar = document.createElement('nav');
-    bar.className = 'goc-bar';
-    bar.innerHTML = `
-      <button type="button" class="goc-collapse goc-blink" id="goc-collapse" title="Thu gọn menu">🎇</button>
-      <a href="index.html"><b>Home</b></a>
-      <a href="licensenetwork.html"><b>LICENSENETWORK</b></a>
-      <a href="creationsroom.html"><b>Creations Room</b></a>
-      <a href="licensecoin.html"><b>LICENSECOIN</b></a>
-      <a href="paycards.html"><b>Pay &amp; Cards</b></a>
-      <a href="vault.html"><b>Vault</b></a>
-      <a href="submit.html"><b>Submit</b></a>
+    <span id="goc-mini" class="goc-mini goc-hidden" title="Now Playing">
+      <button class="pp" id="goc-mini-toggle">⏯</button>
+      <span class="tit" id="goc-mini-title">Now Playing…</span>
+      <button id="goc-mini-open">↗</button>
+    </span>
 
-      <button id="goc-rooms-btn" class="goc-pill">Rooms</button>
-      <button id="goc-open-panel" class="goc-pill"><span>LICENSEGOC</span></button>
+    <button id="goc-open-panel" class="goc-pill"><span>LICENSEGOC</span></button>
+    <button id="goc-ai" class="goc-pill">AI TIM ❤️</button>
+    <span class="goc-pill">🌐
+      <select id="goc-lang" class="goc-sel" aria-label="Translate">
+        <option value="">Translate</option>
+        <option value="en">English</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+        <option value="zh-CN">简体中文</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="es">Español</option>
+      </select>
+    </span>
+  `;
+  document.body.appendChild(bar);
 
-      <span class="goc-prof">
-        <button id="goc-prof-btn" class="goc-pill goc-prof-btn" aria-expanded="false" title="Account">
-          <span id="goc-av" class="goc-avatar">👤</span><b id="goc-prof-name">Guest</b>
-        </button>
-      </span>
-
-      <button id="goc-ai" class="goc-pill">AI TIM ❤️</button>
-
-      <span class="goc-pill">🌐
-        <select id="goc-lang" class="goc-sel" aria-label="Translate">
-          <option value="">Translate</option>
-          <option value="en">English</option>
-          <option value="vi">Tiếng Việt</option>
-          <option value="ja">日本語</option>
-          <option value="ko">한국어</option>
-          <option value="zh-CN">简体中文</option>
-          <option value="fr">Français</option>
-          <option value="de">Deutsch</option>
-          <option value="es">Español</option>
-        </select>
-      </span>
-    `;
-    document.body.appendChild(bar);
-
-    // bubble
-    let bubble = document.querySelector('.goc-bubble');
-    if(!bubble){
-      bubble = document.createElement('button');
-      bubble.className = 'goc-bubble'; bubble.id = 'goc-bubble';
-      bubble.title = 'Mở menu'; bubble.textContent = '≡';
-      document.body.appendChild(bubble);
-    }
-
-    // events
-    const btnCollapse = document.getElementById('goc-collapse');
-    btnCollapse && (btnCollapse.onclick = collapseBar);
-    bubble && (bubble.onclick = expandBar);
-
-    document.getElementById('goc-open-panel')?.addEventListener('click', ()=>togglePanel(true));
-    document.getElementById('goc-ai')?.addEventListener('click', ()=>{ location.href = 'licensenetwork.html#aitim'; });
-
-    // profile menu DOM
-    ensureProfileMenu();
-    // rooms panel DOM
-    ensureRooms();
+  let bubble = document.querySelector('.goc-bubble');
+  if(!bubble){
+    bubble = document.createElement('button');
+    bubble.className = 'goc-bubble'; bubble.id = 'goc-bubble';
+    bubble.title = 'Mở menu'; bubble.textContent = '≡';
+    document.body.appendChild(bubble);
   }
+
+  const btnCollapse = document.getElementById('goc-collapse');
+  if (btnCollapse) btnCollapse.onclick = collapseBar;
+  if (bubble) bubble.onclick = expandBar;
+
+  const op = document.getElementById('goc-open-panel');
+  if (op) op.addEventListener('click', ()=>togglePanel(true));
+
+  const ai = document.getElementById('goc-ai');
+  if (ai) ai.addEventListener('click', ()=>{ location.href = 'licensenetwork.html#aitim'; });
+
+  // init global music bridge
+  initMusicBridge();
+}
 
   /* --------- LICENSEGOC Panel --------- */
   function makePanel(){
@@ -473,5 +469,45 @@
     const bar = document.querySelector('.goc-bar');
     const bub = document.getElementById('goc-bubble');
     if (collapsed && bar && bub){ bar.classList.add('goc-hidden'); bub.classList.add('show'); }
+ 
+    // ---------- Global Music Bridge (Mini-Player) ----------
+function initMusicBridge(){
+  const mini = document.getElementById('goc-mini');
+  const t = document.getElementById('goc-mini-title');
+  const btnToggle = document.getElementById('goc-mini-toggle');
+  const btnOpen = document.getElementById('goc-mini-open');
+  if(!mini||!t||!btnToggle||!btnOpen) return;
+
+  const bc = ('BroadcastChannel' in window) ? new BroadcastChannel('goc-music') : null;
+
+  // Restore last known track
+  try{
+    const last = JSON.parse(localStorage.getItem('goc.music.now')||'null');
+    if(last && last.title){
+      t.textContent = `${last.title}${last.artist?(' — '+last.artist):''}`;
+      mini.classList.remove('goc-hidden');
+    }
+  }catch(e){}
+
+  // listen updates from Music Room
+  bc && bc.addEventListener('message', (e)=>{
+    const m = e.data || {};
+    if(m.type==='np'){ // now playing
+      const label = [m.title, m.artist].filter(Boolean).join(' — ');
+      t.textContent = label || 'Now Playing…';
+      mini.classList.remove('goc-hidden');
+      try{ localStorage.setItem('goc.music.now', JSON.stringify(m)); }catch(e){}
+    }
+    if(m.type==='state'){
+      // could update toggle icon if muốn, giữ đơn giản: ⏯
+    }
+  });
+
+  // controls
+  btnToggle.addEventListener('click', ()=>{
+    bc && bc.postMessage({cmd:'toggle'});
+  });
+  btnOpen.addEventListener('click', ()=>{
+    location.href = 'musicroom.html';
   });
 })();
