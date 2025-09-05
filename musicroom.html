@@ -453,5 +453,57 @@ canvas{width:100%;height:64px;background:#0a0f15;border-radius:8px;border:1px so
 </script>
 
 <!-- (tùy chọn) nếu đang dùng thanh nổi chung: <script src="goc-ui.js?v=10" defer></script> -->
+
+<script>
+(function(){
+  // Lấy tham chiếu audio/video chính của phòng (đặt id="player" cho phần tử phát)
+  const player = document.getElementById('player') || document.querySelector('audio,video');
+
+  // Thông tin bài đang phát -> sửa theo biến thực tế trong trang của Gốc
+  function currentTrack(){
+    // ví dụ đọc từ dataset; hoặc biến toàn cục window.nowTrack
+    const nt = (window.nowTrack)||{};
+    return {
+      title: nt.title || document.querySelector('.now-title')?.textContent || 'Unknown',
+      artist: nt.artist || document.querySelector('.now-artist')?.textContent || '',
+      cover: nt.cover || '',
+      url: nt.src || (player?player.currentSrc:''),
+      playing: !!(player && !player.paused)
+    };
+  }
+
+  const bc = ('BroadcastChannel' in window) ? new BroadcastChannel('goc-music') : null;
+
+  function broadcastNP(){
+    const np = currentTrack();
+    bc && bc.postMessage({type:'np', ...np});
+    try{ localStorage.setItem('goc.music.now', JSON.stringify(np)); }catch(e){}
+  }
+  function broadcastState(){
+    bc && bc.postMessage({type:'state', paused: player?.paused});
+  }
+
+  if(player){
+    ['loadedmetadata','play','pause','ended'].forEach(ev=>{
+      player.addEventListener(ev, ()=>{ broadcastNP(); broadcastState(); }, {passive:true});
+    });
+  }
+
+  // Nhận lệnh từ Mini-Player trên thanh nổi
+  bc && bc.addEventListener('message', (e)=>{
+    const m = e.data||{};
+    if(!player) return;
+    if(m.cmd==='toggle'){
+      if(player.paused) player.play().catch(()=>{});
+      else player.pause();
+    }
+    if(m.cmd==='next' && typeof window.nextTrack==='function'){ window.nextTrack(); }
+    if(m.cmd==='prev' && typeof window.prevTrack==='function'){ window.prevTrack(); }
+  });
+
+  // khởi phát lần đầu (nếu có bài)
+  setTimeout(broadcastNP, 200);
+})();
+</script>
 </body>
 </html>
