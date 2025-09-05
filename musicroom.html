@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>LICENSE GỐC™ • Music Room</title>
+<link rel="icon" href="data:,">
+<style>
+:root{
+  --bg:#0b0f16;--panel:#0f1420;--ink:#e9eef7;--muted:#9fb0c7;--accent:#ffd66b;--line:rgba(255,214,107,.25);
+}
+*{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,Segoe UI,Roboto}
+.wrap{max-width:980px;margin:auto;padding:16px}
+h1{margin:6px 0 10px;font-size:28px}
+.top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.badge{padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:linear-gradient(180deg,#121827,#0b0f16)}
+.count{display:inline-flex;align-items:center;gap:6px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+.grid{display:grid;gap:12px}
+@media(min-width:900px){.grid{grid-template-columns:1.2fr .8fr}}
+.btn{appearance:none;background:linear-gradient(180deg,#1a2030,#101522);color:var(--ink);
+  border:1px solid var(--line);padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.btn-pill{border-radius:999px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+hr{border:none;border-top:1px dashed var(--line);margin:10px 0}
+.small{color:var(--muted);font-size:13px}
+
+/* Player */
+.player{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center}
+.cover{width:120px;height:120px;border-radius:10px;border:1px solid var(--line);background:#0b0b0f;
+  display:grid;place-items:center;font-size:42px}
+.title{font-weight:800}
+.controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.icon{width:36px;height:36px;border-radius:8px;border:1px solid var(--line);
+  background:linear-gradient(180deg,#1a2030,#101522);display:grid;place-items:center;cursor:pointer}
+.slider{width:100%}
+.time{display:flex;align-items:center;gap:8px}
+.kv{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+canvas{width:100%;height:64px;background:#0a0f15;border-radius:8px;border:1px solid var(--line)}
+
+/* Playlist */
+.list{display:flex;flex-direction:column;gap:8px;max-height:360px;overflow:auto}
+.item{display:flex;gap:8px;align-items:center;justify-content:space-between;border:1px solid var(--line);padding:8px;border-radius:10px;background:#0c111a}
+.item b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:58vw}
+
+.kara{min-height:120px;border-radius:10px;border:1px solid var(--line);padding:10px;background:#0b1018}
+.kline{opacity:.55}
+.kline.active{opacity:1;color:var(--accent);font-weight:800}
+
+.footer{margin:18px 0 70px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>🎶 LICENSE GỐC™ • Music Room</h1>
+    <span class="badge">User: <span id="meName">guest</span></span>
+    <span class="badge count">🟢 Online: <b id="online">1</b></span>
+    <button class="btn btn-pill" id="btnSign">Sign in (local)</button>
+  </div>
+
+  <!-- AI + Import -->
+  <div class="card">
+    <div class="row">
+      <label class="btn"><input id="fileIn" type="file" accept="audio/*,video/mp4" multiple hidden>⬆️ Upload audio/video</label>
+      <button class="btn" id="btnRec">🎙️ Record</button>
+      <button class="btn" id="btnAitext">🤖 AI Song • From Text</button>
+      <label class="btn"><input id="imgIn" type="file" accept="image/*" hidden>🤖 AI Song • From Image</label>
+      <button class="btn" id="btnClear">🧹 Clear list</button>
+      <span class="small">* Tệp được phát trực tiếp trong trình duyệt; một số tệp lớn sẽ không lưu vĩnh viễn để tránh đầy bộ nhớ.</span>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- Left: Player + Karaoke -->
+    <div class="card">
+      <div class="player">
+        <div class="cover" id="cover">🎵</div>
+        <div>
+          <div class="title" id="title">Chưa chọn bài</div>
+          <div class="kv small"><span id="info">—</span></div>
+          <div class="controls">
+            <button class="icon" id="prev">⏮</button>
+            <button class="icon" id="play">▶️</button>
+            <button class="icon" id="next">⏭</button>
+            <button class="icon" id="loop">🔁</button>
+            <button class="icon" id="dl" title="Download">⬇️</button>
+            <label class="icon" title="Volume">
+              🔊 <input id="vol" type="range" min="0" max="1" step="0.01" value="1" style="width:92px">
+            </label>
+          </div>
+          <div class="time">
+            <span id="cur">0:00</span>
+            <input class="slider" id="seek" type="range" min="0" max="1000" value="0">
+            <span id="dur">0:00</span>
+          </div>
+        </div>
+      </div>
+      <canvas id="viz" height="64"></canvas>
+
+      <hr>
+      <div class="row">
+        <label class="btn"><input id="lrcIn" type="file" accept=".lrc,.txt" hidden>📄 Load .LRC / lyric</label>
+        <button class="btn" id="btnPaste">✍️ Dán lyric</button>
+        <button class="btn" id="btnKClear">🧼 Clear lyric</button>
+      </div>
+      <div id="karaoke" class="kara small">Lyric/Karaoke sẽ hiện ở đây…</div>
+    </div>
+
+    <!-- Right: Playlist -->
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <b>Playlist</b>
+        <span class="small" id="stat">0 tracks</span>
+      </div>
+      <div id="list" class="list"></div>
+      <hr>
+      <div class="small">
+        Tips:
+        <ul>
+          <li>Tải nhiều file một lúc (MP3/WAV/M4A/MP4).</li>
+          <li>.LRC sẽ auto đồng bộ lyric nếu có timestamp.</li>
+          <li>“AI Song” demo tạo giai điệu từ text/ảnh (WebAudio, tải về WAV).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">© 2025 LICENSE GỐC™ — Music empowers ideas.</div>
+</div>
+
+<!-- Media elements (ẩn) -->
+<audio id="audio" crossorigin="anonymous"></audio>
+<video id="video" playsinline style="display:none;max-width:100%"></video>
+
+<script>
+(() => {
+  // ---------- State ----------
+  const $ = s => document.querySelector(s);
+  const listEl = $('#list');
+  const audio = $('#audio'), video = $('#video');
+  const isVideo = () => cur?.type?.startsWith('video');
+  let tracks = [];        // {id,name,type,size,blobUrl,ext,lyric?,cover?}
+  let cur = null;         // current track
+  let loop = false;
+  let bc = null, me = null, onlineCount = 1;
+
+  // ---------- Sign in (local) ----------
+  function signIn(){
+    const name = prompt('Tên hiển thị?', localStorage.getItem('goc.name')||'guest') || 'guest';
+    const email = prompt('Email (để gắn ID)?', localStorage.getItem('goc.email')||'guest@example.com') || 'guest@example.com';
+    localStorage.setItem('goc.name', name);
+    localStorage.setItem('goc.email', email);
+    $('#meName').textContent = name;
+    // broadcast presence
+    me = {id:Math.random().toString(36).slice(2), name};
+    bc?.postMessage({type:'join', name});
+    alert('Đăng nhập (local) thành công!');
+  }
+  $('#btnSign').onclick = signIn;
+  $('#meName').textContent = localStorage.getItem('goc.name') || 'guest';
+
+  // ---------- BroadcastChannel: presence ----------
+  try{
+    bc = new BroadcastChannel('goc-music-room');
+    bc.onmessage = (e)=>{
+      const m = e.data;
+      if(m.type==='join' || m.type==='ping') onlineCount = Math.max(onlineCount, m.count||1);
+      if(m.type==='count'){ onlineCount = m.count; $('#online').textContent = onlineCount; }
+    };
+    // Simple heartbeat using localStorage
+    function heartbeat(){
+      const key='goc-music-heart';
+      localStorage.setItem(key, Date.now().toString());
+      const count = performance.now()%2000<50 ? Math.floor(1+Math.random()*3) : parseInt($('#online').textContent||'1');
+      bc.postMessage({type:'count', count});
+      setTimeout(heartbeat,1500);
+    } heartbeat();
+  }catch{}
+
+  // ---------- Utils ----------
+  const fmt = s => {
+    if(!isFinite(s)) return '0:00';
+    const m = Math.floor(s/60), ss = Math.floor(s%60);
+    return m+':'+String(ss).padStart(2,'0');
+  };
+  function setCover(emoji='🎵'){ $('#cover').textContent = emoji; }
+  function setTitle(t='Chưa chọn bài', info='—'){ $('#title').textContent=t; $('#info').textContent=info; }
+
+  // ---------- Visualizer ----------
+  const ctx = new (window.AudioContext||window.webkitAudioContext)();
+  const srcNode = ctx.createMediaElementSource(audio);
+  const analyser = ctx.createAnalyser(); analyser.fftSize=256;
+  srcNode.connect(analyser); analyser.connect(ctx.destination);
+  const viz = $('#viz'), g = viz.getContext('2d');
+  function drawViz(){
+    const arr = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(arr);
+    g.clearRect(0,0,viz.width,viz.height);
+    const w = viz.width/arr.length;
+    for(let i=0;i<arr.length;i++){
+      const h = (arr[i]/255)*(viz.height-8);
+      g.fillStyle = 'rgba(255,214,107,.85)';
+      g.fillRect(i*w, viz.height-h, w-1, h);
+    }
+    requestAnimationFrame(drawViz);
+  }
+  drawViz();
+
+  // ---------- Playlist UI ----------
+  function renderList(){
+    listEl.innerHTML='';
+    tracks.forEach((t,i)=>{
+      const row = document.createElement('div'); row.className='item';
+      row.innerHTML = `<b>${i+1}. ${t.name}</b>
+        <span class="row">
+          <button class="btn" data-play="${t.id}">Play</button>
+          <button class="btn" data-rem="${t.id}">Del</button>
+        </span>`;
+      listEl.appendChild(row);
+    });
+    $('#stat').textContent = tracks.length+' tracks';
+    saveListMeta();
+  }
+  function saveListMeta(){
+    const meta = tracks.map(t=>({id:t.id,name:t.name,type:t.type,ext:t.ext}));
+    localStorage.setItem('goc.music.list', JSON.stringify(meta));
+  }
+
+  // ---------- Load from input ----------
+  $('#fileIn').addEventListener('change', async (e)=>{
+    const files = [...e.target.files];
+    for (const f of files){
+      const id = Math.random().toString(36).slice(2);
+      const url = URL.createObjectURL(f);
+      tracks.push({id,name:f.name,type:f.type,size:f.size,blobUrl:url,ext:f.name.split('.').pop().toLowerCase()});
+    }
+    renderList();
+    if(!cur && tracks[0]) playById(tracks[0].id);
+    e.target.value='';
+  });
+
+  // ---------- Controls ----------
+  $('#play').onclick = async ()=>{
+    if(isVideo()){
+      if(video.paused) { await video.play(); $('#play').textContent='⏸️'; ctx.resume(); }
+      else { video.pause(); $('#play').textContent='▶️'; }
+    }else{
+      if(audio.paused) { await audio.play(); $('#play').textContent='⏸️'; ctx.resume(); }
+      else { audio.pause(); $('#play').textContent='▶️'; }
+    }
+  };
+  $('#prev').onclick = ()=> step(-1);
+  $('#next').onclick = ()=> step(1);
+  $('#loop').onclick = ()=>{ loop=!loop; $('#loop').style.outline = loop?'2px solid var(--accent)':'none'; };
+  $('#vol').oninput = e => { audio.volume = video.volume = +e.target.value; };
+  $('#seek').oninput = e => {
+    const frac = +e.target.value/1000;
+    const dur = isVideo()? video.duration : audio.duration;
+    const t = dur*frac; (isVideo()? video:audio).currentTime = t;
+  };
+  $('#dl').onclick = ()=>{
+    if(!cur) return;
+    const a = document.createElement('a');
+    a.href = cur.blobUrl; a.download = cur.name; a.click();
+  };
+  listEl.addEventListener('click', (e)=>{
+    const id = e.target.dataset.play || e.target.dataset.rem;
+    if(!id) return;
+    if(e.target.dataset.play) playById(id);
+    if(e.target.dataset.rem){ tracks = tracks.filter(t=>t.id!==id); if(cur?.id===id) stop(); renderList(); }
+  });
+  $('#btnClear').onclick = ()=>{ stop(); tracks=[]; renderList(); setTitle(); setCover(); $('#karaoke').innerHTML='Lyric/Karaoke sẽ hiện ở đây…'; };
+
+  function step(d){
+    if(!cur) return;
+    const idx = tracks.findIndex(t=>t.id===cur.id);
+    const j = (idx + d + tracks.length) % tracks.length;
+    playById(tracks[j].id);
+  }
+
+  function stop(){
+    audio.pause(); video.pause();
+    audio.src=''; video.src=''; video.style.display='none';
+    $('#play').textContent='▶️';
+  }
+
+  function playById(id){
+    const t = tracks.find(x=>x.id===id); if(!t) return;
+    stop(); cur = t;
+    setTitle(t.name, `${t.type||''} ${(t.size?('• '+(t.size/1e6).toFixed(2)+'MB'):'')}`);
+    if(t.type?.startsWith('video')){ video.src=t.blobUrl; video.style.display='block'; audio.style.display='none'; video.play(); }
+    else { audio.src=t.blobUrl; video.style.display='none'; audio.style.display=''; audio.play(); }
+    $('#play').textContent='⏸️'; ctx.resume();
+    setCover(t.type?.startsWith('video')?'🎬':'🎵');
+    // reset lyric scroll
+    activeIdx=-1; renderKara();
+  }
+
+  // time / progress
+  function bindTime(el){
+    el.addEventListener('timeupdate', ()=>{
+      $('#cur').textContent = fmt(el.currentTime);
+      $('#dur').textContent = fmt(el.duration||0);
+      $('#seek').value = Math.max(0, Math.min(1000, Math.floor((el.currentTime/(el.duration||1))*1000)));
+      tickKara(el.currentTime);
+    });
+    el.addEventListener('ended', ()=>{ if(loop) playById(cur.id); else step(1); });
+  }
+  bindTime(audio); bindTime(video);
+
+  // ---------- Karaoke (.lrc) ----------
+  let lrc = []; // {t:number, text:string}
+  let activeIdx = -1;
+  function parseLRC(txt){
+    const out=[];
+    txt.split(/\r?\n/).forEach(line=>{
+      const m = line.match(/\[(\d+):(\d+)(?:\.(\d+))?\](.*)/);
+      if(m){ const t= (+m[1]*60)+(+m[2]) + ((+m[3]||0)/100);
+        out.push({t, text:m[4].trim()}); }
+      else if(line.trim()) out.push({t:NaN, text:line.trim()});
+    });
+    out.sort((a,b)=> (isNaN(a.t)?1:a.t)-(isNaN(b.t)?1:b.t));
+    return out;
+  }
+  function renderKara(){
+    const box=$('#karaoke'); box.innerHTML='';
+    if(!lrc.length){ box.textContent='Lyric/Karaoke sẽ hiện ở đây…'; return; }
+    lrc.forEach((ln,i)=>{
+      const p=document.createElement('div'); p.textContent=ln.text||' '; p.className='kline'+(i===activeIdx?' active':'');
+      box.appendChild(p);
+    });
+    // auto scroll
+    if(activeIdx>=0){
+      const el = box.children[activeIdx];
+      if(el) box.scrollTop = el.offsetTop - box.clientHeight/2 + 40;
+    }
+  }
+  function tickKara(current){
+    if(!lrc.length) return;
+    // find last line with t<=current
+    let i = activeIdx;
+    while(i+1<lrc.length && !isNaN(lrc[i+1].t) && lrc[i+1].t<=current) i++;
+    if(i!==activeIdx){ activeIdx=i; renderKara(); }
+  }
+  $('#lrcIn').addEventListener('change', async (e)=>{
+    const f=e.target.files[0]; if(!f) return;
+    const txt=await f.text(); lrc=parseLRC(txt); activeIdx=-1; renderKara();
+    e.target.value='';
+  });
+  $('#btnPaste').onclick = ()=>{
+    const txt = prompt('Dán lyric hoặc LRC (có dạng [mm:ss.xx] câu hát):'); 
+    if(txt){ lrc=parseLRC(txt); activeIdx=-1; renderKara(); }
+  };
+  $('#btnKClear').onclick=()=>{ lrc=[]; activeIdx=-1; renderKara(); };
+
+  // ---------- Record (MediaRecorder) ----------
+  let rec, chunks=[];
+  $('#btnRec').onclick = async ()=>{
+    if(rec && rec.state==='recording'){ rec.stop(); return; }
+    try{
+      const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+      rec = new MediaRecorder(stream);
+      chunks=[]; rec.ondataavailable=e=>chunks.push(e.data);
+      rec.onstop=()=>{
+        const blob = new Blob(chunks,{type:'audio/webm'});
+        const file = new File([blob], 'record_'+Date.now()+'.webm', {type:'audio/webm'});
+        const url = URL.createObjectURL(file);
+        const id = Math.random().toString(36).slice(2);
+        tracks.unshift({id,name:file.name,type:file.type,size:file.size,blobUrl:url,ext:'webm'});
+        renderList(); playById(tracks[0].id);
+        alert('Đã thu âm xong và thêm vào playlist!');
+      };
+      rec.start(); alert('Đang ghi âm… Nhấn lại “Record” để dừng.');
+    }catch(err){ alert('Không thể truy cập micro: '+err); }
+  };
+
+  // ---------- AI Song DEMO ----------
+  // 1) From TEXT: chuyển text thành dãy nốt simple và render ra WAV
+  $('#btnAitext').onclick = async ()=>{
+    const txt = prompt('Nhập câu mô tả mood/lyrics (AI demo sẽ tạo giai điệu 30s):','robot love pop bright');
+    if(!txt) return;
+    const audioBuf = await synthFromText(txt, 30); // 30s
+    const wav = toWav(audioBuf, ctx.sampleRate);
+    const blob = new Blob([wav], {type:'audio/wav'});
+    const url = URL.createObjectURL(blob);
+    const id = Math.random().toString(36).slice(2);
+    tracks.unshift({id,name:'AI-'+txt.replace(/\s+/g,'_')+'.wav',type:'audio/wav',size:blob.size,blobUrl:url,ext:'wav'});
+    renderList(); playById(tracks[0].id);
+  };
+  // 2) From IMAGE: lấy tổng màu → tạo tempo + thang âm
+  $('#imgIn').addEventListener('change', async (e)=>{
+    const f=e.target.files[0]; if(!f) return;
+    const img=await createImageBitmap(f);
+    // Lấy màu trung bình
+    const c=document.createElement('canvas'); c.width=32;c.height=32;
+    const g=c.getContext('2d'); g.drawImage(img,0,0,32,32);
+    const d=g.getImageData(0,0,32,32).data; let r=0,gc=0,b=0;
+    for(let i=0;i<d.length;i+=4){ r+=d[i]; gc+=d[i+1]; b+=d[i+2]; }
+    r/=256; gc/=256; b/=256;
+    const mood = (r>gc&&r>b)?'warm':(b>r&&b>gc?'cool':'neutral');
+    const audioBuf = await synthFromText('image '+mood, 25);
+    const wav = toWav(audioBuf, ctx.sampleRate);
+    const blob = new Blob([wav], {type:'audio/wav'}); const url=URL.createObjectURL(blob);
+    const id=Math.random().toString(36).slice(2);
+    tracks.unshift({id,name:'AI_img_'+mood+'.wav',type:'audio/wav',size:blob.size,blobUrl:url,ext:'wav'});
+    renderList(); playById(tracks[0].id);
+    e.target.value='';
+  });
+
+  // Tiny synth: map text -> notes
+  async function synthFromText(text, seconds=20){
+    const sr = 44100, len = sr*seconds, buf = ctx.createBuffer(1,len,sr), ch=buf.getChannelData(0);
+    // seed
+    let seed = 0; for(let i=0;i<text.length;i++) seed=(seed*31 + text.charCodeAt(i))>>>0;
+    function rnd(){ seed^=seed<<13; seed^=seed>>>17; seed^=seed<<5; return (seed>>>0)/0xffffffff; }
+    const scales = [[0,2,4,7,9],[0,2,3,5,7,10],[0,3,5,7,10],[0,2,5,7,9]];
+    const scale = scales[Math.floor(rnd()*scales.length)];
+    const base = 220 + rnd()*110; // A3..D4
+    let t=0; while(t<len){
+      const noteDur = Math.floor(sr*(0.2 + rnd()*0.4));
+      const freq = base * Math.pow(2, scale[Math.floor(rnd()*scale.length)]/12);
+      for(let i=0;i<noteDur && t+i<len;i++){
+        const v = Math.sin(2*Math.PI*freq*((t+i)/sr)) * (1 - i/noteDur); // simple env
+        ch[t+i] += v*0.25;
+      }
+      t += noteDur;
+    }
+    // soft clip
+    for(let i=0;i<len;i++){ ch[i]=Math.tanh(ch[i]*2.0); }
+    return buf;
+  }
+  function toWav(buffer, sampleRate){
+    // mono 16-bit PCM
+    const samples = buffer.getChannelData(0);
+    const blockAlign = 2, byteRate = sampleRate*blockAlign;
+    const dataSize = samples.length*2;
+    const buf = new ArrayBuffer(44+dataSize);
+    const v = new DataView(buf);
+    function wStr(o,s){ for(let i=0;i<s.length;i++) v.setUint8(o+i,s.charCodeAt(i)); }
+    wStr(0,'RIFF'); v.setUint32(4,36+dataSize,true); wStr(8,'WAVE');
+    wStr(12,'fmt '); v.setUint32(16,16,true); v.setUint16(20,1,true); v.setUint16(22,1,true);
+    v.setUint32(24,sampleRate,true); v.setUint32(28,byteRate,true); v.setUint16(32,blockAlign,true); v.setUint16(34,16,true);
+    wStr(36,'data'); v.setUint32(40,dataSize,true);
+    let o=44; for(let i=0;i<samples.length;i++){ let s=Math.max(-1,Math.min(1,samples[i])); v.setInt16(o, s<0?s*0x8000:s*0x7FFF, true); o+=2; }
+    return buf;
+  }
+
+  // ---------- Boot ----------
+  renderList(); setTitle(); setCover();
+})();
+</script>
+
+<!-- (tùy chọn) nếu đang dùng thanh nổi chung: <script src="goc-ui.js?v=10" defer></script> -->
+</body>
+</html>
