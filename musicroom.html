@@ -506,5 +506,130 @@ canvas{width:100%;height:64px;background:#0a0f15;border-radius:8px;border:1px so
 })();
 </script>
 <script src="goc-ui.js?v=18" defer></script>
+<!-- ==== LICENSE GỐC • Upload Box (drop-in) ==== -->
+<style>
+  .goc-uibox{margin:14px 0;padding:12px;border:1px solid rgba(255,215,0,.22);
+    border-radius:12px;background:linear-gradient(180deg,#0f1117,#0a0b0f)}
+  .goc-uibox .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .goc-uibox button{appearance:none;border:1px solid rgba(245,211,106,.35);
+    background:linear-gradient(180deg,#1a1f29,#0f1117);color:#eae7dc;
+    border-radius:999px;padding:10px 14px;font-weight:700;cursor:pointer}
+  .goc-drop{margin-top:10px;padding:14px;border:1px dashed rgba(255,215,0,.35);
+    border-radius:10px;text-align:center;opacity:.8}
+  .goc-drop.drag{background:#0d1118;border-style:solid;opacity:1}
+  .goc-list{margin-top:12px;display:grid;gap:12px}
+  .goc-item{display:grid;grid-template-columns:84px 1fr;gap:10px;align-items:center;
+    padding:10px;border:1px solid rgba(255,215,0,.12);border-radius:12px}
+  .goc-thumb{width:84px;height:64px;display:grid;place-items:center;
+    background:#0d1118;border:1px solid rgba(255,255,255,.06);border-radius:10px;font-size:22px}
+  .goc-meta{font-size:13px;opacity:.85}
+</style>
+
+<div class="goc-uibox" id="goc-uibox">
+  <div class="row">
+    <button id="goc-btn-upload">⬆️ Upload audio/video</button>
+    <button id="goc-btn-clear" title="Clear current list">🧹 Clear list</button>
+    <span id="goc-log" style="opacity:.7;font-size:12px"></span>
+  </div>
+
+  <div id="goc-drop" class="goc-drop">Kéo & thả tệp vào đây, hoặc bấm “Upload audio/video”</div>
+  <input id="goc-input" type="file" accept="audio/*,video/*" multiple hidden>
+
+  <div id="goc-list" class="goc-list"></div>
+</div>
+
+<script>
+(function(){
+  const $ = (s)=>document.querySelector(s);
+  const btnUp   = $('#goc-btn-upload');
+  const btnClr  = $('#goc-btn-clear');
+  const finput  = $('#goc-input');
+  const drop    = $('#goc-drop');
+  const list    = $('#goc-list');
+  const logEl   = $('#goc-log');
+
+  function log(msg){ logEl.textContent = msg||''; }
+
+  btnUp?.addEventListener('click', ()=>finput.click());
+  finput?.addEventListener('change', (e)=> handleFiles(e.target.files));
+
+  // Drag & drop
+  ['dragenter','dragover'].forEach(ev=>{
+    drop.addEventListener(ev, (e)=>{ e.preventDefault(); e.stopPropagation(); drop.classList.add('drag'); });
+  });
+  ['dragleave','drop'].forEach(ev=>{
+    drop.addEventListener(ev, (e)=>{ e.preventDefault(); e.stopPropagation(); drop.classList.remove('drag'); });
+  });
+  drop.addEventListener('drop', (e)=>{ handleFiles(e.dataTransfer.files||[]); });
+
+  // Clear list
+  btnClr?.addEventListener('click', ()=>{
+    list.innerHTML = ''; log('');
+  });
+
+  // Render one item
+  function renderItem(file, url){
+    const wrap = document.createElement('div');
+    wrap.className = 'goc-item';
+
+    const thumb = document.createElement('div');
+    thumb.className = 'goc-thumb';
+    thumb.textContent = file.type.startsWith('video') ? '🎬' : '🎵';
+
+    const body = document.createElement('div');
+
+    const title = document.createElement('div');
+    title.style.fontWeight = '800';
+    title.textContent = file.name;
+
+    const meta = document.createElement('div');
+    meta.className = 'goc-meta';
+    meta.textContent = `${file.type || 'unknown'} · ${(file.size/1024/1024).toFixed(2)}MB`;
+
+    const player = document.createElement(file.type.startsWith('video') ? 'video' : 'audio');
+    player.controls = true;
+    player.preload = 'metadata';
+    player.src = url;
+    player.style.width = '100%';
+    player.style.maxHeight = '280px';
+    player.addEventListener('loadedmetadata', ()=>{
+      // hạn mức hiển thị thông tin thời lượng
+      if (isFinite(player.duration)) {
+        meta.textContent += ` · ${formatTime(player.duration)}`;
+      }
+    });
+
+    body.appendChild(title);
+    body.appendChild(meta);
+    body.appendChild(player);
+
+    wrap.appendChild(thumb);
+    wrap.appendChild(body);
+    list.appendChild(wrap);
+  }
+
+  function formatTime(sec){
+    sec = Math.round(sec||0);
+    const h = Math.floor(sec/3600);
+    const m = Math.floor((sec%3600)/60);
+    const s = sec%60;
+    return (h? (h+':') : '') + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  }
+
+  // Main: handle files (10–20 phút ok nếu dung lượng vừa phải)
+  function handleFiles(files){
+    if(!files || !files.length) return;
+    [...files].forEach(f=>{
+      if(!/^audio\/|^video\//.test(f.type)){ return; } // bỏ qua loại không hỗ trợ
+      // Giới hạn dung lượng mềm: 200MB để tránh tràn RAM trình duyệt
+      const MB = f.size/1024/1024;
+      if(MB>200){ log(`⚠️ ${f.name} quá lớn (${MB.toFixed(1)}MB). Hãy chọn file < 200MB.`); return; }
+      const url = URL.createObjectURL(f);
+      renderItem(f, url);
+    });
+    log('Tệp phát trực tiếp trên trình duyệt; không lưu vĩnh viễn.');
+  }
+})();
+</script>
 </body>
 </html>
