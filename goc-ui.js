@@ -183,11 +183,9 @@ function ensureBar(){
   const ai = document.getElementById('goc-ai');
   if (ai) ai.addEventListener('click', ()=>{ location.href = 'licensenetwork.html#aitim'; });
 
-  // init global music bridge
-  initMusicBridge();
 }
 
-  /* --------- LICENSEGOC Panel --------- */
+ /* --------- LICENSEGOC Panel --------- */
   function makePanel(){
     if (document.querySelector('.goc-panel')) return;
     const p = document.createElement('aside');
@@ -461,6 +459,7 @@ function ensureBar(){
     ensureBar();
     makePanel();
     ensureTranslate();
+    initMusicBridge();
 
     if (!document.querySelector('[data-goc-space]')){
       const sp = document.createElement('div'); sp.setAttribute('data-goc-space',''); document.body.appendChild(sp);
@@ -509,5 +508,14 @@ function initMusicBridge(){
   });
   btnOpen.addEventListener('click', ()=>{
     location.href = 'musicroom.html';
-  });
-})();
+      });
+  } // <-- đóng initMusicBridge()
+
+  // Boot
+  ensureBar();
+  makePanel();
+  ensureTranslate();
+  initMusicBridge(); // gọi sau khi đã định nghĩa
+
+}); // end DOMContentLoaded
+})(); // end IIFE
