@@ -49,8 +49,9 @@
  </style>
   </head>
   <body>
-</div>
-   <div class="wrap">
+  </div>
+  <canvas id="bg-bubbles" width="0" height="0"></canvas>
+    <div class="wrap">
     <section class="panel">
       <h1><span class="brand">🌐 LICENSE GỐC™</span></h1>
       <p class="lead">“Protect the Roots. Empower Humanity.”</p>
@@ -90,7 +91,117 @@
 
   <div class="space"></div>
   <!-- nạp Floating Bar + Translate (một lần duy nhất) -->
-  <script src="goc-ui.js?v=18" defer></script>
+ <script>
+(()=>{
+  const cv = document.getElementById('bg-bubbles');
+  const ctx = cv.getContext('2d');
+
+  // cấu hình
+  const CFG = {
+    count: 16,          // số bong bóng
+    minR: 35, maxR: 120,// bán kính
+    speed: .08,         // tốc độ trôi (px/ms)
+    wobble: .6,         // biên độ lắc
+    hueBase: 210,       // tông xanh biển
+    hueSpan: 60,        // dải đổi màu
+    glow: 0.35          // độ phát sáng
+  };
+
+  const bubbles = [];
+  let w=0,h=0, t0=performance.now();
+
+  function resize(){
+    const dpr = Math.min(window.devicePixelRatio||1, 2);
+    w = cv.clientWidth = window.innerWidth;
+    h = cv.clientHeight = window.innerHeight;
+    cv.width  = Math.floor(w*dpr);
+    cv.height = Math.floor(h*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  addEventListener('resize', resize, {passive:true});
+  resize();
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+
+  // tạo gradient “jelly”
+  function jellyGradient(x,y,r,hue){
+    const g = ctx.createRadialGradient(x-r*0.25,y-r*0.25, r*0.05, x,y,r);
+    const c1 = `hsla(${hue}, 90%, 65%, 0.90)`;
+    const c2 = `hsla(${(hue+20)%360}, 95%, 55%, 0.55)`;
+    const c3 = `hsla(${(hue+40)%360}, 100%, 50%, 0.0)`;
+    g.addColorStop(0.00, 'rgba(255,255,255,0.85)');
+    g.addColorStop(0.15, c1);
+    g.addColorStop(0.45, c2);
+    g.addColorStop(1.00, c3);
+    return g;
+  }
+
+  // tạo bong bóng
+  for(let i=0;i<CFG.count;i++){
+    const r = rand(CFG.minR, CFG.maxR);
+    bubbles.push({
+      r,
+      x: rand(r, Math.max(r, innerWidth - r)),
+      y: rand(r, Math.max(r, innerHeight - r)),
+      vx: rand(-.06, .06),     // trôi ngang nhẹ
+      vy: rand(-.02, -.12),    // trôi lên
+      wob: rand(.6, 1.4),      // nhịp lắc riêng
+      hue: (CFG.hueBase + rand(-CFG.hueSpan, CFG.hueSpan))%360,
+      phase: rand(0, Math.PI*2)
+    });
+  }
+
+  function step(now){
+    const dt = Math.min(40, now - t0); // ms
+    t0 = now;
+
+    ctx.clearRect(0,0,w,h);
+
+    // “ánh sáng” nền nhẹ
+    ctx.globalCompositeOperation = 'lighter';
+    for(const b of bubbles){
+      // cập nhật vị trí + lắc
+      b.phase += dt*0.001*b.wob;
+      b.x += (b.vx + Math.sin(b.phase)*0.15) * dt;
+      b.y += (b.vy - Math.cos(b.phase)*0.08) * dt;
+
+      // vòng lại khi ra khỏi khung
+      const margin = b.r*1.2;
+      if(b.x < -margin) b.x = w+margin;
+      if(b.x > w+margin) b.x = -margin;
+      if(b.y < -margin) { b.y = h+margin; b.x = rand(b.r, w-b.r); }
+
+      // vẽ bóng mờ phát sáng
+      ctx.shadowColor = `hsla(${b.hue},100%,70%,${CFG.glow})`;
+      ctx.shadowBlur = b.r*0.8;
+
+      // “viền thủy tinh” trước, hơi trong suốt
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r*0.98, 0, Math.PI*2);
+      ctx.fillStyle = `hsla(${b.hue},50%,85%,0.12)`;
+      ctx.fill();
+
+      // lõi jelly (radial gradient)
+      ctx.shadowBlur = b.r*0.5;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r*0.9, 0, Math.PI*2);
+      ctx.fillStyle = jellyGradient(b.x, b.y, b.r, b.hue);
+      ctx.fill();
+
+      // highlight nhỏ như phản xạ
+      ctx.shadowBlur = 0;
+      ctx.beginPath();
+      ctx.arc(b.x - b.r*0.35, b.y - b.r*0.35, b.r*0.18, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,255,255,0.25)';
+      ctx.fill();
+    }
+
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+})();
+</script>
+    <script src="goc-ui.js?v=18" defer></script>
   <!-- (tùy chọn) nạp SDK/auth sau khi bar đã chạy -->
   <!-- <script src="goc-auth.js" defer></script> -->
   <!-- <script src="goc-sdk.js" defer></script> -->
