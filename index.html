@@ -1,52 +1,104 @@
 <!doctype html>
-<html lang="vi">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LICENSE GỐC™ — Solar System</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>LICENSE GỐC™</title>
 
-  <style>
-    :root{
-      --space-bg:#070a0f;         /* nền không gian mặc định (fallback) */
-    }
-    html,body{height:100%}
-    body{margin:0; background:var(--space-bg); overflow:hidden}
+<style>
+  :root{
+    --ink:#eae7dc; --muted:#a8b3c7;
+    --line:rgba(255,215,0,.22);
+    --panel:#101216;
+    --glow:0 0 24px rgba(204,164,0,.35);
+    --radius:16px;
+    /* màu nền fallback phía DƯỚI canvas */
+    --space-bg:#0a0b0f;
+  }
 
-    /* Canvas nền vũ trụ (tinh vân + hệ mặt trời) */
-    #space{
-      position:fixed; inset:0; z-index:-1;
-      width:100vw; height:100vh; display:block;
-      pointer-events:none;
-      background:#000;        /* đề phòng lúc canvas chưa vẽ xong */
-    }
+  /* ===== layout & typography ===== */
+  *{box-sizing:border-box}
+  html{height:100%; background:var(--space-bg);}        /* nền fallback */
+  body{
+    min-height:100%;
+    margin:0;
+    color:var(--ink);
+    background:transparent;                              /* QUAN TRỌNG: cho canvas thấy được */
+    font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  }
+  a{color:#ffd66b; text-decoration:none}
 
-    /* Tôn nền tối sẵn của site */
-    :root{ --space-bg:#070a0f; }
+  /* ===== solar background canvas ===== */
+  #solar-bg{
+    position:fixed; inset:0;
+    width:100vw; height:100vh;
+    display:block; pointer-events:none;
+    z-index:0;                                           /* QUAN TRỌNG: dưới nội dung, trên html */
+  }
 
-    /* Tôn trọng cài đặt “giảm chuyển động” của người dùng */
-    @media (prefers-reduced-motion: reduce){
-      #space{ display:none; }
-    }
-  </style>
+  /* ===== content on top of canvas ===== */
+  .wrap{max-width:1100px; margin:28px auto 96px; padding:0 16px; position:relative; z-index:1;}
+  .panel{
+    background:linear-gradient(180deg,#101216,#0c0e12);
+    border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px; margin:18px 0; box-shadow:0 10px 40px rgba(0,0,0,.45);
+  }
+  h1{font-size:clamp(28px,5.5vw,44px); margin:6px 0 8px}
+  .brand{font-weight:900; letter-spacing:.3px; color:#ffd66b; text-shadow:var(--glow)}
+  .chips{display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 22px}
+  .chip{padding:8px 12px; border:1px solid var(--line); border-radius:999px; background:linear-gradient(180deg,#0f1116,#0b0c10); box-shadow:var(--glow); font-weight:600}
+  .grid{display:grid; gap:12px}
+  .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  @media (max-width:900px){ .cols-3{grid-template-columns:1fr 1fr} }
+  @media (max-width:620px){ .cols-3{grid-template-columns:1fr} }
+  .btn{display:flex; align-items:center; justify-content:center; gap:8px; padding:16px 14px; border-radius:14px; border:1px solid var(--line); background:linear-gradient(180deg,#0f1116,#0a0b0f); box-shadow:var(--glow); font-weight:800}
+  footer{opacity:.8; text-align:center; margin:36px 0}
+</style>
 </head>
-<body>
-  <!-- NỀN VŨ TRỤ -->
-  <canvas id="space" aria-hidden="true"></canvas>
 
-  <!-- FLOATING BAR (giữ nguyên) -->
+<body>
+  <!-- Canvas nền hệ Mặt Trời: đặt NGAY sau <body> để luôn phủ toàn màn -->
+  <canvas id="solar-bg" aria-hidden="true"></canvas>
+
+  <!-- Nội dung demo (nằm TRÊN canvas) -->
+  <div class="wrap">
+    <section class="panel">
+      <h1><span class="brand">🌐 LICENSE GỐC™</span></h1>
+      <div class="chips">
+        <a class="chip" href="#">Introduction</a>
+        <a class="chip" href="#">Ecosystem</a>
+        <a class="chip" href="#">Strategy</a>
+        <a class="chip" href="#">Core Values</a>
+        <a class="chip" href="#">Official Links</a>
+      </div>
+
+      <div class="grid cols-3">
+        <a class="btn" href="licensenetwork.html">LICENSENETWORK</a>
+        <a class="btn" href="licensecoin.html">LICENSECOIN</a>
+        <a class="btn" href="paycards.html">Pay & Cards</a>
+        <a class="btn" href="creationsroom.html">Apps</a>
+        <a class="btn" href="vault.html">Vault</a>
+        <a class="btn" href="musicroom.html">🎧 Music Room</a>
+      </div>
+    </section>
+
+    <footer>© 2025 LICENSE GỐC™ — Build with the world.</footer>
+  </div>
+
+  <!-- Floating Bar (giữ nguyên) -->
   <script src="goc-ui.js?v=18" defer></script>
 
+  <!-- ===== Solar System Background JS ===== -->
   <script>
   (()=>{
-    // ====== Thiết lập canvas ======
-    const cvs = document.getElementById('space');
-    const ctx = cvs.getContext('2d');
+    const cvs = document.getElementById('solar-bg');
+    const ctx = cvs.getContext('2d', { alpha: true });
     const DPR = Math.max(1, Math.min(2, window.devicePixelRatio||1));
 
     function resize(){
       const w = innerWidth, h = innerHeight;
-      cvs.width  = Math.floor(w*DPR);
-      cvs.height = Math.floor(h*DPR);
+      cvs.width  = Math.floor(w * DPR);
+      cvs.height = Math.floor(h * DPR);
       cvs.style.width = w+'px';
       cvs.style.height = h+'px';
       ctx.setTransform(DPR,0,0,DPR,0,0);
@@ -54,203 +106,110 @@
     addEventListener('resize', resize, {passive:true});
     resize();
 
-    // ====== Cấu hình cảnh ======
-    const center = ()=>({x: innerWidth/2, y: innerHeight/2});
+    // ---- config ----
+    const C = ()=>({x: innerWidth/2, y: innerHeight/2});
+    const SUN = { r: 34, glow: 170, color: '#ffcf33' };
 
-    // Lớp tinh vân: vài chục "đám mây" radial gradient trôi chậm
-    const NEBULA_LAYERS = [
-      {count:10, drift: 0.004, scale:1.2, alpha:0.20, hue:[210, 260]}, // xanh tím
-      {count: 8, drift: 0.006, scale:1.4, alpha:0.16, hue:[280, 320]}, // tím hồng
-      {count: 6, drift: 0.008, scale:1.7, alpha:0.12, hue:[160, 210]}, // lục lam
-    ];
-    const nebulas = [];
-
-    // Tạo đám mây tinh vân
-    function seedNebula(){
-      nebulas.length = 0;
-      const W = innerWidth, H = innerHeight;
-      for(const layer of NEBULA_LAYERS){
-        for(let i=0;i<layer.count;i++){
-          const hue = rand(layer.hue[0], layer.hue[1]);
-          nebulas.push({
-            x: rand(-0.2*W, 1.2*W),
-            y: rand(-0.2*H, 1.2*H),
-            r: rand(180, 520)*layer.scale,
-            hue,
-            alpha: layer.alpha,
-            driftX: rand(-1,1)*layer.drift,
-            driftY: rand(-1,1)*layer.drift
-          });
-        }
-      }
-    }
-
-    // Mặt Trời
-    const SUN = { r: 36, glow: 220, color: '#ffd062' };
-
-    // 9 hành tinh (kích cỡ & chu kỳ tương đối, có Pluto)
+    // 9 hành tinh (thêm Pluto để đủ "9")
     const PLANETS = [
-      {name:'Mercury',  r:  5, orbit:  76, period:  12, color:'#c9b29b'},
-      {name:'Venus',    r:  7, orbit: 110, period:  20, color:'#e6c477'},
-      {name:'Earth',    r:  8, orbit: 150, period:  26, color:'#5db7ff'},
-      {name:'Mars',     r:  6, orbit: 190, period:  32, color:'#ff6a4a'},
-      {name:'Jupiter',  r: 16, orbit: 250, period:  60, color:'#e0b58a'},
-      {name:'Saturn',   r: 13, orbit: 310, period:  78, color:'#f1d08b', ring:true},
-      {name:'Uranus',   r: 10, orbit: 360, period: 100, color:'#9de3ff'},
-      {name:'Neptune',  r: 10, orbit: 410, period: 120, color:'#6fb0ff'},
-      {name:'Pluto',    r:  4, orbit: 460, period: 160, color:'#bbaaa0'}
+      {name:'Mercury', r:4,  orbit: 70,  period:  12, color:'#c9b29b'},
+      {name:'Venus',   r:6,  orbit: 100, period:  20, color:'#e6c477'},
+      {name:'Earth',   r:7,  orbit: 140, period:  26, color:'#5db7ff'},
+      {name:'Mars',    r:5,  orbit: 180, period:  32, color:'#ff6a4a'},
+      {name:'Jupiter', r:14, orbit: 230, period:  60, color:'#e0b58a'},
+      {name:'Saturn',  r:12, orbit: 290, period:  78, color:'#f1d08b', ring:true},
+      {name:'Uranus',  r:9,  orbit: 340, period: 100, color:'#9de3ff'},
+      {name:'Neptune', r:9,  orbit: 390, period: 120, color:'#6fb0ff'},
+      {name:'Pluto',   r:3,  orbit: 440, period: 160, color:'#c9d0d6'}
     ].map((p,i)=>({ ...p, phase: i*0.6 }));
 
-    // Tham số camera/spotlight
-    const FOCUS_EACH_SEC = 6;     // mỗi 6s focus hành tinh tiếp theo
-    const FOCUS_SOFTNESS = 0.08;  // độ mượt pan/zoom
-    const FOCUS_SCALE_UP = 1.45;  // scale khi hành tinh vào giữa
+    // spotlight: mỗi hành tinh ~6s tiến gần trung tâm màn hình
+    const FOCUS_EACH_SEC = 6;
+    const SOFT = 0.08;
     let cam = {x:0, y:0, zoom:1};
 
-    // ========== Tiện ích ==========
-    function rand(a,b){ return a + Math.random()*(b-a); }
-
-    function drawGlow(x,y,inner,outer,color){
+    function glow(x,y,inner,outer,color){
       const g = ctx.createRadialGradient(x,y,inner*0.1, x,y,outer);
       g.addColorStop(0, color);
       g.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(x,y,outer,0,Math.PI*2);
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(x,y,outer,0,Math.PI*2); ctx.fill();
     }
 
-    function orbitPos(p, t, C){
-      const ang = ((t/p.period)*Math.PI*2 + p.phase);
-      return {
-        x: C.x + Math.cos(ang)*p.orbit,
-        y: C.y + Math.sin(ang)*p.orbit*0.85 // elip nhẹ tạo chiều sâu
-      };
-    }
-
-    // ========== Vẽ tinh vân ==========
-    function drawNebula(){
-      const W = innerWidth, H = innerHeight;
-      ctx.globalCompositeOperation = 'lighter';
-      for(const n of nebulas){
-        // trôi chậm
-        n.x += n.driftX * innerWidth;
-        n.y += n.driftY * innerHeight;
-        // wrap
-        if(n.x < -0.3*W) n.x += 1.6*W;
-        if(n.x >  1.3*W) n.x -= 1.6*W;
-        if(n.y < -0.3*H) n.y += 1.6*H;
-        if(n.y >  1.3*H) n.y -= 1.6*H;
-
-        const g = ctx.createRadialGradient(n.x, n.y, n.r*0.15, n.x, n.y, n.r);
-        g.addColorStop(0.00, `hsla(${n.hue}, 75%, 68%, ${n.alpha})`);
-        g.addColorStop(0.50, `hsla(${n.hue+20}, 70%, 55%, ${n.alpha*0.45})`);
-        g.addColorStop(1.00, `rgba(0,0,0,0)`);
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
-        ctx.fill();
-      }
-      ctx.globalCompositeOperation = 'source-over';
-    }
-
-    // ========== Vòng lặp vẽ ==========
-    function draw() {
+    function draw(){
       const t = performance.now()/1000;
-      const C = center();
 
-      // nền (tối / tinh vân)
-      ctx.clearRect(0,0,innerWidth,innerHeight);
-      ctx.fillStyle = getComputedStyle(document.documentElement)
-                      .getPropertyValue('--space-bg') || '#070a0f';
+      // nền: gradient tinh vân nhẹ
+      const bg = ctx.createLinearGradient(0,0,0,innerHeight);
+      bg.addColorStop(0, 'rgba(30,34,45,1)');
+      bg.addColorStop(1, 'rgba(10,11,15,1)');
+      ctx.fillStyle = bg;
       ctx.fillRect(0,0,innerWidth,innerHeight);
-      drawNebula();
 
-      // xác định hành tinh đang focus
-      const idx = Math.floor((t/FOCUS_EACH_SEC) % PLANETS.length);
+      // hành tinh đang focus
+      const idx = Math.floor((t/FOCUS_EACH_SEC)%PLANETS.length);
       const focused = PLANETS[idx];
 
-      // camera → kéo gần hành tinh đang focus
-      const fPosWorld = orbitPos(focused, t, C);
-      const targetCamX = (C.x - fPosWorld.x)*0.75;
-      const targetCamY = (C.y - fPosWorld.y)*0.75;
-      const targetZoom = 1 + Math.min(0.5, 140/focused.orbit);
-      cam.x += (targetCamX - cam.x)*FOCUS_SOFTNESS;
-      cam.y += (targetCamY - cam.y)*FOCUS_SOFTNESS;
-      cam.zoom += (targetZoom - cam.zoom)*FOCUS_SOFTNESS;
+      // vị trí quỹ đạo & camera
+      const C0 = C();
+      const pos = p => {
+        const ang = ((t/p.period)*Math.PI*2 + p.phase);
+        return { x: C0.x + Math.cos(ang)*p.orbit,
+                 y: C0.y + Math.sin(ang)*p.orbit*0.85 };
+      };
+      const fPos = pos(focused);
 
-      // áp camera
+      // pan/zoom đưa hành tinh focus tiến gần giữa và to dần
+      const targetCamX = (C0.x - fPos.x)*0.75;
+      const targetCamY = (C0.y - fPos.y)*0.75;
+      const targetZoom = 1 + Math.min(0.35, 120/focused.orbit);
+      cam.x += (targetCamX - cam.x)*SOFT;
+      cam.y += (targetCamY - cam.y)*SOFT;
+      cam.zoom += (targetZoom - cam.zoom)*SOFT;
+
       ctx.save();
       ctx.translate(cam.x, cam.y);
       ctx.scale(cam.zoom, cam.zoom);
 
-      // Mặt Trời + quầng sáng
-      drawGlow(C.x, C.y, SUN.r, SUN.glow, 'rgba(255,210,90,0.23)');
-      ctx.beginPath();
-      ctx.fillStyle = SUN.color;
-      ctx.arc(C.x, C.y, SUN.r, 0, Math.PI*2);
-      ctx.fill();
+      // Mặt Trời + quầng
+      glow(C0.x, C0.y, SUN.r, SUN.glow, 'rgba(255,200,60,0.22)');
+      ctx.beginPath(); ctx.fillStyle = SUN.color;
+      ctx.arc(C0.x, C0.y, SUN.r, 0, Math.PI*2); ctx.fill();
 
       // quỹ đạo mờ
       ctx.strokeStyle = 'rgba(255,255,255,0.06)';
       ctx.lineWidth = 1;
-      for(const p of PLANETS){
+      PLANETS.forEach(p=>{
         ctx.beginPath();
-        ctx.ellipse(C.x, C.y, p.orbit, p.orbit*0.85, 0, 0, Math.PI*2);
+        ctx.ellipse(C0.x, C0.y, p.orbit, p.orbit*0.85, 0, 0, Math.PI*2);
         ctx.stroke();
-      }
+      });
 
       // vẽ hành tinh
-      for(const p of PLANETS){
-        const pos = orbitPos(p, t, C);
+      PLANETS.forEach(p=>{
+        const {x,y} = pos(p);
 
-        // halo mềm
-        drawGlow(pos.x, pos.y, p.r, p.r*4, 'rgba(160,190,255,0.16)');
+        glow(x,y, p.r, p.r*4, 'rgba(140,180,255,0.16)');
 
-        // scale khi focus (to dần khi vào giữa)
-        let scale = 1.0;
-        if(p === focused){
-          // tính mức “gần giữa” theo pha 0..1 trong chu kỳ 6s
-          const segT = (t % FOCUS_EACH_SEC) / FOCUS_EACH_SEC;
-          const ramp = segT < 0.5 ? segT*2 : (1-segT)*2; // 0→1→0
-          scale = 1 + (FOCUS_SCALE_UP - 1) * ramp;
-        }
-
-        // thân hành tinh
-        ctx.beginPath();
-        ctx.fillStyle = p.color;
-        ctx.arc(pos.x, pos.y, p.r*scale, 0, Math.PI*2);
-        ctx.fill();
-
-        // vành của Saturn
         if(p.ring){
-          ctx.save();
-          ctx.translate(pos.x, pos.y);
-          ctx.rotate(-0.6);
-          ctx.strokeStyle = 'rgba(240,210,150,0.7)';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.ellipse(0,0, p.r*2.4*scale, p.r*0.95*scale, 0, 0, Math.PI*2);
-          ctx.stroke();
+          ctx.save(); ctx.translate(x,y); ctx.rotate(-0.6);
+          ctx.strokeStyle = 'rgba(240,210,150,0.7)'; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.ellipse(0,0, p.r*2.2, p.r*0.9, 0, 0, Math.PI*2); ctx.stroke();
           ctx.restore();
         }
 
-        // highlight hành tinh đang focus
-        if(p === focused){
-          ctx.strokeStyle = 'rgba(255,255,255,0.65)';
-          ctx.lineWidth = 1.5;
-          ctx.beginPath();
-          ctx.arc(pos.x, pos.y, p.r*scale + 6, 0, Math.PI*2);
-          ctx.stroke();
+        ctx.beginPath(); ctx.fillStyle = p.color;
+        ctx.arc(x,y, p.r, 0, Math.PI*2); ctx.fill();
+
+        if(p===focused){
+          ctx.strokeStyle = 'rgba(255,255,255,0.55)'; ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.arc(x,y, p.r+6, 0, Math.PI*2); ctx.stroke();
         }
-      }
+      });
 
-      ctx.restore(); // thoát camera
-
+      ctx.restore();
       requestAnimationFrame(draw);
     }
-
-    seedNebula();
     requestAnimationFrame(draw);
   })();
   </script>
