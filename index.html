@@ -1,77 +1,89 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>LICENSE GỐC™</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>LICENSE GỐC™</title>
+  <style>
+    :root{
+      --bg:#0a0b0f; --panel:#101216; --ink:#eae7dc; --muted:#a8b3c7;
+      --gold:#f5d36a; --gold2:#ffd66b; --line:rgba(255,215,0,.22);
+      --radius:16px; --shadow:0 10px 40px rgba(0,0,0,.45);
+      --glow:0 0 24px rgba(204,164,0,.35);
+      --goc-trans-bottom:94px;
+      --space-bg:#0a0b0f;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;color:var(--ink);background:var(--bg);
+      font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    a{color:var(--gold2);text-decoration:none}
 
-<style>
-  :root{
-    --ink:#eae7dc; --muted:#a8b3c7;
-    --line:rgba(255,215,0,.22);
-    --panel:#101216;
-    --glow:0 0 24px rgba(204,164,0,.35);
-    --radius:16px;
-    /* màu nền fallback phía DƯỚI canvas */
-    --space-bg:#0a0b0f;
-  }
+    .wrap{max-width:1100px;margin:28px auto 110px;padding:0 16px}
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 22px}
+    .chip{padding:8px 12px;border:1px solid var(--line);border-radius:999px;
+      background:linear-gradient(180deg,#0f1116,#0b0c10);box-shadow:var(--glow);
+      color:var(--ink);font-weight:600}
+    .panel{background:linear-gradient(180deg,#101216,#0c0e12);
+      border:1px solid var(--line);border-radius:var(--radius);
+      padding:20px;margin:18px 0;box-shadow:var(--shadow)}
+    h1{font-size:clamp(28px,5.5vw,44px);margin:6px 0 8px}
+    .brand{font-weight:900;letter-spacing:.3px;color:var(--gold2);text-shadow:var(--glow)}
+    .lead{opacity:.9;margin:0 0 8px}
+    h2{margin:0 0 14px;font-size:clamp(20px,4.6vw,28px)}
+    ul{margin:10px 0 0 22px}
+    .grid{display:grid;gap:12px}
+    .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media(max-width:900px){.cols-3{grid-template-columns:1fr 1fr}}
+    @media(max-width:620px){.cols-3{grid-template-columns:1fr}}
 
-  /* ===== layout & typography ===== */
-  *{box-sizing:border-box}
-  html{height:100%; background:var(--space-bg);}        /* nền fallback */
-  body{
-    min-height:100%;
-    margin:0;
-    color:var(--ink);
-    background:transparent;                              /* QUAN TRỌNG: cho canvas thấy được */
-    font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  }
-  a{color:#ffd66b; text-decoration:none}
+    .btn{display:flex;align-items:center;justify-content:center;gap:8px;
+      padding:16px 14px;border-radius:14px;border:1px solid var(--line);
+      background:linear-gradient(180deg,#0f1116,#0a0b0f);
+      box-shadow:var(--glow);font-weight:800;color:var(--ink)}
+    .note{color:var(--muted)}
+    footer{color:#a0a0a0;text-align:center;margin:36px 0}
 
-  /* ===== solar background canvas ===== */
-  #solar-bg{
-    position:fixed; inset:0;
-    width:100vw; height:100vh;
-    display:block; pointer-events:none;
-    z-index:0;                                           /* QUAN TRỌNG: dưới nội dung, trên html */
-  }
+    /* ===== Solar System Background ===== */
+    #solar-bg{
+      position:fixed;inset:0;z-index:-1;width:100vw;height:100vh;
+      display:block;pointer-events:none;background:var(--space-bg);
+    }
 
-  /* ===== content on top of canvas ===== */
-  .wrap{max-width:1100px; margin:28px auto 96px; padding:0 16px; position:relative; z-index:1;}
-  .panel{
-    background:linear-gradient(180deg,#101216,#0c0e12);
-    border:1px solid var(--line); border-radius:var(--radius);
-    padding:20px; margin:18px 0; box-shadow:0 10px 40px rgba(0,0,0,.45);
-  }
-  h1{font-size:clamp(28px,5.5vw,44px); margin:6px 0 8px}
-  .brand{font-weight:900; letter-spacing:.3px; color:#ffd66b; text-shadow:var(--glow)}
-  .chips{display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 22px}
-  .chip{padding:8px 12px; border:1px solid var(--line); border-radius:999px; background:linear-gradient(180deg,#0f1116,#0b0c10); box-shadow:var(--glow); font-weight:600}
-  .grid{display:grid; gap:12px}
-  .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-  @media (max-width:900px){ .cols-3{grid-template-columns:1fr 1fr} }
-  @media (max-width:620px){ .cols-3{grid-template-columns:1fr} }
-  .btn{display:flex; align-items:center; justify-content:center; gap:8px; padding:16px 14px; border-radius:14px; border:1px solid var(--line); background:linear-gradient(180deg,#0f1116,#0a0b0f); box-shadow:var(--glow); font-weight:800}
-  footer{opacity:.8; text-align:center; margin:36px 0}
-</style>
+    /* ===== Toggle Panel Chip ===== */
+    #main-panel{
+      transition:transform .35s ease,opacity .35s ease,margin .35s ease,padding .35s ease;
+    }
+    #main-panel.collapsed{transform:scale(.92);opacity:0;pointer-events:none;margin:0;padding:0;border-width:0}
+    .toggle-panel{
+      position:fixed;left:16px;bottom:92px;padding:8px 12px;border-radius:999px;
+      border:1px solid var(--line);background:linear-gradient(180deg,#0f1116,#0a0b0f);
+      color:var(--ink);font-weight:900;font-size:13px;letter-spacing:.6px;
+      box-shadow:var(--glow);z-index:5;cursor:pointer;-webkit-tap-highlight-color:transparent;
+      user-select:none;animation:panelGlow 2.2s ease-in-out infinite;
+    }
+    .toggle-panel:active{transform:scale(.97)}
+    .toggle-panel.is-collapsed{animation-duration:1.3s}
+    @keyframes panelGlow{
+      0%{box-shadow:0 0 0 rgba(0,0,0,0);opacity:.96}
+      50%{box-shadow:0 0 24px rgba(204,164,0,.35),0 0 48px rgba(204,164,0,.15);opacity:1}
+      100%{box-shadow:0 0 0 rgba(0,0,0,0);opacity:.96}
+    }
+  </style>
 </head>
-
 <body>
-  <!-- Canvas nền hệ Mặt Trời: đặt NGAY sau <body> để luôn phủ toàn màn -->
   <canvas id="solar-bg" aria-hidden="true"></canvas>
 
-  <!-- Nội dung demo (nằm TRÊN canvas) -->
-  <div class="wrap">
+  <div id="main-panel" class="wrap">
     <section class="panel">
       <h1><span class="brand">🌐 LICENSE GỐC™</span></h1>
+      <p class="lead">“Protect the Roots. Empower Humanity.”</p>
       <div class="chips">
-        <a class="chip" href="#">Introduction</a>
-        <a class="chip" href="#">Ecosystem</a>
-        <a class="chip" href="#">Strategy</a>
-        <a class="chip" href="#">Core Values</a>
-        <a class="chip" href="#">Official Links</a>
+        <a class="chip" href="#intro">Introduction</a>
+        <a class="chip" href="#eco">Ecosystem</a>
+        <a class="chip" href="#strategy">Strategy</a>
+        <a class="chip" href="#values">Core Values</a>
+        <a class="chip" href="#links">Official Links</a>
       </div>
-
       <div class="grid cols-3">
         <a class="btn" href="licensenetwork.html">LICENSENETWORK</a>
         <a class="btn" href="licensecoin.html">LICENSECOIN</a>
@@ -81,136 +93,95 @@
         <a class="btn" href="musicroom.html">🎧 Music Room</a>
       </div>
     </section>
-
     <footer>© 2025 LICENSE GỐC™ — Build with the world.</footer>
   </div>
 
-  <!-- Floating Bar (giữ nguyên) -->
+  <!-- Toggle Chip -->
+  <button id="panelToggle" class="toggle-panel" aria-label="Hiện/Ẩn menu" aria-pressed="false">
+    LICENSEGOC
+  </button>
+
+  <!-- Floating Bar Clear giữ nguyên -->
   <script src="goc-ui.js?v=18" defer></script>
 
-  <!-- ===== Solar System Background JS ===== -->
+  <!-- ===== Solar System Animation ===== -->
   <script>
-  (()=>{
-    const cvs = document.getElementById('solar-bg');
-    const ctx = cvs.getContext('2d', { alpha: true });
-    const DPR = Math.max(1, Math.min(2, window.devicePixelRatio||1));
+  (()=> {
+    const cvs=document.getElementById('solar-bg');if(!cvs)return;
+    const ctx=cvs.getContext('2d');
+    const DPR=Math.max(1,Math.min(2,window.devicePixelRatio||1));
+    function resize(){cvs.width=innerWidth*DPR;cvs.height=innerHeight*DPR;
+      cvs.style.width=innerWidth+'px';cvs.style.height=innerHeight+'px';
+      ctx.setTransform(DPR,0,0,DPR,0,0);}resize();
+    addEventListener('resize',resize,{passive:true});
 
-    function resize(){
-      const w = innerWidth, h = innerHeight;
-      cvs.width  = Math.floor(w * DPR);
-      cvs.height = Math.floor(h * DPR);
-      cvs.style.width = w+'px';
-      cvs.style.height = h+'px';
-      ctx.setTransform(DPR,0,0,DPR,0,0);
+    const center=()=>({x:innerWidth/2,y:innerHeight/2});
+    const SUN={r:32,glow:160,color:'#ffcf33'};
+    const PLANETS=[
+      {name:'Mercury',r:4,orbit:70,period:12,color:'#c9b29b'},
+      {name:'Venus',r:6,orbit:100,period:20,color:'#e6c477'},
+      {name:'Earth',r:7,orbit:140,period:26,color:'#5db7ff'},
+      {name:'Mars',r:5,orbit:180,period:32,color:'#ff6a4a'},
+      {name:'Jupiter',r:14,orbit:230,period:60,color:'#e0b58a'},
+      {name:'Saturn',r:12,orbit:290,period:78,color:'#f1d08b',ring:true},
+      {name:'Uranus',r:9,orbit:340,period:100,color:'#9de3ff'},
+      {name:'Neptune',r:9,orbit:390,period:120,color:'#6fb0ff'},
+      {name:'Pluto',r:3,orbit:440,period:150,color:'#aaa'} // thêm Pluto
+    ].map((p,i)=>({...p,phase:i*0.6}));
+    const FOCUS_EACH_SEC=6,FOCUS_SOFTNESS=0.08;let cam={x:0,y:0,zoom:1};
+
+    function drawGlow(x,y,inner,outer,color){
+      const g=ctx.createRadialGradient(x,y,inner*0.1,x,y,outer);
+      g.addColorStop(0,color);g.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,outer,0,Math.PI*2);ctx.fill();
     }
-    addEventListener('resize', resize, {passive:true});
-    resize();
-
-    // ---- config ----
-    const C = ()=>({x: innerWidth/2, y: innerHeight/2});
-    const SUN = { r: 34, glow: 170, color: '#ffcf33' };
-
-    // 9 hành tinh (thêm Pluto để đủ "9")
-    const PLANETS = [
-      {name:'Mercury', r:4,  orbit: 70,  period:  12, color:'#c9b29b'},
-      {name:'Venus',   r:6,  orbit: 100, period:  20, color:'#e6c477'},
-      {name:'Earth',   r:7,  orbit: 140, period:  26, color:'#5db7ff'},
-      {name:'Mars',    r:5,  orbit: 180, period:  32, color:'#ff6a4a'},
-      {name:'Jupiter', r:14, orbit: 230, period:  60, color:'#e0b58a'},
-      {name:'Saturn',  r:12, orbit: 290, period:  78, color:'#f1d08b', ring:true},
-      {name:'Uranus',  r:9,  orbit: 340, period: 100, color:'#9de3ff'},
-      {name:'Neptune', r:9,  orbit: 390, period: 120, color:'#6fb0ff'},
-      {name:'Pluto',   r:3,  orbit: 440, period: 160, color:'#c9d0d6'}
-    ].map((p,i)=>({ ...p, phase: i*0.6 }));
-
-    // spotlight: mỗi hành tinh ~6s tiến gần trung tâm màn hình
-    const FOCUS_EACH_SEC = 6;
-    const SOFT = 0.08;
-    let cam = {x:0, y:0, zoom:1};
-
-    function glow(x,y,inner,outer,color){
-      const g = ctx.createRadialGradient(x,y,inner*0.1, x,y,outer);
-      g.addColorStop(0, color);
-      g.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(x,y,outer,0,Math.PI*2); ctx.fill();
-    }
-
     function draw(){
-      const t = performance.now()/1000;
-
-      // nền: gradient tinh vân nhẹ
-      const bg = ctx.createLinearGradient(0,0,0,innerHeight);
-      bg.addColorStop(0, 'rgba(30,34,45,1)');
-      bg.addColorStop(1, 'rgba(10,11,15,1)');
-      ctx.fillStyle = bg;
+      const t=performance.now()/1000;
+      ctx.clearRect(0,0,innerWidth,innerHeight);
+      ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--space-bg');
       ctx.fillRect(0,0,innerWidth,innerHeight);
-
-      // hành tinh đang focus
-      const idx = Math.floor((t/FOCUS_EACH_SEC)%PLANETS.length);
-      const focused = PLANETS[idx];
-
-      // vị trí quỹ đạo & camera
-      const C0 = C();
-      const pos = p => {
-        const ang = ((t/p.period)*Math.PI*2 + p.phase);
-        return { x: C0.x + Math.cos(ang)*p.orbit,
-                 y: C0.y + Math.sin(ang)*p.orbit*0.85 };
-      };
-      const fPos = pos(focused);
-
-      // pan/zoom đưa hành tinh focus tiến gần giữa và to dần
-      const targetCamX = (C0.x - fPos.x)*0.75;
-      const targetCamY = (C0.y - fPos.y)*0.75;
-      const targetZoom = 1 + Math.min(0.35, 120/focused.orbit);
-      cam.x += (targetCamX - cam.x)*SOFT;
-      cam.y += (targetCamY - cam.y)*SOFT;
-      cam.zoom += (targetZoom - cam.zoom)*SOFT;
-
-      ctx.save();
-      ctx.translate(cam.x, cam.y);
-      ctx.scale(cam.zoom, cam.zoom);
-
-      // Mặt Trời + quầng
-      glow(C0.x, C0.y, SUN.r, SUN.glow, 'rgba(255,200,60,0.22)');
-      ctx.beginPath(); ctx.fillStyle = SUN.color;
-      ctx.arc(C0.x, C0.y, SUN.r, 0, Math.PI*2); ctx.fill();
-
-      // quỹ đạo mờ
-      ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-      ctx.lineWidth = 1;
-      PLANETS.forEach(p=>{
-        ctx.beginPath();
-        ctx.ellipse(C0.x, C0.y, p.orbit, p.orbit*0.85, 0, 0, Math.PI*2);
-        ctx.stroke();
-      });
-
-      // vẽ hành tinh
-      PLANETS.forEach(p=>{
-        const {x,y} = pos(p);
-
-        glow(x,y, p.r, p.r*4, 'rgba(140,180,255,0.16)');
-
-        if(p.ring){
-          ctx.save(); ctx.translate(x,y); ctx.rotate(-0.6);
-          ctx.strokeStyle = 'rgba(240,210,150,0.7)'; ctx.lineWidth = 2;
-          ctx.beginPath(); ctx.ellipse(0,0, p.r*2.2, p.r*0.9, 0, 0, Math.PI*2); ctx.stroke();
-          ctx.restore();
-        }
-
-        ctx.beginPath(); ctx.fillStyle = p.color;
-        ctx.arc(x,y, p.r, 0, Math.PI*2); ctx.fill();
-
-        if(p===focused){
-          ctx.strokeStyle = 'rgba(255,255,255,0.55)'; ctx.lineWidth = 1.5;
-          ctx.beginPath(); ctx.arc(x,y, p.r+6, 0, Math.PI*2); ctx.stroke();
-        }
-      });
-
-      ctx.restore();
-      requestAnimationFrame(draw);
-    }
+      const idx=Math.floor((t/FOCUS_EACH_SEC)%PLANETS.length);
+      const focused=PLANETS[idx];
+      const C=center();
+      const pos=p=>{const ang=(t/p.period)*Math.PI*2+p.phase;
+        return{x:C.x+Math.cos(ang)*p.orbit,y:C.y+Math.sin(ang)*p.orbit*0.85}};
+      const fPos=pos(focused);
+      const targetCamX=(C.x-fPos.x)*0.75,targetCamY=(C.y-fPos.y)*0.75;
+      const targetZoom=1+Math.min(0.35,120/focused.orbit);
+      cam.x+=(targetCamX-cam.x)*FOCUS_SOFTNESS;
+      cam.y+=(targetCamY-cam.y)*FOCUS_SOFTNESS;
+      cam.zoom+=(targetZoom-cam.zoom)*FOCUS_SOFTNESS;
+      ctx.save();ctx.translate(cam.x,cam.y);ctx.scale(cam.zoom,cam.zoom);
+      drawGlow(C.x,C.y,SUN.r,SUN.glow,'rgba(255,200,60,0.25)');
+      ctx.beginPath();ctx.fillStyle=SUN.color;ctx.arc(C.x,C.y,SUN.r,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
+      PLANETS.forEach(p=>{ctx.beginPath();ctx.ellipse(C.x,C.y,p.orbit,p.orbit*0.85,0,0,Math.PI*2);ctx.stroke();});
+      PLANETS.forEach(p=>{const{x,y}=pos(p);drawGlow(x,y,p.r,p.r*4,'rgba(140,180,255,0.18)');
+        if(p.ring){ctx.save();ctx.translate(x,y);ctx.rotate(-0.6);
+          ctx.strokeStyle='rgba(240,210,150,0.7)';ctx.lineWidth=2;ctx.beginPath();
+          ctx.ellipse(0,0,p.r*2.2,p.r*0.9,0,0,Math.PI*2);ctx.stroke();ctx.restore();}
+        ctx.beginPath();ctx.fillStyle=p.color;ctx.arc(x,y,p.r,0,Math.PI*2);ctx.fill();
+        if(p===focused){ctx.strokeStyle='rgba(255,255,255,0.6)';ctx.lineWidth=1.5;
+          ctx.beginPath();ctx.arc(x,y,p.r+6,0,Math.PI*2);ctx.stroke();}});
+      ctx.restore();requestAnimationFrame(draw);}
     requestAnimationFrame(draw);
+  })();
+  </script>
+
+  <!-- ===== Toggle Panel Script ===== -->
+  <script>
+  (()=> {
+    const panel=document.getElementById('main-panel');
+    const btn=document.getElementById('panelToggle');
+    if(!panel||!btn) return;
+    let hidden=localStorage.getItem('panelHidden')==='1';
+    apply(hidden);
+    btn.addEventListener('click',()=>{
+      hidden=!hidden;localStorage.setItem('panelHidden',hidden?'1':'0');apply(hidden);});
+    function apply(isHidden){
+      if(isHidden){panel.classList.add('collapsed');btn.classList.add('is-collapsed');btn.setAttribute('aria-pressed','true');}
+      else{panel.classList.remove('collapsed');btn.classList.remove('is-collapsed');btn.setAttribute('aria-pressed','false');}
+    }
   })();
   </script>
 </body>
