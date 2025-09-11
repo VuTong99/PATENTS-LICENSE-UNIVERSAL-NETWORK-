@@ -34,6 +34,29 @@
     }
   </style>
 </head>
+  <style id="overlay-hotfix">
+  /* 1) Diệt mọi overlay toàn màn hình nếu có */
+  #goc-overlay,
+  .goc-overlay,
+  .goc-mask,
+  .goc-dim,
+  .modal-backdrop {
+    display: none !important;
+    pointer-events: none !important;
+  }
+
+  /* 2) Ép canvas nền luôn cố định và nằm sau cùng */
+  #bg{
+    position: fixed !important;
+    top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    width: 100vw !important; height: 100vh !important;
+    display: block !important; pointer-events: none !important;
+    z-index: -1 !important;
+  }
+
+  /* 3) Nền trang trong suốt để không “đen” */
+  html, body{ margin:0; background: transparent !important; }
+</style>
 <body>
 
   <!-- Canvas nền: mây volumetric + mạch phát sáng 3D -->
