@@ -2,237 +2,186 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>LICENSE GỐC™</title>
-
+  <meta name="theme-color" content="#0a0b0f">
   <style>
     :root{
-      --bg:#0a0b0f;               /* nền tối tổng thể */
-      --ink:#eae7dc;              /* màu chữ mặc định (nếu cần) */
-      --gold:#f5d36a;             /* vàng nhấn (đồng bộ Floating Bar) */
-      --line:rgba(255,215,0,.22); /* viền nhẹ nếu cần */
+      --space:#0a0b0f;      /* nền không gian */
+      --ink:#eae7dc;
+      --glow:rgba(255,215,0,.18);
     }
+    /* reset + layout */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; background:var(--bg); color:var(--ink);
+      margin:0; overflow:hidden;    /* QUAN TRỌNG: không còn cuộn/chồng màn đen */
+      color:var(--ink); background:var(--space);
       font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      /* chừa đáy một chút để không che Floating Bar */
-      padding-bottom:84px;
     }
 
-    /* ==== BACKGROUND CANVAS (fixed, behind all) ==== */
+    /* Canvas nền mây + mạng 3D */
     #bg{
-      position:fixed; inset:0; width:100vw; height:100vh;
-      display:block; z-index:-1; pointer-events:none;
+      position:fixed; inset:0; z-index:-1;
+      width:100vw; height:100vh; display:block; pointer-events:none;
     }
 
-    /* khi người dùng hạn chế chuyển động -> tắt nền động */
-    @media (prefers-reduced-motion: reduce){
-      #bg{ display:none; }
-      body{ background:#0b0f18 radial-gradient(1200px 700px at 50% 110%, #102038 0%, #0b0f18 60%, #080b12 100%) no-repeat; }
+    /* (tạm) khung trống để bạn test không bị lớp đen che */
+    .wrap{
+      position:relative; z-index:1; /* luôn trên nền */
+      min-height:100dvh;
+      display:grid; place-items:center;
+      padding:24px;
+    }
+    .box{
+      backdrop-filter: blur(6px) saturate(120%);
+      background: radial-gradient(120% 160% at 10% 10%, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:14px;
+      padding:18px 16px; color:#cfd6e4;
+      text-align:center;
     }
   </style>
 </head>
-  <style id="overlay-hotfix">
-  /* 1) Diệt mọi overlay toàn màn hình nếu có */
-  #goc-overlay,
-  .goc-overlay,
-  .goc-mask,
-  .goc-dim,
-  .modal-backdrop {
-    display: none !important;
-    pointer-events: none !important;
-  }
-
-  /* 2) Ép canvas nền luôn cố định và nằm sau cùng */
-  #bg{
-    position: fixed !important;
-    top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
-    width: 100vw !important; height: 100vh !important;
-    display: block !important; pointer-events: none !important;
-    z-index: -1 !important;
-  }
-
-  /* 3) Nền trang trong suốt để không “đen” */
-  html, body{ margin:0; background: transparent !important; }
-</style>
 <body>
 
-  <!-- Canvas nền: mây volumetric + mạch phát sáng 3D -->
+  <!-- NỀN MÂY + MẠCH 3D -->
   <canvas id="bg" aria-hidden="true"></canvas>
 
-  <!-- (Giữ nguyên Floating Bar Clear của gốc) -->
-  <script src="goc-ui.js?v=18" defer></script>
+  <!-- Nội dung tạm (không có Floating Bar). Bạn có thể thay bằng Features sau -->
+  <div class="wrap">
+    <div class="box">
+      <div style="font-weight:800; letter-spacing:.2px">Welcome to LICENSE GỐC™</div>
+      <div style="opacity:.8; font-size:14px">Clean index with volumetric clouds & 3D network background.</div>
+    </div>
+  </div>
 
+  <!-- KHÔNG nạp goc-ui.js ở index -->
   <script>
-  (()=> {
+  (()=>{
     const cvs = document.getElementById('bg');
-    if(!cvs) return;
     const ctx = cvs.getContext('2d');
+    const DPR = Math.max(1, Math.min(2, window.devicePixelRatio||1));
+    let W=0,H=0,t0=performance.now();
 
-    // Hiệu năng mobile
-    const DPR = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
-
-    let W=0, H=0, t0=performance.now();
-    function resize(){
-      W = innerWidth; H = innerHeight;
-      cvs.width  = Math.floor(W*DPR);
-      cvs.height = Math.floor(H*DPR);
-      cvs.style.width  = W+'px';
-      cvs.style.height = H+'px';
+    function rs(){
+      W = cvs.width  = Math.floor(innerWidth * DPR);
+      H = cvs.height = Math.floor(innerHeight * DPR);
+      cvs.style.width  = innerWidth + 'px';
+      cvs.style.height = innerHeight + 'px';
       ctx.setTransform(DPR,0,0,DPR,0,0);
-    }
-    addEventListener('resize', resize, {passive:true});
-    resize();
-
-    /* ======= Scene data ======= */
-
-    // Sao lấp lánh
-    const STARS = Array.from({length: 160}, ()=>({
-      x: Math.random()*W,
-      y: Math.random()*H,
-      r: Math.random()*1.2 + 0.3,
-      ph: Math.random()*Math.PI*2
-    }));
-
-    // Mây (metaballs) – các “khối” radial gradient trôi chậm
-    const CLOUDS = Array.from({length: 18}, ()=>({
-      x: Math.random()*W,
-      y: Math.random()*H*0.7 + H*0.15,
-      r: Math.random()*220 + 180,
-      vx: (Math.random()*.06 - .03),
-      vy: (Math.random()*.04 - .02),
-      ph: Math.random()*Math.PI*2
-    }));
-
-    // Mạng mạch phát sáng (nodes + edges)
-    const NODE_CT = 28;
-    const NODES = Array.from({length: NODE_CT}, ()=>({
-      x: Math.random()*W,
-      y: Math.random()*H*0.55 + H*0.15,
-      z: Math.random()*0.7 + 0.3        // “độ sâu” để scale & alpha
-    }));
-    const EDGES = [];
-    for(let i=0;i<NODES.length;i++){
-      for(let j=i+1;j<NODES.length;j++){
-        const a=NODES[i], b=NODES[j];
-        const d = Math.hypot(a.x-b.x, a.y-b.y);
-        if(d < 220) EDGES.push({i, j, len:d, ph:Math.random()*Math.PI*2});
-      }
-    }
-
-    /* ======= Helpers ======= */
-
-    function drawGlowCircle(x,y,r, color='rgba(255,255,255,0.6)', inner=0.2){
-      const g = ctx.createRadialGradient(x,y, r*inner, x,y, r);
-      g.addColorStop(0, color);
-      g.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(x,y,r,0,Math.PI*2);
-      ctx.fill();
-    }
-
-    function drawBackground(){
-      // lớp nền vũ trụ rất tối + vignette
-      const grd = ctx.createRadialGradient(W*0.5,H*1.15,50, W*0.5,H*1.15, Math.hypot(W,H));
-      grd.addColorStop(0, '#0b1220');
-      grd.addColorStop(0.45, '#0a0f19');
-      grd.addColorStop(1, '#070a11');
-      ctx.fillStyle = grd;
+      // backfill nền để tránh “màn đen” khi Safari kéo
+      ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--space')||'#0a0b0f';
       ctx.fillRect(0,0,W,H);
     }
+    addEventListener('resize', rs, {passive:true});
+    rs();
 
-    function drawStars(t){
-      ctx.save();
-      for(const s of STARS){
-        const a = 0.35 + 0.35*Math.sin(t*0.9 + s.ph);
-        ctx.fillStyle = `rgba(180,200,255,${a})`;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-        ctx.fill();
-        // viền glow nhẹ
-        if(Math.random()<0.02){
-          drawGlowCircle(s.x, s.y, s.r*6, 'rgba(140,180,255,0.08)', 0.05);
+    // ---------- “Volumetric clouds” đơn giản + hạt sao ----------
+    // noise đơn giản (value noise 2D)
+    function n2(x,y){
+      const s = Math.sin(x*12.9898 + y*78.233) * 43758.5453;
+      return s - Math.floor(s);
+    }
+    function smoothNoise(x,y){
+      const x0=Math.floor(x), y0=Math.floor(y);
+      const xf=x-x0, yf=y-y0;
+      function g(ix,iy){ return n2(ix,iy); }
+      const v00=g(x0,y0), v10=g(x0+1,y0), v01=g(x0,y0+1), v11=g(x0+1,y0+1);
+      const i1=v00+(v10-v00)*xf;
+      const i2=v01+(v11-v01)*xf;
+      return i1+(i2-i1)*yf;
+    }
+    function fbm(x,y){
+      let v=0, amp=1, freq=1;
+      for(let i=0;i<4;i++){
+        v += smoothNoise(x*freq, y*freq)*amp;
+        amp*=0.55; freq*=1.9;
+      }
+      return v;
+    }
+
+    const stars = Array.from({length:140}, ()=>({
+      x: Math.random()*innerWidth,
+      y: Math.random()*innerHeight,
+      r: Math.random()*1.25 + 0.25,
+      tw: Math.random()*Math.PI*2
+    }));
+
+    // ---------- network points (đường mạch 3D) ----------
+    const P = Array.from({length:28}, ()=>({
+      x: Math.random()*innerWidth,
+      y: Math.random()*innerHeight,
+      z: Math.random()*1, // “độ sâu”
+      vx: (Math.random()-.5)*0.12,
+      vy: (Math.random()-.5)*0.12
+    }));
+
+    function step(now){
+      const t = (now - t0)/1000;
+
+      // nền gradient không gian
+      const g = ctx.createRadialGradient(W*0.5, H*0.4, 0, W*0.5, H*0.6, Math.max(W,H));
+      g.addColorStop(0, 'rgba(24,28,40,1)');
+      g.addColorStop(1, 'rgba(8,10,14,1)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,innerWidth,innerHeight);
+
+      // lớp mây: vẽ theo dải Alpha dựa trên fbm
+      const cloudRows = 90, cloudCols = 160;
+      const cw = innerWidth/cloudCols, ch = innerHeight/cloudRows;
+      ctx.globalCompositeOperation='lighter';
+      for(let j=0;j<cloudRows;j++){
+        for(let i=0;i<cloudCols;i++){
+          const u = i/cloudCols, v = j/cloudRows;
+          const d = fbm(u*2.0 + t*0.03, v*2.0 - t*0.02);
+          const a = Math.max(0, Math.min(1, (d-0.35)*1.6));
+          if(a<0.01) continue;
+          ctx.fillStyle = `rgba(120,160,255,${a*0.08})`;
+          ctx.fillRect(i*cw, j*ch, cw+1, ch+1);
         }
       }
-      ctx.restore();
-    }
 
-    function stepClouds(dt){
-      for(const c of CLOUDS){
-        c.ph += dt*0.0005;
-        c.x += (c.vx + Math.sin(c.ph)*0.02)*dt;
-        c.y += (c.vy + Math.cos(c.ph)*0.015)*dt;
-        // wrap
-        const m = c.r*0.6;
-        if(c.x < -m) c.x = W+m; else if(c.x > W+m) c.x = -m;
-        if(c.y < -m) c.y = H+m; else if(c.y > H+m) c.y = -m;
-      }
-    }
-
-    function drawClouds(){
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      for(const c of CLOUDS){
-        // lõi lạnh xanh + vành ấm tím để thành volumetric
-        const g = ctx.createRadialGradient(c.x,c.y, c.r*0.1, c.x,c.y, c.r);
-        g.addColorStop(0.00, 'rgba(160,200,255,0.30)');
-        g.addColorStop(0.45, 'rgba(120,170,255,0.18)');
-        g.addColorStop(0.90, 'rgba(90,120,200,0.04)');
-        g.addColorStop(1.00, 'rgba(0,0,0,0)');
-        ctx.fillStyle = g;
+      // sao twinkle
+      ctx.globalCompositeOperation='screen';
+      for(const s of stars){
+        s.tw += 0.06;
+        const a = 0.25 + Math.abs(Math.sin(s.tw))*0.55;
         ctx.beginPath();
-        ctx.arc(c.x,c.y,c.r,0,Math.PI*2);
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(180,210,255,${a})`;
         ctx.fill();
       }
-      ctx.restore();
-    }
 
-    function drawCircuits(t){
-      // các đường mạch mờ + chấm “packet” chạy trên đường
-      ctx.save();
-      for(const e of EDGES){
-        const a=NODES[e.i], b=NODES[e.j];
-        const za = a.z, zb = b.z, z = (za+zb)/2;
-        const alpha = 0.08 + 0.15*z;
-        const lw = 0.6 + 1.2*z;
-
-        // đường glow 2 lớp
-        ctx.strokeStyle = `rgba(120,200,255,${alpha})`;
-        ctx.lineWidth = lw*2.2;
-        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
-
-        ctx.strokeStyle = `rgba(60,160,255,${alpha*1.2})`;
-        ctx.lineWidth = lw;
-        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
-
-        // dot chạy theo chu kỳ
-        const u = (Math.sin(t*0.8 + e.ph)*0.5 + 0.5); // 0..1
-        const x = a.x + (b.x-a.x)*u, y = a.y + (b.y-a.y)*u;
-        drawGlowCircle(x,y, 6+6*z, 'rgba(120,220,255,0.45)', 0.05);
-        ctx.fillStyle = 'rgba(200,245,255,0.9)';
-        ctx.beginPath(); ctx.arc(x,y, 1.2+1.2*z, 0, Math.PI*2); ctx.fill();
+      // network 3D
+      ctx.strokeStyle='rgba(120,200,255,0.28)';
+      ctx.lineWidth=1;
+      for(const q of P){
+        // di chuyển nhẹ
+        q.x += q.vx; q.y += q.vy;
+        if(q.x<0||q.x>innerWidth) q.vx*=-1;
+        if(q.y<0||q.y>innerHeight) q.vy*=-1;
       }
-      ctx.restore();
+      for(let i=0;i<P.length;i++){
+        for(let j=i+1;j<P.length;j++){
+          const a=P[i], b=P[j];
+          const dx=a.x-b.x, dy=a.y-b.y;
+          const d2=dx*dx+dy*dy;
+          if(d2<140*140){
+            const apha = 0.35 * (1 - d2/(140*140));
+            ctx.globalAlpha = apha;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+      ctx.globalAlpha = 1;
+
+      requestAnimationFrame(step);
     }
-
-    /* ======= Main loop ======= */
-    function loop(now){
-      const dt = Math.min(48, now - t0);
-      t0 = now;
-      const t = now/1000;
-
-      drawBackground();
-      drawStars(t);
-      stepClouds(dt);
-      drawClouds();
-      drawCircuits(t);
-
-      requestAnimationFrame(loop);
-    }
-    requestAnimationFrame(loop);
+    requestAnimationFrame(step);
   })();
   </script>
 </body>
