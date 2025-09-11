@@ -4,79 +4,117 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>LICENSE GỐC™</title>
+
   <style>
     :root{
-      --bg:#0a0b0f; --panel:#101216; --ink:#eae7dc; --muted:#a8b3c7;
-      --gold:#f5d36a; --gold2:#ffd66b; --line:rgba(255,215,0,.22);
-      --radius:16px; --shadow:0 10px 40px rgba(0,0,0,.45);
+      --bg:#0a0b0f;
+      --panel:#101216;
+      --ink:#eae7dc;
+      --muted:#a8b3c7;
+      --gold:#f5d36a; --gold2:#ffd66b;
+      --line:rgba(255,215,0,.22);
+      --radius:16px;
+      --shadow:0 10px 40px rgba(0,0,0,.45);
       --glow:0 0 24px rgba(204,164,0,.35);
-      --goc-trans-bottom:94px;
-      --space-bg:#0a0b0f;
+      --goc-trans-bottom:94px; /* chừa chỗ cho Floating Bar */
     }
+
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;color:var(--ink);background:var(--bg);
-      font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-    a{color:var(--gold2);text-decoration:none}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:var(--bg);
+      font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      overflow-x:hidden;
+    }
+    a{color:var(--gold2); text-decoration:none}
 
-    .wrap{max-width:1100px;margin:28px auto 110px;padding:0 16px}
-    .chips{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 22px}
-    .chip{padding:8px 12px;border:1px solid var(--line);border-radius:999px;
-      background:linear-gradient(180deg,#0f1116,#0b0c10);box-shadow:var(--glow);
-      color:var(--ink);font-weight:600}
-    .panel{background:linear-gradient(180deg,#101216,#0c0e12);
-      border:1px solid var(--line);border-radius:var(--radius);
-      padding:20px;margin:18px 0;box-shadow:var(--shadow)}
-    h1{font-size:clamp(28px,5.5vw,44px);margin:6px 0 8px}
-    .brand{font-weight:900;letter-spacing:.3px;color:var(--gold2);text-shadow:var(--glow)}
-    .lead{opacity:.9;margin:0 0 8px}
-    h2{margin:0 0 14px;font-size:clamp(20px,4.6vw,28px)}
-    ul{margin:10px 0 0 22px}
-    .grid{display:grid;gap:12px}
-    .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-    @media(max-width:900px){.cols-3{grid-template-columns:1fr 1fr}}
-    @media(max-width:620px){.cols-3{grid-template-columns:1fr}}
-
-    .btn{display:flex;align-items:center;justify-content:center;gap:8px;
-      padding:16px 14px;border-radius:14px;border:1px solid var(--line);
+    /* ===== LICENSEGOC dock (thu nhỏ) ===== */
+    #lg-dock{
+      position:fixed; left:16px; bottom:16px;
+      z-index:10;
+      padding:10px 16px;
+      border:1px solid var(--line);
+      border-radius:14px;
       background:linear-gradient(180deg,#0f1116,#0a0b0f);
-      box-shadow:var(--glow);font-weight:800;color:var(--ink)}
+      box-shadow:var(--glow);
+      color:var(--ink); font-weight:900; letter-spacing:.4px;
+      cursor:pointer; user-select:none;
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    #lg-dock:active{ transform:scale(.98) }
+
+    /* nhấp nháy rất nhẹ toàn bộ chữ */
+    @keyframes blink {
+      0%,90%,100%{ text-shadow:var(--glow) }
+      95%{ text-shadow:0 0 10px rgba(255,230,120,.9) }
+    }
+    #lg-dock .blink{ animation:blink 3.2s infinite }
+
+    /* ===== LICENSEGOC panel (thu lớn) ===== */
+    #lg-panel{
+      position:fixed; inset:24px 24px var(--goc-trans-bottom) 24px;
+      z-index:11;
+      display:none; /* mặc định thu nhỏ */
+    }
+    #lg-card{
+      height:100%;
+      padding:22px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg,#101216,#0c0e12);
+      box-shadow:var(--shadow);
+      overflow:auto;
+    }
+    .chips{display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 22px}
+    .chip{
+      padding:8px 12px; border:1px solid var(--line); border-radius:999px;
+      background:linear-gradient(180deg,#0f1116,#0b0c10);
+      box-shadow:var(--glow); color:var(--ink); font-weight:700
+    }
+    .btn{
+      display:flex; align-items:center; justify-content:center;
+      padding:16px 14px; margin:10px 0;
+      border-radius:14px; border:1px solid var(--line);
+      background:linear-gradient(180deg,#0f1116,#0a0b0f);
+      box-shadow:var(--glow); font-weight:800; color:var(--ink)
+    }
+    h1{font-size:clamp(28px,5.5vw,44px); margin:6px 0 8px}
+    .brand{font-weight:900; letter-spacing:.3px; color:var(--gold2); text-shadow:var(--glow)}
     .note{color:var(--muted)}
-    footer{color:#a0a0a0;text-align:center;margin:36px 0}
 
-    /* ===== Solar System Background ===== */
-    #solar-bg{
-      position:fixed;inset:0;z-index:-1;width:100vw;height:100vh;
-      display:block;pointer-events:none;background:var(--space-bg);
+    /* thanh tiêu đề panel */
+    .panel-bar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; margin-bottom:10px
+    }
+    .panel-actions{display:flex; gap:8px}
+    .icon-btn{
+      padding:8px 12px; border:1px solid var(--line); border-radius:10px;
+      background:#0b0c10; color:var(--gold2); font-weight:700; cursor:pointer
     }
 
-    /* ===== Toggle Panel Chip ===== */
-    #main-panel{
-      transition:transform .35s ease,opacity .35s ease,margin .35s ease,padding .35s ease;
-    }
-    #main-panel.collapsed{transform:scale(.92);opacity:0;pointer-events:none;margin:0;padding:0;border-width:0}
-    .toggle-panel{
-      position:fixed;left:16px;bottom:92px;padding:8px 12px;border-radius:999px;
-      border:1px solid var(--line);background:linear-gradient(180deg,#0f1116,#0a0b0f);
-      color:var(--ink);font-weight:900;font-size:13px;letter-spacing:.6px;
-      box-shadow:var(--glow);z-index:5;cursor:pointer;-webkit-tap-highlight-color:transparent;
-      user-select:none;animation:panelGlow 2.2s ease-in-out infinite;
-    }
-    .toggle-panel:active{transform:scale(.97)}
-    .toggle-panel.is-collapsed{animation-duration:1.3s}
-    @keyframes panelGlow{
-      0%{box-shadow:0 0 0 rgba(0,0,0,0);opacity:.96}
-      50%{box-shadow:0 0 24px rgba(204,164,0,.35),0 0 48px rgba(204,164,0,.15);opacity:1}
-      100%{box-shadow:0 0 0 rgba(0,0,0,0);opacity:.96}
-    }
+    footer{color:#a0a0a0; text-align:center; margin-top:18px}
   </style>
 </head>
 <body>
-  <canvas id="solar-bg" aria-hidden="true"></canvas>
 
-  <div id="main-panel" class="wrap">
-    <section class="panel">
-      <h1><span class="brand">🌐 LICENSE GỐC™</span></h1>
-      <p class="lead">“Protect the Roots. Empower Humanity.”</p>
+  <!-- Dock: Thu nhỏ / mở panel -->
+  <div id="lg-dock" aria-controls="lg-panel" aria-expanded="false">
+    <span class="blink">LICENSEGOC</span>
+  </div>
+
+  <!-- Panel: nội dung chính (mở ra khi click dock) -->
+  <div id="lg-panel" role="dialog" aria-labelledby="lg-title" aria-modal="true">
+    <div id="lg-card">
+      <div class="panel-bar">
+        <h1 id="lg-title" class="brand">🌐 LICENSE GỐC™</h1>
+        <div class="panel-actions">
+          <button class="icon-btn" id="lg-min">Thu nhỏ</button>
+        </div>
+      </div>
+
       <div class="chips">
         <a class="chip" href="#intro">Introduction</a>
         <a class="chip" href="#eco">Ecosystem</a>
@@ -84,104 +122,54 @@
         <a class="chip" href="#values">Core Values</a>
         <a class="chip" href="#links">Official Links</a>
       </div>
-      <div class="grid cols-3">
-        <a class="btn" href="licensenetwork.html">LICENSENETWORK</a>
-        <a class="btn" href="licensecoin.html">LICENSECOIN</a>
-        <a class="btn" href="paycards.html">Pay & Cards</a>
-        <a class="btn" href="creationsroom.html">Apps</a>
-        <a class="btn" href="vault.html">Vault</a>
-        <a class="btn" href="musicroom.html">🎧 Music Room</a>
-      </div>
-    </section>
-    <footer>© 2025 LICENSE GỐC™ — Build with the world.</footer>
+
+      <a class="btn" href="licensenetwork.html">LICENSENETWORK</a>
+      <a class="btn" href="licensecoin.html">LICENSECOIN</a>
+      <a class="btn" href="paycards.html">Pay & Cards</a>
+      <a class="btn" href="creationsroom.html">Apps</a>
+      <a class="btn" href="vault.html">Vault</a>
+      <a class="btn" href="musicroom.html">🎧 Music Room</a>
+
+      <section id="links" style="margin-top:12px">
+        <p class="note">
+          Balance, invoices & disputes can be managed at
+          <a href="paycards.html">Pay & Cards</a>.
+        </p>
+      </section>
+
+      <footer>© 2025 LICENSE GỐC™ — Build with the world.</footer>
+    </div>
   </div>
 
-  <!-- Toggle Chip -->
-  <button id="panelToggle" class="toggle-panel" aria-label="Hiện/Ẩn menu" aria-pressed="false">
-    LICENSEGOC
-  </button>
-
-  <!-- Floating Bar Clear giữ nguyên -->
+  <!-- Floating Bar (giữ nguyên) -->
   <script src="goc-ui.js?v=18" defer></script>
 
-  <!-- ===== Solar System Animation ===== -->
   <script>
-  (()=> {
-    const cvs=document.getElementById('solar-bg');if(!cvs)return;
-    const ctx=cvs.getContext('2d');
-    const DPR=Math.max(1,Math.min(2,window.devicePixelRatio||1));
-    function resize(){cvs.width=innerWidth*DPR;cvs.height=innerHeight*DPR;
-      cvs.style.width=innerWidth+'px';cvs.style.height=innerHeight+'px';
-      ctx.setTransform(DPR,0,0,DPR,0,0);}resize();
-    addEventListener('resize',resize,{passive:true});
+  // Toggle mở/đóng panel
+  (function(){
+    const dock  = document.getElementById('lg-dock');
+    const panel = document.getElementById('lg-panel');
+    const btnMin= document.getElementById('lg-min');
 
-    const center=()=>({x:innerWidth/2,y:innerHeight/2});
-    const SUN={r:32,glow:160,color:'#ffcf33'};
-    const PLANETS=[
-      {name:'Mercury',r:4,orbit:70,period:12,color:'#c9b29b'},
-      {name:'Venus',r:6,orbit:100,period:20,color:'#e6c477'},
-      {name:'Earth',r:7,orbit:140,period:26,color:'#5db7ff'},
-      {name:'Mars',r:5,orbit:180,period:32,color:'#ff6a4a'},
-      {name:'Jupiter',r:14,orbit:230,period:60,color:'#e0b58a'},
-      {name:'Saturn',r:12,orbit:290,period:78,color:'#f1d08b',ring:true},
-      {name:'Uranus',r:9,orbit:340,period:100,color:'#9de3ff'},
-      {name:'Neptune',r:9,orbit:390,period:120,color:'#6fb0ff'},
-      {name:'Pluto',r:3,orbit:440,period:150,color:'#aaa'} // thêm Pluto
-    ].map((p,i)=>({...p,phase:i*0.6}));
-    const FOCUS_EACH_SEC=6,FOCUS_SOFTNESS=0.08;let cam={x:0,y:0,zoom:1};
-
-    function drawGlow(x,y,inner,outer,color){
-      const g=ctx.createRadialGradient(x,y,inner*0.1,x,y,outer);
-      g.addColorStop(0,color);g.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,outer,0,Math.PI*2);ctx.fill();
+    function openPanel(){
+      panel.style.display = 'block';
+      dock.setAttribute('aria-expanded','true');
     }
-    function draw(){
-      const t=performance.now()/1000;
-      ctx.clearRect(0,0,innerWidth,innerHeight);
-      ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--space-bg');
-      ctx.fillRect(0,0,innerWidth,innerHeight);
-      const idx=Math.floor((t/FOCUS_EACH_SEC)%PLANETS.length);
-      const focused=PLANETS[idx];
-      const C=center();
-      const pos=p=>{const ang=(t/p.period)*Math.PI*2+p.phase;
-        return{x:C.x+Math.cos(ang)*p.orbit,y:C.y+Math.sin(ang)*p.orbit*0.85}};
-      const fPos=pos(focused);
-      const targetCamX=(C.x-fPos.x)*0.75,targetCamY=(C.y-fPos.y)*0.75;
-      const targetZoom=1+Math.min(0.35,120/focused.orbit);
-      cam.x+=(targetCamX-cam.x)*FOCUS_SOFTNESS;
-      cam.y+=(targetCamY-cam.y)*FOCUS_SOFTNESS;
-      cam.zoom+=(targetZoom-cam.zoom)*FOCUS_SOFTNESS;
-      ctx.save();ctx.translate(cam.x,cam.y);ctx.scale(cam.zoom,cam.zoom);
-      drawGlow(C.x,C.y,SUN.r,SUN.glow,'rgba(255,200,60,0.25)');
-      ctx.beginPath();ctx.fillStyle=SUN.color;ctx.arc(C.x,C.y,SUN.r,0,Math.PI*2);ctx.fill();
-      ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
-      PLANETS.forEach(p=>{ctx.beginPath();ctx.ellipse(C.x,C.y,p.orbit,p.orbit*0.85,0,0,Math.PI*2);ctx.stroke();});
-      PLANETS.forEach(p=>{const{x,y}=pos(p);drawGlow(x,y,p.r,p.r*4,'rgba(140,180,255,0.18)');
-        if(p.ring){ctx.save();ctx.translate(x,y);ctx.rotate(-0.6);
-          ctx.strokeStyle='rgba(240,210,150,0.7)';ctx.lineWidth=2;ctx.beginPath();
-          ctx.ellipse(0,0,p.r*2.2,p.r*0.9,0,0,Math.PI*2);ctx.stroke();ctx.restore();}
-        ctx.beginPath();ctx.fillStyle=p.color;ctx.arc(x,y,p.r,0,Math.PI*2);ctx.fill();
-        if(p===focused){ctx.strokeStyle='rgba(255,255,255,0.6)';ctx.lineWidth=1.5;
-          ctx.beginPath();ctx.arc(x,y,p.r+6,0,Math.PI*2);ctx.stroke();}});
-      ctx.restore();requestAnimationFrame(draw);}
-    requestAnimationFrame(draw);
-  })();
-  </script>
-
-  <!-- ===== Toggle Panel Script ===== -->
-  <script>
-  (()=> {
-    const panel=document.getElementById('main-panel');
-    const btn=document.getElementById('panelToggle');
-    if(!panel||!btn) return;
-    let hidden=localStorage.getItem('panelHidden')==='1';
-    apply(hidden);
-    btn.addEventListener('click',()=>{
-      hidden=!hidden;localStorage.setItem('panelHidden',hidden?'1':'0');apply(hidden);});
-    function apply(isHidden){
-      if(isHidden){panel.classList.add('collapsed');btn.classList.add('is-collapsed');btn.setAttribute('aria-pressed','true');}
-      else{panel.classList.remove('collapsed');btn.classList.remove('is-collapsed');btn.setAttribute('aria-pressed','false');}
+    function closePanel(){
+      panel.style.display = 'none';
+      dock.setAttribute('aria-expanded','false');
     }
+
+    dock.addEventListener('click', ()=>{
+      const open = dock.getAttribute('aria-expanded') === 'true';
+      open ? closePanel() : openPanel();
+    });
+    btnMin.addEventListener('click', closePanel);
+
+    // ESC để thu nhỏ
+    document.addEventListener('keydown', e=>{
+      if(e.key === 'Escape') closePanel();
+    });
   })();
   </script>
 </body>
