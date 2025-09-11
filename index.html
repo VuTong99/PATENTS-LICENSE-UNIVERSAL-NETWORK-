@@ -8,140 +8,136 @@
   <style>
     :root{
       --ink:#eae7dc;
-      --muted:#a8b3c7;
       --gold:#f5d36a;
-      --line:rgba(255,215,0,.18);
+      --gold2:#ffd66b;
+      --panel:#101216;
+      --bg:#0a0b0f;
+      --ring:rgba(255,215,0,.22);
       --shadow:0 10px 40px rgba(0,0,0,.45);
-      --radius:16px;
+      --glow:0 0 24px rgba(204,164,0,.35);
+      /* ĐƯỜNG DẪN HÌNH NỀN — đổi đúng tên file của Gốc ở đây */
+      --hero:url('dove-hero.jpg'); /* ví dụ: dove-hero.jpg (ảnh bồ câu) */
     }
 
-    /* ===== background: the dove + earth ===== */
+    /* Reset nhẹ */
+    *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; color:var(--ink);
-      font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:
-        radial-gradient(1200px 800px at 50% 65%, rgba(0,0,0,.25), rgba(0,0,0,.85)),
-        url("ingod-bg.jpg") center/cover no-repeat fixed;
-      /* nếu cần “cover” mạnh hơn trên di động: */
-      background-attachment: fixed;
-    }
-    /* viền tối nhẹ bốn phía để chữ đọc rõ */
-    body::after{
-      content:"";
-      position:fixed; inset:0; pointer-events:none;
-      background:
-        radial-gradient(80% 70% at 50% 60%, rgba(0,0,0,0) 60%, rgba(0,0,0,.45) 100%),
-        linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.35));
-      mix-blend-mode:normal;
+      margin:0;
+      color:var(--ink);
+      background:#000; /* base đen đậm để blend với ảnh */
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     }
 
-    /* ===== panel chính (thu gọn/mở rộng được) ===== */
-    .panel{
+    /* ===== HERO BACKGROUND (hình bồ câu) =====
+       Dùng ::before dạng fixed để luôn nằm sau mọi thứ, không bị che */
+    .hero{
       position:relative;
-      max-width:980px; margin:28px auto; padding:22px;
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      backdrop-filter: blur(6px);
-      background:rgba(8,10,14,.55);
-      box-shadow:var(--shadow);
-      transition:max-height .35s ease, opacity .25s ease, transform .25s ease;
-      overflow:hidden;
+      min-height:100dvh;
+      isolation:isolate; /* tạo layer riêng để z-index chuẩn xác */
     }
-    .panel h1{margin:0 0 14px; font-size:clamp(28px,5.2vw,44px); letter-spacing:.3px}
-    .brand{color:#ffd66b; text-shadow:0 0 24px rgba(204,164,0,.35); font-weight:900}
+    .hero::before{
+      content:"";
+      position:fixed; inset:0;
+      z-index:-1; /* luôn ở sau */
+      background:
+        radial-gradient(100% 140% at 50% 85%, rgba(0,0,0,.0), rgba(0,0,0,.55) 70%) ,
+        var(--hero) center / cover no-repeat fixed;
+      /* Radial gradient mờ ở đáy để chữ/float bar nổi hơn */
+      transform:none;
+      will-change:transform;
+    }
 
-    .chips{display:flex; flex-wrap:wrap; gap:10px; margin:12px 0}
-    .chip{
-      padding:8px 12px; border-radius:999px; border:1px solid var(--line);
-      background:linear-gradient(180deg,#0f1116,#0b0d12); color:var(--ink); font-weight:700;
-      text-decoration:none;
-    }
-    .btn{
-      display:block; width:100%; text-align:center;
-      padding:16px 14px; margin:10px 0;
-      border-radius:14px; border:1px solid var(--line);
+    /* ===== LICENSEGOC badge (góc trái trên) ===== */
+    .licgoc{
+      position:fixed;
+      top:18px; left:18px;
+      z-index:20; /* cao hơn floating bar một chút */
       background:linear-gradient(180deg,#0f1116,#0a0b0f);
-      color:var(--ink); font-weight:800; text-decoration:none;
-      box-shadow:0 0 20px rgba(255,214,107,.06) inset, var(--shadow);
+      color:var(--gold2);
+      border:1px solid var(--ring);
+      border-radius:14px;
+      padding:10px 14px;
+      box-shadow:var(--glow);
+      font-weight:800;
+      letter-spacing:.5px;
+      cursor:pointer;
+      user-select:none;
+      transition:transform .28s cubic-bezier(.2,.8,.2,1), opacity .28s;
+    }
+    .licgoc:active{ transform:scale(.98) }
+
+    /* trạng thái thu nhỏ (collapse) */
+    .licgoc.is-mini{
+      padding:10px 12px;
+      opacity:.88;
+    }
+    .licgoc.is-mini .txt{ max-width:0; opacity:0 }
+    .licgoc .dot{
+      display:inline-block; width:6px; height:6px; border-radius:99px;
+      background:var(--gold2); margin-right:10px; box-shadow:0 0 12px rgba(255,214,107,.8);
+      animation:blink 1.6s infinite ease-in-out;
+    }
+    .licgoc .txt{
+      display:inline-block;
+      max-width:240px;
+      white-space:nowrap; overflow:hidden;
+      transition:max-width .28s, opacity .28s;
+    }
+    @keyframes blink{
+      0%,100%{ opacity:.3; transform:scale(.9) }
+      50%{ opacity:1; transform:scale(1.15) }
     }
 
-    /* nút thu/phóng giống Floating Bar */
-    .toggle{
-      position:fixed; left:16px; bottom:16px; z-index:10;
-      width:56px; height:56px; border-radius:14px;
-      display:grid; place-items:center;
-      border:1px solid var(--line);
-      background:rgba(12,14,18,.7); color:#ffd66b; font-weight:900;
-      box-shadow:var(--shadow); user-select:none; cursor:pointer;
-    }
-    .toggle:active{transform:scale(.97)}
-
-    /* trạng thái thu gọn */
-    .collapsed .panel{max-height:0; opacity:0; transform:translateY(8px)}
-    .collapsed .badge{opacity:1; transform:translateY(0)}
-    .badge{
-      position:fixed; left:88px; bottom:22px; z-index:10;
-      padding:8px 14px; border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(10,12,16,.7); color:#ffd66b; font-weight:800;
-      letter-spacing:.6px; box-shadow:var(--shadow);
-      transition:opacity .25s ease, transform .25s ease;
-      opacity:.85; transform:translateY(2px);
+    /* (Tuỳ chọn) khung container nếu muốn thêm gì sau này */
+    .wrap{
+      min-height:100dvh;
+      display:flex; align-items:flex-end; justify-content:center;
+      padding:24px;
     }
 
-    footer{color:#c9c9c9; text-align:center; margin:26px 0 36px}
+    /* Bật/tắt panel nào đó ở giữa (để dành sau này) */
+    .panel{ display:none }
+
+    /* Đảm bảo Floating Bar luôn nhìn thấy mà không đè ảnh */
+    .floating-area{
+      position:fixed; left:14px; bottom:14px; z-index:18;
+      pointer-events:none;
+    }
+    .floating-area > *{ pointer-events:auto }
   </style>
 </head>
 <body>
 
-  <!-- Nút thu/phóng panel -->
-  <div class="toggle" id="uiToggle">≡</div>
-  <div class="badge" id="miniBadge">LICENSEGOC</div>
+  <!-- HERO (chỉ là nền, không cần thêm gì bên trong) -->
+  <main class="hero" aria-label="Background image"></main>
 
-  <!-- Panel nội dung -->
-  <main class="panel" id="mainPanel">
-    <h1><span class="brand">🌐 LICENSE GỐC™</span></h1>
+  <!-- LICENSEGOC badge – click để thu/giãn -->
+  <button class="licgoc" id="licgocBtn" aria-label="Toggle LICENSEGOC">
+    <span class="dot"></span><span class="txt">LICENSEGOC</span>
+  </button>
 
-    <div class="chips">
-      <a class="chip" href="#intro">Introduction</a>
-      <a class="chip" href="#eco">Ecosystem</a>
-      <a class="chip" href="#strategy">Strategy</a>
-      <a class="chip" href="#links">Official Links</a>
-    </div>
+  <!-- Chỗ neo Floating Bar (goc-ui.js sẽ tự render vào DOM) -->
+  <div class="floating-area" id="goc-floating-slot"></div>
 
-    <a class="btn" href="licensenetwork.html">LICENSENETWORK</a>
-    <a class="btn" href="licensecoin.html">LICENSECOIN</a>
-    <a class="btn" href="paycards.html">Pay & Cards</a>
-    <a class="btn" href="creationsroom.html">Apps</a>
-    <a class="btn" href="vault.html">Vault</a>
-    <a class="btn" href="musicroom.html">🎧 Music Room</a>
-
-    <footer>© 2025 LICENSE GỐC™ — Build with the world.</footer>
-  </main>
-
+  <!-- Script nhỏ để toggle badge -->
   <script>
-    // Thu/phóng panel
-    const body = document.body;
-    const toggle = document.getElementById('uiToggle');
-    const badge  = document.getElementById('miniBadge');
-
-    function setCollapsed(v){
-      body.classList.toggle('collapsed', v);
-      // lưu trạng thái
-      try{ localStorage.setItem('lg_panel_collapsed', v ? '1':'0'); }catch(e){}
-    }
-    // khởi tạo theo trạng thái đã lưu
-    (()=>{
-      const v = (localStorage.getItem('lg_panel_collapsed') === '1');
-      setCollapsed(v);
-    })();
-
-    toggle.addEventListener('click', ()=> setCollapsed(!body.classList.contains('collapsed')));
-    badge.addEventListener('click',  ()=> setCollapsed(false));
+  (function(){
+    const btn = document.getElementById('licgocBtn');
+    let mini = false;
+    const set = v => {
+      mini = v;
+      btn.classList.toggle('is-mini', mini);
+      btn.setAttribute('aria-pressed', String(!mini));
+    };
+    btn.addEventListener('click', ()=> set(!mini));
+    set(false); // mặc định hiển thị đầy đủ
+  })();
   </script>
 
-  <!-- Floating Bar của Gốc (nếu có) -->
+  <!-- Floating Bar của Gốc (giữ nguyên file này trong repo) -->
   <script src="goc-ui.js?v=18" defer></script>
 </body>
 </html>
