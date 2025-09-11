@@ -7,137 +7,210 @@
 
   <style>
     :root{
-      --ink:#eae7dc;
-      --gold:#f5d36a;
-      --gold2:#ffd66b;
-      --panel:#101216;
-      --bg:#0a0b0f;
-      --ring:rgba(255,215,0,.22);
-      --shadow:0 10px 40px rgba(0,0,0,.45);
-      --glow:0 0 24px rgba(204,164,0,.35);
-      /* ĐƯỜNG DẪN HÌNH NỀN — đổi đúng tên file của Gốc ở đây */
-      --hero:url('dove-hero.jpg'); /* ví dụ: dove-hero.jpg (ảnh bồ câu) */
+      --bg:#0a0b0f;               /* nền tối tổng thể */
+      --ink:#eae7dc;              /* màu chữ mặc định (nếu cần) */
+      --gold:#f5d36a;             /* vàng nhấn (đồng bộ Floating Bar) */
+      --line:rgba(255,215,0,.22); /* viền nhẹ nếu cần */
     }
-
-    /* Reset nhẹ */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;
-      color:var(--ink);
-      background:#000; /* base đen đậm để blend với ảnh */
-      overflow-x:hidden;
-      -webkit-font-smoothing:antialiased;
+      margin:0; background:var(--bg); color:var(--ink);
       font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      /* chừa đáy một chút để không che Floating Bar */
+      padding-bottom:84px;
     }
 
-    /* ===== HERO BACKGROUND (hình bồ câu) =====
-       Dùng ::before dạng fixed để luôn nằm sau mọi thứ, không bị che */
-    .hero{
-      position:relative;
-      min-height:100dvh;
-      isolation:isolate; /* tạo layer riêng để z-index chuẩn xác */
-    }
-    .hero::before{
-      content:"";
-      position:fixed; inset:0;
-      z-index:-1; /* luôn ở sau */
-      background:
-        radial-gradient(100% 140% at 50% 85%, rgba(0,0,0,.0), rgba(0,0,0,.55) 70%) ,
-        var(--hero) center / cover no-repeat fixed;
-      /* Radial gradient mờ ở đáy để chữ/float bar nổi hơn */
-      transform:none;
-      will-change:transform;
+    /* ==== BACKGROUND CANVAS (fixed, behind all) ==== */
+    #bg{
+      position:fixed; inset:0; width:100vw; height:100vh;
+      display:block; z-index:-1; pointer-events:none;
     }
 
-    /* ===== LICENSEGOC badge (góc trái trên) ===== */
-    .licgoc{
-      position:fixed;
-      top:18px; left:18px;
-      z-index:20; /* cao hơn floating bar một chút */
-      background:linear-gradient(180deg,#0f1116,#0a0b0f);
-      color:var(--gold2);
-      border:1px solid var(--ring);
-      border-radius:14px;
-      padding:10px 14px;
-      box-shadow:var(--glow);
-      font-weight:800;
-      letter-spacing:.5px;
-      cursor:pointer;
-      user-select:none;
-      transition:transform .28s cubic-bezier(.2,.8,.2,1), opacity .28s;
+    /* khi người dùng hạn chế chuyển động -> tắt nền động */
+    @media (prefers-reduced-motion: reduce){
+      #bg{ display:none; }
+      body{ background:#0b0f18 radial-gradient(1200px 700px at 50% 110%, #102038 0%, #0b0f18 60%, #080b12 100%) no-repeat; }
     }
-    .licgoc:active{ transform:scale(.98) }
-
-    /* trạng thái thu nhỏ (collapse) */
-    .licgoc.is-mini{
-      padding:10px 12px;
-      opacity:.88;
-    }
-    .licgoc.is-mini .txt{ max-width:0; opacity:0 }
-    .licgoc .dot{
-      display:inline-block; width:6px; height:6px; border-radius:99px;
-      background:var(--gold2); margin-right:10px; box-shadow:0 0 12px rgba(255,214,107,.8);
-      animation:blink 1.6s infinite ease-in-out;
-    }
-    .licgoc .txt{
-      display:inline-block;
-      max-width:240px;
-      white-space:nowrap; overflow:hidden;
-      transition:max-width .28s, opacity .28s;
-    }
-    @keyframes blink{
-      0%,100%{ opacity:.3; transform:scale(.9) }
-      50%{ opacity:1; transform:scale(1.15) }
-    }
-
-    /* (Tuỳ chọn) khung container nếu muốn thêm gì sau này */
-    .wrap{
-      min-height:100dvh;
-      display:flex; align-items:flex-end; justify-content:center;
-      padding:24px;
-    }
-
-    /* Bật/tắt panel nào đó ở giữa (để dành sau này) */
-    .panel{ display:none }
-
-    /* Đảm bảo Floating Bar luôn nhìn thấy mà không đè ảnh */
-    .floating-area{
-      position:fixed; left:14px; bottom:14px; z-index:18;
-      pointer-events:none;
-    }
-    .floating-area > *{ pointer-events:auto }
   </style>
 </head>
 <body>
 
-  <!-- HERO (chỉ là nền, không cần thêm gì bên trong) -->
-  <main class="hero" aria-label="Background image"></main>
+  <!-- Canvas nền: mây volumetric + mạch phát sáng 3D -->
+  <canvas id="bg" aria-hidden="true"></canvas>
 
-  <!-- LICENSEGOC badge – click để thu/giãn -->
-  <button class="licgoc" id="licgocBtn" aria-label="Toggle LICENSEGOC">
-    <span class="dot"></span><span class="txt">LICENSEGOC</span>
-  </button>
+  <!-- (Giữ nguyên Floating Bar Clear của gốc) -->
+  <script src="goc-ui.js?v=18" defer></script>
 
-  <!-- Chỗ neo Floating Bar (goc-ui.js sẽ tự render vào DOM) -->
-  <div class="floating-area" id="goc-floating-slot"></div>
-
-  <!-- Script nhỏ để toggle badge -->
   <script>
-  (function(){
-    const btn = document.getElementById('licgocBtn');
-    let mini = false;
-    const set = v => {
-      mini = v;
-      btn.classList.toggle('is-mini', mini);
-      btn.setAttribute('aria-pressed', String(!mini));
-    };
-    btn.addEventListener('click', ()=> set(!mini));
-    set(false); // mặc định hiển thị đầy đủ
+  (()=> {
+    const cvs = document.getElementById('bg');
+    if(!cvs) return;
+    const ctx = cvs.getContext('2d');
+
+    // Hiệu năng mobile
+    const DPR = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
+
+    let W=0, H=0, t0=performance.now();
+    function resize(){
+      W = innerWidth; H = innerHeight;
+      cvs.width  = Math.floor(W*DPR);
+      cvs.height = Math.floor(H*DPR);
+      cvs.style.width  = W+'px';
+      cvs.style.height = H+'px';
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+    }
+    addEventListener('resize', resize, {passive:true});
+    resize();
+
+    /* ======= Scene data ======= */
+
+    // Sao lấp lánh
+    const STARS = Array.from({length: 160}, ()=>({
+      x: Math.random()*W,
+      y: Math.random()*H,
+      r: Math.random()*1.2 + 0.3,
+      ph: Math.random()*Math.PI*2
+    }));
+
+    // Mây (metaballs) – các “khối” radial gradient trôi chậm
+    const CLOUDS = Array.from({length: 18}, ()=>({
+      x: Math.random()*W,
+      y: Math.random()*H*0.7 + H*0.15,
+      r: Math.random()*220 + 180,
+      vx: (Math.random()*.06 - .03),
+      vy: (Math.random()*.04 - .02),
+      ph: Math.random()*Math.PI*2
+    }));
+
+    // Mạng mạch phát sáng (nodes + edges)
+    const NODE_CT = 28;
+    const NODES = Array.from({length: NODE_CT}, ()=>({
+      x: Math.random()*W,
+      y: Math.random()*H*0.55 + H*0.15,
+      z: Math.random()*0.7 + 0.3        // “độ sâu” để scale & alpha
+    }));
+    const EDGES = [];
+    for(let i=0;i<NODES.length;i++){
+      for(let j=i+1;j<NODES.length;j++){
+        const a=NODES[i], b=NODES[j];
+        const d = Math.hypot(a.x-b.x, a.y-b.y);
+        if(d < 220) EDGES.push({i, j, len:d, ph:Math.random()*Math.PI*2});
+      }
+    }
+
+    /* ======= Helpers ======= */
+
+    function drawGlowCircle(x,y,r, color='rgba(255,255,255,0.6)', inner=0.2){
+      const g = ctx.createRadialGradient(x,y, r*inner, x,y, r);
+      g.addColorStop(0, color);
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(x,y,r,0,Math.PI*2);
+      ctx.fill();
+    }
+
+    function drawBackground(){
+      // lớp nền vũ trụ rất tối + vignette
+      const grd = ctx.createRadialGradient(W*0.5,H*1.15,50, W*0.5,H*1.15, Math.hypot(W,H));
+      grd.addColorStop(0, '#0b1220');
+      grd.addColorStop(0.45, '#0a0f19');
+      grd.addColorStop(1, '#070a11');
+      ctx.fillStyle = grd;
+      ctx.fillRect(0,0,W,H);
+    }
+
+    function drawStars(t){
+      ctx.save();
+      for(const s of STARS){
+        const a = 0.35 + 0.35*Math.sin(t*0.9 + s.ph);
+        ctx.fillStyle = `rgba(180,200,255,${a})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+        ctx.fill();
+        // viền glow nhẹ
+        if(Math.random()<0.02){
+          drawGlowCircle(s.x, s.y, s.r*6, 'rgba(140,180,255,0.08)', 0.05);
+        }
+      }
+      ctx.restore();
+    }
+
+    function stepClouds(dt){
+      for(const c of CLOUDS){
+        c.ph += dt*0.0005;
+        c.x += (c.vx + Math.sin(c.ph)*0.02)*dt;
+        c.y += (c.vy + Math.cos(c.ph)*0.015)*dt;
+        // wrap
+        const m = c.r*0.6;
+        if(c.x < -m) c.x = W+m; else if(c.x > W+m) c.x = -m;
+        if(c.y < -m) c.y = H+m; else if(c.y > H+m) c.y = -m;
+      }
+    }
+
+    function drawClouds(){
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      for(const c of CLOUDS){
+        // lõi lạnh xanh + vành ấm tím để thành volumetric
+        const g = ctx.createRadialGradient(c.x,c.y, c.r*0.1, c.x,c.y, c.r);
+        g.addColorStop(0.00, 'rgba(160,200,255,0.30)');
+        g.addColorStop(0.45, 'rgba(120,170,255,0.18)');
+        g.addColorStop(0.90, 'rgba(90,120,200,0.04)');
+        g.addColorStop(1.00, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(c.x,c.y,c.r,0,Math.PI*2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function drawCircuits(t){
+      // các đường mạch mờ + chấm “packet” chạy trên đường
+      ctx.save();
+      for(const e of EDGES){
+        const a=NODES[e.i], b=NODES[e.j];
+        const za = a.z, zb = b.z, z = (za+zb)/2;
+        const alpha = 0.08 + 0.15*z;
+        const lw = 0.6 + 1.2*z;
+
+        // đường glow 2 lớp
+        ctx.strokeStyle = `rgba(120,200,255,${alpha})`;
+        ctx.lineWidth = lw*2.2;
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+
+        ctx.strokeStyle = `rgba(60,160,255,${alpha*1.2})`;
+        ctx.lineWidth = lw;
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+
+        // dot chạy theo chu kỳ
+        const u = (Math.sin(t*0.8 + e.ph)*0.5 + 0.5); // 0..1
+        const x = a.x + (b.x-a.x)*u, y = a.y + (b.y-a.y)*u;
+        drawGlowCircle(x,y, 6+6*z, 'rgba(120,220,255,0.45)', 0.05);
+        ctx.fillStyle = 'rgba(200,245,255,0.9)';
+        ctx.beginPath(); ctx.arc(x,y, 1.2+1.2*z, 0, Math.PI*2); ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    /* ======= Main loop ======= */
+    function loop(now){
+      const dt = Math.min(48, now - t0);
+      t0 = now;
+      const t = now/1000;
+
+      drawBackground();
+      drawStars(t);
+      stepClouds(dt);
+      drawClouds();
+      drawCircuits(t);
+
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
   })();
   </script>
-
-  <!-- Floating Bar của Gốc (giữ nguyên file này trong repo) -->
-  <script src="goc-ui.js?v=18" defer></script>
 </body>
 </html>
