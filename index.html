@@ -7,170 +7,141 @@
 
   <style>
     :root{
-      --bg:#0a0b0f;
-      --panel:#101216;
       --ink:#eae7dc;
       --muted:#a8b3c7;
-      --gold:#f5d36a; --gold2:#ffd66b;
-      --line:rgba(255,215,0,.22);
-      --radius:16px;
+      --gold:#f5d36a;
+      --line:rgba(255,215,0,.18);
       --shadow:0 10px 40px rgba(0,0,0,.45);
-      --glow:0 0 24px rgba(204,164,0,.35);
-      --goc-trans-bottom:94px; /* chừa chỗ cho Floating Bar */
+      --radius:16px;
     }
 
-    *{box-sizing:border-box}
+    /* ===== background: the dove + earth ===== */
     html,body{height:100%}
     body{
-      margin:0;
-      color:var(--ink);
-      background:var(--bg);
+      margin:0; color:var(--ink);
       font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      overflow-x:hidden;
+      background:
+        radial-gradient(1200px 800px at 50% 65%, rgba(0,0,0,.25), rgba(0,0,0,.85)),
+        url("ingod-bg.jpg") center/cover no-repeat fixed;
+      /* nếu cần “cover” mạnh hơn trên di động: */
+      background-attachment: fixed;
     }
-    a{color:var(--gold2); text-decoration:none}
+    /* viền tối nhẹ bốn phía để chữ đọc rõ */
+    body::after{
+      content:"";
+      position:fixed; inset:0; pointer-events:none;
+      background:
+        radial-gradient(80% 70% at 50% 60%, rgba(0,0,0,0) 60%, rgba(0,0,0,.45) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.35));
+      mix-blend-mode:normal;
+    }
 
-    /* ===== LICENSEGOC dock (thu nhỏ) ===== */
-    #lg-dock{
-      position:fixed; left:16px; bottom:16px;
-      z-index:10;
-      padding:10px 16px;
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:linear-gradient(180deg,#0f1116,#0a0b0f);
-      box-shadow:var(--glow);
-      color:var(--ink); font-weight:900; letter-spacing:.4px;
-      cursor:pointer; user-select:none;
-      transition:transform .2s ease, box-shadow .2s ease;
-    }
-    #lg-dock:active{ transform:scale(.98) }
-
-    /* nhấp nháy rất nhẹ toàn bộ chữ */
-    @keyframes blink {
-      0%,90%,100%{ text-shadow:var(--glow) }
-      95%{ text-shadow:0 0 10px rgba(255,230,120,.9) }
-    }
-    #lg-dock .blink{ animation:blink 3.2s infinite }
-
-    /* ===== LICENSEGOC panel (thu lớn) ===== */
-    #lg-panel{
-      position:fixed; inset:24px 24px var(--goc-trans-bottom) 24px;
-      z-index:11;
-      display:none; /* mặc định thu nhỏ */
-    }
-    #lg-card{
-      height:100%;
-      padding:22px;
+    /* ===== panel chính (thu gọn/mở rộng được) ===== */
+    .panel{
+      position:relative;
+      max-width:980px; margin:28px auto; padding:22px;
       border:1px solid var(--line);
       border-radius:var(--radius);
-      background:linear-gradient(180deg,#101216,#0c0e12);
+      backdrop-filter: blur(6px);
+      background:rgba(8,10,14,.55);
       box-shadow:var(--shadow);
-      overflow:auto;
+      transition:max-height .35s ease, opacity .25s ease, transform .25s ease;
+      overflow:hidden;
     }
-    .chips{display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 22px}
+    .panel h1{margin:0 0 14px; font-size:clamp(28px,5.2vw,44px); letter-spacing:.3px}
+    .brand{color:#ffd66b; text-shadow:0 0 24px rgba(204,164,0,.35); font-weight:900}
+
+    .chips{display:flex; flex-wrap:wrap; gap:10px; margin:12px 0}
     .chip{
-      padding:8px 12px; border:1px solid var(--line); border-radius:999px;
-      background:linear-gradient(180deg,#0f1116,#0b0c10);
-      box-shadow:var(--glow); color:var(--ink); font-weight:700
+      padding:8px 12px; border-radius:999px; border:1px solid var(--line);
+      background:linear-gradient(180deg,#0f1116,#0b0d12); color:var(--ink); font-weight:700;
+      text-decoration:none;
     }
     .btn{
-      display:flex; align-items:center; justify-content:center;
+      display:block; width:100%; text-align:center;
       padding:16px 14px; margin:10px 0;
       border-radius:14px; border:1px solid var(--line);
       background:linear-gradient(180deg,#0f1116,#0a0b0f);
-      box-shadow:var(--glow); font-weight:800; color:var(--ink)
-    }
-    h1{font-size:clamp(28px,5.5vw,44px); margin:6px 0 8px}
-    .brand{font-weight:900; letter-spacing:.3px; color:var(--gold2); text-shadow:var(--glow)}
-    .note{color:var(--muted)}
-
-    /* thanh tiêu đề panel */
-    .panel-bar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px; margin-bottom:10px
-    }
-    .panel-actions{display:flex; gap:8px}
-    .icon-btn{
-      padding:8px 12px; border:1px solid var(--line); border-radius:10px;
-      background:#0b0c10; color:var(--gold2); font-weight:700; cursor:pointer
+      color:var(--ink); font-weight:800; text-decoration:none;
+      box-shadow:0 0 20px rgba(255,214,107,.06) inset, var(--shadow);
     }
 
-    footer{color:#a0a0a0; text-align:center; margin-top:18px}
+    /* nút thu/phóng giống Floating Bar */
+    .toggle{
+      position:fixed; left:16px; bottom:16px; z-index:10;
+      width:56px; height:56px; border-radius:14px;
+      display:grid; place-items:center;
+      border:1px solid var(--line);
+      background:rgba(12,14,18,.7); color:#ffd66b; font-weight:900;
+      box-shadow:var(--shadow); user-select:none; cursor:pointer;
+    }
+    .toggle:active{transform:scale(.97)}
+
+    /* trạng thái thu gọn */
+    .collapsed .panel{max-height:0; opacity:0; transform:translateY(8px)}
+    .collapsed .badge{opacity:1; transform:translateY(0)}
+    .badge{
+      position:fixed; left:88px; bottom:22px; z-index:10;
+      padding:8px 14px; border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(10,12,16,.7); color:#ffd66b; font-weight:800;
+      letter-spacing:.6px; box-shadow:var(--shadow);
+      transition:opacity .25s ease, transform .25s ease;
+      opacity:.85; transform:translateY(2px);
+    }
+
+    footer{color:#c9c9c9; text-align:center; margin:26px 0 36px}
   </style>
 </head>
 <body>
 
-  <!-- Dock: Thu nhỏ / mở panel -->
-  <div id="lg-dock" aria-controls="lg-panel" aria-expanded="false">
-    <span class="blink">LICENSEGOC</span>
-  </div>
+  <!-- Nút thu/phóng panel -->
+  <div class="toggle" id="uiToggle">≡</div>
+  <div class="badge" id="miniBadge">LICENSEGOC</div>
 
-  <!-- Panel: nội dung chính (mở ra khi click dock) -->
-  <div id="lg-panel" role="dialog" aria-labelledby="lg-title" aria-modal="true">
-    <div id="lg-card">
-      <div class="panel-bar">
-        <h1 id="lg-title" class="brand">🌐 LICENSE GỐC™</h1>
-        <div class="panel-actions">
-          <button class="icon-btn" id="lg-min">Thu nhỏ</button>
-        </div>
-      </div>
+  <!-- Panel nội dung -->
+  <main class="panel" id="mainPanel">
+    <h1><span class="brand">🌐 LICENSE GỐC™</span></h1>
 
-      <div class="chips">
-        <a class="chip" href="#intro">Introduction</a>
-        <a class="chip" href="#eco">Ecosystem</a>
-        <a class="chip" href="#strategy">Strategy</a>
-        <a class="chip" href="#values">Core Values</a>
-        <a class="chip" href="#links">Official Links</a>
-      </div>
-
-      <a class="btn" href="licensenetwork.html">LICENSENETWORK</a>
-      <a class="btn" href="licensecoin.html">LICENSECOIN</a>
-      <a class="btn" href="paycards.html">Pay & Cards</a>
-      <a class="btn" href="creationsroom.html">Apps</a>
-      <a class="btn" href="vault.html">Vault</a>
-      <a class="btn" href="musicroom.html">🎧 Music Room</a>
-
-      <section id="links" style="margin-top:12px">
-        <p class="note">
-          Balance, invoices & disputes can be managed at
-          <a href="paycards.html">Pay & Cards</a>.
-        </p>
-      </section>
-
-      <footer>© 2025 LICENSE GỐC™ — Build with the world.</footer>
+    <div class="chips">
+      <a class="chip" href="#intro">Introduction</a>
+      <a class="chip" href="#eco">Ecosystem</a>
+      <a class="chip" href="#strategy">Strategy</a>
+      <a class="chip" href="#links">Official Links</a>
     </div>
-  </div>
 
-  <!-- Floating Bar (giữ nguyên) -->
-  <script src="goc-ui.js?v=18" defer></script>
+    <a class="btn" href="licensenetwork.html">LICENSENETWORK</a>
+    <a class="btn" href="licensecoin.html">LICENSECOIN</a>
+    <a class="btn" href="paycards.html">Pay & Cards</a>
+    <a class="btn" href="creationsroom.html">Apps</a>
+    <a class="btn" href="vault.html">Vault</a>
+    <a class="btn" href="musicroom.html">🎧 Music Room</a>
+
+    <footer>© 2025 LICENSE GỐC™ — Build with the world.</footer>
+  </main>
 
   <script>
-  // Toggle mở/đóng panel
-  (function(){
-    const dock  = document.getElementById('lg-dock');
-    const panel = document.getElementById('lg-panel');
-    const btnMin= document.getElementById('lg-min');
+    // Thu/phóng panel
+    const body = document.body;
+    const toggle = document.getElementById('uiToggle');
+    const badge  = document.getElementById('miniBadge');
 
-    function openPanel(){
-      panel.style.display = 'block';
-      dock.setAttribute('aria-expanded','true');
+    function setCollapsed(v){
+      body.classList.toggle('collapsed', v);
+      // lưu trạng thái
+      try{ localStorage.setItem('lg_panel_collapsed', v ? '1':'0'); }catch(e){}
     }
-    function closePanel(){
-      panel.style.display = 'none';
-      dock.setAttribute('aria-expanded','false');
-    }
+    // khởi tạo theo trạng thái đã lưu
+    (()=>{
+      const v = (localStorage.getItem('lg_panel_collapsed') === '1');
+      setCollapsed(v);
+    })();
 
-    dock.addEventListener('click', ()=>{
-      const open = dock.getAttribute('aria-expanded') === 'true';
-      open ? closePanel() : openPanel();
-    });
-    btnMin.addEventListener('click', closePanel);
-
-    // ESC để thu nhỏ
-    document.addEventListener('keydown', e=>{
-      if(e.key === 'Escape') closePanel();
-    });
-  })();
+    toggle.addEventListener('click', ()=> setCollapsed(!body.classList.contains('collapsed')));
+    badge.addEventListener('click',  ()=> setCollapsed(false));
   </script>
+
+  <!-- Floating Bar của Gốc (nếu có) -->
+  <script src="goc-ui.js?v=18" defer></script>
 </body>
 </html>
