@@ -1,1 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>LICENSE GỐC™</title>
 
+  <style>
+    html,body{
+      margin:0; padding:0;
+      height:100%; width:100%;
+      background:#000;
+      overflow:hidden;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    }
+    canvas#bg{
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index:-1;
+    }
+    .center-banner{
+      position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      text-align:center;
+      z-index:5;
+    }
+    .center-banner img{
+      max-width: 420px;
+      width:90%;
+      height:auto;
+      filter: drop-shadow(0 0 25px rgba(255,255,255,0.4));
+    }
+    footer{
+      position:fixed;
+      bottom:10px;
+      width:100%;
+      text-align:center;
+      color:#888;
+      font-size:14px;
+      letter-spacing:0.3px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background animation -->
+  <canvas id="bg"></canvas>
+
+  <!-- Banner center -->
+  <div class="center-banner">
+    <img src="assets/studio_with_dove.png" alt="In God We Trust"/>
+  </div>
+
+  <!-- Footer -->
+  <footer>© 2025 LICENSE GỐC™ — Build with the world.</footer>
+
+  <script>
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d');
+    let w,h,particles;
+
+    function resize(){
+      w=canvas.width=window.innerWidth;
+      h=canvas.height=window.innerHeight;
+      particles = Array.from({length:80},()=>({
+        x:Math.random()*w,
+        y:Math.random()*h,
+        vx:(Math.random()-0.5)*0.4,
+        vy:(Math.random()-0.5)*0.4
+      }));
+    }
+    window.addEventListener('resize',resize);
+    resize();
+
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+
+      // Background gradient cloud
+      const grd=ctx.createRadialGradient(w/2,h/2,100,w/2,h/2,Math.max(w,h));
+      grd.addColorStop(0,"rgba(20,40,80,0.8)");
+      grd.addColorStop(1,"rgba(0,0,0,1)");
+      ctx.fillStyle=grd;
+      ctx.fillRect(0,0,w,h);
+
+      // Particles
+      ctx.fillStyle="rgba(255,255,255,0.8)";
+      for(let p of particles){
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,2,0,Math.PI*2);
+        ctx.fill();
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0||p.x>w) p.vx*=-1;
+        if(p.y<0||p.y>h) p.vy*=-1;
+      }
+
+      // Lines
+      ctx.strokeStyle="rgba(150,200,255,0.2)";
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const a=particles[i],b=particles[j];
+          const dx=a.x-b.x,dy=a.y-b.y;
+          const dist=Math.sqrt(dx*dx+dy*dy);
+          if(dist<120){
+            ctx.globalAlpha=1-dist/120;
+            ctx.beginPath();
+            ctx.moveTo(a.x,a.y);
+            ctx.lineTo(b.x,b.y);
+            ctx.stroke();
+          }
+        }
+      }
+      ctx.globalAlpha=1;
+
+      requestAnimationFrame(draw);
+    }
+    draw();
+  </script>
+</body>
+</html>
