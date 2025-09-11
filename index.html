@@ -1,188 +1,236 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>LICENSE GỐC™</title>
-  <meta name="theme-color" content="#0a0b0f">
-  <style>
-    :root{
-      --space:#0a0b0f;      /* nền không gian */
-      --ink:#eae7dc;
-      --glow:rgba(255,215,0,.18);
-    }
-    /* reset + layout */
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; overflow:hidden;    /* QUAN TRỌNG: không còn cuộn/chồng màn đen */
-      color:var(--ink); background:var(--space);
-      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-    }
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>LICENSE GỐC™</title>
 
-    /* Canvas nền mây + mạng 3D */
-    #bg{
-      position:fixed; inset:0; z-index:-1;
-      width:100vw; height:100vh; display:block; pointer-events:none;
-    }
+<style>
+  :root{
+    --bg:#0a0b0f;           /* nền tối */
+    --ink:#eae7dc;          /* chữ sáng */
+    --muted:#9aa7b7;
+    --gold:#f5d36a;         /* vàng nhấn */
+    --glow:0 0 24px rgba(204,164,0,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:var(--bg);           /* quan trọng: không trắng/đen che */
+    color:var(--ink);
+    font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    overflow-x:hidden;
+  }
 
-    /* (tạm) khung trống để bạn test không bị lớp đen che */
-    .wrap{
-      position:relative; z-index:1; /* luôn trên nền */
-      min-height:100dvh;
-      display:grid; place-items:center;
-      padding:24px;
-    }
-    .box{
-      backdrop-filter: blur(6px) saturate(120%);
-      background: radial-gradient(120% 160% at 10% 10%, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.09);
-      border-radius:14px;
-      padding:18px 16px; color:#cfd6e4;
-      text-align:center;
-    }
-  </style>
+  /* ====== BACKGROUND CANVASES ====== */
+  .bg-layer{
+    position:fixed; inset:0; z-index:-1;
+    width:100vw; height:100vh; display:block;
+    pointer-events:none;     /* không cản click */
+  }
+  /* nếu người dùng hạn chế chuyển động thì tắt animation */
+  @media (prefers-reduced-motion: reduce){
+    .bg-layer{ display:none; }
+    body{ background: radial-gradient(1200px 900px at 50% 70%, #111622 0%, #0b0f16 60%, #0a0b0f 100%); }
+  }
+
+  /* ====== CENTER WELCOME ====== */
+  .wrap{
+    min-height:100svh;       /* khớp viewport trên mobile */
+    display:grid; place-items:center;
+    padding:40px 18px;
+  }
+  .card{
+    text-align:center;
+    max-width:940px;
+    padding:28px 22px;
+    border-radius:16px;
+    background:linear-gradient(180deg, rgba(18,20,28,.66), rgba(12,14,20,.50));
+    border:1px solid rgba(255,215,0,.16);
+    box-shadow: 0 10px 40px rgba(0,0,0,.45), var(--glow);
+    backdrop-filter: blur(6px);
+  }
+  h1{
+    margin:0 0 10px;
+    font-size:clamp(24px,6vw,42px);
+    font-weight:900; letter-spacing:.2px;
+    color:var(--gold);
+    text-shadow: 0 0 12px rgba(255,215,0,.45);
+  }
+  p.lead{
+    margin:0;
+    color:var(--muted);
+    font-size:clamp(14px,3.8vw,18px);
+  }
+
+  footer{
+    position:fixed; left:0; right:0; bottom:18px;
+    text-align:center; color:#8c96a8; font-size:13px;
+    text-shadow:0 1px 0 #000;
+    pointer-events:none;
+  }
+</style>
 </head>
 <body>
+  <!-- background layers -->
+  <canvas id="bg-clouds" class="bg-layer" aria-hidden="true"></canvas>
+  <canvas id="bg-net" class="bg-layer" aria-hidden="true"></canvas>
 
-  <!-- NỀN MÂY + MẠCH 3D -->
-  <canvas id="bg" aria-hidden="true"></canvas>
+  <main class="wrap">
+    <section class="card">
+      <h1>Welcome to LICENSE GỐC™</h1>
+      <p class="lead">Clean index with volumetric clouds & a subtle 3D network background. No overlays, no floating bar here.</p>
+    </section>
+  </main>
 
-  <!-- Nội dung tạm (không có Floating Bar). Bạn có thể thay bằng Features sau -->
-  <div class="wrap">
-    <div class="box">
-      <div style="font-weight:800; letter-spacing:.2px">Welcome to LICENSE GỐC™</div>
-      <div style="opacity:.8; font-size:14px">Clean index with volumetric clouds & 3D network background.</div>
-    </div>
-  </div>
+  <footer>© 2025 LICENSE GỐC™ — Build with the world.</footer>
 
-  <!-- KHÔNG nạp goc-ui.js ở index -->
-  <script>
-  (()=>{
-    const cvs = document.getElementById('bg');
-    const ctx = cvs.getContext('2d');
-    const DPR = Math.max(1, Math.min(2, window.devicePixelRatio||1));
-    let W=0,H=0,t0=performance.now();
+<script>
+(()=> {
+  // Helpers
+  const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+  const clamp = (v,a,b)=>Math.min(b,Math.max(a,v));
 
-    function rs(){
-      W = cvs.width  = Math.floor(innerWidth * DPR);
-      H = cvs.height = Math.floor(innerHeight * DPR);
-      cvs.style.width  = innerWidth + 'px';
-      cvs.style.height = innerHeight + 'px';
-      ctx.setTransform(DPR,0,0,DPR,0,0);
-      // backfill nền để tránh “màn đen” khi Safari kéo
-      ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--space')||'#0a0b0f';
-      ctx.fillRect(0,0,W,H);
+  /* ====== CLOUDS (soft volumetric look by layered blobs + noise drift) ====== */
+  const cvC = document.getElementById('bg-clouds');
+  const ctC = cvC.getContext('2d');
+
+  function sizeCanvas(cvs, ctx){
+    const w = innerWidth, h = innerHeight;
+    cvs.width  = Math.floor(w * DPR);
+    cvs.height = Math.floor(h * DPR);
+    cvs.style.width = w + 'px';
+    cvs.style.height = h + 'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+  sizeCanvas(cvC, ctC);
+
+  // generate cloud seeds
+  const CLOUDS = Array.from({length: 28}, _ => ({
+    x: Math.random()*innerWidth,
+    y: Math.random()*innerHeight,
+    r: 60 + Math.random()*180,
+    a: 0.12 + Math.random()*0.18,
+    dx: (-0.15 + Math.random()*0.3),  // drift
+    dy: (-0.04 + Math.random()*0.08),
+    wob: 0.4 + Math.random()*0.9,
+    phase: Math.random()*Math.PI*2
+  }));
+
+  function drawClouds(t){
+    ctC.clearRect(0,0,innerWidth,innerHeight);
+
+    // deep space gradient base (subtle)
+    const g = ctC.createRadialGradient(innerWidth*0.5, innerHeight*0.75, 0,
+                                       innerWidth*0.5, innerHeight*0.75, Math.max(innerWidth,innerHeight));
+    g.addColorStop(0, '#0b0f16');
+    g.addColorStop(1, '#0a0b0f');
+    ctC.fillStyle = g;
+    ctC.fillRect(0,0,innerWidth,innerHeight);
+
+    // soft stars
+    ctC.save();
+    ctC.globalAlpha = 0.65;
+    for(let i=0;i<60;i++){
+      const x = (i*53.7 + t*0.015) % innerWidth;
+      const y = (i*97.3 + t*0.02) % innerHeight;
+      ctC.beginPath();
+      ctC.arc(x, y, (i%7===0)?1.4:0.8, 0, Math.PI*2);
+      ctC.fillStyle = 'rgba(200,220,255,0.6)';
+      ctC.fill();
     }
-    addEventListener('resize', rs, {passive:true});
-    rs();
+    ctC.restore();
 
-    // ---------- “Volumetric clouds” đơn giản + hạt sao ----------
-    // noise đơn giản (value noise 2D)
-    function n2(x,y){
-      const s = Math.sin(x*12.9898 + y*78.233) * 43758.5453;
-      return s - Math.floor(s);
+    // foggy blobs
+    ctC.globalCompositeOperation = 'lighter';
+    CLOUDS.forEach(c=>{
+      c.phase += 0.0025*c.wob;
+      c.x += c.dx + Math.sin(c.phase)*0.25;
+      c.y += c.dy + Math.cos(c.phase*0.9)*0.15;
+
+      // wrap
+      const M = c.r*1.2;
+      if(c.x < -M) c.x = innerWidth + M;
+      if(c.x > innerWidth+M) c.x = -M;
+      if(c.y < -M) c.y = innerHeight + M;
+      if(c.y > innerHeight+M) c.y = -M;
+
+      // soft blob
+      const grd = ctC.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.r);
+      grd.addColorStop(0.0, 'rgba(120,160,255,'+clamp(c.a+0.12,0,0.45)+')');
+      grd.addColorStop(0.5, 'rgba(120,160,255,'+clamp(c.a,0,0.35)+')');
+      grd.addColorStop(1.0, 'rgba(120,160,255,0)');
+      ctC.fillStyle = grd;
+      ctC.beginPath(); ctC.arc(c.x, c.y, c.r, 0, Math.PI*2); ctC.fill();
+    });
+
+    requestAnimationFrame(drawClouds);
+  }
+
+  /* ====== 3D NETWORK (parallax dots + linking lines) ====== */
+  const cvN = document.getElementById('bg-net');
+  const ctN = cvN.getContext('2d');
+  sizeCanvas(cvN, ctN);
+
+  const NODES = Array.from({length: 48}, _ => ({
+    x: Math.random()*innerWidth,
+    y: Math.random()*innerHeight,
+    z: Math.random()*1.0 + 0.2,  // depth 0.2..1.2
+    vx: (-0.05 + Math.random()*0.10),
+    vy: (-0.05 + Math.random()*0.10)
+  }));
+
+  function drawNet(){
+    ctN.clearRect(0,0,innerWidth,innerHeight);
+
+    // nodes move
+    for(const n of NODES){
+      n.x += n.vx * (0.6 + n.z);
+      n.y += n.vy * (0.6 + n.z);
+
+      if(n.x < -50) { n.x = innerWidth+40; n.y = Math.random()*innerHeight; }
+      if(n.x > innerWidth+50){ n.x = -40; n.y = Math.random()*innerHeight; }
+      if(n.y < -50) { n.y = innerHeight+40; n.x = Math.random()*innerWidth; }
+      if(n.y > innerHeight+50){ n.y = -40; n.x = Math.random()*innerWidth; }
     }
-    function smoothNoise(x,y){
-      const x0=Math.floor(x), y0=Math.floor(y);
-      const xf=x-x0, yf=y-y0;
-      function g(ix,iy){ return n2(ix,iy); }
-      const v00=g(x0,y0), v10=g(x0+1,y0), v01=g(x0,y0+1), v11=g(x0+1,y0+1);
-      const i1=v00+(v10-v00)*xf;
-      const i2=v01+(v11-v01)*xf;
-      return i1+(i2-i1)*yf;
-    }
-    function fbm(x,y){
-      let v=0, amp=1, freq=1;
-      for(let i=0;i<4;i++){
-        v += smoothNoise(x*freq, y*freq)*amp;
-        amp*=0.55; freq*=1.9;
-      }
-      return v;
-    }
 
-    const stars = Array.from({length:140}, ()=>({
-      x: Math.random()*innerWidth,
-      y: Math.random()*innerHeight,
-      r: Math.random()*1.25 + 0.25,
-      tw: Math.random()*Math.PI*2
-    }));
-
-    // ---------- network points (đường mạch 3D) ----------
-    const P = Array.from({length:28}, ()=>({
-      x: Math.random()*innerWidth,
-      y: Math.random()*innerHeight,
-      z: Math.random()*1, // “độ sâu”
-      vx: (Math.random()-.5)*0.12,
-      vy: (Math.random()-.5)*0.12
-    }));
-
-    function step(now){
-      const t = (now - t0)/1000;
-
-      // nền gradient không gian
-      const g = ctx.createRadialGradient(W*0.5, H*0.4, 0, W*0.5, H*0.6, Math.max(W,H));
-      g.addColorStop(0, 'rgba(24,28,40,1)');
-      g.addColorStop(1, 'rgba(8,10,14,1)');
-      ctx.fillStyle = g;
-      ctx.fillRect(0,0,innerWidth,innerHeight);
-
-      // lớp mây: vẽ theo dải Alpha dựa trên fbm
-      const cloudRows = 90, cloudCols = 160;
-      const cw = innerWidth/cloudCols, ch = innerHeight/cloudRows;
-      ctx.globalCompositeOperation='lighter';
-      for(let j=0;j<cloudRows;j++){
-        for(let i=0;i<cloudCols;i++){
-          const u = i/cloudCols, v = j/cloudRows;
-          const d = fbm(u*2.0 + t*0.03, v*2.0 - t*0.02);
-          const a = Math.max(0, Math.min(1, (d-0.35)*1.6));
-          if(a<0.01) continue;
-          ctx.fillStyle = `rgba(120,160,255,${a*0.08})`;
-          ctx.fillRect(i*cw, j*ch, cw+1, ch+1);
+    // lines
+    for(let i=0;i<NODES.length;i++){
+      for(let j=i+1;j<NODES.length;j++){
+        const a = NODES[i], b = NODES[j];
+        const dx = a.x-b.x, dy = a.y-b.y;
+        const d2 = dx*dx+dy*dy;
+        if(d2 < 110*110){
+          const alpha = clamp(1 - Math.sqrt(d2)/110, 0, .9) * .25;
+          ctN.strokeStyle = 'rgba(160,190,255,'+alpha+')';
+          ctN.lineWidth = 1;
+          ctN.beginPath();
+          ctN.moveTo(a.x, a.y);
+          ctN.lineTo(b.x, b.y);
+          ctN.stroke();
         }
       }
-
-      // sao twinkle
-      ctx.globalCompositeOperation='screen';
-      for(const s of stars){
-        s.tw += 0.06;
-        const a = 0.25 + Math.abs(Math.sin(s.tw))*0.55;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(180,210,255,${a})`;
-        ctx.fill();
-      }
-
-      // network 3D
-      ctx.strokeStyle='rgba(120,200,255,0.28)';
-      ctx.lineWidth=1;
-      for(const q of P){
-        // di chuyển nhẹ
-        q.x += q.vx; q.y += q.vy;
-        if(q.x<0||q.x>innerWidth) q.vx*=-1;
-        if(q.y<0||q.y>innerHeight) q.vy*=-1;
-      }
-      for(let i=0;i<P.length;i++){
-        for(let j=i+1;j<P.length;j++){
-          const a=P[i], b=P[j];
-          const dx=a.x-b.x, dy=a.y-b.y;
-          const d2=dx*dx+dy*dy;
-          if(d2<140*140){
-            const apha = 0.35 * (1 - d2/(140*140));
-            ctx.globalAlpha = apha;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
-          }
-        }
-      }
-      ctx.globalAlpha = 1;
-
-      requestAnimationFrame(step);
     }
-    requestAnimationFrame(step);
-  })();
-  </script>
+
+    // dots
+    for(const n of NODES){
+      ctN.beginPath();
+      ctN.arc(n.x, n.y, 1.2 + n.z*1.8, 0, Math.PI*2);
+      ctN.fillStyle = 'rgba(200,220,255,'+(0.4 + n.z*0.4)+')';
+      ctN.fill();
+    }
+
+    requestAnimationFrame(drawNet);
+  }
+
+  // Resize handling
+  addEventListener('resize', ()=>{ sizeCanvas(cvC, ctC); sizeCanvas(cvN, ctN); }, {passive:true});
+
+  // Kick
+  requestAnimationFrame(drawClouds);
+  requestAnimationFrame(drawNet);
+})();
+</script>
 </body>
 </html>
