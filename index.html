@@ -23,4 +23,82 @@ header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(2
 nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
 nav a{padding:9px 14px;border:1.5px solid rgba(217,164,65,.55);border-radius:22px;color:var(--ink);
  background:linear-gradient(180deg,rgba(217,164,65,.09),rgba(217,164,65,.03))}
-nav a.active{background:linear-gradient(180deg,rgba(217,164
+nav a.active{background:linear-gradient(180deg,rgba(217,164,65,.22),rgba(217,164,65,.06));
+ box-shadow:0 0 20px rgba(217,164,65,.22)}
+main{max-width:1100px;margin:auto;padding:30px 20px}
+.hero{display:grid;gap:20px;grid-template-columns:1.1fr .9fr;align-items:center}
+.hero-card{border:1px solid rgba(217,164,65,.18);border-radius:16px;padding:16px;
+ background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));
+ box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.kicker{color:var(--gold);font-weight:600;letter-spacing:.6px;margin-bottom:6px}
+.muted{color:var(--muted)}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:20px}
+.card{border:1px solid rgba(217,164,65,.18);border-radius:14px;padding:16px;
+ background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;text-align:center;color:var(--muted);font-size:14px}
+@media(max-width:800px){.hero{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="brand">
+  <div class="logo"></div>
+  <div class="brand-text">
+   <strong>LICENSE GỐC</strong>
+   <div class="sub">IN GOD WE TRUST · LICENSE · CREATION · TRUTH</div>
+  </div>
+ </div>
+
+ <nav>
+  <a class="active" href="index.html">Introduction</a>
+  <a href="licensenetwork.html">LicenseNetwork</a>
+  <a href="licensecoin.html">LicenseCoin</a>
+  <a href="musicroom.html">Music Room</a>
+  <a href="creationsroom.html">Creations Room</a>
+  <a href="commercial.html">Commercial</a>
+  <a href="vault.html">Vault</a>
+ </nav>
+</header>
+
+<main>
+ <section class="hero">
+  <div>
+   <div class="kicker">Welcome to</div>
+   <h1 style="color:var(--gold);font-size:38px;">LICENSE GỐC</h1>
+   <p class="muted">The universal network for creation, licensing & truth.<br>
+   Empowering creators, protecting intellectual property, and building faith through innovation.</p>
+  </div>
+  <div class="hero-card">
+   <p><strong>Creations Room</strong> – where ideas become reality.<br>
+   Explore music, art, AI design and global intellectual projects.</p>
+  </div>
+ </section>
+
+ <section class="grid">
+  <div class="card">
+   <h3>LicenseNetwork</h3>
+   <p>Connect creators, verify ownership and timestamp ideas on the blockchain.</p>
+  </div>
+  <div class="card">
+   <h3>LicenseCoin</h3>
+   <p>Fuel the ecosystem of creative exchange and intellectual property value.</p>
+  </div>
+  <div class="card">
+   <h3>Commercial</h3>
+   <p>Partnerships, advertising and global strategic alliances powered by truth.</p>
+  </div>
+ </section>
+</main>
+
+<footer>
+ © 2025 LICENSE GỐC · IN GOD WE TRUST · CREATION · TRUTH
+</footer>
+
+<script>
+document.querySelectorAll('nav a').forEach(a=>{
+ if(a.getAttribute('href')===location.pathname.split('/').pop()) a.classList.add('active');
+});
+</script>
+</body>
+</html>
