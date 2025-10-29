@@ -1,197 +1,80 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>LICENSE GỐC — In God We Trust · License · Truth</title>
-<meta name="description" content="WELCOME TO LICENSE LICENSEGOC — The universal network empowering creators, protecting intellectual truth worldwide." />
-<link rel="icon" href="assets/favicon.png" />
-<meta property="og:title" content="LICENSE GỐC — In God We Trust" />
-<meta property="og:description" content="Universal network for creators · License · Truth" />
-<meta property="og:image" content="assets/cover.jpg" />
-<meta property="og:type" content="website" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>LICENSE GỐC — IN GOD WE TRUST</title>
 <style>
 :root{
-  --bg:#0a0907; --panel:#0f0d0a; --ink:#efe6cf;
-  --gold:#f0c461; --gold2:#d9a441; --line:rgba(217,164,65,.28);
+  --gold:#d9a441;
+  --bg:#0f0c08;
+  --ink:#e5e5e5;
 }
-*{box-sizing:border-box}
-html,body{height:100%}
 body{
-  margin:0; color:var(--ink); background:radial-gradient(1200px 600px at 50% 10%, #241a08 0%, #0a0907 60%);
-  font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  margin:0;
+  padding:0;
+  font-family:system-ui,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
 }
 
-/* ===== TOP EMBLEM (dove + oval + text) ===== */
-.hero-emblem{
-  position:relative; width:100%; max-width:1100px; margin:0 auto;
-  padding-top:28px;
-}
-.dove{ 
-  width:92px; height:92px; 
-  background:url('assets/dove.png') center/contain no-repeat; /* <- thay assets/dove.png */
-  margin:0 auto 2px; filter: drop-shadow(0 8px 18px rgba(0,255,255,.18));
-}
-.oval{
-  width:340px; height:140px; margin:0 auto; position:relative;
-  background:url('assets/oval.png') center/contain no-repeat; /* <- ảnh vòng vàng PNG/SVG */
-}
-.oval h2{
-  position:absolute; inset:0; display:grid; place-items:center;
-  color:var(--gold); letter-spacing:.05em; text-align:center;
-  font-weight:800; line-height:1.05; text-shadow:0 2px 0 rgba(0,0,0,.35);
-  font-size:42px;
-}
-
-/* ===== LEFT PANEL (welcome text nhỏ) + HERO IMAGE ===== */
-.scene{
-  position:relative; max-width:1100px; margin:0 auto; padding:10px 16px 0;
-}
-.left-card{
-  position:absolute; left:16px; top:24px; width:min(46%,460px);
-  color:#eecf8a; background:linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.12));
-  border:1px solid var(--line); border-radius:10px; padding:14px 16px;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
-  backdrop-filter: blur(2px);
-}
-.left-card .kicker{ color:#ffd480; font-weight:800; letter-spacing:.06em; }
-.left-card h3{ margin:.25rem 0; color:#ffdf87; font-size:22px; letter-spacing:.03em }
-.left-card p{ margin:.25rem 0; color:#ffe6a6; opacity:.95; font-size:14px }
-.hero-person{
-  display:block; width:100%; height:520px; border-radius:14px;
-  background:url('assets/hero.png') center right/cover no-repeat; /* <- ảnh nhân vật/hologram */
-  box-shadow: 0 60px 120px rgba(0,0,0,.6) inset, 0 0 0 1px rgba(255,255,255,.04) inset;
-}
-
-/* ===== WELCOME TITLES ===== */
-.welcome{
-  max-width:1100px; margin:0 auto; padding:8px 16px 0;
+/* === HERO BACKGROUND === */
+.hero{
+  width:100%;
+  min-height:100vh;
+  background:url('assets/hero_main.jpg') center center/cover no-repeat;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
   text-align:center;
-}
-.welcome .k1{
-  margin:6px 0 0; font-weight:800; color:var(--gold); letter-spacing:.10em;
-  font-size:22px;
-}
-.welcome .main{
-  margin:2px 0 0; font-weight:900; color:var(--gold); letter-spacing:.06em;
-  font-size:44px;
-}
-.welcome .slogan{
-  margin:8px 0 0; color:#f6d79b; letter-spacing:.18em; font-size:14px;
+  padding-bottom:4vh;
 }
 
-/* ===== PILLS (2 rows) ===== */
-.pills-wrap{
-  max-width:1100px; margin:14px auto 18px; padding:0 12px;
+/* === TITLE TEXT === */
+.hero h1{
+  color:var(--gold);
+  font-size:2.6rem;
+  margin:0.5rem 0;
+  letter-spacing:1px;
 }
-.pills{
-  display:flex; flex-wrap:wrap; gap:12px; justify-content:center;
-  border:1px solid var(--line); border-radius:16px; padding:10px 12px;
-  background:linear-gradient(180deg, rgba(255,222,155,.07), rgba(0,0,0,.35));
-  box-shadow:0 20px 50px rgba(0,0,0,.35);
+.hero h2{
+  color:var(--gold);
+  font-size:1.2rem;
+  margin:0.5rem 0;
+  font-weight:400;
 }
-.pill{
-  display:inline-block; text-decoration:none; color:var(--gold);
-  border:1px solid var(--line); border-radius:999px;
-  padding:10px 16px; font-weight:700; letter-spacing:.02em;
-  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.22));
-  box-shadow:0 0 0 1px rgba(255,255,255,.04) inset;
-  transition:transform .12s ease, box-shadow .12s ease, background .2s ease;
-  white-space:nowrap;
-}
-.pill:hover{ transform:translateY(-1px); box-shadow:0 10px 22px rgba(0,0,0,.25) }
-.pill.active{
-  background:linear-gradient(180deg, rgba(255,214,125,.22), rgba(0,0,0,.2));
-  color:#1b1408; border-color:rgba(217,164,65,.65);
-  box-shadow:0 10px 24px rgba(217,164,65,.28);
+.hero p{
+  color:var(--ink);
+  font-size:1rem;
+  max-width:90%;
+  margin:auto;
 }
 
-/* Row spacing mimic two rows */
-.row{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin:10px 0 }
+/* === HIDE NAV === */
+nav{
+  display:none !important;
+}
 
-/* ===== FOOTER ===== */
+/* FOOTER */
 footer{
-  max-width:1100px; margin:18px auto 30px; padding:10px 16px; text-align:center;
-  color:#c7b07a; letter-spacing:.18em; font-size:12px;
-  border-top:1px solid rgba(217,164,65,.18);
-}
-
-/* ===== Responsive ===== */
-@media (max-width:900px){
-  .left-card{ position:relative; width:100%; left:0; top:0; margin-bottom:10px }
-  .hero-person{ height:420px }
-  .oval{ width:300px; height:120px }
-  .oval h2{ font-size:36px }
-  .welcome .main{ font-size:36px }
-}
-@media (max-width:560px){
-  .hero-person{ height:360px }
-  .oval{ width:260px; height:104px }
-  .oval h2{ font-size:30px }
-  .welcome .k1{ font-size:18px }
-  .welcome .main{ font-size:30px }
+  text-align:center;
+  padding:1rem;
+  color:var(--gold);
+  font-size:0.9rem;
 }
 </style>
 </head>
 <body>
 
-  <!-- EMBLEM -->
-  <div class="hero-emblem">
-    <div class="dove" aria-hidden="true"></div>
-    <div class="oval" aria-hidden="true">
-      <h2>IN GOD<br/>WE TRUST</h2>
-    </div>
-  </div>
+<main class="hero">
+  <h2>WELCOME TO LICENSE</h2>
+  <h1>LICENSEGOC</h1>
+  <h2>IN GOD WE TRUST · LICENSE · TRUTH</h2>
+</main>
 
-  <!-- SCENE: left welcome card + hero hologram -->
-  <div class="scene">
-    <div class="left-card">
-      <div class="kicker">WELCOME TO LICENSE</div>
-      <h3>LICENSEGOC®</h3>
-      <p>IN GOD WE TRUST – LICENSE – TRUTH</p>
-      <p>LICENSEGOC is not just a website — it’s a platform network for creativity, and copyright worldwide.</p>
-    </div>
-    <div class="hero-person" role="img" aria-label="Hologram host"></div>
-  </div>
+<footer>© 2025 LICENSE GỐC · IN GOD WE TRUST · LICENSE · TRUTH</footer>
 
-  <!-- WELCOME TITLES -->
-  <section class="welcome">
-    <div class="k1">WELCOME TO LICENSE</div>
-    <div class="main">LICENSEGOC</div>
-    <div class="slogan">IN GOD WE TRUST - LICENSE - TRUTH</div>
-  </section>
-
-  <!-- PILLS (two rows exactly like screenshot) -->
-  <div class="pills-wrap">
-    <div class="pills">
-      <div class="row">
-        <a class="pill" href="index.html">Introduction</a>
-        <a class="pill" href="licensenetwork.html">LICENSENETWORK</a>
-        <a class="pill" href="licensecoin.html">LICENSECOIN</a>
-        <a class="pill" href="tim.html">TIM ❤️</a>
-      </div>
-      <div class="row">
-        <a class="pill" href="paycards.html">Pay &amp; Cards</a>
-        <a class="pill" href="strategy.html">Strategy</a>
-        <a class="pill" href="apps.html">Apps</a>
-        <a class="pill active" href="commercial.html">COMMERCIAL</a>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    © 2025 LICENSE GỐC · IN GOD WE TRUST · LICENSE · TRUTH
-  </footer>
-
-<script>
-  // Nếu đang ở trang khác, tự kích hoạt nút tương ứng
-  const page = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.pill').forEach(a=>{
-    if(a.getAttribute('href')===page){
-      document.querySelectorAll('.pill.active').forEach(x=>x.classList.remove('active'));
-      a.classList.add('active');
-    }
-  });
-</script>
 </body>
 </html>
