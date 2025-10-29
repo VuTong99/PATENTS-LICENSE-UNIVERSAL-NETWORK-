@@ -1,147 +1,197 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>LICENSE GỐC · IN GOD WE TRUST</title>
-  <meta name="description" content="LICENSE GỐC™ — In God We Trust · License · Creation · Truth">
-  <style>
-    :root{
-      --bg:#0f0c08;
-      --gold:#d9a441;
-      --ink:#dfe6f1;
-      --line:rgba(217,164,65,.25);
-    }
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{
-      background:var(--bg);
-      color:var(--ink);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      line-height:1.5;
-    }
-    header{
-      position:sticky;
-      top:0;
-      z-index:100;
-      background:linear-gradient(180deg,rgba(0,0,0,.9),rgba(0,0,0,.6));
-      backdrop-filter:blur(6px);
-      border-bottom:1px solid var(--line);
-      padding:10px 14px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-    .brand strong{color:var(--gold);font-size:20px;}
-    .brand .sub{font-size:13px;color:rgba(223,230,241,.7);}
-    nav{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:8px;
-    }
-    nav a{
-      color:var(--ink);
-      text-decoration:none;
-      border:1px solid var(--line);
-      border-radius:10px;
-      padding:6px 10px;
-      background:linear-gradient(180deg,rgba(217,164,65,.1),rgba(0,0,0,.3));
-      font-weight:600;
-      transition:.2s;
-    }
-    nav a:hover,nav a.active{
-      background:linear-gradient(180deg,rgba(217,164,65,.3),rgba(0,0,0,.5));
-      color:var(--gold);
-    }
-    main{
-      max-width:1100px;
-      margin:auto;
-      padding:40px 20px 80px;
-      text-align:center;
-    }
-    .hero h1{color:var(--gold);font-size:36px;margin-bottom:10px;}
-    .hero p{color:rgba(223,230,241,.85);font-size:18px;}
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:20px;
-      margin-top:40px;
-    }
-    .card{
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:20px;
-      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.35));
-      box-shadow:0 0 20px rgba(0,0,0,.4);
-      transition:.3s;
-    }
-    .card:hover{box-shadow:0 0 25px rgba(217,164,65,.4);}
-    .card h3{color:var(--gold);margin-bottom:8px;}
-    footer{
-      border-top:1px solid var(--line);
-      text-align:center;
-      padding:25px 10px;
-      font-size:13px;
-      color:rgba(223,230,241,.6);
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>LICENSE GỐC — In God We Trust · License · Truth</title>
+<meta name="description" content="WELCOME TO LICENSE LICENSEGOC — The universal network empowering creators, protecting intellectual truth worldwide." />
+<link rel="icon" href="assets/favicon.png" />
+<meta property="og:title" content="LICENSE GỐC — In God We Trust" />
+<meta property="og:description" content="Universal network for creators · License · Truth" />
+<meta property="og:image" content="assets/cover.jpg" />
+<meta property="og:type" content="website" />
+<style>
+:root{
+  --bg:#0a0907; --panel:#0f0d0a; --ink:#efe6cf;
+  --gold:#f0c461; --gold2:#d9a441; --line:rgba(217,164,65,.28);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--ink); background:radial-gradient(1200px 600px at 50% 10%, #241a08 0%, #0a0907 60%);
+  font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+
+/* ===== TOP EMBLEM (dove + oval + text) ===== */
+.hero-emblem{
+  position:relative; width:100%; max-width:1100px; margin:0 auto;
+  padding-top:28px;
+}
+.dove{ 
+  width:92px; height:92px; 
+  background:url('assets/dove.png') center/contain no-repeat; /* <- thay assets/dove.png */
+  margin:0 auto 2px; filter: drop-shadow(0 8px 18px rgba(0,255,255,.18));
+}
+.oval{
+  width:340px; height:140px; margin:0 auto; position:relative;
+  background:url('assets/oval.png') center/contain no-repeat; /* <- ảnh vòng vàng PNG/SVG */
+}
+.oval h2{
+  position:absolute; inset:0; display:grid; place-items:center;
+  color:var(--gold); letter-spacing:.05em; text-align:center;
+  font-weight:800; line-height:1.05; text-shadow:0 2px 0 rgba(0,0,0,.35);
+  font-size:42px;
+}
+
+/* ===== LEFT PANEL (welcome text nhỏ) + HERO IMAGE ===== */
+.scene{
+  position:relative; max-width:1100px; margin:0 auto; padding:10px 16px 0;
+}
+.left-card{
+  position:absolute; left:16px; top:24px; width:min(46%,460px);
+  color:#eecf8a; background:linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.12));
+  border:1px solid var(--line); border-radius:10px; padding:14px 16px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+  backdrop-filter: blur(2px);
+}
+.left-card .kicker{ color:#ffd480; font-weight:800; letter-spacing:.06em; }
+.left-card h3{ margin:.25rem 0; color:#ffdf87; font-size:22px; letter-spacing:.03em }
+.left-card p{ margin:.25rem 0; color:#ffe6a6; opacity:.95; font-size:14px }
+.hero-person{
+  display:block; width:100%; height:520px; border-radius:14px;
+  background:url('assets/hero.png') center right/cover no-repeat; /* <- ảnh nhân vật/hologram */
+  box-shadow: 0 60px 120px rgba(0,0,0,.6) inset, 0 0 0 1px rgba(255,255,255,.04) inset;
+}
+
+/* ===== WELCOME TITLES ===== */
+.welcome{
+  max-width:1100px; margin:0 auto; padding:8px 16px 0;
+  text-align:center;
+}
+.welcome .k1{
+  margin:6px 0 0; font-weight:800; color:var(--gold); letter-spacing:.10em;
+  font-size:22px;
+}
+.welcome .main{
+  margin:2px 0 0; font-weight:900; color:var(--gold); letter-spacing:.06em;
+  font-size:44px;
+}
+.welcome .slogan{
+  margin:8px 0 0; color:#f6d79b; letter-spacing:.18em; font-size:14px;
+}
+
+/* ===== PILLS (2 rows) ===== */
+.pills-wrap{
+  max-width:1100px; margin:14px auto 18px; padding:0 12px;
+}
+.pills{
+  display:flex; flex-wrap:wrap; gap:12px; justify-content:center;
+  border:1px solid var(--line); border-radius:16px; padding:10px 12px;
+  background:linear-gradient(180deg, rgba(255,222,155,.07), rgba(0,0,0,.35));
+  box-shadow:0 20px 50px rgba(0,0,0,.35);
+}
+.pill{
+  display:inline-block; text-decoration:none; color:var(--gold);
+  border:1px solid var(--line); border-radius:999px;
+  padding:10px 16px; font-weight:700; letter-spacing:.02em;
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.22));
+  box-shadow:0 0 0 1px rgba(255,255,255,.04) inset;
+  transition:transform .12s ease, box-shadow .12s ease, background .2s ease;
+  white-space:nowrap;
+}
+.pill:hover{ transform:translateY(-1px); box-shadow:0 10px 22px rgba(0,0,0,.25) }
+.pill.active{
+  background:linear-gradient(180deg, rgba(255,214,125,.22), rgba(0,0,0,.2));
+  color:#1b1408; border-color:rgba(217,164,65,.65);
+  box-shadow:0 10px 24px rgba(217,164,65,.28);
+}
+
+/* Row spacing mimic two rows */
+.row{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin:10px 0 }
+
+/* ===== FOOTER ===== */
+footer{
+  max-width:1100px; margin:18px auto 30px; padding:10px 16px; text-align:center;
+  color:#c7b07a; letter-spacing:.18em; font-size:12px;
+  border-top:1px solid rgba(217,164,65,.18);
+}
+
+/* ===== Responsive ===== */
+@media (max-width:900px){
+  .left-card{ position:relative; width:100%; left:0; top:0; margin-bottom:10px }
+  .hero-person{ height:420px }
+  .oval{ width:300px; height:120px }
+  .oval h2{ font-size:36px }
+  .welcome .main{ font-size:36px }
+}
+@media (max-width:560px){
+  .hero-person{ height:360px }
+  .oval{ width:260px; height:104px }
+  .oval h2{ font-size:30px }
+  .welcome .k1{ font-size:18px }
+  .welcome .main{ font-size:30px }
+}
+</style>
 </head>
-
 <body>
-  <header>
-    <div class="brand">
-      <strong>LICENSE GỐC</strong>
-      <div class="sub">IN GOD WE TRUST · LICENSE · CREATION · TRUTH</div>
+
+  <!-- EMBLEM -->
+  <div class="hero-emblem">
+    <div class="dove" aria-hidden="true"></div>
+    <div class="oval" aria-hidden="true">
+      <h2>IN GOD<br/>WE TRUST</h2>
     </div>
-    <nav>
-      <a class="active" href="index.html">Introduction</a>
-      <a href="licensenetwork.html">LicenseNetwork</a>
-      <a href="licensecoin.html">LicenseCoin</a>
-      <a href="musicroom.html">Music Room</a>
-      <a href="creationsroom.html">Creations Room</a>
-      <a href="commercial.html">Commercial</a>
-      <a href="vault.html">Vault</a>
-    </nav>
-  </header>
+  </div>
 
-  <main>
-    <section class="hero">
-      <h1>WELCOME TO LICENSE GỐC™</h1>
-      <p>The universal network empowering creators, protecting intellectual truth worldwide.</p>
-    </section>
+  <!-- SCENE: left welcome card + hero hologram -->
+  <div class="scene">
+    <div class="left-card">
+      <div class="kicker">WELCOME TO LICENSE</div>
+      <h3>LICENSEGOC®</h3>
+      <p>IN GOD WE TRUST – LICENSE – TRUTH</p>
+      <p>LICENSEGOC is not just a website — it’s a platform network for creativity, and copyright worldwide.</p>
+    </div>
+    <div class="hero-person" role="img" aria-label="Hologram host"></div>
+  </div>
 
-    <section class="grid">
-      <div class="card">
-        <h3>LicenseNetwork</h3>
-        <p>Connect creators and verify ownership on a trusted global platform.</p>
+  <!-- WELCOME TITLES -->
+  <section class="welcome">
+    <div class="k1">WELCOME TO LICENSE</div>
+    <div class="main">LICENSEGOC</div>
+    <div class="slogan">IN GOD WE TRUST - LICENSE - TRUTH</div>
+  </section>
+
+  <!-- PILLS (two rows exactly like screenshot) -->
+  <div class="pills-wrap">
+    <div class="pills">
+      <div class="row">
+        <a class="pill" href="index.html">Introduction</a>
+        <a class="pill" href="licensenetwork.html">LICENSENETWORK</a>
+        <a class="pill" href="licensecoin.html">LICENSECOIN</a>
+        <a class="pill" href="tim.html">TIM ❤️</a>
       </div>
-      <div class="card">
-        <h3>LicenseCoin</h3>
-        <p>Powering the ecosystem of creativity through AI + Blockchain integration.</p>
+      <div class="row">
+        <a class="pill" href="paycards.html">Pay &amp; Cards</a>
+        <a class="pill" href="strategy.html">Strategy</a>
+        <a class="pill" href="apps.html">Apps</a>
+        <a class="pill active" href="commercial.html">COMMERCIAL</a>
       </div>
-      <div class="card">
-        <h3>Commercial</h3>
-        <p>Global partnerships, strategic advertising and creative collaborations.</p>
-      </div>
-      <div class="card">
-        <h3>Creations Room</h3>
-        <p>Explore art, music, AI design and community projects in one space.</p>
-      </div>
-    </section>
-  </main>
+    </div>
+  </div>
 
   <footer>
-    © 2025 LICENSE GỐC · IN GOD WE TRUST · CREATION · TRUTH
+    © 2025 LICENSE GỐC · IN GOD WE TRUST · LICENSE · TRUTH
   </footer>
 
-  <script>
-    // highlight current page
-    document.querySelectorAll('nav a').forEach(a=>{
-      if(a.getAttribute('href')===location.pathname.split('/').pop()){
-        a.classList.add('active');
-      }
-    });
-  </script>
+<script>
+  // Nếu đang ở trang khác, tự kích hoạt nút tương ứng
+  const page = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.pill').forEach(a=>{
+    if(a.getAttribute('href')===page){
+      document.querySelectorAll('.pill.active').forEach(x=>x.classList.remove('active'));
+      a.classList.add('active');
+    }
+  });
+</script>
 </body>
 </html>
