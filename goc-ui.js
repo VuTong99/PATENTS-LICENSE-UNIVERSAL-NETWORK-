@@ -510,7 +510,16 @@ function initMusicBridge(){
     location.href = 'musicroom.html';
       });
   } // <-- đóng initMusicBridge()
+  // === BACKGROUND AUTO ===
+// Tự động đổi hình nền theo ngày
+const today = new Date();
+const day = today.getDate(); // 1 → 31
+const imgPath = `./backgrounds/bg_${day}.jpg`;
 
+document.body.style.backgroundImage = `url('${imgPath}')`;
+document.body.style.backgroundSize = 'cover';
+document.body.style.backgroundRepeat = 'no-repeat';
+document.body.style.backgroundPosition = 'center center';
   // Boot
   ensureBar();
   makePanel();
