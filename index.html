@@ -1,743 +1,489 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LICENSE GỐC • LICENSEGOC</title>
-  <meta name="description" content="LICENSEGOC — IN GOD WE TRUST • LICENSE • TRUTH">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LICENSEGOC™ — IN GOD WE TRUST</title>
+  <meta name="description" content="LICENSEGOC™ cinematic homepage" />
 
   <style>
     :root{
-      --bg:#090603;
-      --bg2:#140d05;
-      --gold:#f0c461;
-      --gold2:#d59a2f;
-      --line:rgba(240,196,97,.22);
-      --text:#f4dfb0;
-      --muted:#cfb98c;
+      --bg:#050505;
+      --gold:#f1c76b;
+      --gold2:#d89c31;
+      --text:#fff3d4;
+      --line:rgba(241,199,107,.28);
+      --panel:rgba(18,11,7,.82);
+      --shadow:0 20px 60px rgba(0,0,0,.48);
+      --maxw:430px;
     }
 
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
+    html,body{margin:0;padding:0;background:#000}
     body{
       min-height:100vh;
       font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
-      background:
-        radial-gradient(circle at 50% 8%, rgba(196,132,23,.18), transparent 20%),
-        radial-gradient(circle at 50% 90%, rgba(138,88,10,.10), transparent 22%),
-        linear-gradient(180deg, #090603 0%, #120b04 45%, #090603 100%);
       overflow-x:hidden;
+      background:#000;
     }
 
-    a{text-decoration:none;color:inherit}
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
 
-    .wrap{
-      width:min(1100px, calc(100% - 24px));
+    .page{
+      width:100%;
+      max-width:var(--maxw);
       margin:0 auto;
+      position:relative;
+      background:#000;
     }
 
-    /* FLOATING BAR CLEAR */
-    .floating-bar{
-      position:sticky;
-      top:10px;
-      z-index:50;
-      width:min(1100px, calc(100% - 24px));
-      margin:14px auto 18px;
-      padding:10px 12px;
+    .poster{
+      position:relative;
+      min-height:100vh;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.18) 30%, rgba(0,0,0,.48) 100%),
+        url("assets/home-bg.jpg") center/cover no-repeat;
+    }
+
+    .poster::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 50% 16%, rgba(255,214,120,.18), transparent 14%),
+        radial-gradient(circle at 20% 48%, rgba(255,198,92,.06), transparent 18%),
+        radial-gradient(circle at 80% 48%, rgba(255,198,92,.06), transparent 18%);
+      pointer-events:none;
+    }
+
+    .poster-inner{
+      position:relative;
+      z-index:2;
+      min-height:100vh;
       display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      justify-content:center;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:22px;
-      background:rgba(255,255,255,.05);
-      backdrop-filter:blur(12px);
-      box-shadow:0 10px 30px rgba(0,0,0,.25);
+      flex-direction:column;
+      justify-content:space-between;
+      padding:28px 14px 16px;
     }
 
-    .bar-btn{
+    .brand-top{
+      text-align:center;
+      padding-top:4px;
+    }
+
+    .bird{
+      font-size:54px;
+      line-height:1;
+      margin-bottom:6px;
+      filter:drop-shadow(0 0 20px rgba(241,199,107,.18));
+    }
+
+    .faith-ring{
+      display:inline-block;
+      border:2px solid rgba(241,199,107,.8);
+      border-radius:999px;
+      padding:14px 28px;
+      margin-bottom:12px;
+      background:rgba(0,0,0,.06);
+      box-shadow:0 0 22px rgba(241,199,107,.08);
+    }
+
+    .faith{
+      margin:0;
+      color:var(--gold);
+      font-size:34px;
+      line-height:.95;
+      font-weight:1000;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      text-shadow:0 0 24px rgba(241,199,107,.10);
+    }
+
+    .logo{
+      margin:4px 0 8px;
+      font-size:32px;
+      font-weight:1000;
+      color:#fff1cb;
+      letter-spacing:.03em;
+    }
+
+    .subline{
+      margin:0;
+      color:#e0c690;
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    .middle-space{
+      flex:1;
+    }
+
+    .cta-wrap{
+      display:flex;
+      justify-content:center;
+      margin-bottom:18px;
+    }
+
+    .cta{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding:10px 16px;
-      min-height:42px;
+      min-width:245px;
+      min-height:52px;
+      padding:12px 22px;
       border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
+      border:1px solid rgba(241,199,107,.34);
       color:var(--gold);
-      font-weight:800;
-      font-size:14px;
-      white-space:nowrap;
-    }
-
-    .bar-btn:hover{
-      border-color:rgba(240,196,97,.40);
-      box-shadow:0 0 18px rgba(240,196,97,.08);
-    }
-
-    .hero{
-      text-align:center;
-      padding:22px 0 8px;
-    }
-
-    .god{
-      font-size:clamp(34px, 8vw, 76px);
-      line-height:1;
-      font-weight:900;
-      color:var(--gold);
-      margin:18px 0 14px;
-      text-shadow:0 0 24px rgba(240,196,97,.10);
-    }
-
-    .intro-card{
-      margin:0 auto 22px;
-      max-width:980px;
-      padding:26px 20px;
-      border:1px solid var(--line);
-      border-radius:28px;
-      background:linear-gradient(180deg, rgba(255,220,140,.03), rgba(0,0,0,.18));
-      box-shadow:0 18px 50px rgba(0,0,0,.35);
-    }
-
-    .kicker{
-      color:var(--gold);
-      font-size:clamp(18px, 3vw, 26px);
-      font-weight:900;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-      margin-bottom:8px;
-    }
-
-    .brand{
-      font-size:clamp(34px, 8vw, 70px);
-      line-height:1;
+      font-size:20px;
       font-weight:1000;
-      color:var(--gold);
-      margin:0 0 12px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,214,120,.12), transparent 72%),
+        linear-gradient(180deg, rgba(255,214,120,.08), rgba(0,0,0,.24));
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.03) inset,
+        0 12px 28px rgba(0,0,0,.32);
     }
 
-    .slogan{
-      color:#f2d8a2;
-      letter-spacing:.18em;
+    .cta span{
+      margin-left:10px;
+      font-size:18px;
+    }
+
+    .layout-note{
+      text-align:center;
+      margin:0 0 10px;
+      color:#e7c985;
+      font-size:11px;
+      letter-spacing:.12em;
       text-transform:uppercase;
-      font-size:clamp(13px, 2.8vw, 22px);
+      text-shadow:0 0 14px rgba(241,199,107,.10);
+    }
+
+    .bottom-bar{
+      position:relative;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:8px;
+      background:rgba(22,14,8,.72);
+      backdrop-filter:blur(14px);
+      box-shadow:var(--shadow);
+      margin:0 12px 8px;
+    }
+
+    .bottom-nav{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:8px;
+      align-items:stretch;
+    }
+
+    .nav-item,
+    .menu-btn{
+      appearance:none;
+      -webkit-appearance:none;
+      border:none;
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(241,199,107,.10);
+      min-height:64px;
+      border-radius:20px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:5px;
+      padding:6px 4px;
+      color:#f4e1b4;
+      font-size:11px;
+      font-weight:700;
+      text-align:center;
+      cursor:pointer;
+    }
+
+    .nav-item .icon,
+    .menu-btn .icon{
+      color:var(--gold);
+      font-size:19px;
+      line-height:1;
+    }
+
+    .menu-btn{
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,213,115,.18), transparent 62%),
+        linear-gradient(180deg, rgba(255,213,115,.08), rgba(0,0,0,.18));
+      box-shadow:0 0 18px rgba(241,199,107,.16);
+    }
+
+    .menu-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.58);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .2s ease;
+      z-index:98;
+    }
+
+    .menu-overlay.show{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .menu-panel{
+      position:fixed;
+      left:14px;
+      right:14px;
+      bottom:96px;
+      max-width:430px;
+      margin:0 auto;
+      padding:16px;
+      border-radius:28px;
+      border:1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(241,199,107,.08), transparent 26%),
+        linear-gradient(180deg, rgba(28,18,10,.96), rgba(10,7,5,.96));
+      backdrop-filter:blur(16px);
+      box-shadow:0 26px 70px rgba(0,0,0,.58);
+      z-index:99;
+      opacity:0;
+      pointer-events:none;
+      transform:translateY(12px) scale(.98);
+      transition:all .2s ease;
+    }
+
+    .menu-panel.show{
+      opacity:1;
+      pointer-events:auto;
+      transform:translateY(0) scale(1);
+    }
+
+    .menu-title{
+      margin:0 0 14px;
+      text-align:center;
+      color:var(--gold);
+      font-size:19px;
+      font-weight:1000;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .menu-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
       margin-bottom:12px;
     }
 
-    .desc{
-      max-width:780px;
-      margin:0 auto;
-      font-size:clamp(16px, 3vw, 24px);
-      color:#edd9b0;
-    }
-
-    .pill-box{
-      margin:24px auto 18px;
-      max-width:980px;
-      padding:20px 14px;
-      border:1px solid var(--line);
-      border-radius:28px;
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.18));
-      box-shadow:0 18px 50px rgba(0,0,0,.35);
-    }
-
-    .rows{
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-      align-items:center;
-    }
-
-    .row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:16px;
-      justify-content:center;
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:170px;
-      padding:16px 22px;
-      border-radius:999px;
-      border:1px solid rgba(240,196,97,.26);
+    .menu-card{
+      min-height:94px;
+      border-radius:20px;
+      border:1px solid rgba(241,199,107,.18);
       background:
-        radial-gradient(circle at 50% 30%, rgba(255,214,120,.06), transparent 36%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.18));
-      color:var(--gold);
-      font-weight:900;
-      font-size:clamp(16px, 3vw, 26px);
+        linear-gradient(180deg, rgba(255,214,120,.05), rgba(0,0,0,.18));
       box-shadow:0 10px 24px rgba(0,0,0,.26);
-      cursor:pointer;
-    }
-
-    .pill:hover{
-      box-shadow:0 10px 24px rgba(0,0,0,.30), 0 0 20px rgba(240,196,97,.08);
-    }
-
-    .pill.long{min-width:270px}
-    .pill.small{min-width:140px}
-
-    .launch{
-      text-align:center;
-      margin:26px 0 10px;
-    }
-
-    .open-btn{
-      min-width:290px;
-      padding:15px 24px;
-      border:none;
-      border-radius:999px;
-      cursor:pointer;
-      font-weight:800;
-      font-size:18px;
-      color:#2d7ad3;
-      background:linear-gradient(180deg, #f7f4ed, #dbe0ea);
-      box-shadow:0 10px 22px rgba(0,0,0,.22);
-    }
-
-    footer{
-      text-align:center;
-      padding:26px 12px 34px;
-      margin-top:18px;
-      border-top:1px solid rgba(240,196,97,.14);
-      color:var(--muted);
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      font-size:12px;
-    }
-
-    /* POPUP */
-    .lc-overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.72);
-      backdrop-filter:blur(2px);
-      opacity:0;
-      pointer-events:none;
-      transition:opacity .22s ease;
-      z-index:9998;
-    }
-
-    .lc-overlay.active{
-      opacity:1;
-      pointer-events:auto;
-    }
-
-    .lc-popup{
-      position:fixed;
-      left:50%;
-      top:50%;
-      transform:translate(-50%,-50%) scale(.95);
-      width:min(920px, calc(100% - 20px));
-      max-height:88vh;
-      overflow:auto;
-      opacity:0;
-      pointer-events:none;
-      transition:.22s ease;
-      z-index:9999;
-      border-radius:26px;
-      border:1px solid rgba(115,220,255,.18);
-      background:
-        radial-gradient(circle at 85% 0%, rgba(120,160,255,.14), transparent 22%),
-        radial-gradient(circle at 10% 100%, rgba(0,255,220,.08), transparent 22%),
-        linear-gradient(180deg, #06111d 0%, #07111a 100%);
-      color:#e9fbff;
-      box-shadow:0 28px 80px rgba(0,0,0,.55), 0 0 28px rgba(0,220,255,.07);
-    }
-
-    .lc-popup.active{
-      opacity:1;
-      pointer-events:auto;
-      transform:translate(-50%,-50%) scale(1);
-    }
-
-    .lc-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      padding:16px 16px 12px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      position:sticky;
-      top:0;
-      background:rgba(6,17,29,.92);
-      backdrop-filter:blur(8px);
-    }
-
-    .lc-brand{
-      font-size:clamp(22px, 4vw, 36px);
-      font-weight:1000;
-      color:#84eeff;
-      letter-spacing:.05em;
-    }
-
-    .lc-close{
-      width:44px;
-      height:44px;
-      border:none;
-      border-radius:12px;
-      background:rgba(255,255,255,.06);
-      color:#dff9ff;
-      font-size:28px;
-      cursor:pointer;
-    }
-
-    .lc-body{
-      padding:16px;
-    }
-
-    .lc-title{
-      font-size:clamp(28px, 6vw, 58px);
-      line-height:1;
-      color:#88efff;
-      font-weight:1000;
-      margin:0 0 10px;
-    }
-
-    .lc-sub{
-      margin:0 0 14px;
-      color:rgba(255,255,255,.84);
-      font-size:clamp(15px, 3vw, 22px);
-    }
-
-    .lc-ticker{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      align-items:center;
-      padding:12px 14px;
-      border-radius:999px;
-      border:1px solid rgba(120,210,255,.18);
-      background:rgba(255,255,255,.04);
-      font-weight:700;
-      margin-bottom:16px;
-    }
-
-    .lc-grid{
-      display:grid;
-      grid-template-columns:1.35fr .9fr;
-      gap:16px;
-    }
-
-    .panel{
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:22px;
-      padding:16px;
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
-      box-shadow:0 12px 30px rgba(0,0,0,.22);
-    }
-
-    .mini-title{
-      margin:0 0 10px;
-      color:#defaff;
-      font-size:22px;
-      font-weight:900;
-    }
-
-    .chart{
-      height:240px;
-      border-radius:18px;
-      border:1px solid rgba(120,210,255,.14);
-      background:
-        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.14));
-      background-size:40px 40px, 40px 40px, auto;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .chart svg{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-    }
-
-    .bottom-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:16px;
-      margin-top:16px;
-    }
-
-    .item{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding:10px 0;
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-
-    .item:last-child{border-bottom:none}
-
-    .pos{color:#63f3ae;font-weight:800}
-    .neg{color:#ff8795;font-weight:800}
-
-    .side{
       display:flex;
       flex-direction:column;
-      gap:16px;
-    }
-
-    .sentiment{
-      display:flex;
-      align-items:center;
-      gap:14px;
-    }
-
-    .gauge{
-      width:110px;
-      height:110px;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      position:relative;
-      background:conic-gradient(#7bf4ff 0 72%, rgba(255,255,255,.08) 72% 100%);
-      flex:0 0 110px;
-    }
-
-    .gauge::after{
-      content:"";
-      position:absolute;
-      inset:12px;
-      border-radius:50%;
-      background:#081520;
-    }
-
-    .gauge span{
-      position:relative;
-      z-index:1;
-      font-size:32px;
-      font-weight:1000;
-      color:#82eeff;
-    }
-
-    .sent-text h4{
-      margin:0 0 6px;
-      font-size:22px;
-      color:#e7fbff;
-    }
-
-    .sent-text p{
-      margin:0;
-      color:#bfe8ee;
-      font-size:14px;
-    }
-
-    .actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .lc-btn{
-      display:inline-flex;
       align-items:center;
       justify-content:center;
+      text-align:center;
+      padding:12px 10px;
+    }
+
+    .menu-card .icon{
+      color:var(--gold);
+      font-size:28px;
+      margin-bottom:8px;
+      line-height:1;
+    }
+
+    .menu-card b{
+      color:#fff2d5;
+      font-size:14px;
+      line-height:1.2;
+    }
+
+    .quick-row{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+
+    .quick-btn{
       min-height:44px;
-      padding:11px 16px;
-      border-radius:14px;
-      font-weight:800;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
-      color:#fff;
+      border-radius:16px;
+      border:1px solid rgba(241,199,107,.18);
+      background:rgba(255,255,255,.03);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#f2ddb0;
+      font-size:13px;
+      font-weight:900;
+      text-align:center;
+      padding:8px 6px;
     }
 
-    .lc-btn.primary{
-      background:linear-gradient(90deg, #7affdf, #72b6ff);
-      color:#03121a;
-      border:none;
-    }
-
-    @media (max-width:900px){
-      .lc-grid,
-      .bottom-grid{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media (max-width:560px){
-      .pill{min-width:140px;padding:14px 16px}
-      .pill.long{min-width:220px}
-      .open-btn{min-width:250px;font-size:17px}
-      .gauge{width:92px;height:92px;flex-basis:92px}
-      .gauge::after{inset:10px}
-      .gauge span{font-size:26px}
-      .floating-bar{top:6px}
+    @media (max-width:390px){
+      .faith{font-size:30px}
+      .logo{font-size:28px}
+      .cta{min-width:225px;font-size:18px}
+      .bottom-nav{gap:6px}
+      .nav-item,.menu-btn{min-height:60px;font-size:10px}
     }
   </style>
 </head>
 <body>
+  <div class="page">
+    <section class="poster">
+      <div class="poster-inner">
+        <div class="brand-top">
+          <div class="bird">🕊️</div>
 
-  <div class="floating-bar">
-    <a class="bar-btn" href="index.html">Home</a>
-    <a class="bar-btn" href="licensenetwork.html">Network</a>
-    <button class="bar-btn" id="menuOpenLC" type="button">LICENSECOIN</button>
-    <a class="bar-btn" href="tim.html">TIM ❤️</a>
-    <a class="bar-btn" href="commercial.html">Commercial</a>
-  </div>
-
-  <div class="wrap">
-    <section class="hero">
-      <div class="god">IN GOD<br>WE TRUST</div>
-
-      <div class="intro-card">
-        <div class="kicker">WELCOME TO LICENSE</div>
-        <h1 class="brand">LICENSEGOC®</h1>
-        <div class="slogan">IN GOD WE TRUST - LICENSE - TRUTH</div>
-        <p class="desc">
-          LICENSEGOC is not just a website — it’s a platform network for creativity,
-          copyright, ownership, and global innovation.
-        </p>
-      </div>
-
-      <div class="pill-box">
-        <div class="rows">
-          <div class="row">
-            <a class="pill" href="introduction.html">Introduction</a>
+          <div class="faith-ring">
+            <h1 class="faith">IN GOD<br>WE TRUST</h1>
           </div>
 
-          <div class="row">
-            <a class="pill long" href="licensenetwork.html">LICENSENETWORK</a>
-          </div>
+          <div class="logo">LICENSEGOC™</div>
+          <p class="subline">GLOBAL AI • COPYRIGHT • OWNERSHIP • FUTURE ECONOMY</p>
+        </div>
 
-          <div class="row">
-            <button class="pill" id="heroOpenLC" type="button">LICENSECOIN</button>
-            <a class="pill small" href="tim.html">TIM ❤️</a>
-          </div>
+        <div class="middle-space"></div>
 
-          <div class="row">
-            <a class="pill" href="paycards.html">Pay &amp; Cards</a>
-            <a class="pill small" href="strategy.html">Strategy</a>
-          </div>
+        <div class="cta-wrap">
+          <a class="cta" href="licensecoin.html">Enter LICENSECOIN <span>›</span></a>
+        </div>
 
-          <div class="row">
-            <a class="pill small" href="apps.html">Apps</a>
-            <a class="pill long" href="commercial.html">COMMERCIAL</a>
+        <div class="layout-note">LICENSEGOC™ NEW LAYOUT SYSTEM UPDATE</div>
+
+        <div class="bottom-bar">
+          <div class="bottom-nav">
+            <a class="nav-item" href="index.html">
+              <span class="icon">⌂</span>
+              <span>Home</span>
+            </a>
+
+            <a class="nav-item" href="licensenetwork.html">
+              <span class="icon">◌</span>
+              <span>Network</span>
+            </a>
+
+            <a class="nav-item" href="licensegoc.html">
+              <span class="icon">✦</span>
+              <span>LicenseGOC</span>
+            </a>
+
+            <a class="nav-item" href="licensecoin.html">
+              <span class="icon">◉</span>
+              <span>LCN</span>
+            </a>
+
+            <a class="nav-item" href="tim.html">
+              <span class="icon">♥</span>
+              <span>Tim ♥ AI</span>
+            </a>
+
+            <button class="menu-btn" id="menuBtn" type="button">
+              <span class="icon">☰</span>
+              <span>Menu</span>
+            </button>
           </div>
         </div>
-      </div>
-
-      <div class="launch">
-        <button id="openLC" class="open-btn" type="button">Open LICENSECOIN Center</button>
       </div>
     </section>
-
-    <footer>
-      © 2025 LICENSE GỐC · IN GOD WE TRUST · LICENSE · TRUTH
-    </footer>
   </div>
 
-  <div id="lcOverlay" class="lc-overlay"></div>
+  <div class="menu-overlay" id="menuOverlay"></div>
 
-  <section id="lcPopup" class="lc-popup" aria-hidden="true">
-    <div class="lc-head">
-      <div class="lc-brand">LICENSECOIN</div>
-      <button id="closeLC" class="lc-close" type="button" aria-label="Close">×</button>
+  <section class="menu-panel" id="menuPanel" aria-hidden="true">
+    <h2 class="menu-title">Expanded System</h2>
+
+    <div class="menu-grid">
+      <a class="menu-card" href="introduction.html">
+        <span class="icon">📖</span>
+        <b>Introduction</b>
+      </a>
+
+      <a class="menu-card" href="licensegoc.html">
+        <span class="icon">🕊️</span>
+        <b>LicenseGOC</b>
+      </a>
+
+      <a class="menu-card" href="licensenetwork.html">
+        <span class="icon">🔗</span>
+        <b>LicenseNetwork</b>
+      </a>
+
+      <a class="menu-card" href="tim.html">
+        <span class="icon">❤️</span>
+        <b>Tim AI</b>
+      </a>
+
+      <a class="menu-card" href="creationsroom.html">
+        <span class="icon">🎨</span>
+        <b>CreationsRoom</b>
+      </a>
+
+      <a class="menu-card" href="commercial.html">
+        <span class="icon">🏢</span>
+        <b>Commercial</b>
+      </a>
+
+      <a class="menu-card" href="entertainment.html">
+        <span class="icon">🎧</span>
+        <b>Entertainment</b>
+      </a>
+
+      <a class="menu-card" href="uspto-patent.html">
+        <span class="icon">⚖️</span>
+        <b>USPTO Patent</b>
+      </a>
     </div>
 
-    <div class="lc-body">
-      <h2 class="lc-title">LICENSECOIN</h2>
-      <p class="lc-sub">Theo dõi tín hiệu thị trường tài chính, crypto và tài sản số trong hệ sinh thái LICENSECOIN.</p>
-
-      <div class="lc-ticker">
-        <span>S&amp;P 500 <b id="t-sp">5,214.48</b></span>
-        <span>•</span>
-        <span>NASDAQ <b id="t-nas">16,340.21</b></span>
-        <span>•</span>
-        <span>BTC <b id="t-btc">$84,560</b></span>
-        <span>•</span>
-        <span>ETH <b id="t-eth">$4,120</b></span>
-        <span>•</span>
-        <span>LICENSECOIN <b id="t-lc">$1.002</b></span>
-      </div>
-
-      <div class="lc-grid">
-        <div>
-          <div class="panel">
-            <div class="mini-title">Market Performance</div>
-            <div class="chart">
-              <svg viewBox="0 0 100 40" preserveAspectRatio="none">
-                <polyline
-                  fill="none"
-                  stroke="#82f7ff"
-                  stroke-width="0.8"
-                  points="0,34 6,33 12,31 18,32 24,27 30,28 36,24 42,22 48,18 54,20 60,16 66,15 72,12 78,10 84,9 90,7 100,5" />
-              </svg>
-            </div>
-          </div>
-
-          <div class="bottom-grid">
-            <div class="panel">
-              <div class="mini-title">Watchlist</div>
-              <div class="item"><span>S&amp;P 500</span><span id="sp500v">5,214.48</span><span id="sp500c" class="pos">+0.82%</span></div>
-              <div class="item"><span>NASDAQ</span><span id="nasdaqv">16,340.21</span><span id="nasdaqc" class="pos">+1.14%</span></div>
-              <div class="item"><span>BTC</span><span id="btcv">$84,560</span><span id="btcc" class="pos">+2.46%</span></div>
-              <div class="item"><span>ETH</span><span id="ethv">$4,120</span><span id="ethc" class="pos">+0.38%</span></div>
-              <div class="item"><span>LICENSECOIN</span><span id="lcv">$1.002</span><span id="lcc" class="pos">+0.20%</span></div>
-            </div>
-
-            <div class="panel">
-              <div class="mini-title">Latest News</div>
-              <div class="item"><span>Bloomberg</span><span>1h</span></div>
-              <div class="item"><span>CoinDesk</span><span>2h</span></div>
-              <div class="item"><span>Forbes</span><span>3h</span></div>
-              <div class="item"><span>MarketWatch</span><span>4h</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="side">
-          <div class="panel">
-            <div class="mini-title">Investor Intelligence</div>
-            <div class="sentiment">
-              <div class="gauge"><span id="gaugeNum">72</span></div>
-              <div class="sent-text">
-                <h4 id="sentimentLabel">BB. Greed</h4>
-                <p>AI market sentiment • creator capital inflow • licensing demand</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <div class="mini-title">Licensing Revenue</div>
-            <div class="item"><span>Patent &amp; Content</span><span class="pos">Active</span></div>
-            <div class="item"><span>Network &amp; Brand</span><span class="pos">Growing</span></div>
-            <div class="item"><span>Social Hype</span><span class="pos">Open</span></div>
-
-            <div class="actions">
-              <a class="lc-btn primary" href="licensecoin.html">Open Full Page</a>
-              <a class="lc-btn" href="commercial.html">Investor Access</a>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="quick-row">
+      <a class="quick-btn" href="licensecoin.html">Deposit</a>
+      <a class="quick-btn" href="licensecoin.html">Withdraw</a>
+      <a class="quick-btn" href="licensecoin.html">Transfer</a>
+      <a class="quick-btn" href="licensecoin.html">Convert</a>
     </div>
   </section>
 
   <script>
-    const openBtn = document.getElementById('openLC');
-    const heroOpenBtn = document.getElementById('heroOpenLC');
-    const menuOpenBtn = document.getElementById('menuOpenLC');
-    const closeBtn = document.getElementById('closeLC');
-    const popup = document.getElementById('lcPopup');
-    const overlay = document.getElementById('lcOverlay');
+    const menuBtn = document.getElementById('menuBtn');
+    const menuPanel = document.getElementById('menuPanel');
+    const menuOverlay = document.getElementById('menuOverlay');
 
-    function openPopup(){
-      popup.classList.add('active');
-      overlay.classList.add('active');
-      popup.setAttribute('aria-hidden', 'false');
+    function openMenu(){
+      menuPanel.classList.add('show');
+      menuOverlay.classList.add('show');
+      menuPanel.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     }
 
-    function closePopup(){
-      popup.classList.remove('active');
-      overlay.classList.remove('active');
-      popup.setAttribute('aria-hidden', 'true');
+    function closeMenu(){
+      menuPanel.classList.remove('show');
+      menuOverlay.classList.remove('show');
+      menuPanel.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     }
 
-    openBtn.addEventListener('click', openPopup);
-    heroOpenBtn.addEventListener('click', openPopup);
-    menuOpenBtn.addEventListener('click', openPopup);
-    closeBtn.addEventListener('click', closePopup);
-    overlay.addEventListener('click', closePopup);
-
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape') closePopup();
+    menuBtn.addEventListener('click', () => {
+      if(menuPanel.classList.contains('show')){
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
 
-    function setClass(el, value){
-      el.classList.remove('pos','neg');
-      el.classList.add(value >= 0 ? 'pos' : 'neg');
-    }
+    menuOverlay.addEventListener('click', closeMenu);
 
-    function fmtNum(n){ return n.toLocaleString('en-US', {maximumFractionDigits:2}); }
-    function fmtMoney(n){ return '$' + n.toLocaleString('en-US', {maximumFractionDigits:3}); }
-    function fmtPct(n){ return (n >= 0 ? '+' : '') + n.toFixed(2) + '%'; }
-
-    let market = {
-      sp500: 5214.48,
-      nasdaq: 16340.21,
-      btc: 84560,
-      eth: 4120,
-      lc: 1.002,
-      sp500p: 0.82,
-      nasdaqp: 1.14,
-      btcp: 2.46,
-      ethp: 0.38,
-      lcp: 0.20,
-      gauge: 72
-    };
-
-    function renderMarket(){
-      document.getElementById('t-sp').textContent = fmtNum(market.sp500);
-      document.getElementById('t-nas').textContent = fmtNum(market.nasdaq);
-      document.getElementById('t-btc').textContent = fmtMoney(market.btc);
-      document.getElementById('t-eth').textContent = fmtMoney(market.eth);
-      document.getElementById('t-lc').textContent = fmtMoney(market.lc);
-
-      document.getElementById('sp500v').textContent = fmtNum(market.sp500);
-      document.getElementById('nasdaqv').textContent = fmtNum(market.nasdaq);
-      document.getElementById('btcv').textContent = fmtMoney(market.btc);
-      document.getElementById('ethv').textContent = fmtMoney(market.eth);
-      document.getElementById('lcv').textContent = fmtMoney(market.lc);
-
-      const sp500c = document.getElementById('sp500c');
-      const nasdaqc = document.getElementById('nasdaqc');
-      const btcc = document.getElementById('btcc');
-      const ethc = document.getElementById('ethc');
-      const lcc = document.getElementById('lcc');
-
-      sp500c.textContent = fmtPct(market.sp500p);
-      nasdaqc.textContent = fmtPct(market.nasdaqp);
-      btcc.textContent = fmtPct(market.btcp);
-      ethc.textContent = fmtPct(market.ethp);
-      lcc.textContent = fmtPct(market.lcp);
-
-      setClass(sp500c, market.sp500p);
-      setClass(nasdaqc, market.nasdaqp);
-      setClass(btcc, market.btcp);
-      setClass(ethc, market.ethp);
-      setClass(lcc, market.lcp);
-
-      document.getElementById('gaugeNum').textContent = Math.round(market.gauge);
-      document.getElementById('sentimentLabel').textContent =
-        market.gauge >= 70 ? 'BB. Greed' :
-        market.gauge >= 55 ? 'Balanced' :
-        'Defensive';
-    }
-
-    function drift(value, amount){
-      return value + (Math.random() - 0.5) * amount;
-    }
-
-    function tickMarket(){
-      market.sp500 = drift(market.sp500, 8);
-      market.nasdaq = drift(market.nasdaq, 18);
-      market.btc = drift(market.btc, 180);
-      market.eth = drift(market.eth, 18);
-      market.lc = Math.max(0.85, Math.min(1.25, drift(market.lc, 0.012)));
-
-      market.sp500p = drift(market.sp500p, 0.16);
-      market.nasdaqp = drift(market.nasdaqp, 0.18);
-      market.btcp = drift(market.btcp, 0.28);
-      market.ethp = drift(market.ethp, 0.20);
-      market.lcp = drift(market.lcp, 0.10);
-
-      market.gauge = Math.max(20, Math.min(95, drift(market.gauge, 3.2)));
-
-      renderMarket();
-    }
-
-    renderMarket();
-    setInterval(tickMarket, 3200);
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') closeMenu();
+    });
   </script>
 </body>
 </html>
