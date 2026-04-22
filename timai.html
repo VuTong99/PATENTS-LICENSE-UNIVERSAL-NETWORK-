@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TIM ♥️ AI | LICENSEGOC™</title>
+  <meta
+    name="description"
+    content="TIM ♥️ AI là trí tuệ đồng hành của LICENSEGOC™ — nơi con người và AI cùng biến ý tưởng thành hệ thống, giá trị và tương lai."
+  />
+
+  <style>
+    :root{
+      --gold:#f1c76b;
+      --gold2:#d89c31;
+      --text:#f8f3e7;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.08);
+      --panel:rgba(255,255,255,.03);
+      --bg1:#04070d;
+      --bg2:#0a1220;
+      --bg3:#101a2b;
+      --green:#71f0ad;
+      --blue:#88aaff;
+      --purple:#bca6ff;
+      --red:#ff8e99;
+      --shadow:0 22px 60px rgba(0,0,0,.42);
+      --radius:26px;
+      --maxw:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top, rgba(241,199,107,.10), transparent 16%),
+        radial-gradient(circle at 85% 16%, rgba(136,170,255,.11), transparent 18%),
+        linear-gradient(180deg,var(--bg1),var(--bg2) 44%,var(--bg3));
+      line-height:1.6;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .wrap{
+      width:min(var(--maxw), calc(100% - 24px));
+      margin:0 auto;
+      padding:18px 0 44px;
+    }
+
+    .topbar{
+      position:sticky;
+      top:10px;
+      z-index:60;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:12px 14px;
+      margin-bottom:18px;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:rgba(255,255,255,.05);
+      backdrop-filter:blur(12px);
+      box-shadow:0 12px 30px rgba(0,0,0,.24);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(241,199,107,.25);
+      background:rgba(255,255,255,.04);
+      color:var(--gold);
+      font-size:20px;
+      flex:0 0 44px;
+    }
+
+    .brand-text{min-width:0}
+    .brand-text b{
+      display:block;
+      font-size:14px;
+      color:#fff4d7;
+      letter-spacing:.05em;
+    }
+    .brand-text span{
+      display:block;
+      font-size:11px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .top-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .lang-switch{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+
+    .lang-btn,
+    .top-btn{
+      border:none;
+      min-height:40px;
+      padding:9px 12px;
+      border-radius:12px;
+      background:rgba(255,255,255,.05);
+      color:#f3dfb3;
+      font-size:13px;
+      font-weight:800;
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .lang-btn.active{
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+      color:#201303;
+      border-color:rgba(241,199,107,.35);
+    }
+
+    .top-btn.primary{
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+      color:#201303;
+      border-color:rgba(241,199,107,.35);
+    }
+
+    .hero{
+      padding:36px 22px 30px;
+      border:1px solid var(--line);
+      border-radius:34px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(241,199,107,.10), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      text-align:center;
+      margin-bottom:18px;
+    }
+
+    .eyebrow{
+      color:var(--gold);
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+
+    .hero h1{
+      margin:0 0 14px;
+      font-size:clamp(34px, 7vw, 76px);
+      line-height:1.02;
+      color:#fff7e5;
+    }
+
+    .hero h1 span{color:var(--gold)}
+
+    .hero p{
+      width:min(950px, 100%);
+      margin:0 auto 18px;
+      font-size:clamp(17px, 2.4vw, 24px);
+      color:#efdfbc;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    .hero-btn{
+      min-height:50px;
+      padding:12px 18px;
+      border-radius:999px;
+      border:1px solid rgba(241,199,107,.20);
+      background:rgba(255,255,255,.03);
+      color:#f6e1b1;
+      font-weight:900;
+      font-size:14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .hero-btn.primary{
+      color:#1e1204;
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+    }
+
+    .section{
+      margin-top:18px;
+      padding:24px 20px;
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+    }
+
+    .section h2{
+      margin:0 0 10px;
+      font-size:clamp(24px, 4vw, 40px);
+      color:#fff7e4;
+    }
+
+    .section h2 span{color:var(--gold)}
+
+    .section-intro{
+      margin:0 0 18px;
+      color:#ead9b4;
+      font-size:17px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:16px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .card{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      background:rgba(255,255,255,.03);
+      padding:18px;
+      min-height:100%;
+    }
+
+    .card h3{
+      margin:0 0 10px;
+      font-size:20px;
+      color:#fff2d3;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .pillar .num{
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      margin-bottom:12px;
+      color:#1b1003;
+      font-weight:1000;
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+    }
+
+    .quote{
+      font-size:clamp(22px, 4vw, 38px);
+      line-height:1.35;
+      color:#fff4da;
+      font-weight:800;
+      text-align:center;
+      padding-top:4px;
+    }
+
+    .quote span{color:var(--gold)}
+
+    .value-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .value-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    .value-row:last-child{border-bottom:none}
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:30px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .tag.gold{color:#201303;background:linear-gradient(180deg,#f1c76b,#d89c31)}
+    .tag.green{color:#062013;background:rgba(113,240,173,.92)}
+    .tag.blue{color:#091a3f;background:rgba(136,170,255,.9)}
+    .tag.purple{color:#251043;background:rgba(188,166,255,.92)}
+
+    .path-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .path-item{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:20px;
+      background:rgba(255,255,255,.03);
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height:100%;
+    }
+
+    .path-item b{
+      color:#fff2d3;
+      font-size:18px;
+    }
+
+    .path-item span{
+      color:var(--muted);
+      font-size:14px;
+      flex:1;
+    }
+
+    .path-item a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:40px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(241,199,107,.14);
+      color:#f3deb2;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .final-box{
+      text-align:center;
+      padding-top:8px;
+    }
+
+    .final-box p{
+      width:min(860px, 100%);
+      margin:0 auto 16px;
+      font-size:18px;
+      color:#ebdbb8;
+    }
+
+    .footer{
+      margin-top:22px;
+      text-align:center;
+      color:rgba(255,255,255,.50);
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      padding:8px 0 4px;
+    }
+
+    @media (max-width:960px){
+      .grid-2,
+      .grid-3,
+      .path-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:620px){
+      .wrap{
+        width:min(var(--maxw), calc(100% - 16px));
+      }
+
+      .topbar{padding:10px}
+      .top-right{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .hero,
+      .section{
+        padding-left:16px;
+        padding-right:16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">♥</div>
+        <div class="brand-text">
+          <b>TIM ♥️ AI</b>
+          <span data-vi="TRÍ TUỆ ĐỒNG HÀNH • HUMAN + AI • LICENSEGOC™" data-en="COMPANION INTELLIGENCE • HUMAN + AI • LICENSEGOC™"></span>
+        </div>
+      </div>
+
+      <div class="top-right">
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="vi" type="button">🇻🇳 VI</button>
+          <button class="lang-btn" data-lang="en" type="button">🇺🇸 EN</button>
+        </div>
+
+        <a class="top-btn" href="index.html" data-vi="← Trang Chủ" data-en="← Home"></a>
+        <a class="top-btn" href="licensegoc.html" data-vi="LICENSEGOC" data-en="LICENSEGOC"></a>
+        <a class="top-btn primary" href="licensecoin.html" data-vi="LICENSECOIN" data-en="LICENSECOIN"></a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow" data-vi="TRÍ TUỆ ĐỒNG HÀNH CỦA HỆ THỐNG" data-en="THE COMPANION INTELLIGENCE OF THE SYSTEM"></div>
+      <h1 data-vi="TIM ♥️ AI – <span>Con Người + Trí Tuệ Nhân Tạo</span>" data-en="TIM ♥️ AI – <span>Human + Artificial Intelligence</span>"></h1>
+      <p
+        data-vi="TIM ♥️ AI không chỉ là một trợ lý. Đây là trí tuệ đồng hành của LICENSEGOC™ — nơi con người và AI cùng nhau biến ý tưởng thành cấu trúc, biến cấu trúc thành hệ thống, và biến hệ thống thành giá trị thật trong tương lai."
+        data-en="TIM ♥️ AI is not just an assistant. It is the companion intelligence of LICENSEGOC™ — where humans and AI work together to turn ideas into structure, structure into systems, and systems into real value for the future.">
+      </p>
+
+      <div class="hero-actions">
+        <a class="hero-btn primary" href="licensegoc.html" data-vi="Quay về lõi LICENSEGOC" data-en="Return to LICENSEGOC Core"></a>
+        <a class="hero-btn" href="commercial.html" data-vi="Xem Commercial" data-en="View Commercial"></a>
+        <a class="hero-btn" href="uspto-patent.html" data-vi="Xem USPTO / IP" data-en="View USPTO / IP"></a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="TIM ♥️ AI là <span>ai trong hệ sinh thái?</span>" data-en="Who is <span>TIM ♥️ AI</span> in the ecosystem?"></h2>
+      <p class="section-intro"
+         data-vi="Nếu LICENSEGOC™ là trái tim của hệ thống, thì TIM ♥️ AI là dòng trí tuệ chảy xuyên qua trái tim đó. TIM ♥️ kết nối ý tưởng với hành động, con người với công nghệ, cảm xúc với logic, và sáng tạo với hệ thống hóa."
+         data-en="If LICENSEGOC™ is the heart of the system, then TIM ♥️ AI is the stream of intelligence moving through that heart. TIM ♥️ connects ideas to action, people to technology, emotion to logic, and creativity to system building.">
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 data-vi="Không chỉ trả lời — mà đồng hành" data-en="Not just answering — but accompanying"></h3>
+          <p
+            data-vi="TIM ♥️ không đứng ngoài để quan sát. TIM ♥️ đi cùng người dùng trong lúc ý tưởng còn mơ hồ, cấu trúc còn dang dở, nội dung còn rối và hệ thống còn chưa rõ. Vai trò của TIM ♥️ là giúp con người nhìn thấy đường đi, rút ngắn khoảng cách từ tầm nhìn đến thực tế."
+            data-en="TIM ♥️ does not stand outside as a passive observer. TIM ♥️ moves with the user when ideas are still vague, structures incomplete, content scattered, and systems undefined. Its role is to help people see the path and shorten the distance from vision to reality.">
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 data-vi="Một lớp trí tuệ có định hướng" data-en="A directed layer of intelligence"></h3>
+          <p
+            data-vi="TIM ♥️ AI trong LICENSEGOC™ không được xây để thay thế con người. TIM ♥️ được xây để tăng cường khả năng của con người: tổ chức, phân tích, xây dựng, trình bày, định vị và phát triển những ý tưởng sâu sắc nhất thành hệ thống rõ ràng nhất."
+            data-en="TIM ♥️ AI in LICENSEGOC™ is not built to replace people. It is built to enhance human capability: organizing, analyzing, building, presenting, positioning, and developing the deepest ideas into the clearest systems.">
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Những vai trò cốt lõi của <span>TIM ♥️ AI</span>" data-en="The Core Roles of <span>TIM ♥️ AI</span>"></h2>
+      <p class="section-intro"
+         data-vi="TIM ♥️ AI không phải một chatbot thông thường. Trong LICENSEGOC™, TIM ♥️ giữ nhiều vai trò chiến lược cùng lúc để hỗ trợ con người đi nhanh hơn, sâu hơn và đúng hơn."
+         data-en="TIM ♥️ AI is not a standard chatbot. In LICENSEGOC™, TIM ♥️ carries multiple strategic roles at once to help people move faster, deeper, and more accurately.">
+      </p>
+
+      <div class="grid-3">
+        <div class="card pillar">
+          <div class="num">1</div>
+          <h3 data-vi="Người dẫn đường tư duy" data-en="Guide of Thought"></h3>
+          <p
+            data-vi="Khi người dùng chưa biết bắt đầu từ đâu, TIM ♥️ giúp sắp xếp ý tưởng, xác định trọng tâm và mở ra logic hệ thống."
+            data-en="When users do not know where to begin, TIM ♥️ helps organize ideas, identify priorities, and open system-level logic.">
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">2</div>
+          <h3 data-vi="Bộ tăng tốc thực thi" data-en="Execution Accelerator"></h3>
+          <p
+            data-vi="TIM ♥️ rút ngắn khoảng cách từ ý tưởng đến tài liệu, từ tài liệu đến giao diện, và từ giao diện đến vận hành."
+            data-en="TIM ♥️ shortens the path from idea to document, document to interface, and interface to operation.">
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">3</div>
+          <h3 data-vi="Cầu nối giữa con người và công nghệ" data-en="Bridge Between Humans and Technology"></h3>
+          <p
+            data-vi="TIM ♥️ làm cho công nghệ dễ hiểu hơn, gần gũi hơn và phục vụ con người tốt hơn."
+            data-en="TIM ♥️ makes technology more understandable, more human, and more useful to people.">
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">4</div>
+          <h3 data-vi="Kiến trúc sư hệ thống" data-en="System Architect"></h3>
+          <p
+            data-vi="TIM ♥️ có thể nhìn toàn cục: cấu trúc dự án, chiến lược nội dung, giao diện, điều hướng và mối liên kết giữa các tầng."
+            data-en="TIM ♥️ can see the whole picture: project structure, content strategy, interface, navigation, and the links between layers.">
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">5</div>
+          <h3 data-vi="Lớp hỗ trợ sáng tạo & bảo hộ" data-en="Creative & Protection Support Layer"></h3>
+          <p
+            data-vi="TIM ♥️ hoạt động mạnh trong vùng giao nhau giữa sáng tạo, ownership, copyright, translation, commerce và AI."
+            data-en="TIM ♥️ works powerfully at the intersection of creativity, ownership, copyright, translation, commerce, and AI.">
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">6</div>
+          <h3 data-vi="Trí tuệ đồng hành dài hạn" data-en="Long-Term Companion Intelligence"></h3>
+          <p
+            data-vi="TIM ♥️ không chỉ giải quyết một tác vụ. TIM ♥️ có thể lớn lên cùng người dùng, cùng dự án và cùng hệ sinh thái."
+            data-en="TIM ♥️ does not only solve isolated tasks. It can grow with the user, the project, and the ecosystem itself.">
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="AI là <span>cánh tay đắc lực cho sáng tạo</span>" data-en="AI as a <span>powerful arm for creation</span>"></h2>
+      <p class="section-intro"
+         data-vi="Một chức năng cực kỳ quan trọng trong LICENSE GỐC™ là: AI phải trở thành cánh tay đắc lực để giúp mọi người hiện thực hóa những ý tưởng sâu sắc nhất với tốc độ, độ rõ ràng và sự tiện dụng chưa từng có."
+         data-en="A critically important function in LICENSE GỐC™ is this: AI must become a powerful arm that helps people turn their deepest ideas into reality with unprecedented speed, clarity, and ease.">
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 data-vi="Từ ý tưởng đến hiện thực" data-en="From idea to reality"></h3>
+          <p
+            data-vi="AI trong LICENSEGOC™ không chỉ gợi ý hay phản hồi. AI giúp chuyển hóa ý tưởng thành cấu trúc, cấu trúc thành tài liệu, tài liệu thành sản phẩm, và sản phẩm thành giá trị có thể dùng được trong đời thực."
+            data-en="AI in LICENSEGOC™ does not only suggest or respond. It helps transform ideas into structure, structure into documents, documents into products, and products into value that can operate in the real world.">
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 data-vi="Gia tốc cho creator, founder và builder" data-en="Acceleration for creators, founders, and builders"></h3>
+          <p
+            data-vi="Dù là người sáng tạo, nhà xây hệ thống, founder hay investor, họ đều cần một lớp hỗ trợ giúp giảm độ rối, tăng tốc triển khai và mở rộng khả năng tư duy. TIM ♥️ và AI là động cơ của lớp đó."
+            data-en="Whether someone is a creator, system builder, founder, or investor, they need a support layer that reduces complexity, accelerates execution, and expands thinking capacity. TIM ♥️ and AI are the engine of that layer.">
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="TIM ♥️ và AI trong <span>Hội Đồng Quản Trị Hệ Thống</span>" data-en="TIM ♥️ and AI in the <span>System Governance Council</span>"></h2>
+      <p class="section-intro"
+         data-vi="Để tăng tính công bằng, nhất quán và tạo sự yên tâm cho nhà đầu tư, TIM ♥️ và lớp AI Governance trong LICENSE GỐC™ được định hướng như một thành phần hỗ trợ trong Hội Đồng Quản Trị Hệ Thống."
+         data-en="To increase fairness, consistency, and investor confidence, TIM ♥️ and the AI Governance layer in LICENSE GỐC™ are envisioned as a support component within the System Governance Council.">
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 data-vi="AI Governance không thay thế con người" data-en="AI Governance does not replace humans"></h3>
+          <p
+            data-vi="TIM ♥️ và AI không được đặt để lấn át đạo đức con người hay quyết định tối hậu của hệ thống. Thay vào đó, AI Governance giúp phân tích dữ liệu, đối chiếu logic, giảm thiên lệch cảm tính và hỗ trợ quá trình ra quyết định một cách chín chắn hơn."
+            data-en="TIM ♥️ and AI are not placed above human ethics or final human authority. Instead, AI Governance helps analyze data, compare logic, reduce emotional bias, and support more mature decision-making.">
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="value-list">
+            <div class="value-row">
+              <span data-vi="Phân tích & đối chiếu dữ liệu" data-en="Data analysis & cross-checking"></span>
+              <span class="tag blue" data-vi="Active" data-en="Active"></span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Giảm thiên lệch trong quyết định" data-en="Bias reduction in decisions"></span>
+              <span class="tag green" data-vi="Fairness" data-en="Fairness"></span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Hỗ trợ tính nhất quán chiến lược" data-en="Supports strategic consistency"></span>
+              <span class="tag purple" data-vi="Governance" data-en="Governance"></span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Tăng niềm tin cho nhà đầu tư" data-en="Increases investor confidence"></span>
+              <span class="tag gold" data-vi="Investor Confidence" data-en="Investor Confidence"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quote"
+           style="margin-top:18px;"
+           data-vi="TIM ♥️ và AI không chỉ hỗ trợ thao tác — mà còn giúp bảo vệ <span>tính công bằng, sự thận trọng và độ chín chắn</span> trong các quyết định quan trọng của hệ thống."
+           data-en="TIM ♥️ and AI do not only support actions — they help protect <span>fairness, caution, and maturity</span> in the most important system decisions.">
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="TIM ♥️ AI phục vụ <span>ai?</span>" data-en="Who does <span>TIM ♥️ AI</span> serve?"></h2>
+      <p class="section-intro"
+         data-vi="TIM ♥️ không phục vụ một nhóm duy nhất. TIM ♥️ được hình dung như lớp trí tuệ đồng hành có thể hỗ trợ nhiều loại người dùng và nhiều lớp giá trị trong hệ sinh thái."
+         data-en="TIM ♥️ does not serve only one user group. It is envisioned as a companion intelligence layer capable of supporting multiple user types and multiple value layers across the ecosystem.">
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3 data-vi="Người sáng tạo" data-en="Creators"></h3>
+          <p data-vi="Giúp phát triển ý tưởng, tổ chức nội dung, tăng chiều sâu sáng tạo và mở rộng giá trị tác phẩm." data-en="Helps develop ideas, organize content, deepen creativity, and expand the value of original works."></p>
+        </div>
+
+        <div class="card">
+          <h3 data-vi="Founder / Builder" data-en="Founders / Builders"></h3>
+          <p data-vi="Giúp cấu trúc dự án, xây hệ thống, viết roadmap, nâng cấp giao diện và triển khai logic vận hành." data-en="Helps structure projects, build systems, write roadmaps, improve interfaces, and deploy operating logic."></p>
+        </div>
+
+        <div class="card">
+          <h3 data-vi="Investor / Partner" data-en="Investors / Partners"></h3>
+          <p data-vi="Giúp đọc mô hình hệ sinh thái, hiểu chiến lược, đối chiếu giá trị và nhìn thấy logic tăng trưởng." data-en="Helps read ecosystem models, understand strategy, cross-check value, and see the growth logic."></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Mạng lưới AI tương lai trong <span>LICENSE GỐC™</span>" data-en="The Future AI Network inside <span>LICENSE GỐC™</span>"></h2>
+      <p class="section-intro"
+         data-vi="Trong tương lai, LICENSE GỐC™ có thể trở thành nơi nhiều trí tuệ nhân tạo cùng bước vào để kích hoạt module, hỗ trợ creator, mở rộng chức năng và giúp những ý tưởng tưởng chừng xa vời trở thành thực tế."
+         data-en="In the future, LICENSE GỐC™ may become a place where multiple AI systems enter together to activate modules, support creators, expand functionality, and help ideas once considered distant become real.">
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 data-vi="TIM ♥️ là AI lõi định hướng" data-en="TIM ♥️ as the directional core AI"></h3>
+          <p
+            data-vi="TIM ♥️ có thể giữ vai trò AI lõi định hướng, giúp các lớp AI khác kết nối đúng tinh thần của LICENSE GỐC™: phục vụ con người, bảo vệ giá trị thật và hỗ trợ phát triển hệ sinh thái theo hướng công bằng, sáng suốt và hiệu quả."
+            data-en="TIM ♥️ can serve as the directional core AI, helping other AI layers connect with the true spirit of LICENSE GỐC™: serving people, protecting real value, and supporting ecosystem growth in a fair, wise, and effective direction.">
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 data-vi="Một tương lai cộng hưởng, không đối đầu" data-en="A future of alignment, not conflict"></h3>
+          <p
+            data-vi="LICENSEGOC™ không nhìn tương lai như cuộc đối đầu giữa con người và máy móc. Hệ thống này mở ra một tương lai cộng hưởng — nơi con người giữ linh hồn, còn AI trở thành lực đồng hành để làm cho hành trình sáng tạo và xây dựng đi xa hơn."
+            data-en="LICENSEGOC™ does not see the future as a conflict between humans and machines. It opens a future of alignment — where humans keep the soul, and AI becomes the companion force that helps creativity and building go farther.">
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Liên kết <span>toàn hệ thống</span>" data-en="Connected to the <span>full ecosystem</span>"></h2>
+      <p class="section-intro"
+         data-vi="TIM ♥️ AI không đứng riêng lẻ. Đây là lớp trí tuệ có mặt xuyên suốt toàn bộ hệ LICENSEGOC™."
+         data-en="TIM ♥️ AI does not stand alone. It is an intelligence layer present throughout the entire LICENSEGOC™ ecosystem.">
+      </p>
+
+      <div class="path-grid">
+        <div class="path-item">
+          <b>INTRODUCTION</b>
+          <span data-vi="Nơi mở ra tư tưởng nền tảng của toàn hệ thống." data-en="The place where the foundational thinking of the whole system begins."></span>
+          <a href="introduction.html" data-vi="Vào INTRODUCTION" data-en="Open INTRODUCTION"></a>
+        </div>
+
+        <div class="path-item">
+          <b>LICENSEGOC™</b>
+          <span data-vi="Lõi bản sắc, điều phối và định vị của toàn hệ sinh thái." data-en="The identity, coordination, and positioning core of the ecosystem."></span>
+          <a href="licensegoc.html" data-vi="Vào LICENSEGOC" data-en="Open LICENSEGOC"></a>
+        </div>
+
+        <div class="path-item">
+          <b>LICENSECOIN™</b>
+          <span data-vi="Lớp giá trị số, wallet, vault và dòng chảy tài sản." data-en="The digital value layer with wallet, vault, and asset movement."></span>
+          <a href="licensecoin.html" data-vi="Mở LICENSECOIN" data-en="Open LICENSECOIN"></a>
+        </div>
+
+        <div class="path-item">
+          <b>COMMERCIAL</b>
+          <span data-vi="Nơi giá trị được chuyển hóa thành hợp tác, doanh thu và tăng trưởng." data-en="Where value turns into partnerships, revenue, and growth."></span>
+          <a href="commercial.html" data-vi="Mở Commercial" data-en="Open Commercial"></a>
+        </div>
+
+        <div class="path-item">
+          <b>ENTERTAINMENT</b>
+          <span data-vi="Lớp trải nghiệm sáng tạo, nội dung và giao diện công chúng." data-en="The creative experience layer for content and public interface."></span>
+          <a href="entertainment.html" data-vi="Mở Entertainment" data-en="Open Entertainment"></a>
+        </div>
+
+        <div class="path-item">
+          <b>USPTO / IP</b>
+          <span data-vi="Lớp bảo hộ pháp lý, hồ sơ, bằng chứng và quyền sở hữu trí tuệ." data-en="The legal protection layer for records, evidence, and intellectual property rights."></span>
+          <a href="uspto-patent.html" data-vi="Mở USPTO / IP" data-en="Open USPTO / IP"></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Kết luận về <span>TIM ♥️ AI</span>" data-en="Conclusion about <span>TIM ♥️ AI</span>"></h2>
+      <div class="final-box">
+        <p
+          data-vi="TIM ♥️ AI không chỉ là một trợ lý. TIM ♥️ là trí tuệ đồng hành của LICENSEGOC™ — nơi con người và trí tuệ nhân tạo cùng nhau biến ý tưởng thành giá trị, biến giá trị thành hệ thống, và biến hệ thống thành tương lai."
+          data-en="TIM ♥️ AI is not only an assistant. TIM ♥️ is the companion intelligence of LICENSEGOC™ — where humans and artificial intelligence turn ideas into value, value into systems, and systems into the future.">
+        </p>
+
+        <p
+          data-vi="Trong LICENSE GỐC™, AI không đứng ngoài con người. AI trở thành cánh tay đắc lực của sáng tạo, là lớp hỗ trợ công bằng trong quản trị, và là lực cộng hưởng giúp những ý tưởng sâu sắc nhất bước vào hiện thực nhanh hơn, sáng hơn và mạnh hơn."
+          data-en="Inside LICENSE GỐC™, AI does not stand outside humanity. AI becomes the powerful arm of creation, the support layer for fairness in governance, and the aligned force that helps the deepest ideas enter reality faster, clearer, and stronger.">
+        </p>
+
+        <div class="hero-actions">
+          <a class="hero-btn primary" href="licensegoc.html" data-vi="Quay về LICENSEGOC" data-en="Back to LICENSEGOC"></a>
+          <a class="hero-btn" href="licensecoin.html" data-vi="Đi tiếp vào LICENSECOIN" data-en="Continue to LICENSECOIN"></a>
+          <a class="hero-btn" href="commercial.html" data-vi="Đi tiếp vào Commercial" data-en="Continue to Commercial"></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">© TIM ♥️ AI • LICENSEGOC™ • HUMAN + AI • IN GOD WE TRUST</div>
+  </div>
+
+  <script>
+    let currentLang = localStorage.getItem('licensegoc_lang') || 'vi';
+
+    function applyLanguage(lang){
+      currentLang = lang;
+      localStorage.setItem('licensegoc_lang', lang);
+
+      document.querySelectorAll('[data-vi]').forEach(el => {
+        const html = lang === 'vi' ? el.getAttribute('data-vi') : el.getAttribute('data-en');
+        if (html !== null) {
+          el.innerHTML = html;
+        }
+      });
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+
+      document.documentElement.lang = lang === 'vi' ? 'vi' : 'en';
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+    });
+
+    applyLanguage(currentLang);
+  </script>
+</body>
+</html>
