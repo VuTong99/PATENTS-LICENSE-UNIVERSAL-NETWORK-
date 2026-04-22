@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LICENSECOIN™ Wallet</title>
-  <meta name="description" content="LICENSECOIN wallet app interface" />
+  <title>LICENSECOIN™ Pro X</title>
+  <meta name="description" content="LICENSECOIN Pro X exchange super app demo for LICENSEGOC" />
 
   <style>
     :root{
-      --bg:#05070c;
-      --bg2:#08111d;
-      --panel:#0d1726;
+      --bg:#04070c;
+      --bg2:#09111d;
+      --panel:#0c1624;
       --panel2:#101b2c;
       --line:rgba(255,255,255,.08);
       --gold:#f1c76b;
@@ -20,8 +20,11 @@
       --cyan:#8feeff;
       --green:#79f4b1;
       --red:#ff8a96;
+      --blue:#81a8ff;
+      --purple:#b69cff;
       --shadow:0 24px 60px rgba(0,0,0,.45);
       --maxw:430px;
+      --radius:22px;
     }
 
     *{box-sizing:border-box}
@@ -37,7 +40,7 @@
     body{
       background:
         radial-gradient(circle at 50% 0%, rgba(241,199,107,.10), transparent 18%),
-        radial-gradient(circle at 80% 24%, rgba(241,199,107,.08), transparent 18%),
+        radial-gradient(circle at 80% 24%, rgba(80,120,255,.10), transparent 18%),
         linear-gradient(180deg, #04070d 0%, #08111d 100%);
       display:flex;
       justify-content:center;
@@ -71,15 +74,14 @@
       inset:0;
       pointer-events:none;
       background:
-        radial-gradient(circle at 50% 18%, rgba(255,214,120,.07), transparent 16%),
+        radial-gradient(circle at 50% 18%, rgba(255,214,120,.06), transparent 16%),
         linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
-      opacity:.9;
     }
 
     .topbar{
       position:sticky;
       top:0;
-      z-index:20;
+      z-index:30;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -105,9 +107,7 @@
       flex:0 0 38px;
     }
 
-    .nav-btn.hidden{
-      visibility:hidden;
-    }
+    .nav-btn.hidden{ visibility:hidden; }
 
     .top-title{
       flex:1;
@@ -125,20 +125,22 @@
       position:relative;
       z-index:2;
       padding:14px;
-      padding-bottom:90px;
+      padding-bottom:94px;
     }
 
     .screen{
       display:none;
-      animation:fadeIn .24s ease;
+      opacity:0;
+      transform:translateY(10px);
     }
 
     .screen.active{
       display:block;
+      animation:screenIn .24s ease forwards;
     }
 
-    @keyframes fadeIn{
-      from{opacity:0; transform:translateY(8px)}
+    @keyframes screenIn{
+      from{opacity:0; transform:translateY(10px)}
       to{opacity:1; transform:translateY(0)}
     }
 
@@ -157,11 +159,12 @@
     .hero-sub{
       color:var(--muted);
       font-size:12px;
+      line-height:1.45;
     }
 
     .card{
       border:1px solid rgba(241,199,107,.14);
-      border-radius:20px;
+      border-radius:var(--radius);
       padding:14px;
       background:
         radial-gradient(circle at 50% 0%, rgba(241,199,107,.08), transparent 30%),
@@ -170,39 +173,88 @@
       margin-bottom:14px;
     }
 
-    .portfolio{
-      text-align:center;
-      padding:18px 14px;
+    .wallet-hero{
+      padding:16px 14px;
     }
 
-    .portfolio small{
-      display:block;
+    .wallet-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:12px;
+    }
+
+    .wallet-title{
+      font-size:13px;
       color:var(--muted);
-      font-size:12px;
-      margin-bottom:8px;
+    }
+
+    .wallet-chip{
+      font-size:11px;
+      color:#f0deb3;
+      border:1px solid rgba(241,199,107,.20);
+      border-radius:999px;
+      padding:6px 10px;
+      background:rgba(255,255,255,.03);
     }
 
     .balance{
-      font-size:24px;
+      font-size:30px;
       font-weight:1000;
       color:var(--gold);
-      margin-bottom:8px;
+      margin-bottom:6px;
     }
 
     .sub-balance{
-      color:#e7d2a1;
+      color:#e5cf9f;
+      font-size:13px;
+      margin-bottom:12px;
+    }
+
+    .balance-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .mini-stat{
+      flex:1 1 0;
+      min-width:90px;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:16px;
+      padding:10px;
+      background:rgba(255,255,255,.03);
+    }
+
+    .mini-stat small{
+      display:block;
+      color:var(--muted);
+      font-size:11px;
+      margin-bottom:4px;
+    }
+
+    .mini-stat b{
+      color:#fff;
       font-size:14px;
+    }
+
+    .section-title{
+      font-size:15px;
+      font-weight:1000;
+      color:#fff;
+      margin-bottom:10px;
     }
 
     .action-grid{
       display:grid;
-      grid-template-columns:repeat(3,1fr);
+      grid-template-columns:repeat(4,1fr);
       gap:10px;
       margin-bottom:14px;
     }
 
     .action{
-      min-height:86px;
+      min-height:84px;
       border-radius:18px;
       border:1px solid rgba(241,199,107,.14);
       background:rgba(255,255,255,.03);
@@ -213,7 +265,14 @@
       gap:8px;
       color:#f3dfb0;
       font-weight:900;
+      font-size:12px;
       cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .action:hover{
+      border-color:rgba(241,199,107,.28);
+      box-shadow:0 0 18px rgba(241,199,107,.08);
     }
 
     .action .icon{
@@ -222,11 +281,25 @@
       line-height:1;
     }
 
-    .section-title{
-      font-size:15px;
-      font-weight:1000;
-      color:#fff;
-      margin-bottom:10px;
+    .chart-wrap{
+      height:160px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.06);
+      background:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      background-size:40px 40px, 40px 40px, auto;
+      position:relative;
+      overflow:hidden;
+      margin-bottom:12px;
+    }
+
+    .chart-wrap svg{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
     }
 
     .tabs{
@@ -253,13 +326,8 @@
       color:#fff0cc;
     }
 
-    .tab-pane{
-      display:none;
-    }
-
-    .tab-pane.active{
-      display:block;
-    }
+    .tab-pane{ display:none; }
+    .tab-pane.active{ display:block; }
 
     .row{
       display:grid;
@@ -271,28 +339,13 @@
       font-size:13px;
     }
 
-    .row:last-child{
-      border-bottom:none;
-    }
+    .row:last-child{ border-bottom:none; }
 
-    .muted{
-      color:var(--muted);
-    }
-
-    .gold{
-      color:var(--gold);
-      font-weight:900;
-    }
-
-    .green{
-      color:var(--green);
-      font-weight:900;
-    }
-
-    .red{
-      color:var(--red);
-      font-weight:900;
-    }
+    .muted{ color:var(--muted); }
+    .gold{ color:var(--gold); font-weight:900; }
+    .green{ color:var(--green); font-weight:900; }
+    .red{ color:var(--red); font-weight:900; }
+    .blue{ color:var(--blue); font-weight:900; }
 
     .field{
       min-height:48px;
@@ -308,7 +361,8 @@
       color:#f3ead4;
     }
 
-    .field input{
+    .field input,
+    .field select{
       flex:1;
       border:none;
       outline:none;
@@ -316,6 +370,10 @@
       color:#fff;
       font-size:14px;
       min-width:0;
+    }
+
+    .field select option{
+      color:#000;
     }
 
     .field input::placeholder{
@@ -332,9 +390,7 @@
       flex:0 0 auto;
     }
 
-    .qr-wrap{
-      text-align:center;
-    }
+    .qr-wrap{ text-align:center; }
 
     .qr-box{
       width:190px;
@@ -455,6 +511,112 @@
       margin-bottom:16px;
     }
 
+    .activity-item{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:10px;
+      align-items:center;
+      padding:11px 0;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    .activity-item:last-child{
+      border-bottom:none;
+    }
+
+    .activity-icon{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      background:rgba(255,255,255,.05);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--gold);
+      font-size:16px;
+    }
+
+    .activity-text b{
+      display:block;
+      color:#fff;
+      font-size:13px;
+      margin-bottom:3px;
+    }
+
+    .activity-text small{
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .activity-value{
+      text-align:right;
+      font-size:12px;
+    }
+
+    .market-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .market-item{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:16px;
+      padding:12px;
+      background:rgba(255,255,255,.03);
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      align-items:center;
+      cursor:pointer;
+    }
+
+    .market-item b{
+      display:block;
+      margin-bottom:4px;
+    }
+
+    .market-item small{
+      color:var(--muted);
+    }
+
+    .search{
+      margin-bottom:12px;
+    }
+
+    .search input{
+      width:100%;
+      min-height:46px;
+      border:none;
+      outline:none;
+      border-radius:16px;
+      padding:0 14px;
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .search input::placeholder{
+      color:rgba(255,255,255,.35);
+    }
+
+    .news-card{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:16px;
+      padding:12px;
+      background:rgba(255,255,255,.03);
+      margin-bottom:10px;
+    }
+
+    .news-card b{
+      display:block;
+      margin-bottom:6px;
+    }
+
+    .news-card small{
+      color:var(--muted);
+      line-height:1.5;
+    }
+
     .bottom-tabs{
       position:fixed;
       bottom:0;
@@ -462,7 +624,7 @@
       transform:translateX(-50%);
       width:min(var(--maxw), 100%);
       display:grid;
-      grid-template-columns:repeat(4,1fr);
+      grid-template-columns:repeat(5,1fr);
       gap:8px;
       padding:12px 14px 16px;
       background:rgba(7,12,22,.96);
@@ -512,7 +674,9 @@
 
     @media (max-width:390px){
       .qr-box{width:170px;height:170px}
-      .balance{font-size:22px}
+      .balance{font-size:24px}
+      .action-grid{grid-template-columns:repeat(2,1fr)}
+      .bottom-tabs{grid-template-columns:repeat(5,1fr)}
     }
   </style>
 </head>
@@ -528,34 +692,60 @@
       <!-- OVERVIEW -->
       <section class="screen active" id="screen-overview">
         <div class="hero">
-          <div class="hero-title">LICENSECOIN</div>
-          <div class="hero-sub">Protect the Roots. Empower Humanity.</div>
+          <div class="hero-title">LICENSECOIN Pro X</div>
+          <div class="hero-sub">Exchange • Wallet • Vault • Licensing • Revenue</div>
         </div>
 
-        <div class="card portfolio">
-          <small>Total Portfolio Balance</small>
+        <div class="card wallet-hero">
+          <div class="wallet-top">
+            <div class="wallet-title">Total Portfolio Balance</div>
+            <div class="wallet-chip">Live</div>
+          </div>
+
           <div class="balance">$53,850.32</div>
           <div class="sub-balance">₿ 52,560 LICENSECOIN</div>
+
+          <div class="balance-row">
+            <div class="mini-stat">
+              <small>24h Change</small>
+              <b class="green">+2.46%</b>
+            </div>
+            <div class="mini-stat">
+              <small>Available</small>
+              <b>524.52 LCN</b>
+            </div>
+            <div class="mini-stat">
+              <small>Vault</small>
+              <b>$18,420</b>
+            </div>
+          </div>
         </div>
 
         <div class="action-grid">
-          <button class="action" type="button" onclick="showScreen('deposit')">
-            <span class="icon">◉</span>
-            <span>Deposit</span>
-          </button>
-          <button class="action" type="button" onclick="showScreen('withdraw')">
-            <span class="icon">◌</span>
-            <span>Withdraw</span>
-          </button>
-          <button class="action" type="button" onclick="showScreen('transfer')">
-            <span class="icon">⇄</span>
-            <span>Transfer</span>
-          </button>
+          <button class="action" type="button" onclick="showScreen('deposit')"><span class="icon">◉</span><span>Deposit</span></button>
+          <button class="action" type="button" onclick="showScreen('withdraw')"><span class="icon">◌</span><span>Withdraw</span></button>
+          <button class="action" type="button" onclick="showScreen('transfer')"><span class="icon">⇄</span><span>Transfer</span></button>
+          <button class="action" type="button" onclick="showScreen('convert')"><span class="icon">◇</span><span>Convert</span></button>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Performance</div>
+          <div class="chart-wrap">
+            <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+              <polyline fill="none" stroke="#8feeff" stroke-width="0.8"
+                points="0,34 6,33 12,31 18,32 24,27 30,28 36,24 42,22 48,18 54,20 60,16 66,15 72,12 78,10 84,9 90,7 100,5" />
+              <polyline fill="rgba(143,238,255,.12)" stroke="none"
+                points="0,40 0,34 6,33 12,31 18,32 24,27 30,28 36,24 42,22 48,18 54,20 60,16 66,15 72,12 78,10 84,9 90,7 100,5 100,40" />
+            </svg>
+          </div>
+          <div class="row">
+            <span class="muted">Market Outlook</span>
+            <span class="green">Bullish</span>
+          </div>
         </div>
 
         <div class="card">
           <div class="section-title">Revenue Dashboard</div>
-
           <div class="tabs">
             <button class="tab active" type="button" data-tab="rev-overview">Overview</button>
             <button class="tab" type="button" data-tab="rev-vault">Vault</button>
@@ -564,67 +754,81 @@
           </div>
 
           <div class="tab-pane active" id="rev-overview">
-            <div class="row">
-              <span>Tim • GhostID™721</span>
-              <span class="gold">+ 2,9.60</span>
-            </div>
-            <div class="row">
-              <span class="muted">Acoustic enlightenment routed to your terrifect.</span>
-              <span class="muted">LE</span>
-            </div>
-            <div class="row">
-              <span>Smart Contract ID linked to your wallet.</span>
-              <span class="green">Secure</span>
-            </div>
-            <div class="row">
-              <span class="muted">Smart Contract ID: 0x0175589...</span>
-              <span class="muted">Verified</span>
-            </div>
+            <div class="row"><span>Tim • GhostID™721</span><span class="gold">+ 2,9.60</span></div>
+            <div class="row"><span class="muted">Acoustic enlightenment routed to your terrifect.</span><span class="muted">LE</span></div>
+            <div class="row"><span>Smart Contract ID linked to your wallet.</span><span class="green">Secure</span></div>
+            <div class="row"><span class="muted">Smart Contract ID: 0x0175589...</span><span class="muted">Verified</span></div>
           </div>
 
           <div class="tab-pane" id="rev-vault">
-            <div class="row">
-              <span>Ownership Vault</span>
-              <span class="gold">$18,420.00</span>
-            </div>
-            <div class="row">
-              <span>Reserve Secure</span>
-              <span class="green">Protected</span>
-            </div>
-            <div class="row">
-              <span class="muted">Vault Sync</span>
-              <span class="muted">Today</span>
-            </div>
+            <div class="row"><span>Ownership Vault</span><span class="gold">$18,420.00</span></div>
+            <div class="row"><span>Reserve Secure</span><span class="green">Protected</span></div>
+            <div class="row"><span class="muted">Vault Sync</span><span class="muted">Today</span></div>
           </div>
 
           <div class="tab-pane" id="rev-licensing">
-            <div class="row">
-              <span>Creator License Revenue</span>
-              <span class="gold">$7,865.40</span>
-            </div>
-            <div class="row">
-              <span>Patent & Brand Rights</span>
-              <span class="gold">$3,540.00</span>
-            </div>
-            <div class="row">
-              <span>Status</span>
-              <span class="green">Active</span>
-            </div>
+            <div class="row"><span>Creator License Revenue</span><span class="gold">$7,865.40</span></div>
+            <div class="row"><span>Patent & Brand Rights</span><span class="gold">$3,540.00</span></div>
+            <div class="row"><span>Status</span><span class="green">Active</span></div>
           </div>
 
           <div class="tab-pane" id="rev-payments">
-            <div class="row">
-              <span>Latest Incoming</span>
-              <span class="gold">$1,220.00</span>
-            </div>
-            <div class="row">
-              <span>Pending Settlement</span>
-              <span>$420.00</span>
-            </div>
-            <div class="row">
-              <span class="muted">Network Fee</span>
-              <span>0.12 LCN</span>
-            </div>
+            <div class="row"><span>Latest Incoming</span><span class="gold">$1,220.00</span></div>
+            <div class="row"><span>Pending Settlement</span><span>$420.00</span></div>
+            <div class="row"><span class="muted">Network Fee</span><span>0.12 LCN</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Recent Activity</div>
+
+          <div class="activity-item">
+            <div class="activity-icon">◉</div>
+            <div class="activity-text"><b>Deposit Received</b><small>2 mins ago • Wallet Sync</small></div>
+            <div class="activity-value green">+120 LCN</div>
+          </div>
+
+          <div class="activity-item">
+            <div class="activity-icon">⇄</div>
+            <div class="activity-text"><b>Transfer Completed</b><small>18 mins ago • Ownership Vault</small></div>
+            <div class="activity-value">200.75</div>
+          </div>
+
+          <div class="activity-item">
+            <div class="activity-icon">◇</div>
+            <div class="activity-text"><b>Convert Executed</b><small>1 hour ago • USD Stable</small></div>
+            <div class="activity-value gold">1.02x</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MARKETS -->
+      <section class="screen" id="screen-markets">
+        <div class="hero">
+          <div class="hero-title">Markets</div>
+          <div class="hero-sub">Track major pairs and trending assets</div>
+        </div>
+
+        <div class="search">
+          <input type="text" placeholder="Search market pair..." oninput="showToast('Search demo active.')" />
+        </div>
+
+        <div class="market-list">
+          <div class="market-item" onclick="showToast('BTC/USDT opened.')">
+            <div><b>BTC / USDT</b><small>Bitcoin</small></div>
+            <div class="green">+2.85%</div>
+          </div>
+          <div class="market-item" onclick="showToast('ETH/USDT opened.')">
+            <div><b>ETH / USDT</b><small>Ethereum</small></div>
+            <div class="green">+1.42%</div>
+          </div>
+          <div class="market-item" onclick="showToast('LCN / USD opened.')">
+            <div><b>LCN / USD</b><small>LICENSECOIN</small></div>
+            <div class="gold">$1.02</div>
+          </div>
+          <div class="market-item" onclick="showToast('SOL/USDT opened.')">
+            <div><b>SOL / USDT</b><small>Solana</small></div>
+            <div class="red">-0.84%</div>
           </div>
         </div>
       </section>
@@ -649,7 +853,7 @@
 
         <div class="card">
           <div class="section-title">Security Notices</div>
-          <div class="row"><span>Only deposit LICENSECOIN (LCN) to this address via Ethereum (ERC20) or LICENSECHAIN.</span></div>
+          <div class="row"><span>Only deposit LICENSECOIN (LCN) via Ethereum (ERC20) or LICENSECHAIN.</span></div>
           <div class="row"><span>Address auto-verified via smart contract.</span></div>
           <div class="row"><span>Smart Contract ID shown is linked to your wallet.</span></div>
         </div>
@@ -678,22 +882,13 @@
         </div>
 
         <div class="card">
-          <div class="row">
-            <span>Available Balance</span>
-            <span class="gold">524.52 LCN</span>
-          </div>
+          <div class="row"><span>Available Balance</span><span class="gold">524.52 LCN</span></div>
           <div class="field">
             <input type="text" id="withdrawAmount" placeholder="Enter amount" />
             <button class="field-btn" type="button" onclick="fillAllAmount('withdrawAmount','524.52')">All</button>
           </div>
-          <div class="row">
-            <span>Blockchain Fee</span>
-            <span class="gold">1.3 LCN</span>
-          </div>
-          <div class="row">
-            <span class="muted">Priority Fee</span>
-            <span>0.5 LCN</span>
-          </div>
+          <div class="row"><span>Blockchain Fee</span><span class="gold">1.3 LCN</span></div>
+          <div class="row"><span class="muted">Priority Fee</span><span>0.5 LCN</span></div>
         </div>
 
         <button class="primary-btn" type="button" onclick="confirmWithdraw()">Confirm Withdrawal</button>
@@ -708,36 +903,16 @@
 
         <div class="card">
           <div class="section-title">From</div>
-
-          <div class="row selectable active" data-group="from">
-            <span>Exchange Account</span>
-            <span class="gold">200.75 LCN</span>
-          </div>
-          <div class="row selectable" data-group="from">
-            <span>Tim</span>
-            <span>400.50 LCN</span>
-          </div>
-          <div class="row selectable" data-group="from">
-            <span>Tim - GhostID™721</span>
-            <span class="tag">Secure Shares</span>
-          </div>
+          <div class="row selectable active" data-group="from"><span>Exchange Account</span><span class="gold">200.75 LCN</span></div>
+          <div class="row selectable" data-group="from"><span>Tim</span><span>400.50 LCN</span></div>
+          <div class="row selectable" data-group="from"><span>Tim - GhostID™721</span><span class="tag">Secure Shares</span></div>
         </div>
 
         <div class="card">
           <div class="section-title">To</div>
-
-          <div class="row selectable active" data-group="to">
-            <span>Ownership Vault</span>
-            <span class="tag">Revenue Secure</span>
-          </div>
-          <div class="row selectable" data-group="to">
-            <span>Reserve Account</span>
-            <span class="tag">TIM walletchain</span>
-          </div>
-          <div class="row">
-            <span class="muted">Smart Contract: 0x43556...</span>
-            <span class="muted">Verified</span>
-          </div>
+          <div class="row selectable active" data-group="to"><span>Ownership Vault</span><span class="tag">Revenue Secure</span></div>
+          <div class="row selectable" data-group="to"><span>Reserve Account</span><span class="tag">TIM walletchain</span></div>
+          <div class="row"><span class="muted">Smart Contract: 0x43556...</span><span class="muted">Verified</span></div>
         </div>
 
         <div class="field">
@@ -746,10 +921,7 @@
         </div>
 
         <div class="card">
-          <div class="row">
-            <span>Blockchain Fee</span>
-            <span class="gold">0.3 • Auto Adjusted</span>
-          </div>
+          <div class="row"><span>Blockchain Fee</span><span class="gold">0.3 • Auto Adjusted</span></div>
         </div>
 
         <button class="primary-btn" type="button" onclick="confirmTransfer()">Confirm Transfer</button>
@@ -774,7 +946,11 @@
 
         <div class="field">
           <span>To</span>
-          <span>USD Stable</span>
+          <select id="convertTarget">
+            <option>USD Stable</option>
+            <option>BTC</option>
+            <option>ETH</option>
+          </select>
         </div>
 
         <div class="field">
@@ -785,15 +961,72 @@
         <button class="primary-btn" type="button" onclick="confirmConvert()">Confirm Convert</button>
       </section>
 
-      <!-- SUCCESS DEPOSIT -->
+      <!-- LICENSING -->
+      <section class="screen" id="screen-licensing">
+        <div class="hero">
+          <div class="hero-title">Licensing Hub</div>
+          <div class="hero-sub">Revenue rights, creators, contracts and vault sync</div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Active Licensing Streams</div>
+          <div class="row"><span>Creator Royalties</span><span class="gold">$7,865.40</span></div>
+          <div class="row"><span>Patent Rights</span><span class="gold">$3,540.00</span></div>
+          <div class="row"><span>Commercial Licensing</span><span class="green">Live</span></div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Quick Actions</div>
+          <div class="stack">
+            <button class="secondary-btn" type="button" onclick="showToast('Create license draft coming next.')">Create License Draft</button>
+            <button class="secondary-btn" type="button" onclick="showToast('Assign ownership flow coming next.')">Assign Ownership</button>
+            <button class="secondary-btn" type="button" onclick="showToast('Revenue split engine coming next.')">Revenue Split Engine</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ASSETS -->
+      <section class="screen" id="screen-assets">
+        <div class="hero">
+          <div class="hero-title">Assets</div>
+          <div class="hero-sub">Your multi-asset view and reserve status</div>
+        </div>
+
+        <div class="card">
+          <div class="row"><span>LICENSECOIN</span><span class="gold">52,560 LCN</span></div>
+          <div class="row"><span>USD Stable</span><span>$4,220.00</span></div>
+          <div class="row"><span>BTC Reserve</span><span>0.42 BTC</span></div>
+          <div class="row"><span>ETH Reserve</span><span>3.80 ETH</span></div>
+        </div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="screen" id="screen-settings">
+        <div class="hero">
+          <div class="hero-title">Settings & Security</div>
+          <div class="hero-sub">Secure your wallet and manage preferences</div>
+        </div>
+
+        <div class="card">
+          <div class="row"><span>2FA</span><span class="green">Enabled</span></div>
+          <div class="row"><span>Biometric Unlock</span><span class="green">On</span></div>
+          <div class="row"><span>Withdrawal Whitelist</span><span class="blue">Managed</span></div>
+          <div class="row"><span>Login Alerts</span><span class="green">On</span></div>
+        </div>
+
+        <div class="stack">
+          <button class="secondary-btn" type="button" onclick="showToast('Passcode reset flow coming next.')">Reset Passcode</button>
+          <button class="secondary-btn" type="button" onclick="showToast('Security logs opened.')">View Security Logs</button>
+          <button class="secondary-btn" type="button" onclick="showToast('Device management coming next.')">Manage Devices</button>
+        </div>
+      </section>
+
+      <!-- SUCCESS -->
       <section class="screen" id="screen-success-deposit">
         <div class="success">
           <div class="success-icon">✓</div>
           <div class="success-title">Deposit Recorded</div>
-          <div class="success-desc">
-            Your deposit request has been registered.<br>
-            Network verification is now processing.
-          </div>
+          <div class="success-desc">Your deposit request has been registered.<br>Network verification is now processing.</div>
           <div class="stack">
             <button class="primary-btn" type="button" onclick="showScreen('overview')">Back to Wallet</button>
             <button class="secondary-btn" type="button" onclick="showScreen('deposit')">Deposit More</button>
@@ -801,14 +1034,11 @@
         </div>
       </section>
 
-      <!-- SUCCESS WITHDRAW -->
       <section class="screen" id="screen-success-withdraw">
         <div class="success">
           <div class="success-icon">✓</div>
           <div class="success-title">Withdrawal Submitted</div>
-          <div class="success-desc" id="withdrawResultText">
-            Your withdrawal request has been submitted successfully.
-          </div>
+          <div class="success-desc" id="withdrawResultText">Your withdrawal request has been submitted successfully.</div>
           <div class="stack">
             <button class="primary-btn" type="button" onclick="showScreen('overview')">Back to Wallet</button>
             <button class="secondary-btn" type="button" onclick="showScreen('withdraw')">Make Another Withdrawal</button>
@@ -816,14 +1046,11 @@
         </div>
       </section>
 
-      <!-- SUCCESS TRANSFER -->
       <section class="screen" id="screen-success-transfer">
         <div class="success">
           <div class="success-icon">✓</div>
           <div class="success-title">Transfer Completed</div>
-          <div class="success-desc" id="transferResultText">
-            Your transfer was completed successfully.
-          </div>
+          <div class="success-desc" id="transferResultText">Your transfer was completed successfully.</div>
           <div class="stack">
             <button class="primary-btn" type="button" onclick="showScreen('overview')">Back to Wallet</button>
             <button class="secondary-btn" type="button" onclick="showScreen('transfer')">Make Another Transfer</button>
@@ -831,14 +1058,11 @@
         </div>
       </section>
 
-      <!-- SUCCESS CONVERT -->
       <section class="screen" id="screen-success-convert">
         <div class="success">
           <div class="success-icon">✓</div>
           <div class="success-title">Convert Completed</div>
-          <div class="success-desc" id="convertResultText">
-            Your convert request has been completed successfully.
-          </div>
+          <div class="success-desc" id="convertResultText">Your convert request has been completed successfully.</div>
           <div class="stack">
             <button class="primary-btn" type="button" onclick="showScreen('overview')">Back to Wallet</button>
             <button class="secondary-btn" type="button" onclick="showScreen('convert')">Convert Again</button>
@@ -848,22 +1072,11 @@
     </div>
 
     <div class="bottom-tabs">
-      <div class="bottom-tab" onclick="showScreen('overview')">
-        <span class="icon">⌂</span>
-        Home
-      </div>
-      <div class="bottom-tab" onclick="showToast('Markets panel is coming next.')">
-        <span class="icon">◌</span>
-        Markets
-      </div>
-      <div class="bottom-tab" onclick="showScreen('overview')">
-        <span class="icon">◉</span>
-        Licensing
-      </div>
-      <div class="bottom-tab" onclick="showToast('Assets panel is coming next.')">
-        <span class="icon">▭</span>
-        Assets
-      </div>
+      <div class="bottom-tab" onclick="showScreen('overview')"><span class="icon">⌂</span>Home</div>
+      <div class="bottom-tab" onclick="showScreen('markets')"><span class="icon">◌</span>Markets</div>
+      <div class="bottom-tab" onclick="showScreen('licensing')"><span class="icon">◉</span>Licensing</div>
+      <div class="bottom-tab" onclick="showScreen('assets')"><span class="icon">▭</span>Assets</div>
+      <div class="bottom-tab" onclick="showScreen('settings')"><span class="icon">⚙</span>Settings</div>
     </div>
 
     <div class="toast" id="toast"></div>
@@ -877,10 +1090,14 @@
 
     const titles = {
       overview: 'LICENSECOIN',
+      markets: 'Markets',
       deposit: 'Deposit',
       withdraw: 'Withdraw LICENSECOIN',
       transfer: 'Transfer LICENSECOIN',
       convert: 'Convert LICENSECOIN',
+      licensing: 'Licensing Hub',
+      assets: 'Assets',
+      settings: 'Settings & Security',
       'success-deposit': 'Deposit Success',
       'success-withdraw': 'Withdraw Success',
       'success-transfer': 'Transfer Success',
@@ -902,7 +1119,6 @@
 
     function updateHeader(){
       pageTitle.textContent = titles[currentScreen] || 'LICENSECOIN';
-
       if(currentScreen === 'overview'){
         backBtn.classList.add('hidden');
       } else {
@@ -960,7 +1176,6 @@
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-
         btn.classList.add('active');
         const pane = document.getElementById(btn.dataset.tab);
         if(pane) pane.classList.add('active');
@@ -1014,11 +1229,8 @@
     }
 
     function confirmWithdraw(){
-      const addressEl = document.getElementById('withdrawAddress');
-      const amountEl = document.getElementById('withdrawAmount');
-
-      const address = addressEl.value.trim();
-      const amount = amountEl.value.trim();
+      const address = document.getElementById('withdrawAddress').value.trim();
+      const amount = document.getElementById('withdrawAmount').value.trim();
 
       if(!address){
         showToast('Please enter wallet address.');
@@ -1030,15 +1242,14 @@
         return;
       }
 
-      const result = document.getElementById('withdrawResultText');
-      result.textContent = 'Withdrawal of ' + amount + ' LCN has been submitted to ' + address.slice(0,12) + '...';
+      document.getElementById('withdrawResultText').textContent =
+        'Withdrawal of ' + amount + ' LCN has been submitted to ' + address.slice(0,12) + '...';
 
       showScreen('success-withdraw');
     }
 
     function confirmTransfer(){
-      const amountEl = document.getElementById('transferAmount');
-      const amount = amountEl.value.trim();
+      const amount = document.getElementById('transferAmount').value.trim();
 
       if(!amount){
         showToast('Please enter transfer amount.');
@@ -1051,24 +1262,32 @@
       const fromText = from ? from.querySelector('span').textContent : 'Exchange Account';
       const toText = to ? to.querySelector('span').textContent : 'Ownership Vault';
 
-      const result = document.getElementById('transferResultText');
-      result.textContent = amount + ' LCN transferred from ' + fromText + ' to ' + toText + '.';
+      document.getElementById('transferResultText').textContent =
+        amount + ' LCN transferred from ' + fromText + ' to ' + toText + '.';
 
       showScreen('success-transfer');
     }
 
     function confirmConvert(){
-      const amountEl = document.getElementById('convertAmount');
-      const amount = amountEl.value.trim();
+      const amount = document.getElementById('convertAmount').value.trim();
+      const target = document.getElementById('convertTarget').value;
 
       if(!amount){
         showToast('Please enter convert amount.');
         return;
       }
 
-      const usd = (parseFloat(amount || '0') * 1.02).toFixed(2);
-      const result = document.getElementById('convertResultText');
-      result.textContent = amount + ' LCN converted successfully into ' + usd + ' USD Stable.';
+      let resultText = '';
+      if(target === 'USD Stable'){
+        resultText = (parseFloat(amount || '0') * 1.02).toFixed(2) + ' USD Stable';
+      } else if(target === 'BTC'){
+        resultText = (parseFloat(amount || '0') * 0.000012).toFixed(6) + ' BTC';
+      } else {
+        resultText = (parseFloat(amount || '0') * 0.00022).toFixed(6) + ' ETH';
+      }
+
+      document.getElementById('convertResultText').textContent =
+        amount + ' LCN converted successfully into ' + resultText + '.';
 
       showScreen('success-convert');
     }
