@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LICENSEGOC™ | Core System of LICENSE GỐC</title>
+  <meta
+    name="description"
+    content="LICENSEGOC™ là lõi trung tâm của hệ sinh thái LICENSE GỐC™ — sáng tạo, quyền sở hữu, bản quyền, AI, thương mại, translation và giá trị số."
+  />
+
+  <style>
+    :root{
+      --gold:#f1c76b;
+      --gold2:#d89c31;
+      --text:#f8f3e7;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.08);
+      --panel:rgba(255,255,255,.03);
+      --panel-strong:rgba(255,255,255,.05);
+      --bg1:#04070d;
+      --bg2:#0a1220;
+      --bg3:#0f1728;
+      --green:#71f0ad;
+      --blue:#88aaff;
+      --purple:#bca6ff;
+      --red:#ff8e99;
+      --shadow:0 22px 60px rgba(0,0,0,.42);
+      --radius:26px;
+      --maxw:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top, rgba(241,199,107,.10), transparent 16%),
+        radial-gradient(circle at 82% 16%, rgba(90,120,255,.10), transparent 18%),
+        linear-gradient(180deg,var(--bg1),var(--bg2) 46%,var(--bg3));
+      line-height:1.6;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .wrap{
+      width:min(var(--maxw), calc(100% - 24px));
+      margin:0 auto;
+      padding:18px 0 44px;
+    }
+
+    .topbar{
+      position:sticky;
+      top:10px;
+      z-index:60;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:12px 14px;
+      margin-bottom:18px;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:rgba(255,255,255,.05);
+      backdrop-filter:blur(12px);
+      box-shadow:0 12px 30px rgba(0,0,0,.24);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(241,199,107,.25);
+      background:rgba(255,255,255,.04);
+      color:var(--gold);
+      font-size:20px;
+      flex:0 0 44px;
+    }
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-text b{
+      display:block;
+      font-size:14px;
+      color:#fff4d7;
+      letter-spacing:.05em;
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:11px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .top-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .lang-switch{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+
+    .lang-btn,
+    .top-btn{
+      border:none;
+      min-height:40px;
+      padding:9px 12px;
+      border-radius:12px;
+      background:rgba(255,255,255,.05);
+      color:#f3dfb3;
+      font-size:13px;
+      font-weight:800;
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .lang-btn.active{
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+      color:#201303;
+      border-color:rgba(241,199,107,.35);
+    }
+
+    .top-btn.primary{
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+      color:#201303;
+      border-color:rgba(241,199,107,.35);
+    }
+
+    .hero{
+      padding:34px 22px 28px;
+      border:1px solid var(--line);
+      border-radius:34px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(241,199,107,.10), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      text-align:center;
+      margin-bottom:18px;
+    }
+
+    .eyebrow{
+      color:var(--gold);
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+
+    .hero h1{
+      margin:0 0 14px;
+      font-size:clamp(34px, 7vw, 76px);
+      line-height:1.02;
+      color:#fff7e5;
+    }
+
+    .hero h1 span{
+      color:var(--gold);
+    }
+
+    .hero p{
+      width:min(930px, 100%);
+      margin:0 auto 18px;
+      font-size:clamp(17px, 2.4vw, 24px);
+      color:#efdfbc;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    .hero-btn{
+      min-height:50px;
+      padding:12px 18px;
+      border-radius:999px;
+      border:1px solid rgba(241,199,107,.20);
+      background:rgba(255,255,255,.03);
+      color:#f6e1b1;
+      font-weight:900;
+      font-size:14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .hero-btn.primary{
+      color:#1e1204;
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+    }
+
+    .section{
+      margin-top:18px;
+      padding:24px 20px;
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+    }
+
+    .section h2{
+      margin:0 0 10px;
+      font-size:clamp(24px, 4vw, 40px);
+      color:#fff7e4;
+    }
+
+    .section h2 span{
+      color:var(--gold);
+    }
+
+    .section-intro{
+      margin:0 0 18px;
+      color:#ead9b4;
+      font-size:17px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:16px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .card{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      background:rgba(255,255,255,.03);
+      padding:18px;
+      min-height:100%;
+    }
+
+    .card h3{
+      margin:0 0 10px;
+      font-size:20px;
+      color:#fff2d3;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .pillar .num{
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      margin-bottom:12px;
+      color:#1b1003;
+      font-weight:1000;
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+    }
+
+    .quote{
+      font-size:clamp(22px, 4vw, 38px);
+      line-height:1.35;
+      color:#fff4da;
+      font-weight:800;
+      text-align:center;
+      padding-top:4px;
+    }
+
+    .quote span{
+      color:var(--gold);
+    }
+
+    .map-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .map-item{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:20px;
+      background:rgba(255,255,255,.03);
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height:100%;
+    }
+
+    .map-item b{
+      color:#fff2d3;
+      font-size:18px;
+    }
+
+    .map-item span{
+      color:var(--muted);
+      font-size:14px;
+      flex:1;
+    }
+
+    .map-item a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:40px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(241,199,107,.14);
+      color:#f3deb2;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .value-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .value-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    .value-row:last-child{border-bottom:none}
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:30px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .tag.gold{color:#201303;background:linear-gradient(180deg,#f1c76b,#d89c31)}
+    .tag.green{color:#062013;background:rgba(113,240,173,.92)}
+    .tag.blue{color:#091a3f;background:rgba(136,170,255,.9)}
+    .tag.purple{color:#251043;background:rgba(188,166,255,.92)}
+
+    .translation-box{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:16px;
+    }
+
+    .lang-demo{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .lang-chip{
+      min-height:38px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.06);
+      color:#f4dfb3;
+      font-weight:800;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .final-box{
+      text-align:center;
+      padding-top:8px;
+    }
+
+    .final-box p{
+      width:min(860px, 100%);
+      margin:0 auto 16px;
+      font-size:18px;
+      color:#ebdbb8;
+    }
+
+    .footer{
+      margin-top:22px;
+      text-align:center;
+      color:rgba(255,255,255,.50);
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      padding:8px 0 4px;
+    }
+
+    @media (max-width:960px){
+      .grid-2,
+      .grid-3,
+      .map-grid,
+      .translation-box{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:620px){
+      .wrap{
+        width:min(var(--maxw), calc(100% - 16px));
+      }
+
+      .topbar{
+        padding:10px;
+      }
+
+      .top-right{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .hero,
+      .section{
+        padding-left:16px;
+        padding-right:16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">🕊️</div>
+        <div class="brand-text">
+          <b>LICENSEGOC™</b>
+          <span data-vi="LÕI HỆ THỐNG • MAIN HUB • IN GOD WE TRUST" data-en="CORE SYSTEM • MAIN HUB • IN GOD WE TRUST"></span>
+        </div>
+      </div>
+
+      <div class="top-right">
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="vi" type="button">🇻🇳 VI</button>
+          <button class="lang-btn" data-lang="en" type="button">🇺🇸 EN</button>
+        </div>
+
+        <a class="top-btn" href="index.html" data-vi="← Trang Chủ" data-en="← Home"></a>
+        <a class="top-btn" href="introduction.html" data-vi="Introduction" data-en="Introduction"></a>
+        <a class="top-btn primary" href="licensecoin.html" data-vi="LICENSECOIN" data-en="LICENSECOIN"></a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow" data-vi="TRÁI TIM CỦA HỆ THỐNG" data-en="THE HEART OF THE SYSTEM"></div>
+      <h1 data-vi="LICENSEGOC™ – <span>Lõi Trung Tâm</span>" data-en="LICENSEGOC™ – <span>Core System</span>"></h1>
+      <p
+        data-vi="LICENSEGOC™ là trung tâm định danh, bản sắc và điều phối của toàn bộ hệ sinh thái LICENSE GỐC™ — nơi sáng tạo, quyền sở hữu, bản quyền, AI, thương mại, translation và giá trị số được kết nối thành một cấu trúc sống."
+        data-en="LICENSEGOC™ is the central identity, brand core, and coordination layer of the LICENSE GỐC™ ecosystem — where creativity, ownership, copyright, AI, commerce, translation, and digital value are connected into a living structure.">
+      </p>
+
+      <div class="hero-actions">
+        <a class="hero-btn primary" href="licensecoin.html" data-vi="Mở LICENSECOIN" data-en="Open LICENSECOIN"></a>
+        <a class="hero-btn" href="tim.html" data-vi="Gặp AI TIM ♥️" data-en="Meet TIM ♥️ AI"></a>
+        <a class="hero-btn" href="commercial.html" data-vi="Khám phá Commercial" data-en="Explore Commercial"></a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Lời dẫn cho <span>Investor & Partner</span>" data-en="Entry for <span>Investors & Partners</span>"></h2>
+      <p class="section-intro"
+         data-vi="Chúng ta đang bước vào một thời đại mà giá trị được tạo ra cực nhanh, nhưng quyền sở hữu thật lại ngày càng mong manh. LICENSEGOC™ được xây dựng để trả lời câu hỏi lớn nhất của kỷ nguyên số: ai tạo ra giá trị, ai sở hữu nó, và hệ thống nào đủ mạnh để bảo vệ điều đó?"
+         data-en="We are entering a time where value is created faster than ever, while true ownership becomes increasingly fragile. LICENSEGOC™ is built to answer the defining question of the digital era: who creates value, who owns it, and what system is strong enough to protect it?">
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 data-vi="Một kiến trúc, không phải một sản phẩm đơn lẻ" data-en="An architecture, not a single product"></h3>
+          <p
+            data-vi="Điểm mạnh lớn nhất của LICENSEGOC™ không nằm ở một tính năng riêng lẻ, mà nằm ở cách toàn bộ hệ thống được thiết kế như một kiến trúc liên kết. Thay vì tách rời AI, bản quyền, thương mại, tài sản số và trải nghiệm người dùng thành những module rời rạc, LICENSEGOC™ gom tất cả vào một lõi điều phối thống nhất."
+            data-en="The greatest strength of LICENSEGOC™ is not a single feature, but the way the full system is designed as a connected architecture. Instead of separating AI, copyright, commerce, digital assets, and user experience into isolated modules, LICENSEGOC™ brings them into one coordinated core.">
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 data-vi="Tầm nhìn infrastructure cho tương lai" data-en="An infrastructure vision for the future"></h3>
+          <p
+            data-vi="Đây không phải là một website chỉ để trình bày. Đây là một hạ tầng tư tưởng và hệ thống cho tương lai của ownership, verification, creator economy và licensed digital value. Trong một thế giới AI tạo ra hàng tỷ nội dung mỗi ngày, ai kiểm soát quyền sở hữu sẽ là người kiểm soát giá trị."
+            data-en="This is not a website built only for presentation. It is an infrastructure layer for the future of ownership, verification, creator economy, and licensed digital value. In a world where AI may generate billions of content units per day, whoever controls ownership will control value.">
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Vì sao LICENSEGOC™ là <span>Main Point</span>" data-en="Why LICENSEGOC™ is the <span>Main Point</span>"></h2>
+      <p class="section-intro"
+         data-vi="Nếu INTRODUCTION mở cánh cửa tư tưởng, thì LICENSEGOC™ là nơi hệ thống bắt đầu có hình dạng rõ ràng. Đây là trung tâm để người xem hiểu cấu trúc tổng thể, chọn hướng đi và nhìn thấy sự kết nối giữa mọi phần của hệ sinh thái."
+         data-en="If INTRODUCTION opens the philosophical doorway, LICENSEGOC™ is where the system begins to take visible shape. It is the center where visitors understand the overall structure, choose their path, and see the connection between every part of the ecosystem.">
+      </p>
+
+      <div class="grid-3">
+        <div class="card pillar">
+          <div class="num">1</div>
+          <h3 data-vi="Lõi bản sắc" data-en="Identity Core"></h3>
+          <p
+            data-vi="LICENSEGOC™ xác lập ngôn ngữ, bản sắc và định vị trung tâm cho toàn bộ hệ thống."
+            data-en="LICENSEGOC™ defines the language, identity, and central positioning of the full system.">
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">2</div>
+          <h3 data-vi="Lõi điều phối" data-en="Coordination Core"></h3>
+          <p
+            data-vi="Đây là nơi các lớp như AI, thương mại, bản quyền, translation và giá trị số được liên kết đúng vai trò."
+            data-en="This is where AI, commerce, copyright, translation, and digital value are linked in their proper roles.">
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">3</div>
+          <h3 data-vi="Lõi dẫn hướng" data-en="Navigation Core"></h3>
+          <p
+            data-vi="Từ đây, mọi user, partner hay investor đều có thể đi tiếp vào nhánh họ cần mà không bị đứt mạch nhận thức."
+            data-en="From here, every user, partner, or investor can move into the right branch without losing the thread of understanding.">
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Triết lý cốt lõi của <span>LICENSEGOC™</span>" data-en="The Core Philosophy of <span>LICENSEGOC™</span>"></h2>
+      <div class="quote"
+           data-vi="Mọi giá trị thật đều phải có <span>Gốc</span>."
+           data-en="Every real value must have an <span>Origin</span>.">
+      </div>
+
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3 data-vi="“Gốc” là nguồn sinh ra giá trị" data-en="Origin is where value is born"></h3>
+          <p
+            data-vi="“Gốc” không chỉ là điểm bắt đầu. Đó là nguồn sinh ra ý tưởng, là căn tính của sáng tạo, là bằng chứng của quyền sở hữu và là nền móng để giá trị có thể phát triển lâu dài mà không đánh mất bản chất."
+            data-en="Origin is not only the starting point. It is where ideas are born, where identity is anchored, where ownership is evidenced, and where value can grow without losing its essence.">
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 data-vi="Công nghệ phải phục vụ sự thật" data-en="Technology must serve truth"></h3>
+          <p
+            data-vi="LICENSEGOC™ không chạy theo công nghệ để phô diễn công nghệ. Hệ thống này theo đuổi một hướng sâu hơn: công nghệ phải phục vụ sự thật, AI phải phục vụ con người, và giá trị phải luôn gắn với chủ thể thật."
+            data-en="LICENSEGOC™ does not pursue technology for spectacle. It follows a deeper direction: technology must serve truth, AI must serve people, and value must remain connected to the real subject behind it.">
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Bản đồ chiến lược của <span>hệ sinh thái</span>" data-en="Strategic Map of the <span>Ecosystem</span>"></h2>
+      <p class="section-intro"
+         data-vi="Từ lõi LICENSEGOC™, hệ thống mở rộng ra nhiều nhánh chiến lược. Mỗi phần có chức năng riêng, nhưng tất cả đều quay về cùng một Gốc."
+         data-en="From the LICENSEGOC™ core, the system expands into multiple strategic branches. Each part has its own function, yet all of them return to the same origin.">
+      </p>
+
+      <div class="map-grid">
+        <div class="map-item">
+          <b>INTRODUCTION</b>
+          <span data-vi="Mở ra tư duy nền tảng và lý do tồn tại của toàn bộ hệ thống." data-en="Opens the foundational thinking and the reason the entire system exists."></span>
+          <a href="introduction.html" data-vi="Vào INTRODUCTION" data-en="Open INTRODUCTION"></a>
+        </div>
+
+        <div class="map-item">
+          <b>LICENSECOIN™</b>
+          <span data-vi="Lớp giá trị số, wallet, vault, transfer, convert và dòng chảy tài sản." data-en="The digital value layer with wallet, vault, transfer, convert, and asset movement."></span>
+          <a href="licensecoin.html" data-vi="Mở LICENSECOIN" data-en="Open LICENSECOIN"></a>
+        </div>
+
+        <div class="map-item">
+          <b>TIM ♥️ AI</b>
+          <span data-vi="Lớp trí tuệ hỗ trợ, phân tích, định hướng và đồng hành cùng hệ sinh thái." data-en="The intelligence layer for support, analysis, direction, and ecosystem guidance."></span>
+          <a href="tim.html" data-vi="Gặp TIM ♥️" data-en="Meet TIM ♥️"></a>
+        </div>
+
+        <div class="map-item">
+          <b>COMMERCIAL</b>
+          <span data-vi="Lớp thương mại hóa, licensing deal, đối tác, investor access và tăng trưởng." data-en="The commercialization layer for licensing deals, partners, investor access, and growth."></span>
+          <a href="commercial.html" data-vi="Mở Commercial" data-en="Open Commercial"></a>
+        </div>
+
+        <div class="map-item">
+          <b>ENTERTAINMENT</b>
+          <span data-vi="Lớp trải nghiệm sáng tạo, media, content, âm nhạc và giao diện công chúng." data-en="The creative experience layer for media, content, music, and public interaction."></span>
+          <a href="entertainment.html" data-vi="Mở Entertainment" data-en="Open Entertainment"></a>
+        </div>
+
+        <div class="map-item">
+          <b>USPTO / IP</b>
+          <span data-vi="Lớp pháp lý, hồ sơ, bằng chứng và bảo hộ tài sản trí tuệ toàn cầu." data-en="The legal layer for records, evidence, and global intellectual property protection."></span>
+          <a href="uspto-patent.html" data-vi="Mở USPTO / IP" data-en="Open USPTO / IP"></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Investor Value Logic <span>– Điều nhà đầu tư nhìn thấy</span>" data-en="Investor Value Logic <span>– What investors see</span>"></h2>
+      <p class="section-intro"
+         data-vi="Một investor mạnh sẽ không chỉ nhìn giao diện. Họ sẽ nhìn vào cấu trúc, khả năng mở rộng, nhiều lớp doanh thu và lợi thế hệ thống."
+         data-en="A serious investor does not only look at design. They look at structure, scalability, multiple revenue layers, and system advantage.">
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="value-list">
+            <div class="value-row">
+              <span data-vi="Giải quyết vấn đề lớn của thời đại số" data-en="Solves a major digital era problem"></span>
+              <span class="tag gold" data-vi="Ownership" data-en="Ownership"></span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Có thể mở rộng nhiều ngành" data-en="Scalable across multiple sectors"></span>
+              <span class="tag blue" data-vi="Scalable" data-en="Scalable"></span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Nhiều lớp giá trị và doanh thu" data-en="Multiple value and revenue layers"></span>
+              <span class="tag green" data-vi="Multi-Layer" data-en="Multi-Layer"></span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Có core identity rất rõ" data-en="Has a clear core identity"></span>
+              <span class="tag purple" data-vi="GỐC" data-en="ORIGIN"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 data-vi="Infrastructure play cho tương lai" data-en="An infrastructure play for the future"></h3>
+          <p
+            data-vi="LICENSEGOC™ có thể mở sang AI, creator economy, copyright systems, licensing commerce, digital asset interfaces, legal record structures và translation-based global access. Đây là lợi thế của một ecosystem architecture chứ không phải một landing product ngắn hạn."
+            data-en="LICENSEGOC™ can expand into AI, creator economy, copyright systems, licensing commerce, digital asset interfaces, legal record structures, and translation-based global access. This is the advantage of an ecosystem architecture, not a short-term landing product.">
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Translation Layer <span>– Bảo toàn Gốc khi bước ra toàn cầu</span>" data-en="Translation Layer <span>– Preserving Origin Across Global Expansion</span>"></h2>
+      <p class="section-intro"
+         data-vi="Trong LICENSEGOC™, Translation không chỉ là dịch ngôn ngữ. Đây là lớp chuyển đổi giá trị toàn cầu, nơi ý tưởng vẫn giữ nguyên bản chất, chủ thể và nguồn gốc dù đi qua nhiều nền văn hóa."
+         data-en="In LICENSEGOC™, Translation is not just language conversion. It is a global value layer where ideas preserve their identity, subject, and origin across cultures.">
+      </p>
+
+      <div class="translation-box">
+        <div class="card">
+          <h3 data-vi="Translation là một phần của kiến trúc" data-en="Translation is part of the architecture"></h3>
+          <p
+            data-vi="Một bản dịch trong LICENSEGOC™ không được xem là nội dung mới vô chủ. Mỗi phiên bản ngôn ngữ phải vẫn liên kết về cùng một Gốc, cùng một chủ thể, cùng một logic ownership. Đây là cách hệ thống mở rộng ra toàn cầu mà không làm loãng giá trị."
+            data-en="A translation in LICENSEGOC™ is not treated as a new ownerless content object. Each language version must remain linked to the same origin, the same subject, and the same ownership logic. This is how the system expands globally without diluting value.">
+          </p>
+
+          <div class="lang-demo">
+            <span class="lang-chip">🇻🇳 Vietnamese</span>
+            <span class="lang-chip">🇺🇸 English</span>
+            <span class="lang-chip">🇨🇳 Chinese</span>
+            <span class="lang-chip">🇪🇸 Spanish</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="value-list">
+            <div class="value-row">
+              <span data-vi="GhostID™ liên kết với bản gốc" data-en="GhostID™ linked to original"></span>
+              <span class="tag gold" data-vi="Preserved" data-en="Preserved"></span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Mở rộng đa ngôn ngữ" data-en="Multi-language expansion"></span>
+              <span class="tag green" data-vi="Enabled" data-en="Enabled"></span>
+            </div>
+            <div class="value-row">
+              <span data-vi="TIM ♥️ AI hỗ trợ dịch ngữ cảnh" data-en="TIM ♥️ AI supports contextual translation"></span>
+              <span class="tag blue" data-vi="Active" data-en="Active"></span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Tiềm năng dịch vụ / doanh thu translation" data-en="Translation service / revenue potential"></span>
+              <span class="tag purple" data-vi="Future Layer" data-en="Future Layer"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Kết luận chiến lược <span>của LICENSEGOC™</span>" data-en="Strategic Conclusion of <span>LICENSEGOC™</span>"></h2>
+      <div class="final-box">
+        <p
+          data-vi="LICENSEGOC™ không chỉ là trung tâm điều hướng của website. Đây là trung tâm tinh thần, trung tâm cấu trúc và trung tâm chiến lược của toàn bộ hệ sinh thái LICENSE GỐC™."
+          data-en="LICENSEGOC™ is not only the navigation center of the website. It is the spiritual center, the structural center, and the strategic center of the entire LICENSE GỐC™ ecosystem.">
+        </p>
+
+        <p
+          data-vi="Đây là nơi hệ thống nói với thế giới rằng: sáng tạo có Gốc, giá trị có chủ thể, AI có định hướng, quyền sở hữu có tương lai, và công nghệ có thể phục vụ sự thật."
+          data-en="This is where the system tells the world: creativity has an origin, value has a subject, AI has direction, ownership has a future, and technology can serve truth.">
+        </p>
+
+        <div class="hero-actions">
+          <a class="hero-btn primary" href="licensecoin.html" data-vi="Đi vào LICENSECOIN" data-en="Enter LICENSECOIN"></a>
+          <a class="hero-btn" href="tim.html" data-vi="Tiếp tục với TIM ♥️ AI" data-en="Continue with TIM ♥️ AI"></a>
+          <a class="hero-btn" href="uspto-patent.html" data-vi="Xem lớp bảo hộ IP" data-en="View IP Protection Layer"></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">© LICENSEGOC™ • CORE SYSTEM • IN GOD WE TRUST</div>
+  </div>
+
+  <script>
+    let currentLang = localStorage.getItem('licensegoc_lang') || 'vi';
+
+    function applyLanguage(lang){
+      currentLang = lang;
+      localStorage.setItem('licensegoc_lang', lang);
+
+      document.querySelectorAll('[data-vi]').forEach(el => {
+        const html = lang === 'vi' ? el.getAttribute('data-vi') : el.getAttribute('data-en');
+        if (html !== null) {
+          el.innerHTML = html;
+        }
+      });
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+
+      document.documentElement.lang = lang === 'vi' ? 'vi' : 'en';
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+    });
+
+    applyLanguage(currentLang);
+  </script>
+</body>
+</html>
