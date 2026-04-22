@@ -1,384 +1,1090 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LICENSECOIN™ Wallet</title>
-<h1>LICENSECOIN™ Wallet</h1>
-  <meta name="description" content="Demo wallet for LICENSECOIN™ (LCN) — buy, sell, transfer, pay, export history. Not real money." />
+  <meta name="description" content="LICENSECOIN wallet app interface" />
+
   <style>
     :root{
-      --bg:#0a0b0f; --panel:#11141a; --text:#eaeef5; --muted:#aab3c5;
-      --gold:#f5d36a; --gold2:#ffd86b; --line:rgba(245, 211, 106, .16);
-      --radius:16px; --shadow: 0 20px 70px rgba(0,0,0,.45);
+      --bg:#05070c;
+      --bg2:#08111d;
+      --panel:#0d1726;
+      --panel2:#101b2c;
+      --line:rgba(255,255,255,.08);
+      --gold:#f1c76b;
+      --gold2:#d89c31;
+      --text:#f7f7f7;
+      --muted:rgba(255,255,255,.68);
+      --cyan:#8feeff;
+      --green:#79f4b1;
+      --red:#ff8a96;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --maxw:430px;
     }
+
     *{box-sizing:border-box}
-    body{margin:0;font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Inter,Arial;
-         background:radial-gradient(1200px 600px at 50% -20%, #18202f 0%, #0b0e13 70%, #07090c 100%);
-         color:var(--text)}
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:980px;margin:32px auto;padding:0 20px}
-    .hero{min-height:44vh;display:grid;place-items:center;text-align:center;position:relative}
-    .brand{font-weight:800;letter-spacing:.02em;font-size:clamp(28px,4vw,42px)}
-    .tag{opacity:.85;color:var(--muted);font-size:clamp(14px,2vw,18px)}
-    .logo{width:min(340px,70vw);aspect-ratio:1/1;object-fit:contain;border-radius:22px;
-          background:linear-gradient(180deg,#0f1a2e,#0b0e13);border:1px solid #1a2233;
-          box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 40px 140px rgba(0,0,0,.55)}
-    /* logo pulse sau 10s */
-    .pulse{animation: pulse 3.2s ease-in-out 10s infinite}
-    @keyframes pulse{
-      0%{filter:drop-shadow(0 0 0 rgba(255,215,128,0))}
-      50%{filter:drop-shadow(0 0 24px rgba(255,215,128,.35))}
-      100%{filter:drop-shadow(0 0 0 rgba(255,215,128,0))}
+    html,body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+      background:#000;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
     }
 
-    .card{background:rgba(15,18,24,.7);backdrop-filter:blur(10px);
-          border:1px solid var(--line); border-radius:var(--radius);
-          box-shadow:var(--shadow); padding:22px}
-    .title{font-weight:800;font-size:clamp(22px,3.2vw,28px);margin:10px 0 18px}
-
-    .balance{display:flex;align-items:flex-end;gap:12px;margin:10px 0 18px}
-    .balance .num{font-weight:900;font-size:clamp(44px,7vw,72px);letter-spacing:.01em}
-    .balance .unit{color:var(--gold);font-weight:800}
-
-    .row{display:flex;flex-wrap:wrap;gap:12px}
-    .row > *{flex:1 1 160px}
-    input,select,button,textarea{
-      font:inherit;color:inherit;background:#0c1017;border:1px solid #202635;
-      border-radius:12px;padding:12px 14px;outline:none;min-height:44px
+    body{
+      background:
+        radial-gradient(circle at 50% 0%, rgba(241,199,107,.10), transparent 18%),
+        radial-gradient(circle at 80% 24%, rgba(241,199,107,.08), transparent 18%),
+        linear-gradient(180deg, #04070d 0%, #08111d 100%);
+      display:flex;
+      justify-content:center;
     }
-    input::placeholder{color:#6c788d}
-    button{cursor:pointer;background:linear-gradient(180deg,#2a2f3a,#1a1f29);
-      border:1px solid rgba(255,255,255,.06)}
-    .btn-gold{background:linear-gradient(180deg,#3b2c12,#20180a);
-      border:1px solid rgba(245,211,106,.35); color:var(--gold);font-weight:800}
-    .btn-ghost{background:transparent}
-    .pill{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;
-      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#cdd6ea}
-    .muted{color:var(--muted)}
-    .grid{display:grid;gap:14px}
-    @media(min-width:780px){ .grid2{grid-template-columns:1fr 1fr} .grid3{grid-template-columns:repeat(
+
+    button,input,select{
+      font-family:inherit;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .app{
+      width:100%;
+      max-width:var(--maxw);
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 50% 10%, rgba(241,199,107,.08), transparent 20%),
+        radial-gradient(circle at 20% 80%, rgba(68,120,255,.08), transparent 24%),
+        linear-gradient(180deg, rgba(6,12,22,.98), rgba(9,15,27,.98));
+      position:relative;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .app::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255,214,120,.07), transparent 16%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+      opacity:.9;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:14px 14px 10px;
+      background:rgba(5,10,18,.92);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav-btn{
+      width:38px;
+      height:38px;
+      border:none;
+      border-radius:12px;
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      font-size:22px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      flex:0 0 38px;
+    }
+
+    .nav-btn.hidden{
+      visibility:hidden;
+    }
+
+    .top-title{
+      flex:1;
+      text-align:center;
+      font-size:14px;
+      font-weight:900;
+      color:#fff;
+      letter-spacing:.02em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .content{
+      position:relative;
+      z-index:2;
+      padding:14px;
+      padding-bottom:90px;
+    }
+
+    .screen{
+      display:none;
+      animation:fadeIn .24s ease;
+    }
+
+    .screen.active{
+      display:block;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(8px)}
+      to{opacity:1; transform:translateY(0)}
+    }
+
+    .hero{
+      text-align:center;
+      margin-bottom:14px;
+    }
+
+    .hero-title{
+      font-size:18px;
+      font-weight:1000;
+      color:#fff;
+      margin-bottom:4px;
+    }
+
+    .hero-sub{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .card{
+      border:1px solid rgba(241,199,107,.14);
+      border-radius:20px;
+      padding:14px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(241,199,107,.08), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      box-shadow:0 12px 28px rgba(0,0,0,.24);
+      margin-bottom:14px;
+    }
+
+    .portfolio{
+      text-align:center;
+      padding:18px 14px;
+    }
+
+    .portfolio small{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:8px;
+    }
+
+    .balance{
+      font-size:24px;
+      font-weight:1000;
+      color:var(--gold);
+      margin-bottom:8px;
+    }
+
+    .sub-balance{
+      color:#e7d2a1;
+      font-size:14px;
+    }
+
+    .action-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .action{
+      min-height:86px;
+      border-radius:18px;
+      border:1px solid rgba(241,199,107,.14);
+      background:rgba(255,255,255,.03);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      color:#f3dfb0;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .action .icon{
+      color:var(--gold);
+      font-size:22px;
+      line-height:1;
+    }
+
+    .section-title{
+      font-size:15px;
+      font-weight:1000;
+      color:#fff;
+      margin-bottom:10px;
+    }
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+
+    .tab{
+      border:1px solid rgba(241,199,107,.16);
+      border-radius:999px;
+      padding:8px 12px;
+      background:rgba(255,255,255,.03);
+      color:#e7d2a2;
+      font-size:11px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .tab.active{
+      background:rgba(241,199,107,.12);
+      border-color:rgba(241,199,107,.34);
+      color:#fff0cc;
+    }
+
+    .tab-pane{
+      display:none;
+    }
+
+    .tab-pane.active{
+      display:block;
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      align-items:center;
+      padding:11px 0;
+      border-bottom:1px solid rgba(255,255,255,.07);
+      font-size:13px;
+    }
+
+    .row:last-child{
+      border-bottom:none;
+    }
+
+    .muted{
+      color:var(--muted);
+    }
+
+    .gold{
+      color:var(--gold);
+      font-weight:900;
+    }
+
+    .green{
+      color:var(--green);
+      font-weight:900;
+    }
+
+    .red{
+      color:var(--red);
+      font-weight:900;
+    }
+
+    .field{
+      min-height:48px;
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:0 12px;
+      margin-bottom:10px;
+      color:#f3ead4;
+    }
+
+    .field input{
+      flex:1;
+      border:none;
+      outline:none;
+      background:transparent;
+      color:#fff;
+      font-size:14px;
+      min-width:0;
+    }
+
+    .field input::placeholder{
+      color:rgba(255,255,255,.38);
+    }
+
+    .field-btn{
+      border:none;
+      background:transparent;
+      color:#fff;
+      font-size:22px;
+      cursor:pointer;
+      padding:0;
+      flex:0 0 auto;
+    }
+
+    .qr-wrap{
+      text-align:center;
+    }
+
+    .qr-box{
+      width:190px;
+      height:190px;
+      margin:0 auto 12px;
+      border-radius:10px;
+      background:
+        linear-gradient(90deg,#111 10px,transparent 10px) 0 0/20px 20px,
+        linear-gradient(#111 10px,transparent 10px) 0 0/20px 20px,
+        linear-gradient(90deg,transparent 10px,#111 10px) 10px 10px/20px 20px,
+        linear-gradient(transparent 10px,#111 10px) 10px 10px/20px 20px,
+        #fff;
+      box-shadow:0 10px 24px rgba(0,0,0,.24);
+    }
+
+    .address{
+      font-size:11px;
+      line-height:1.5;
+      color:#f0ddb3;
+      word-break:break-all;
+      margin-bottom:10px;
+    }
+
+    .info-box{
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      padding:10px 12px;
+      margin-bottom:10px;
+      color:#ddfff7;
+      font-size:13px;
+      cursor:pointer;
+    }
+
+    .primary-btn{
+      width:100%;
+      min-height:50px;
+      border:none;
+      border-radius:16px;
+      background:linear-gradient(180deg, #f1c76b, #d89c31);
+      color:#241607;
+      font-size:17px;
+      font-weight:1000;
+      cursor:pointer;
+      box-shadow:0 12px 24px rgba(0,0,0,.24);
+    }
+
+    .secondary-btn{
+      width:100%;
+      min-height:44px;
+      border-radius:14px;
+      border:1px solid rgba(241,199,107,.26);
+      background:rgba(255,255,255,.03);
+      color:#f0ddb0;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .stack{
+      display:grid;
+      gap:10px;
+    }
+
+    .selectable{
+      cursor:pointer;
+      transition:.16s ease;
+      border-radius:12px;
+      padding-left:8px;
+      padding-right:8px;
+      margin-left:-8px;
+      margin-right:-8px;
+    }
+
+    .selectable.active{
+      background:rgba(241,199,107,.08);
+    }
+
+    .tag{
+      padding:5px 8px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#f0deb5;
+      font-size:11px;
+      white-space:nowrap;
+    }
+
+    .success{
+      text-align:center;
+      padding:20px 4px 6px;
+    }
+
+    .success-icon{
+      width:84px;
+      height:84px;
+      border-radius:50%;
+      margin:0 auto 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:42px;
+      color:#062417;
+      background:linear-gradient(180deg,#9affcf,#54d99b);
+      box-shadow:0 12px 24px rgba(0,0,0,.24);
+    }
+
+    .success-title{
+      font-size:26px;
+      font-weight:1000;
+      margin-bottom:8px;
+      color:#fff;
+    }
+
+    .success-desc{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+      margin-bottom:16px;
+    }
+
+    .bottom-tabs{
+      position:fixed;
+      bottom:0;
+      left:50%;
+      transform:translateX(-50%);
+      width:min(var(--maxw), 100%);
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      padding:12px 14px 16px;
+      background:rgba(7,12,22,.96);
+      backdrop-filter:blur(8px);
+      border-top:1px solid rgba(255,255,255,.06);
+      z-index:25;
+    }
+
+    .bottom-tab{
+      text-align:center;
+      font-size:11px;
+      color:#d1c8af;
+      cursor:pointer;
+    }
+
+    .bottom-tab .icon{
+      display:block;
+      font-size:18px;
+      color:var(--gold);
+      margin-bottom:4px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:86px;
+      transform:translateX(-50%) translateY(18px);
+      width:min(360px, calc(100% - 28px));
+      background:rgba(12,18,30,.96);
+      color:#fff;
+      border:1px solid rgba(241,199,107,.20);
+      border-radius:14px;
+      padding:12px 14px;
+      text-align:center;
+      font-size:13px;
+      opacity:0;
+      pointer-events:none;
+      transition:.22s ease;
+      z-index:40;
+      box-shadow:0 16px 34px rgba(0,0,0,.34);
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    @media (max-width:390px){
+      .qr-box{width:170px;height:170px}
+      .balance{font-size:22px}
+    }
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <!-- HERO -->
-    <section class="hero">
-      <div>
-        <img class="logo pulse" src="assets/logo-licensecoin.png" alt="LICENSECOIN logo" onerror="this.style.display='none'">
-        <div class="brand" style="margin-top:14px;">LICENSECOIN™ Wallet</div>
-        <div class="tag">Protect the Roots. Empower Humanity.</div>
-      </div>
-    </section>
-
-    <!-- STATUS ROW -->
-    <div class="row" style="margin-bottom:14px">
-      <div class="pill"><strong>Status:</strong>&nbsp;<span id="status">Signed out</span></div>
-      <div class="pill"><strong>User:</strong>&nbsp;<span id="who" class="muted">guest</span></div>
-      <div class="pill"><strong>Rate:</strong>&nbsp;<span id="rateLabel">1 LCN = 1.00 USD</span></div>
-      <div class="pill"><strong>ID:</strong>&nbsp;<span id="wid" class="muted">guest</span></div>
+  <div class="app">
+    <div class="topbar">
+      <button class="nav-btn hidden" id="backBtn" type="button">‹</button>
+      <div class="top-title" id="pageTitle">LICENSECOIN</div>
+      <button class="nav-btn" id="closeBtn" type="button">×</button>
     </div>
 
-    <!-- WALLET -->
-    <section class="card">
-      <div class="title">Số dư hiện tại</div>
-      <div class="balance">
-        <div id="bal" class="num">0</div><div class="unit">LCN</div>
+    <div class="content">
+      <!-- OVERVIEW -->
+      <section class="screen active" id="screen-overview">
+        <div class="hero">
+          <div class="hero-title">LICENSECOIN</div>
+          <div class="hero-sub">Protect the Roots. Empower Humanity.</div>
+        </div>
+
+        <div class="card portfolio">
+          <small>Total Portfolio Balance</small>
+          <div class="balance">$53,850.32</div>
+          <div class="sub-balance">₿ 52,560 LICENSECOIN</div>
+        </div>
+
+        <div class="action-grid">
+          <button class="action" type="button" onclick="showScreen('deposit')">
+            <span class="icon">◉</span>
+            <span>Deposit</span>
+          </button>
+          <button class="action" type="button" onclick="showScreen('withdraw')">
+            <span class="icon">◌</span>
+            <span>Withdraw</span>
+          </button>
+          <button class="action" type="button" onclick="showScreen('transfer')">
+            <span class="icon">⇄</span>
+            <span>Transfer</span>
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Revenue Dashboard</div>
+
+          <div class="tabs">
+            <button class="tab active" type="button" data-tab="rev-overview">Overview</button>
+            <button class="tab" type="button" data-tab="rev-vault">Vault</button>
+            <button class="tab" type="button" data-tab="rev-licensing">Licensing</button>
+            <button class="tab" type="button" data-tab="rev-payments">Payments</button>
+          </div>
+
+          <div class="tab-pane active" id="rev-overview">
+            <div class="row">
+              <span>Tim • GhostID™721</span>
+              <span class="gold">+ 2,9.60</span>
+            </div>
+            <div class="row">
+              <span class="muted">Acoustic enlightenment routed to your terrifect.</span>
+              <span class="muted">LE</span>
+            </div>
+            <div class="row">
+              <span>Smart Contract ID linked to your wallet.</span>
+              <span class="green">Secure</span>
+            </div>
+            <div class="row">
+              <span class="muted">Smart Contract ID: 0x0175589...</span>
+              <span class="muted">Verified</span>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="rev-vault">
+            <div class="row">
+              <span>Ownership Vault</span>
+              <span class="gold">$18,420.00</span>
+            </div>
+            <div class="row">
+              <span>Reserve Secure</span>
+              <span class="green">Protected</span>
+            </div>
+            <div class="row">
+              <span class="muted">Vault Sync</span>
+              <span class="muted">Today</span>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="rev-licensing">
+            <div class="row">
+              <span>Creator License Revenue</span>
+              <span class="gold">$7,865.40</span>
+            </div>
+            <div class="row">
+              <span>Patent & Brand Rights</span>
+              <span class="gold">$3,540.00</span>
+            </div>
+            <div class="row">
+              <span>Status</span>
+              <span class="green">Active</span>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="rev-payments">
+            <div class="row">
+              <span>Latest Incoming</span>
+              <span class="gold">$1,220.00</span>
+            </div>
+            <div class="row">
+              <span>Pending Settlement</span>
+              <span>$420.00</span>
+            </div>
+            <div class="row">
+              <span class="muted">Network Fee</span>
+              <span>0.12 LCN</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DEPOSIT -->
+      <section class="screen" id="screen-deposit">
+        <div class="hero">
+          <div class="hero-title">Deposit LICENSECOIN</div>
+          <div class="hero-sub">Deposit LICENSECOIN to Your Wallet</div>
+        </div>
+
+        <div class="card qr-wrap">
+          <div class="qr-box"></div>
+          <div class="address" id="depositAddress">0x40d4c4c6748999e8488698598017e250</div>
+          <button class="primary-btn" type="button" onclick="saveQRCode()">Save QR Code</button>
+        </div>
+
+        <div class="info-box" onclick="showAuditInfo()">
+          <b>Verified Network: Secure</b><br>
+          Audit Report: Tap to View
+        </div>
+
+        <div class="card">
+          <div class="section-title">Security Notices</div>
+          <div class="row"><span>Only deposit LICENSECOIN (LCN) to this address via Ethereum (ERC20) or LICENSECHAIN.</span></div>
+          <div class="row"><span>Address auto-verified via smart contract.</span></div>
+          <div class="row"><span>Smart Contract ID shown is linked to your wallet.</span></div>
+        </div>
+
+        <div class="stack">
+          <button class="secondary-btn" type="button" onclick="copyAddress()">Copy Wallet Address</button>
+          <button class="secondary-btn" type="button" onclick="showScreen('success-deposit')">I Have Deposited</button>
+        </div>
+      </section>
+
+      <!-- WITHDRAW -->
+      <section class="screen" id="screen-withdraw">
+        <div class="hero">
+          <div class="hero-title">Withdraw LICENSECOIN</div>
+          <div class="hero-sub">Send LICENSECOIN from your wallet</div>
+        </div>
+
+        <div class="field">
+          <span class="muted">From</span>
+          <span>LICENSECOIN</span>
+        </div>
+
+        <div class="field">
+          <input type="text" id="withdrawAddress" placeholder="Paste / Scan Wallet Address" />
+          <button class="field-btn" type="button" onclick="fillSampleAddress('withdrawAddress')">+</button>
+        </div>
+
+        <div class="card">
+          <div class="row">
+            <span>Available Balance</span>
+            <span class="gold">524.52 LCN</span>
+          </div>
+          <div class="field">
+            <input type="text" id="withdrawAmount" placeholder="Enter amount" />
+            <button class="field-btn" type="button" onclick="fillAllAmount('withdrawAmount','524.52')">All</button>
+          </div>
+          <div class="row">
+            <span>Blockchain Fee</span>
+            <span class="gold">1.3 LCN</span>
+          </div>
+          <div class="row">
+            <span class="muted">Priority Fee</span>
+            <span>0.5 LCN</span>
+          </div>
+        </div>
+
+        <button class="primary-btn" type="button" onclick="confirmWithdraw()">Confirm Withdrawal</button>
+      </section>
+
+      <!-- TRANSFER -->
+      <section class="screen" id="screen-transfer">
+        <div class="hero">
+          <div class="hero-title">Transfer LICENSECOIN</div>
+          <div class="hero-sub">Move assets between secure accounts</div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">From</div>
+
+          <div class="row selectable active" data-group="from">
+            <span>Exchange Account</span>
+            <span class="gold">200.75 LCN</span>
+          </div>
+          <div class="row selectable" data-group="from">
+            <span>Tim</span>
+            <span>400.50 LCN</span>
+          </div>
+          <div class="row selectable" data-group="from">
+            <span>Tim - GhostID™721</span>
+            <span class="tag">Secure Shares</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">To</div>
+
+          <div class="row selectable active" data-group="to">
+            <span>Ownership Vault</span>
+            <span class="tag">Revenue Secure</span>
+          </div>
+          <div class="row selectable" data-group="to">
+            <span>Reserve Account</span>
+            <span class="tag">TIM walletchain</span>
+          </div>
+          <div class="row">
+            <span class="muted">Smart Contract: 0x43556...</span>
+            <span class="muted">Verified</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <input type="text" id="transferAmount" placeholder="Enter transfer amount" />
+          <button class="field-btn" type="button" onclick="fillAllAmount('transferAmount','200.75')">All</button>
+        </div>
+
+        <div class="card">
+          <div class="row">
+            <span>Blockchain Fee</span>
+            <span class="gold">0.3 • Auto Adjusted</span>
+          </div>
+        </div>
+
+        <button class="primary-btn" type="button" onclick="confirmTransfer()">Confirm Transfer</button>
+      </section>
+
+      <!-- CONVERT -->
+      <section class="screen" id="screen-convert">
+        <div class="hero">
+          <div class="hero-title">Convert LICENSECOIN</div>
+          <div class="hero-sub">Convert between LCN and supported assets</div>
+        </div>
+
+        <div class="field">
+          <span>From</span>
+          <span>LICENSECOIN</span>
+        </div>
+
+        <div class="field">
+          <input type="text" id="convertAmount" placeholder="Amount to convert" />
+          <span>LCN</span>
+        </div>
+
+        <div class="field">
+          <span>To</span>
+          <span>USD Stable</span>
+        </div>
+
+        <div class="field">
+          <span>Rate</span>
+          <span class="gold">1 LCN = 1.02 USD</span>
+        </div>
+
+        <button class="primary-btn" type="button" onclick="confirmConvert()">Confirm Convert</button>
+      </section>
+
+      <!-- SUCCESS DEPOSIT -->
+      <section class="screen" id="screen-success-deposit">
+        <div class="success">
+          <div class="success-icon">✓</div>
+          <div class="success-title">Deposit Recorded</div>
+          <div class="success-desc">
+            Your deposit request has been registered.<br>
+            Network verification is now processing.
+          </div>
+          <div class="stack">
+            <button class="primary-btn" type="button" onclick="showScreen('overview')">Back to Wallet</button>
+            <button class="secondary-btn" type="button" onclick="showScreen('deposit')">Deposit More</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUCCESS WITHDRAW -->
+      <section class="screen" id="screen-success-withdraw">
+        <div class="success">
+          <div class="success-icon">✓</div>
+          <div class="success-title">Withdrawal Submitted</div>
+          <div class="success-desc" id="withdrawResultText">
+            Your withdrawal request has been submitted successfully.
+          </div>
+          <div class="stack">
+            <button class="primary-btn" type="button" onclick="showScreen('overview')">Back to Wallet</button>
+            <button class="secondary-btn" type="button" onclick="showScreen('withdraw')">Make Another Withdrawal</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUCCESS TRANSFER -->
+      <section class="screen" id="screen-success-transfer">
+        <div class="success">
+          <div class="success-icon">✓</div>
+          <div class="success-title">Transfer Completed</div>
+          <div class="success-desc" id="transferResultText">
+            Your transfer was completed successfully.
+          </div>
+          <div class="stack">
+            <button class="primary-btn" type="button" onclick="showScreen('overview')">Back to Wallet</button>
+            <button class="secondary-btn" type="button" onclick="showScreen('transfer')">Make Another Transfer</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUCCESS CONVERT -->
+      <section class="screen" id="screen-success-convert">
+        <div class="success">
+          <div class="success-icon">✓</div>
+          <div class="success-title">Convert Completed</div>
+          <div class="success-desc" id="convertResultText">
+            Your convert request has been completed successfully.
+          </div>
+          <div class="stack">
+            <button class="primary-btn" type="button" onclick="showScreen('overview')">Back to Wallet</button>
+            <button class="secondary-btn" type="button" onclick="showScreen('convert')">Convert Again</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="bottom-tabs">
+      <div class="bottom-tab" onclick="showScreen('overview')">
+        <span class="icon">⌂</span>
+        Home
       </div>
-
-      <div class="row">
-        <input id="amt" type="number" inputmode="decimal" placeholder="Nhập số LCN hoặc USD…" />
-        <button class="btn-gold" id="buyBtn">Buy</button>
-        <button class="btn-gold" id="sellBtn">Sell</button>
-        <button id="addBtn">+ Nạp</button>
-        <button id="subBtn">− Rút</button>
-        <button id="bonusBtn">🎁 Nhận Bonus</button>
-        <button id="resetBtn" class="btn-ghost">Reset</button>
+      <div class="bottom-tab" onclick="showToast('Markets panel is coming next.')">
+        <span class="icon">◌</span>
+        Markets
       </div>
-
-      <div class="row" style="margin-top:10px">
-        <button id="tradeBtn">⚡ Trade nhanh</button>
-        <button id="transferBtn">⇄ Transfer</button>
-        <button id="payBtn">💳 Pay & Cards</button>
-        <button id="historyBtn">📜 History</button>
-        <button id="exportBtn">⬇ Export JSON</button>
-        <button id="rateBtn" class="btn-ghost">✎ Set Rate</button>
+      <div class="bottom-tab" onclick="showScreen('overview')">
+        <span class="icon">◉</span>
+        Licensing
       </div>
-
-      <p class="small muted" style="margin-top:10px">
-        Demo cục bộ (localStorage). Đây <b>không</b> phải tiền thật. Khi kết nối API thật, mọi tác vụ sẽ ghi vào sổ cái trên server + băm thời gian lên blockchain.
-      </p>
-
-      <!-- HISTORY -->
-      <div id="historyWrap" style="display:none;margin-top:16px">
-        <table>
-          <thead><tr><th>Thời gian</th><th>Loại</th><th class="right">±LCN</th><th class="right">Số dư</th><th>Ghi chú</th></tr></thead>
-          <tbody id="history"></tbody>
-        </table>
+      <div class="bottom-tab" onclick="showToast('Assets panel is coming next.')">
+        <span class="icon">▭</span>
+        Assets
       </div>
-    </section>
+    </div>
 
-    <!-- HOW-TO -->
-    <section class="card" style="margin-top:16px">
-      <div class="title">Guide • How to use</div>
-      <ol class="small">
-        <li>Mở <b>Vault</b> và “Sign in” (name + email) → quay lại Licensecoin để gắn ví theo tài khoản.</li>
-        <li>Nhập số và bấm <b>Buy/Sell/Nạp/Rút</b>. Nhấn <b>History</b> để xem sổ giao dịch; <b>Export JSON</b> để tải về.</li>
-        <li><b>Transfer</b> tới email khác (đã từng đăng nhập ở Vault trên máy họ). <b>Pay & Cards</b> chỉ là demo form thanh toán.</li>
-        <li>Nút <b>Set Rate</b> để đặt tỷ giá LCN⇄USD trong demo (mặc định 1.00).</li>
-      </ol>
-    </section>
+    <div class="toast" id="toast"></div>
   </div>
 
-  <!-- Floating App Bar (standalone, không cần goc-ui.js) -->
-  <nav class="apps-nav" role="navigation" aria-label="Apps bar">
-    <div class="apps">
-      <a href="index.html">Apps</a>
-      <a href="licensenetwork.html">LICENSENETWORK</a>
-      <a href="licensecoin.html"><b>LICENSECOIN</b></a>
-      <a href="vault.html">Vault</a>
-      <a href="submit.html">Submit</a>
-      <a href="paycards.html">Pay & Cards</a>
-      <a href="logout.html">Log out</a>
-      <a href="#" id="openTim">AI TIM ❤️</a>
-      <span class="pill" id="langPill">🌐 <select id="langPick" aria-label="Translate">
-        <option value="auto|en">English</option>
-        <option value="auto|vi">Tiếng Việt</option>
-        <option value="auto|ja">日本語</option>
-        <option value="auto|ko">한국어</option>
-        <option value="auto|zh-CN">简体中文</option>
-        <option value="auto|zh-TW">繁體中文</option>
-        <option value="auto|es">Español</option>
-        <option value="auto|fr">Français</option>
-        <option value="auto|de">Deutsch</option>
-        <option value="auto|pt">Português</option>
-        <option value="auto|ru">Русский</option>
-        <option value="auto|ar">العربية</option>
-        <option value="auto|hi">हिन्दी</option>
-        <option value="auto|th">ไทย</option>
-      </select></span>
-    </div>
-  </nav>
-
-  <!-- SCRIPTS -->
   <script>
-  // ===== UTILITIES =====
-  const $ = s => document.querySelector(s);
-  const fmt = n => new Intl.NumberFormat().format(n);
-  function id(){ return Math.random().toString(36).slice(2) }
-  function now(){ return new Date().toISOString() }
+    const pageTitle = document.getElementById('pageTitle');
+    const backBtn = document.getElementById('backBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const toast = document.getElementById('toast');
 
-  // Vault user (nếu có)
-  function getUser(){
-    try{ return JSON.parse(localStorage.getItem('goc_user')||'') }catch(e){ return null }
-  }
-  function uid(){ const u=getUser(); return u? (u.id || u.email || 'guest') : 'guest' }
+    const titles = {
+      overview: 'LICENSECOIN',
+      deposit: 'Deposit',
+      withdraw: 'Withdraw LICENSECOIN',
+      transfer: 'Transfer LICENSECOIN',
+      convert: 'Convert LICENSECOIN',
+      'success-deposit': 'Deposit Success',
+      'success-withdraw': 'Withdraw Success',
+      'success-transfer': 'Transfer Success',
+      'success-convert': 'Convert Success'
+    };
 
-  // Keys theo user
-  function balKey(){ return `lcn_balance_${uid()}` }
-  function ledgerKey(){ return `lcn_ledger_${uid()}` }
-  function rateKey(){ return `lcn_rate` } // chung
+    let historyStack = ['overview'];
+    let currentScreen = 'overview';
+    let toastTimer = null;
 
-  // Balance/ledger
-  function loadBal(){ return parseInt(localStorage.getItem(balKey())||'0',10) }
-  function saveBal(v){ localStorage.setItem(balKey(), String(v)) }
-  function loadLedger(){ try{return JSON.parse(localStorage.getItem(ledgerKey())||'[]')}catch{return[]} }
-  function saveLedger(arr){ localStorage.setItem(ledgerKey(), JSON.stringify(arr)) }
-
-  // Tỷ giá
-  function getRate(){ const r = localStorage.getItem(rateKey()); return r? Number(r) : 1.00 }
-  function setRate(v){ localStorage.setItem(rateKey(), String(v)) }
-
-  // Captcha nhẹ
-  function captcha(){
-    const a = 1+Math.floor(Math.random()*9), b = 1+Math.floor(Math.random()*9);
-    const x = prompt(`Captcha: ${a} + ${b} = ?`);
-    return x !== null && Number(x) === (a+b);
-  }
-
-  // Ghi ledger
-  function pushEntry(type, delta, note=''){
-    const arr = loadLedger();
-    const bal = loadBal() + delta;
-    if(bal < 0) throw new Error('Số dư không đủ');
-    const entry = { id:id(), t:now(), type, delta, bal, note, rate:getRate() };
-    arr.unshift(entry); saveLedger(arr); saveBal(bal); return entry;
-  }
-
-  // Refresh UI
-  function refresh(){
-    const u = getUser();
-    $('#status').textContent = u? 'Signed in' : 'Signed out';
-    $('#who').textContent = u ? `${u.name||u.email||u.id}` : 'guest';
-    $('#wid').textContent = uid();
-    $('#bal').textContent = fmt(loadBal());
-    $('#rateLabel').textContent = `1 LCN = ${getRate().toFixed(2)} USD`;
-    renderHistory();
-  }
-
-  // History render
-  function renderHistory(){
-    const tbody = $('#history'); if(!tbody) return;
-    const rows = loadLedger().map(e=>(
-      `<tr>
-        <td class="small">${new Date(e.t).toLocaleString()}</td>
-        <td>${e.type}</td>
-        <td class="right ${e.delta>=0?'ok':'warn'}">${e.delta>=0?'+':''}${fmt(e.delta)}</td>
-        <td class="right">${fmt(e.bal)}</td>
-        <td class="small muted">${e.note||''}${e.rate?` • @${e.rate.toFixed(2)} USD/LCN`:''}</td>
-      </tr>`
-    )).join('');
-    tbody.innerHTML = rows || `<tr><td colspan="5" class="small muted">Chưa có giao dịch.</td></tr>`;
-  }
-
-  // ===== ACTIONS =====
-  function parseAmt(){
-    const n = Number($('#amt').value||'0');
-    if(!isFinite(n) || n<=0) throw new Error('Nhập số > 0');
-    return Math.floor(n);
-  }
-
-  // Nạp / Rút (demo)
-  $('#addBtn').onclick = ()=>{ try{
-    const n=parseAmt(); if(!captcha()) return;
-    pushEntry('DEPOSIT', n, 'Manual deposit (demo)'); refresh();
-  }catch(e){ alert(e.message) } };
-
-  $('#subBtn').onclick = ()=>{ try{
-    const n=parseAmt(); if(!captcha()) return;
-    pushEntry('WITHDRAW', -n, 'Manual withdraw (demo)'); refresh();
-  }catch(e){ alert(e.message) } };
-
-  // Bonus
-  $('#bonusBtn').onclick = ()=>{ pushEntry('BONUS', 50, 'Welcome bonus'); refresh() };
-
-  // Reset
-  $('#resetBtn').onclick = ()=>{ if(confirm('Reset ví + lịch sử cho user hiện tại?')){
-    saveBal(0); saveLedger([]); refresh();
-  }}
-
-  // Buy/Sell theo USD/LCN (demo)
-  function promptUSDorLCN(kind){
-    const mode = prompt(`${kind}: nhập 'usd' để nhập USD, 'lcn' để nhập LCN`, 'lcn') || 'lcn';
-    return mode.toLowerCase()==='usd' ? 'usd' : 'lcn';
-  }
-  $('#buyBtn').onclick = ()=>{ try{
-    const mode = promptUSDorLCN('Buy');
-    const r = getRate();
-    const n = parseAmt();
-    const lcn = mode==='usd' ? Math.floor(n/r) : n;
-    if(lcn<=0) throw new Error('Số LCN quá nhỏ');
-    if(!captcha()) return;
-    pushEntry('BUY', lcn, mode==='usd'?`Buy by ${n} USD`:`Buy ${lcn} LCN`);
-    refresh();
-  }catch(e){ alert(e.message) } };
-
-  $('#sellBtn').onclick = ()=>{ try{
-    const mode = promptUSDorLCN('Sell');
-    const r = getRate();
-    const n = parseAmt();
-    const lcn = mode==='usd' ? Math.floor(n/r) : n;
-    if(!captcha()) return;
-    pushEntry('SELL', -lcn, mode==='usd'?`Sell for ${n} USD`:`Sell ${lcn} LCN`);
-    refresh();
-  }catch(e){ alert(e.message) } };
-
-  // Trade nhanh (buy/sell toggle)
-  $('#tradeBtn').onclick = ()=>{ try{
-    const kind = (prompt("Trade: 'buy' hoặc 'sell'?", 'buy')||'buy').toLowerCase();
-    if(kind!=='buy' && kind!=='sell') return;
-    const n = parseAmt();
-    if(!captcha()) return;
-    pushEntry(kind.toUpperCase(), kind==='buy'? +n : -n, `Quick trade ${kind}`);
-    refresh();
-  }catch(e){ alert(e.message) } };
-
-  // Transfer
-  $('#transferBtn').onclick = ()=>{ try{
-    const to = prompt('Email người nhận (đã đăng nhập Vault ở thiết bị họ):'); if(!to) return;
-    const n = parseAmt(); if(!captcha()) return;
-    // Trừ người gửi
-    pushEntry('TRANSFER_OUT', -n, `to ${to}`);
-    // Cộng người nhận (cùng localStorage namespace theo email — demo)
-    const rid = to;
-    const rBalKey = `lcn_balance_${rid}`;
-    const rLedKey = `lcn_ledger_${rid}`;
-    const rBal = parseInt(localStorage.getItem(rBalKey)||'0',10) + n;
-    localStorage.setItem(rBalKey, String(rBal));
-    const rLed = (()=>{try{return JSON.parse(localStorage.getItem(rLedKey)||'[]')}catch{return[]}})();
-    rLed.unshift({id:id(), t:now(), type:'TRANSFER_IN', delta:+n, bal:rBal, note:`from ${uid()}`, rate:getRate()});
-    localStorage.setItem(rLedKey, JSON.stringify(rLed));
-    refresh(); alert('Đã transfer (demo).');
-  }catch(e){ alert(e.message) } };
-
-  // Pay (demo)
-  $('#payBtn').onclick = ()=>{ try{
-    const bill = prompt('Nhập mô tả hóa đơn / người nhận:');
-    if(!bill) return;
-    const n = parseAmt(); if(!captcha()) return;
-    pushEntry('PAY', -n, `Pay: ${bill}`); refresh();
-  }catch(e){ alert(e.message) } };
-
-  // History toggle
-  $('#historyBtn').onclick = ()=>{ const el=$('#historyWrap'); el.style.display = el.style.display==='none'?'block':'none' }
-
-  // Export JSON
-  $('#exportBtn').onclick = ()=>{
-    const data = { user: uid(), balance: loadBal(), rate:getRate(), history: loadLedger() };
-    const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = `licensecoin_${uid()}_${Date.now()}.json`; a.click();
-  }
-
-  // Set Rate
-  $('#rateBtn').onclick = ()=>{
-    const v = Number(prompt('Nhập tỷ giá (USD cho 1 LCN):', String(getRate())));
-    if(isFinite(v) && v>0){ setRate(v); refresh() }
-  }
-
-  // AI Tim (placeholder)
-  $('#openTim').onclick = (e)=>{ e.preventDefault(); alert('AI TIM ❤️ — tích hợp chat ở bản kế tiếp.'); }
-
-  // Translator
-  (function(){
-    // Khi chọn, chạy Google Translate script
-    const pick = $('#langPick');
-    function loadSaved(){
-      const v = (document.cookie.match(/(?:^|;)\s*goc_lang=([^;]+)/)||[])[1];
-      if(v) pick.value = decodeURIComponent(v);
+    function showToast(message){
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
     }
-    function setCookie(name,value){ document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=31536000` }
-    pick.addEventListener('change', e=>{
-      setCookie('goc_lang', pick.value);
-      // gọi translate
-      const parts = pick.value.split('|');
-      const lang = parts[1]||'en';
-      if(window.google && window.google.translate && window.google.translate.TranslateElement){
-        new google.translate.TranslateElement({pageLanguage:'en', includedLanguages:'', autoDisplay:false}, 'google_translate_element');
-        const cb = document.querySelector('.goog-te-combo'); if(cb){ cb.value=lang; cb.dispatchEvent(new Event('change')) }
+
+    function updateHeader(){
+      pageTitle.textContent = titles[currentScreen] || 'LICENSECOIN';
+
+      if(currentScreen === 'overview'){
+        backBtn.classList.add('hidden');
+      } else {
+        backBtn.classList.remove('hidden');
+      }
+    }
+
+    function showScreen(name, push = true){
+      document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.remove('active');
+      });
+
+      const target = document.getElementById('screen-' + name);
+      if(!target){
+        console.log('Missing screen:', name);
+        return;
+      }
+
+      target.classList.add('active');
+
+      if(push && currentScreen !== name){
+        historyStack.push(name);
+      }
+
+      currentScreen = name;
+      updateHeader();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goBack(){
+      if(currentScreen === 'overview') return;
+      historyStack.pop();
+      const prev = historyStack[historyStack.length - 1] || 'overview';
+      showScreen(prev, false);
+    }
+
+    function closeApp(){
+      window.location.href = 'index.html';
+    }
+
+    backBtn.addEventListener('click', goBack);
+    closeBtn.addEventListener('click', closeApp);
+
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape'){
+        if(currentScreen === 'overview'){
+          closeApp();
+        } else {
+          goBack();
+        }
       }
     });
-    loadSaved();
-    window.googleTranslateElementInit = function(){
-      new google.translate.TranslateElement({pageLanguage:'en', autoDisplay:false}, 'google_translate_element');
-      const cb = document.querySelector('.goog-te-combo'); if(cb){
-        const saved = (document.cookie.match(/(?:^|;)\s*goc_lang=([^;]+)/)||[])[1];
-        if(saved){ cb.value=(saved.split('|')[1]||'en'); cb.dispatchEvent(new Event('change')) }
+
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+
+        btn.classList.add('active');
+        const pane = document.getElementById(btn.dataset.tab);
+        if(pane) pane.classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('.selectable').forEach(row => {
+      row.addEventListener('click', () => {
+        const group = row.dataset.group;
+        document.querySelectorAll('.selectable[data-group="' + group + '"]').forEach(item => {
+          item.classList.remove('active');
+        });
+        row.classList.add('active');
+      });
+    });
+
+    function fillSampleAddress(inputId){
+      const el = document.getElementById(inputId);
+      if(el){
+        el.value = '0x43556A90fc11485Abf6d8280A5147F4';
+        showToast('Sample wallet address inserted.');
       }
-    };
-    const s=document.createElement('script'); s.src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    document.head.appendChild(s);
-  })();
+    }
 
-  // Khởi động
-  if(localStorage.getItem(balKey())===null){ saveBal(150) } // seed demo
-  refresh();
+    function fillAllAmount(inputId, value){
+      const el = document.getElementById(inputId);
+      if(el){
+        el.value = value;
+        showToast('Maximum amount filled.');
+      }
+    }
+
+    async function copyAddress(){
+      const el = document.getElementById('depositAddress');
+      const text = el.textContent.trim();
+
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast('Wallet address copied.');
+      } catch(err){
+        showToast('Address ready to copy.');
+      }
+    }
+
+    function saveQRCode(){
+      showToast('QR code saved successfully.');
+    }
+
+    function showAuditInfo(){
+      showToast('Audit passed • Verified Network Secure.');
+    }
+
+    function confirmWithdraw(){
+      const addressEl = document.getElementById('withdrawAddress');
+      const amountEl = document.getElementById('withdrawAmount');
+
+      const address = addressEl.value.trim();
+      const amount = amountEl.value.trim();
+
+      if(!address){
+        showToast('Please enter wallet address.');
+        return;
+      }
+
+      if(!amount){
+        showToast('Please enter withdrawal amount.');
+        return;
+      }
+
+      const result = document.getElementById('withdrawResultText');
+      result.textContent = 'Withdrawal of ' + amount + ' LCN has been submitted to ' + address.slice(0,12) + '...';
+
+      showScreen('success-withdraw');
+    }
+
+    function confirmTransfer(){
+      const amountEl = document.getElementById('transferAmount');
+      const amount = amountEl.value.trim();
+
+      if(!amount){
+        showToast('Please enter transfer amount.');
+        return;
+      }
+
+      const from = document.querySelector('.selectable[data-group="from"].active');
+      const to = document.querySelector('.selectable[data-group="to"].active');
+
+      const fromText = from ? from.querySelector('span').textContent : 'Exchange Account';
+      const toText = to ? to.querySelector('span').textContent : 'Ownership Vault';
+
+      const result = document.getElementById('transferResultText');
+      result.textContent = amount + ' LCN transferred from ' + fromText + ' to ' + toText + '.';
+
+      showScreen('success-transfer');
+    }
+
+    function confirmConvert(){
+      const amountEl = document.getElementById('convertAmount');
+      const amount = amountEl.value.trim();
+
+      if(!amount){
+        showToast('Please enter convert amount.');
+        return;
+      }
+
+      const usd = (parseFloat(amount || '0') * 1.02).toFixed(2);
+      const result = document.getElementById('convertResultText');
+      result.textContent = amount + ' LCN converted successfully into ' + usd + ' USD Stable.';
+
+      showScreen('success-convert');
+    }
+
+    updateHeader();
+
+    window.showScreen = showScreen;
+    window.fillSampleAddress = fillSampleAddress;
+    window.fillAllAmount = fillAllAmount;
+    window.copyAddress = copyAddress;
+    window.saveQRCode = saveQRCode;
+    window.showAuditInfo = showAuditInfo;
+    window.confirmWithdraw = confirmWithdraw;
+    window.confirmTransfer = confirmTransfer;
+    window.confirmConvert = confirmConvert;
+    window.showToast = showToast;
   </script>
-
-  <!-- (Tùy chọn) Global UI nếu có sẵn trong repo -->
-  
-  <script src="goc-ui.js"></script>
-  <script src="goc-auth.js"></script>
-  <script src="goc-sdk.js"></script>
-  <div id="google_translate_element" style="position:absolute;left:-9999px"></div>
 </body>
 </html>
