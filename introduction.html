@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INTRODUCTION | LICENSE GỐC™</title>
+  <meta
+    name="description"
+    content="Giới thiệu nền hệ thống LICENSE GỐC™ — sáng tạo, quyền sở hữu, bản quyền, AI và giá trị số tương lai."
+  />
+
+  <style>
+    :root{
+      --gold:#f1c76b;
+      --gold-soft:rgba(241,199,107,.16);
+      --text:#f7f3e8;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.08);
+      --panel:rgba(255,255,255,.03);
+      --bg1:#05080f;
+      --bg2:#0a1220;
+      --bg3:#0f1728;
+      --shadow:0 22px 60px rgba(0,0,0,.42);
+      --radius:26px;
+      --maxw:1120px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top, rgba(241,199,107,.10), transparent 16%),
+        radial-gradient(circle at 80% 20%, rgba(90,120,255,.10), transparent 18%),
+        linear-gradient(180deg,var(--bg1),var(--bg2) 48%,var(--bg3));
+      line-height:1.6;
+    }
+
+    a{color:inherit;text-decoration:none}
+
+    .wrap{
+      width:min(var(--maxw), calc(100% - 24px));
+      margin:0 auto;
+      padding:18px 0 44px;
+    }
+
+    .topbar{
+      position:sticky;
+      top:10px;
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 14px;
+      margin-bottom:18px;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:rgba(255,255,255,.05);
+      backdrop-filter:blur(12px);
+      box-shadow:0 12px 30px rgba(0,0,0,.24);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(241,199,107,.25);
+      background:rgba(255,255,255,.04);
+      color:var(--gold);
+      font-size:20px;
+      flex:0 0 42px;
+    }
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-text b{
+      display:block;
+      font-size:14px;
+      color:#fff5db;
+      letter-spacing:.04em;
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:11px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .top-btn{
+      min-height:42px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:#f4dfb2;
+      font-size:13px;
+      font-weight:800;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      white-space:nowrap;
+    }
+
+    .top-btn.primary{
+      border-color:rgba(241,199,107,.28);
+      color:#1e1204;
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+    }
+
+    .hero{
+      padding:34px 20px 26px;
+      border:1px solid var(--line);
+      border-radius:32px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(241,199,107,.10), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      text-align:center;
+      margin-bottom:18px;
+    }
+
+    .eyebrow{
+      color:var(--gold);
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+
+    .hero h1{
+      margin:0 0 14px;
+      font-size:clamp(34px, 7vw, 76px);
+      line-height:1.02;
+      color:#fff7e6;
+    }
+
+    .hero h1 span{
+      color:var(--gold);
+    }
+
+    .hero p{
+      width:min(900px, 100%);
+      margin:0 auto 18px;
+      font-size:clamp(17px, 2.4vw, 24px);
+      color:#efe1bf;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    .hero-btn{
+      min-height:50px;
+      padding:12px 18px;
+      border-radius:999px;
+      border:1px solid rgba(241,199,107,.20);
+      background:rgba(255,255,255,.03);
+      color:#f6e1b1;
+      font-weight:900;
+      font-size:14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .hero-btn.primary{
+      color:#1e1204;
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+    }
+
+    .section{
+      margin-top:18px;
+      padding:24px 20px;
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+    }
+
+    .section h2{
+      margin:0 0 10px;
+      font-size:clamp(24px, 4vw, 40px);
+      color:#fff7e4;
+    }
+
+    .section h2 span{
+      color:var(--gold);
+    }
+
+    .section-intro{
+      margin:0 0 18px;
+      color:#e9d8b2;
+      font-size:17px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:16px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .card{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      background:rgba(255,255,255,.03);
+      padding:18px;
+    }
+
+    .card h3{
+      margin:0 0 10px;
+      font-size:20px;
+      color:#fff3d7;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .pillar{
+      min-height:100%;
+    }
+
+    .pillar .num{
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      margin-bottom:12px;
+      color:#1b1003;
+      font-weight:1000;
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+    }
+
+    .quote{
+      font-size:clamp(22px, 4vw, 38px);
+      line-height:1.35;
+      color:#fff4da;
+      font-weight:800;
+      text-align:center;
+      padding:10px 6px 0;
+    }
+
+    .quote span{
+      color:var(--gold);
+    }
+
+    .map-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .map-item{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      padding:14px 16px;
+      background:rgba(255,255,255,.03);
+    }
+
+    .map-item b{
+      display:block;
+      color:#fff2d1;
+      margin-bottom:4px;
+      font-size:16px;
+    }
+
+    .map-item span{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .final-box{
+      text-align:center;
+      padding-top:8px;
+    }
+
+    .final-box p{
+      width:min(850px, 100%);
+      margin:0 auto 16px;
+      font-size:18px;
+      color:#ebdbb8;
+    }
+
+    .footer{
+      margin-top:22px;
+      text-align:center;
+      color:rgba(255,255,255,.50);
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      padding:8px 0 4px;
+    }
+
+    @media (max-width:900px){
+      .grid-2,
+      .grid-3{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:560px){
+      .wrap{
+        width:min(var(--maxw), calc(100% - 16px));
+      }
+
+      .topbar{
+        padding:10px;
+      }
+
+      .top-actions{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .top-btn{
+        flex:1 1 auto;
+      }
+
+      .section,
+      .hero{
+        padding-left:16px;
+        padding-right:16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">🕊️</div>
+        <div class="brand-text">
+          <b>LICENSE GỐC™</b>
+          <span>INTRODUCTION • NỀN HỆ THỐNG • IN GOD WE TRUST</span>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <a class="top-btn" href="index.html">← Trang Chủ</a>
+        <a class="top-btn" href="licensegoc.html">LICENSEGOC</a>
+        <a class="top-btn primary" href="licensecoin.html">LICENSECOIN</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">HỆ SINH THÁI TƯƠNG LAI</div>
+      <h1>GIỚI THIỆU <span>LICENSE GỐC™</span></h1>
+      <p>
+        LICENSE GỐC™ không chỉ là một website. Đây là một hệ thống nền tảng
+        dành cho sáng tạo, quyền sở hữu, bản quyền, trí tuệ nhân tạo và giá trị số,
+        được xây dựng để bảo vệ nguồn gốc, xác lập chủ thể và mở ra một cấu trúc mới
+        cho tài sản trí tuệ trong tương lai.
+      </p>
+
+      <div class="hero-actions">
+        <a class="hero-btn primary" href="licensegoc.html">Khám phá lõi LICENSEGOC</a>
+        <a class="hero-btn" href="licensecoin.html">Mở LICENSECOIN</a>
+        <a class="hero-btn" href="tim.html">Gặp AI TIM ♥️</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>LICENSE GỐC™ <span>là gì?</span></h2>
+      <p class="section-intro">
+        LICENSE GỐC™ là một hệ sinh thái đa tầng, nơi sáng tạo được ghi nhận,
+        quyền sở hữu được xác lập, bản quyền được bảo vệ, AI được định hướng đúng vai trò,
+        và giá trị có thể phát triển bền vững theo thời gian.
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Một hệ thống, không phải một trang đơn lẻ</h3>
+          <p>
+            LICENSE GỐC™ không được tạo ra để chỉ hiển thị thông tin. Nó được xây dựng
+            như một kiến trúc vận hành cho thời đại mới — nơi con người, AI, bản quyền,
+            thương mại và tài sản số không còn tồn tại rời rạc, mà được kết nối trong
+            một cấu trúc thống nhất, rõ ràng và có chiều sâu.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Một lời khẳng định về giá trị thật</h3>
+          <p>
+            Trong thế giới số, rất nhiều giá trị bị sao chép, pha loãng hoặc mất gốc.
+            LICENSE GỐC™ xuất hiện để khẳng định rằng mọi sáng tạo chân chính phải có
+            nguồn gốc, mọi giá trị thật phải có chủ thể, và mọi tài sản trí tuệ phải
+            được bảo vệ đúng tầm của nó.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Vì sao hệ thống này <span>cần tồn tại?</span></h2>
+      <p class="section-intro">
+        Chúng ta đang sống trong một thời đại mà nội dung có thể được tạo ra cực nhanh,
+        AI phát triển mạnh, dữ liệu lan truyền không giới hạn, nhưng quyền sở hữu thật
+        lại ngày càng mong manh hơn bao giờ hết.
+      </p>
+
+      <div class="grid-3">
+        <div class="card pillar">
+          <div class="num">1</div>
+          <h3>Sáng tạo đang mất gốc</h3>
+          <p>
+            Người tạo ra giá trị thật không phải lúc nào cũng được nhận diện đúng.
+            Ý tưởng có thể lan đi rất nhanh, nhưng chủ thể thật lại dễ bị mờ đi.
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">2</div>
+          <h3>Công nghệ đi nhanh hơn bảo hộ</h3>
+          <p>
+            Công nghệ phát triển quá nhanh trong khi cấu trúc bảo vệ quyền sở hữu,
+            bản quyền và tài sản trí tuệ vẫn chưa theo kịp.
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">3</div>
+          <h3>Giá trị cần một kiến trúc mới</h3>
+          <p>
+            Sáng tạo, AI, thương mại số và quyền sở hữu đang giao nhau. LICENSE GỐC™
+            được tạo ra để gom các dòng đó vào một hệ thống có định hướng.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Triết lý cốt lõi của <span>LICENSE GỐC™</span></h2>
+      <div class="quote">
+        Mọi giá trị thật đều phải có <span>Gốc</span>.
+      </div>
+
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card">
+          <h3>“Gốc” là nguồn sinh ra giá trị</h3>
+          <p>
+            “Gốc” không chỉ là điểm bắt đầu. Đó là nơi sinh ra ý tưởng, là căn tính
+            của sáng tạo, là bằng chứng của quyền sở hữu, và là nền móng để mọi giá trị
+            có thể phát triển lâu dài mà không đánh mất bản chất.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Công nghệ phải phục vụ sự thật</h3>
+          <p>
+            LICENSE GỐC™ không chạy theo công nghệ để phô diễn công nghệ. Hệ thống này
+            đi theo một hướng sâu hơn: công nghệ phải phục vụ sự thật, AI phải phục vụ
+            con người, và giá trị phải được gắn với nguồn gốc.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Các trụ cột của <span>hệ sinh thái</span></h2>
+      <p class="section-intro">
+        Để biến tầm nhìn thành thực tế, LICENSE GỐC™ được xây dựng trên những trụ cột
+        chiến lược kết nối với nhau trong một hệ thống sống.
+      </p>
+
+      <div class="grid-3">
+        <div class="card pillar">
+          <div class="num">1</div>
+          <h3>Sáng tạo</h3>
+          <p>
+            Mọi thứ bắt đầu từ sáng tạo thật. Ý tưởng, nội dung, thiết kế, triết lý,
+            nghệ thuật hay công nghệ đều có thể trở thành nguồn giá trị nếu được nhìn nhận đúng.
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">2</div>
+          <h3>Quyền sở hữu</h3>
+          <p>
+            Sáng tạo không thể mãi tồn tại dưới dạng vô danh. Nó phải được gắn với người tạo ra,
+            người nắm giữ và người chịu trách nhiệm cho nó.
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">3</div>
+          <h3>Bản quyền & bảo hộ</h3>
+          <p>
+            Không chỉ ghi nhận, mà còn phải bảo vệ. Giá trị trí tuệ cần hồ sơ, chứng cứ,
+            cấu trúc và lộ trình bảo hộ rõ ràng.
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">4</div>
+          <h3>AI hỗ trợ</h3>
+          <p>
+            AI trong LICENSE GỐC™ không thay thế con người. AI được đặt đúng vai trò:
+            trợ lực, tăng tốc, phân tích, tổ chức và mở rộng năng lực con người.
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">5</div>
+          <h3>Giá trị số & kinh tế</h3>
+          <p>
+            Một sáng tạo chỉ thật sự sống lâu khi nó có thể bước vào dòng chảy giá trị.
+            LICENSE GỐC™ mở ra lớp kinh tế cho licensing, giao dịch và tài sản số.
+          </p>
+        </div>
+
+        <div class="card pillar">
+          <div class="num">6</div>
+          <h3>Mạng lưới tương lai</h3>
+          <p>
+            LICENSE GỐC™ không phải sản phẩm đơn lẻ. Đây là một mạng lưới có thể mở rộng
+            thành nhiều phân hệ nhưng vẫn thống nhất trong cùng một tinh thần.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Bản đồ mở rộng của <span>toàn hệ thống</span></h2>
+      <p class="section-intro">
+        Từ nền lõi này, LICENSE GỐC™ phát triển thành nhiều nhánh chiến lược,
+        mỗi nhánh giữ một vai trò riêng nhưng cùng chung một Gốc.
+      </p>
+
+      <div class="map-list">
+        <div class="map-item">
+          <b>LICENSEGOC™</b>
+          <span>Lõi thương hiệu, triết lý, định vị và bản sắc của toàn bộ hệ thống.</span>
+        </div>
+
+        <div class="map-item">
+          <b>LICENSECOIN™</b>
+          <span>Lớp giá trị số, giao diện kinh tế và chuyển động tài sản trong hệ sinh thái.</span>
+        </div>
+
+        <div class="map-item">
+          <b>AI TIM ♥️</b>
+          <span>Lớp trí tuệ hỗ trợ, tương tác, định hướng, đồng hành và khuếch đại năng lực hệ thống.</span>
+        </div>
+
+        <div class="map-item">
+          <b>COMMERCIAL</b>
+          <span>Lớp hợp tác thương mại, licensing deal, đầu tư, tăng trưởng và đối tác chiến lược.</span>
+        </div>
+
+        <div class="map-item">
+          <b>ENTERTAINMENT</b>
+          <span>Lớp trải nghiệm sáng tạo, âm nhạc, cảm xúc, văn hóa và giao diện công chúng.</span>
+        </div>
+
+        <div class="map-item">
+          <b>USPTO / IP / COPYRIGHT</b>
+          <span>Lớp pháp lý, hồ sơ, bằng chứng và cấu trúc bảo hộ quyền sở hữu trí tuệ.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Tầm nhìn <span>dài hạn</span></h2>
+      <div class="final-box">
+        <p>
+          LICENSE GỐC™ không được tạo ra để chỉ phục vụ hiện tại. Nó hướng đến một tương lai
+          nơi sáng tạo không bị thất lạc, quyền sở hữu được tôn trọng, AI hỗ trợ nhưng không
+          làm con người mất gốc, và giá trị được xây trên sự thật.
+        </p>
+
+        <p>
+          Đây không chỉ là một nền tảng. Đây là một kiến trúc sống cho sáng tạo, quyền sở hữu,
+          bản quyền, AI và giá trị của tương lai.
+        </p>
+
+        <div class="hero-actions">
+          <a class="hero-btn primary" href="licensegoc.html">Tiếp tục vào LICENSEGOC</a>
+          <a class="hero-btn" href="commercial.html">Mở Commercial</a>
+          <a class="hero-btn" href="uspto-patent.html">Xem USPTO / IP</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      © LICENSE GỐC™ • INTRODUCTION SYSTEM • IN GOD WE TRUST
+    </div>
+  </div>
+</body>
+</html>
