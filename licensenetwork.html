@@ -1,139 +1,1418 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>LICENSENETWORK™ — Global Ideas Network</title>
-  <meta name="description" content="Phòng mạng sáng tạo toàn cầu: Boards • Chat • Bảo hộ tác quyền • Phần thưởng cộng đồng — thuộc hệ sinh thái LICENSE GỐC™.">
-  <meta name="theme-color" content="#0a0b0f" />
-
-  <!-- Open Graph (khi share link) -->
-  <meta property="og:title" content="LICENSENETWORK™ — Global Ideas Network">
-  <meta property="og:description" content="Boards • Chat • Bảo hộ tác quyền • Phần thưởng cộng đồng.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://vutong99.github.io/PATENTS-LICENSE-UNIVERSAL-NETWORK/licensenetwork.html">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LICENSENETWORK™ | Global Connect Layer of LICENSEGOC™</title>
+  <meta
+    name="description"
+    content="LICENSENETWORK™ là mạng lưới kết nối toàn cầu của LICENSEGOC™ — inventions, business, investors, commercial, knowledge, chat, private protection và global social infrastructure."
+  />
 
   <style>
     :root{
-      --bg:#0a0b0f; --panel:#101319; --ink:#eae7dc; --muted:#a8b3c7;
-      --line:rgba(245,211,106,.22); --gold:#ffd66b;
-      --r:16px;
+      --gold:#f1c76b;
+      --gold2:#d89c31;
+      --text:#f8f3e7;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.08);
+      --panel:rgba(255,255,255,.03);
+      --panel2:rgba(255,255,255,.05);
+      --bg1:#04070d;
+      --bg2:#09111c;
+      --bg3:#0d1726;
+      --blue:#88aaff;
+      --green:#71f0ad;
+      --purple:#bca6ff;
+      --red:#ff8e99;
+      --shadow:0 24px 60px rgba(0,0,0,.42);
+      --radius:26px;
+      --maxw:1200px;
     }
+
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html,body{margin:0;padding:0}
     body{
-      margin:0; background:var(--bg); color:var(--ink);
-      font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.56)),
+        radial-gradient(circle at 50% 0%, rgba(241,199,107,.08), transparent 14%),
+        radial-gradient(circle at 85% 18%, rgba(96,130,255,.10), transparent 18%),
+        linear-gradient(180deg,var(--bg1),var(--bg2) 42%,var(--bg3));
+      line-height:1.6;
+      overflow-x:hidden;
     }
-    a{color:var(--gold); text-decoration:none}
-    .wrap{max-width:1100px; margin:24px auto; padding:0 16px}
 
-    /* Hero */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      background:
+        linear-gradient(180deg, rgba(1,4,10,.22), rgba(1,4,10,.72)),
+        url("assets/backgrounds/licensenetwork-bg.jpg") center/cover no-repeat;
+      opacity:.42;
+      transform:scale(1.04);
+      filter:saturate(1.04);
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background:
+        radial-gradient(circle at 50% 16%, rgba(241,199,107,.10), transparent 18%),
+        radial-gradient(circle at 18% 60%, rgba(99,130,255,.08), transparent 18%),
+        radial-gradient(circle at 82% 60%, rgba(188,166,255,.07), transparent 18%);
+      pointer-events:none;
+    }
+
+    a{text-decoration:none;color:inherit}
+    button,input,select,textarea{font-family:inherit}
+
+    .wrap{
+      width:min(var(--maxw), calc(100% - 24px));
+      margin:0 auto;
+      padding:18px 0 46px;
+    }
+
+    .topbar{
+      position:sticky;
+      top:10px;
+      z-index:70;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:12px 14px;
+      margin-bottom:18px;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:rgba(255,255,255,.05);
+      backdrop-filter:blur(14px);
+      box-shadow:0 12px 30px rgba(0,0,0,.24);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(241,199,107,.24);
+      background:rgba(255,255,255,.04);
+      color:var(--gold);
+      font-size:21px;
+      flex:0 0 46px;
+    }
+
+    .brand-text b{
+      display:block;
+      font-size:14px;
+      color:#fff4d7;
+      letter-spacing:.05em;
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:11px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .top-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .lang-switch{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+
+    .lang-btn,
+    .top-btn{
+      border:none;
+      min-height:40px;
+      padding:9px 12px;
+      border-radius:12px;
+      background:rgba(255,255,255,.05);
+      color:#f3dfb3;
+      font-size:13px;
+      font-weight:800;
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .lang-btn.active{
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+      color:#201303;
+      border-color:rgba(241,199,107,.35);
+    }
+
+    .top-btn.primary{
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+      color:#201303;
+      border-color:rgba(241,199,107,.35);
+    }
+
     .hero{
-      border:1px solid var(--line); border-radius:var(--r);
-      background:linear-gradient(180deg,#111520,#0c0f17);
-      box-shadow:0 10px 40px rgba(0,0,0,.45);
-      padding:22px 18px; position:relative; overflow:hidden;
+      padding:34px 22px 28px;
+      border:1px solid var(--line);
+      border-radius:34px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(241,199,107,.10), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      text-align:center;
+      margin-bottom:18px;
     }
-    .hero h1{margin:0 0 8px; font-size:clamp(26px,5.5vw,40px)}
-    .hero p{margin:6px 0 0; color:var(--muted)}
-    .brandline{height:1px; margin:12px 0; border-radius:999px;
-      background:linear-gradient(90deg,#6b5b2a,#ffd66b,#6b5b2a)}
 
-    /* Panels */
-    .panel{
-      margin:16px 0; padding:18px; border-radius:14px;
-      background:linear-gradient(180deg,#101319,#0b0e14);
-      border:1px solid var(--line); box-shadow:0 10px 40px rgba(0,0,0,.35);
+    .eyebrow{
+      color:var(--gold);
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      margin-bottom:12px;
     }
-    .panel h2{margin:0 0 12px; color:var(--gold)}
-    .note{color:var(--muted); font-size:14px}
 
-    /* Grid cards */
-    .grid{display:grid; gap:12px}
-    @media (min-width:900px){ .cols-3{grid-template-columns:repeat(3,1fr)} .cols-2{grid-template-columns:repeat(2,1fr)} }
+    .hero h1{
+      margin:0 0 14px;
+      font-size:clamp(34px, 7vw, 76px);
+      line-height:1.02;
+      color:#fff7e5;
+    }
+
+    .hero h1 span{color:var(--gold)}
+
+    .hero p{
+      width:min(950px, 100%);
+      margin:0 auto 18px;
+      font-size:clamp(17px, 2.4vw, 24px);
+      color:#efdfbc;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    .hero-btn{
+      min-height:50px;
+      padding:12px 18px;
+      border-radius:999px;
+      border:1px solid rgba(241,199,107,.20);
+      background:rgba(255,255,255,.03);
+      color:#f6e1b1;
+      font-weight:900;
+      font-size:14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+
+    .hero-btn.primary{
+      color:#1e1204;
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .stat{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      padding:14px;
+      background:rgba(255,255,255,.03);
+      text-align:center;
+    }
+
+    .stat b{
+      display:block;
+      font-size:24px;
+      color:var(--gold);
+      margin-bottom:4px;
+    }
+
+    .stat span{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .section{
+      margin-top:18px;
+      padding:24px 20px;
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+    }
+
+    .section h2{
+      margin:0 0 10px;
+      font-size:clamp(24px, 4vw, 40px);
+      color:#fff7e4;
+    }
+
+    .section h2 span{color:var(--gold)}
+
+    .section-intro{
+      margin:0 0 18px;
+      color:#ead9b4;
+      font-size:17px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1.02fr .98fr;
+      gap:16px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .grid-4{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+    }
+
     .card{
-      padding:14px; border-radius:12px; border:1px solid var(--line);
-      background:linear-gradient(180deg,#0f131b,#0b0f16);
-    }
-    .badge{display:inline-block; padding:6px 10px; border-radius:999px;
-      border:1px solid rgba(245,211,106,.35); color:var(--gold); font-weight:800; margin-bottom:6px}
-
-    /* Inputs */
-    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    .ipt{
-      background:#0c0f15; border:1px solid rgba(255,255,255,.08);
-      color:var(--ink); padding:10px 12px; border-radius:10px;
-    }
-    .btn{
-      padding:10px 14px; border-radius:10px; border:1px solid rgba(245,211,106,.35);
-      background:linear-gradient(180deg,#151924,#0f121a);
-      color:var(--gold); font-weight:800; cursor:pointer;
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.05), 0 10px 22px rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      background:rgba(255,255,255,.03);
+      padding:18px;
+      min-height:100%;
     }
 
-    footer{color:#a9a9a9; text-align:center; padding:28px 12px; border-top:1px solid rgba(255,255,255,.06)}
+    .card h3{
+      margin:0 0 10px;
+      font-size:20px;
+      color:#fff2d3;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .icon-badge{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+      color:#1b1003;
+      font-weight:1000;
+      margin-bottom:12px;
+      font-size:18px;
+    }
+
+    .value-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .value-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    .value-row:last-child{border-bottom:none}
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:30px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .tag.gold{color:#201303;background:linear-gradient(180deg,#f1c76b,#d89c31)}
+    .tag.green{color:#062013;background:rgba(113,240,173,.92)}
+    .tag.blue{color:#091a3f;background:rgba(136,170,255,.90)}
+    .tag.purple{color:#251043;background:rgba(188,166,255,.92)}
+
+    .quote{
+      font-size:clamp(22px, 4vw, 38px);
+      line-height:1.35;
+      color:#fff4da;
+      font-weight:800;
+      text-align:center;
+      padding-top:4px;
+    }
+
+    .quote span{color:var(--gold)}
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .search{
+      flex:1 1 260px;
+      min-height:46px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      padding:0 14px;
+      color:#fff;
+      outline:none;
+    }
+
+    .search::placeholder{
+      color:rgba(255,255,255,.36);
+    }
+
+    .filter-btn{
+      min-height:46px;
+      padding:0 14px;
+      border:none;
+      border-radius:16px;
+      background:rgba(255,255,255,.04);
+      color:#f0ddb0;
+      border:1px solid rgba(255,255,255,.08);
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .filter-btn.active{
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+      color:#201303;
+      border-color:rgba(241,199,107,.35);
+    }
+
+    .network-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .network-item{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:20px;
+      background:rgba(255,255,255,.03);
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height:100%;
+      transition:.18s ease;
+    }
+
+    .network-item.hide{
+      display:none;
+    }
+
+    .network-item:hover{
+      transform:translateY(-2px);
+      box-shadow:0 14px 28px rgba(0,0,0,.18);
+    }
+
+    .network-item b{
+      color:#fff2d3;
+      font-size:18px;
+    }
+
+    .network-item small{
+      color:var(--muted);
+      font-size:13px;
+      display:block;
+      min-height:40px;
+    }
+
+    .network-item .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:auto;
+    }
+
+    .network-item .actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    .mini-btn{
+      min-height:36px;
+      padding:8px 12px;
+      border:none;
+      border-radius:12px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.07);
+      color:#f4dfb3;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .mini-btn.primary{
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+      color:#201303;
+    }
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .tab{
+      border:none;
+      border-radius:999px;
+      border:1px solid rgba(241,199,107,.16);
+      background:rgba(255,255,255,.03);
+      color:#e8d3a3;
+      padding:8px 12px;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .tab.active{
+      background:rgba(241,199,107,.12);
+      border-color:rgba(241,199,107,.34);
+      color:#fff0cb;
+    }
+
+    .tab-pane{display:none}
+    .tab-pane.active{display:block}
+
+    .feed-item,
+    .news-item,
+    .message-item{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      align-items:center;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    .feed-item:last-child,
+    .news-item:last-child,
+    .message-item:last-child{
+      border-bottom:none;
+    }
+
+    .feed-item b,
+    .news-item b,
+    .message-item b{
+      display:block;
+      color:#fff2d3;
+      margin-bottom:4px;
+      font-size:15px;
+    }
+
+    .feed-item span,
+    .news-item span,
+    .message-item span{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .privacy-panel{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+
+    .toggle-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    .toggle-row:last-child{border-bottom:none}
+
+    .switch{
+      position:relative;
+      width:52px;
+      height:30px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .switch::after{
+      content:"";
+      position:absolute;
+      top:4px;
+      left:4px;
+      width:22px;
+      height:22px;
+      border-radius:50%;
+      background:#fff;
+      transition:.18s ease;
+    }
+
+    .switch.on{
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+    }
+
+    .switch.on::after{
+      left:26px;
+      background:#1e1305;
+    }
+
+    .chat-box{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      background:rgba(255,255,255,.03);
+      padding:16px;
+    }
+
+    .chat-log{
+      height:260px;
+      overflow:auto;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:16px;
+      padding:12px;
+      background:rgba(255,255,255,.02);
+      margin-bottom:12px;
+    }
+
+    .bubble{
+      max-width:78%;
+      padding:10px 12px;
+      border-radius:16px;
+      margin-bottom:10px;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .bubble.them{
+      background:rgba(255,255,255,.05);
+      color:#f3e8c8;
+      border-top-left-radius:6px;
+    }
+
+    .bubble.me{
+      margin-left:auto;
+      background:linear-gradient(180deg,#f1c76b,#d89c31);
+      color:#201303;
+      border-top-right-radius:6px;
+      font-weight:700;
+    }
+
+    .chat-actions{
+      display:flex;
+      gap:10px;
+    }
+
+    .chat-input{
+      flex:1;
+      min-height:46px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      padding:0 14px;
+      color:#fff;
+      outline:none;
+    }
+
+    .cta-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .cta-card{
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      background:rgba(255,255,255,.03);
+      padding:18px;
+      text-align:center;
+    }
+
+    .cta-card h3{
+      margin:0 0 8px;
+      color:#fff2d3;
+      font-size:21px;
+    }
+
+    .cta-card p{
+      margin:0 0 14px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .footer{
+      margin-top:22px;
+      text-align:center;
+      color:rgba(255,255,255,.50);
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      padding:8px 0 4px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:22px;
+      transform:translateX(-50%) translateY(18px);
+      width:min(380px, calc(100% - 28px));
+      border-radius:14px;
+      border:1px solid rgba(241,199,107,.20);
+      background:rgba(12,18,30,.96);
+      color:#fff;
+      padding:12px 14px;
+      text-align:center;
+      font-size:13px;
+      opacity:0;
+      pointer-events:none;
+      transition:.22s ease;
+      z-index:120;
+      box-shadow:0 16px 34px rgba(0,0,0,.34);
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    @media (max-width:980px){
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .network-grid,
+      .privacy-panel,
+      .cta-grid{
+        grid-template-columns:1fr;
+      }
+
+      .stats{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media (max-width:620px){
+      .wrap{
+        width:min(var(--maxw), calc(100% - 16px));
+      }
+
+      .topbar{padding:10px}
+
+      .top-right{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .hero,
+      .section{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      .chat-actions{
+        flex-direction:column;
+      }
+    }
   </style>
 </head>
 <body>
-
   <div class="wrap">
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="title">
-      <h1 id="title">LICENSENETWORK™ — The Global Room for Ideas</h1>
-      <div class="brandline"></div>
-      <p>Boards • Chat • Bảo hộ tác quyền • Phần thưởng cộng đồng — thuộc hệ sinh thái LICENSE GỐC™.</p>
-    </section>
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">LN</div>
+        <div class="brand-text">
+          <b>LICENSENETWORK™</b>
+          <span data-vi="GLOBAL CONNECT • SOCIAL INTELLIGENCE • PRIVATE VALUE" data-en="GLOBAL CONNECT • SOCIAL INTELLIGENCE • PRIVATE VALUE"></span>
+        </div>
+      </div>
 
-    <!-- ROOMS (thư mục phòng) -->
-    <section class="panel" aria-labelledby="rooms">
-      <h2 id="rooms">Rooms</h2>
-      <div class="grid cols-3">
-        <a class="card" href="creationsroom.html">
-          <div class="badge">Boards</div>
-          <h3 style="margin:6px 0">Creations Room</h3>
-          <p class="note">Tạo thẻ công việc, chia lane (To-do / Doing / Done), chia sẻ minh chứng.</p>
-        </a>
-        <a class="card" href="submit.html">
-          <div class="badge">Protect</div>
-          <h3 style="margin:6px 0">Submit Idea / Work</h3>
-          <p class="note">Time-stamp & bảo hộ nội dung. Export JSON minh bạch.</p>
-        </a>
-        <a class="card" href="paycards.html">
-          <div class="badge">Economy</div>
-          <h3 style="margin:6px 0">Pay & Cards</h3>
-          <p class="note">Thanh toán, invoice, tranh chấp — kết nối LICENSECOIN sau này.</p>
-        </a>
+      <div class="top-right">
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="vi" type="button">🇻🇳 VI</button>
+          <button class="lang-btn" data-lang="en" type="button">🇺🇸 EN</button>
+        </div>
+
+        <a class="top-btn" href="index.html" data-vi="← Trang Chủ" data-en="← Home"></a>
+        <a class="top-btn" href="licensegoc.html" data-vi="LICENSEGOC" data-en="LICENSEGOC"></a>
+        <a class="top-btn primary" href="licensecoin.html" data-vi="LICENSECOIN" data-en="LICENSECOIN"></a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow" data-vi="MẠNG LƯỚI KẾT NỐI TOÀN CẦU" data-en="THE GLOBAL CONNECT LAYER"></div>
+      <h1 data-vi="LICENSENETWORK™ – <span>Thế giới đang sống</span>" data-en="LICENSENETWORK™ – <span>The living world</span>"></h1>
+      <p
+        data-vi="LICENSENETWORK™ là mạng lưới kết nối toàn cầu của LICENSEGOC™ — nơi phát minh, kinh doanh, investor, commercial, tri thức, chat, thông tin hiện thực và đời sống số gặp nhau trong một không gian mở, sâu, hiện đại và được bảo vệ quyền riêng tư ở cấp độ cao."
+        data-en="LICENSENETWORK™ is the global connect layer of LICENSEGOC™ — where inventions, business, investors, commercial exchange, knowledge, chat, real information, and digital social life meet in an open, deep, modern, and privacy-protected space.">
+      </p>
+
+      <div class="hero-actions">
+        <button class="hero-btn primary" type="button" onclick="scrollToSection('networkExplorer')"
+          data-vi="Khám phá mạng lưới" data-en="Explore the network"></button>
+        <button class="hero-btn" type="button" onclick="scrollToSection('globalChat')"
+          data-vi="Mở Chat Layer" data-en="Open Chat Layer"></button>
+        <button class="hero-btn" type="button" onclick="scrollToSection('privacyLayer')"
+          data-vi="Xem Privacy Layer" data-en="View Privacy Layer"></button>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <b>8</b>
+          <span data-vi="Lớp giá trị chính" data-en="Primary value layers"></span>
+        </div>
+        <div class="stat">
+          <b>24/7</b>
+          <span data-vi="Đối thoại toàn cầu" data-en="Global dialogue"></span>
+        </div>
+        <div class="stat">
+          <b>∞</b>
+          <span data-vi="Tiềm năng kết nối" data-en="Connection potential"></span>
+        </div>
+        <div class="stat">
+          <b>Private</b>
+          <span data-vi="Bảo vệ quyền riêng tư" data-en="Privacy protection"></span>
+        </div>
       </div>
     </section>
 
-    <!-- HOW-TO -->
-    <section class="panel" aria-labelledby="howto">
-      <h2 id="howto">How it works</h2>
-      <div class="grid cols-2">
+    <section class="section">
+      <h2 data-vi="LICENSENETWORK™ <span>nên là gì?</span>" data-en="What should <span>LICENSENETWORK™</span> be?"></h2>
+      <p class="section-intro"
+         data-vi="LICENSENETWORK™ không chỉ là social feed, forum hay chat room. Đây phải là lớp lưu thông giá trị sống của toàn hệ LICENSEGOC™ — nơi con người không chỉ hiện diện, mà còn kết nối, hợp tác, phát triển và biến cơ hội thành hiện thực."
+         data-en="LICENSENETWORK™ is not just a social feed, a forum, or a chat room. It must be the living value circulation layer of the LICENSEGOC™ ecosystem — where people do not only appear, but connect, collaborate, grow, and turn opportunity into reality.">
+      </p>
+
+      <div class="grid-4">
         <div class="card">
-          <h3 style="margin:0 0 6px">1) Tạo / Góp ý</h3>
-          <p class="note">Dùng Creations Room để tạo thẻ, gán người, đẩy tiến độ. Chat cộng đồng hỗ trợ theo thời gian thực.</p>
+          <div class="icon-badge">1</div>
+          <h3 data-vi="Inventions" data-en="Inventions"></h3>
+          <p data-vi="Không gian cho phát minh, sáng chế, mô hình và ý tưởng công nghệ bước ra thế giới." data-en="A space where inventions, patents, models, and technology ideas step into the world."></p>
         </div>
+
         <div class="card">
-          <h3 style="margin:0 0 6px">2) Bảo hộ</h3>
-          <p class="note">Nộp bản mô tả/ảnh/video vào trang Submit để ghi dấu thời gian và lưu bằng chứng.</p>
+          <div class="icon-badge">2</div>
+          <h3 data-vi="Business" data-en="Business"></h3>
+          <p data-vi="Nơi doanh nghiệp, founder và partner gặp nhau trong cùng một cấu trúc giá trị." data-en="A place where businesses, founders, and partners meet within one shared value structure."></p>
         </div>
+
         <div class="card">
-          <h3 style="margin:0 0 6px">3) Kinh tế sáng tạo</h3>
-          <p class="note">Kết nối Pay & Cards và LICENSECOIN (sau) để thưởng — minh bạch đóng góp.</p>
+          <div class="icon-badge">3</div>
+          <h3 data-vi="Investors" data-en="Investors"></h3>
+          <p data-vi="Nơi investor tiếp cận tín hiệu, dự án, founder, creator và cơ hội có định hướng." data-en="A place where investors access signals, projects, founders, creators, and directional opportunities."></p>
         </div>
+
         <div class="card">
-          <h3 style="margin:0 0 6px">4) Mở rộng</h3>
-          <p class="note">Hỗ trợ đa ngôn ngữ (nút 🌐 Translate), đổi giao diện Dark/Light/Color ngay trên thanh nổi.</p>
+          <div class="icon-badge">4</div>
+          <h3 data-vi="Private Social" data-en="Private Social"></h3>
+          <p data-vi="Một mạng xã hội thế hệ mới với bảo vệ quyền riêng tư như nguyên lý gốc." data-en="A next-generation social layer where privacy protection is a core principle."></p>
         </div>
       </div>
     </section>
 
-    <footer>© 2025 LICENSENETWORK™ — Build with the world.</footer>
+    <section class="section">
+      <h2 data-vi="Vai trò chiến lược trong <span>LICENSEGOC™</span>" data-en="Strategic role inside <span>LICENSEGOC™</span>"></h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 data-vi="Làm cho hệ sinh thái trở thành thật" data-en="Makes the ecosystem become real"></h3>
+          <p
+            data-vi="Nếu LICENSEGOC™ là lõi điều phối, thì LICENSENETWORK™ là nơi các dòng chảy thật bắt đầu xuất hiện: đối thoại, hợp tác, cơ hội, thương lượng, tri thức, tín hiệu thị trường và cộng đồng."
+            data-en="If LICENSEGOC™ is the coordinating core, then LICENSENETWORK™ is where real flows begin to appear: dialogue, collaboration, opportunity, negotiation, knowledge, market signals, and community.">
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="value-list">
+            <div class="value-row">
+              <span data-vi="Mở cửa toàn cầu kể cả khách chưa là thành viên" data-en="Open globally even to non-members"></span>
+              <span class="tag gold" data-vi="Open Access" data-en="Open Access"></span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Kết nối creator + business + investor" data-en="Connects creators + business + investors"></span>
+              <span class="tag blue" data-vi="Bridge" data-en="Bridge"></span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Tạo lưu thông giá trị thật" data-en="Creates real value circulation"></span>
+              <span class="tag green" data-vi="Flow" data-en="Flow"></span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Bảo vệ riêng tư ở tầng cao" data-en="Protects privacy at a high level"></span>
+              <span class="tag purple" data-vi="Protected" data-en="Protected"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quote"
+        style="margin-top:18px;"
+        data-vi="LICENSEGOC™ tạo ra nền tảng của giá trị. <span>LICENSENETWORK™ làm cho giá trị đó gặp được thế giới.</span>"
+        data-en="LICENSEGOC™ builds the foundation of value. <span>LICENSENETWORK™ makes that value meet the world.</span>">
+      </div>
+    </section>
+
+    <section class="section" id="networkExplorer">
+      <h2 data-vi="Network Explorer <span>– Khám phá các tầng kết nối</span>" data-en="Network Explorer <span>– Explore the connection layers</span>"></h2>
+      <p class="section-intro"
+         data-vi="Bất kỳ ai cũng có thể bước vào mạng lưới này để xem, khám phá, trao đổi và cảm nhận hướng đi của hệ thống, dù chưa phải thành viên chính thức của LICENSE GỐC™."
+         data-en="Anyone can step into this network to view, explore, exchange, and feel the direction of the system, even before becoming an official member of LICENSE GỐC™.">
+      </p>
+
+      <div class="toolbar">
+        <input class="search" id="searchInput" type="text"
+          placeholder="Tìm invention, business, investor, news, chat..."
+          oninput="filterNetwork()" />
+        <button class="filter-btn active" type="button" data-filter="all">All</button>
+        <button class="filter-btn" type="button" data-filter="inventions">Inventions</button>
+        <button class="filter-btn" type="button" data-filter="business">Business</button>
+        <button class="filter-btn" type="button" data-filter="investors">Investors</button>
+        <button class="filter-btn" type="button" data-filter="commercial">Commercial</button>
+        <button class="filter-btn" type="button" data-filter="knowledge">Knowledge</button>
+        <button class="filter-btn" type="button" data-filter="chat">Chat</button>
+        <button class="filter-btn" type="button" data-filter="news">News</button>
+        <button class="filter-btn" type="button" data-filter="private">Private</button>
+      </div>
+
+      <div class="network-grid" id="networkGrid">
+        <div class="network-item" data-category="inventions knowledge">
+          <b data-vi="Invention Exchange" data-en="Invention Exchange"></b>
+          <small data-vi="Không gian cho phát minh, bằng sáng chế, mô hình và ý tưởng tương lai được đưa ra, phản biện và kết nối." data-en="A space where inventions, patents, models, and future ideas are presented, discussed, and connected."></small>
+          <div class="meta">
+            <span class="tag gold">Inventions</span>
+            <span class="tag blue">Knowledge</span>
+          </div>
+          <div class="actions">
+            <button class="mini-btn primary" type="button" onclick="showToast('Invention Exchange opened.')">Open</button>
+            <button class="mini-btn" type="button" onclick="showToast('Submit invention flow coming next.')">Submit</button>
+          </div>
+        </div>
+
+        <div class="network-item" data-category="business investors">
+          <b data-vi="Founder & Investor Bridge" data-en="Founder & Investor Bridge"></b>
+          <small data-vi="Nơi founder, investor, doanh nghiệp và strategic partner gặp nhau trong một luồng đối thoại rõ ràng." data-en="A place where founders, investors, businesses, and strategic partners meet within a clear flow of dialogue."></small>
+          <div class="meta">
+            <span class="tag green">Business</span>
+            <span class="tag purple">Investors</span>
+          </div>
+          <div class="actions">
+            <button class="mini-btn primary" type="button" onclick="showToast('Founder & Investor Bridge opened.')">Open</button>
+            <button class="mini-btn" type="button" onclick="showToast('Pitch request prepared.')">Pitch</button>
+          </div>
+        </div>
+
+        <div class="network-item" data-category="commercial">
+          <b data-vi="Commercial Exchange" data-en="Commercial Exchange"></b>
+          <small data-vi="Lớp thương mại hóa cho licensing deal, đối tác, hợp tác, placement và cơ hội doanh thu." data-en="A commercialization layer for licensing deals, partnerships, placements, and revenue opportunities."></small>
+          <div class="meta">
+            <span class="tag gold">Commercial</span>
+          </div>
+          <div class="actions">
+            <button class="mini-btn primary" type="button" onclick="window.location.href='commercial.html'">Open</button>
+            <button class="mini-btn" type="button" onclick="showToast('Commercial proposal builder coming next.')">Proposal</button>
+          </div>
+        </div>
+
+        <div class="network-item" data-category="knowledge news">
+          <b data-vi="Knowledge Commons" data-en="Knowledge Commons"></b>
+          <small data-vi="Nơi trao đổi kiến thức, phân tích, chia sẻ góc nhìn và học hỏi có chiều sâu." data-en="A place to exchange knowledge, analysis, perspective, and deep learning."></small>
+          <div class="meta">
+            <span class="tag blue">Knowledge</span>
+            <span class="tag green">Public</span>
+          </div>
+          <div class="actions">
+            <button class="mini-btn primary" type="button" onclick="showToast('Knowledge Commons opened.')">Open</button>
+            <button class="mini-btn" type="button" onclick="showToast('Knowledge article draft coming next.')">Write</button>
+          </div>
+        </div>
+
+        <div class="network-item" data-category="chat private">
+          <b data-vi="Global Dialogue Layer" data-en="Global Dialogue Layer"></b>
+          <small data-vi="Không gian nói chuyện công khai, nhóm và riêng tư, nơi mọi tầng lớp có thể bước vào và đối thoại." data-en="A space for public, group, and private conversation where every layer of society can enter and dialogue."></small>
+          <div class="meta">
+            <span class="tag purple">Chat</span>
+            <span class="tag gold">Global</span>
+          </div>
+          <div class="actions">
+            <button class="mini-btn primary" type="button" onclick="scrollToSection('globalChat')">Open Chat</button>
+            <button class="mini-btn" type="button" onclick="showToast('Private room access initialized.')">Private Room</button>
+          </div>
+        </div>
+
+        <div class="network-item" data-category="news knowledge">
+          <b data-vi="Reality News Layer" data-en="Reality News Layer"></b>
+          <small data-vi="Tin tức và thông tin hiện thực — giúp network không bị chết vì nội dung rỗng hoặc giả tạo." data-en="Real news and grounded information — helping the network avoid becoming empty or artificial."></small>
+          <div class="meta">
+            <span class="tag green">News</span>
+            <span class="tag blue">Reality</span>
+          </div>
+          <div class="actions">
+            <button class="mini-btn primary" type="button" onclick="showToast('Reality News Layer opened.')">Open</button>
+            <button class="mini-btn" type="button" onclick="showToast('News signal tracking coming next.')">Signals</button>
+          </div>
+        </div>
+
+        <div class="network-item" data-category="private">
+          <b data-vi="Private Social Vault" data-en="Private Social Vault"></b>
+          <small data-vi="Mạng xã hội thế hệ mới, nơi quyền riêng tư không phải cài đặt phụ mà là nguyên lý nền tảng." data-en="A next-generation social layer where privacy is not an optional setting but a foundational principle."></small>
+          <div class="meta">
+            <span class="tag purple">Private</span>
+            <span class="tag gold">Protected</span>
+          </div>
+          <div class="actions">
+            <button class="mini-btn primary" type="button" onclick="scrollToSection('privacyLayer')">View</button>
+            <button class="mini-btn" type="button" onclick="togglePrivateMode()">Private Mode</button>
+          </div>
+        </div>
+
+        <div class="network-item" data-category="business commercial">
+          <b data-vi="Business Rooms" data-en="Business Rooms"></b>
+          <small data-vi="Phòng trao đổi theo doanh nghiệp, ngành nghề, deal room và định hướng hợp tác chuyên sâu." data-en="Rooms for businesses, industries, deal rooms, and deeper cooperation pathways."></small>
+          <div class="meta">
+            <span class="tag green">Business</span>
+            <span class="tag blue">Rooms</span>
+          </div>
+          <div class="actions">
+            <button class="mini-btn primary" type="button" onclick="showToast('Business Rooms opened.')">Open</button>
+            <button class="mini-btn" type="button" onclick="showToast('Secure room request submitted.')">Request Room</button>
+          </div>
+        </div>
+
+        <div class="network-item" data-category="investors knowledge private">
+          <b data-vi="Investor Intelligence" data-en="Investor Intelligence"></b>
+          <small data-vi="Nơi investor nhận tín hiệu, đánh giá hệ sinh thái, xem cơ hội và tiếp cận các lớp giá trị có chọn lọc." data-en="A place where investors receive signals, assess the ecosystem, see opportunities, and access curated value layers."></small>
+          <div class="meta">
+            <span class="tag gold">Investors</span>
+            <span class="tag purple">Intelligence</span>
+          </div>
+          <div class="actions">
+            <button class="mini-btn primary" type="button" onclick="showToast('Investor Intelligence opened.')">Open</button>
+            <button class="mini-btn" type="button" onclick="showToast('Investor summary prepared.')">Summary</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="liveLayer">
+      <h2 data-vi="Live Layer <span>– News, Feed & Signals</span>" data-en="Live Layer <span>– News, Feed & Signals</span>"></h2>
+      <div class="tabs">
+        <button class="tab active" type="button" data-pane="pane-feed">Feed</button>
+        <button class="tab" type="button" data-pane="pane-news">News</button>
+        <button class="tab" type="button" data-pane="pane-signals">Signals</button>
+      </div>
+
+      <div class="tab-pane active" id="pane-feed">
+        <div class="card">
+          <div class="feed-item">
+            <div>
+              <b data-vi="Một founder mới vừa mở proposal trong Business Room" data-en="A new founder just opened a proposal in the Business Room"></b>
+              <span data-vi="3 phút trước" data-en="3 minutes ago"></span>
+            </div>
+            <span class="tag green">Live</span>
+          </div>
+
+          <div class="feed-item">
+            <div>
+              <b data-vi="Một invention concept đang được quan tâm mạnh" data-en="An invention concept is drawing strong attention"></b>
+              <span data-vi="12 phút trước" data-en="12 minutes ago"></span>
+            </div>
+            <span class="tag gold">Trend</span>
+          </div>
+
+          <div class="feed-item">
+            <div>
+              <b data-vi="TIM ♥️ AI vừa hỗ trợ một creator hoàn thiện trình bày hệ thống" data-en="TIM ♥️ AI just helped a creator complete a system presentation"></b>
+              <span data-vi="20 phút trước" data-en="20 minutes ago"></span>
+            </div>
+            <span class="tag blue">AI</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="pane-news">
+        <div class="card">
+          <div class="news-item">
+            <div>
+              <b data-vi="Reality News: Thị trường đang tăng nhu cầu với hệ sinh thái xác thực quyền sở hữu" data-en="Reality News: Market demand is rising for ownership verification ecosystems"></b>
+              <span data-vi="Nguồn xác minh • 1h" data-en="Verified source • 1h"></span>
+            </div>
+            <span class="tag green">News</span>
+          </div>
+
+          <div class="news-item">
+            <div>
+              <b data-vi="Commercial Pulse: Các mô hình private network đang trở lại mạnh" data-en="Commercial Pulse: Private network models are returning strongly"></b>
+              <span data-vi="2h trước" data-en="2h ago"></span>
+            </div>
+            <span class="tag gold">Commercial</span>
+          </div>
+
+          <div class="news-item">
+            <div>
+              <b data-vi="Investor Focus: Hệ social có tầng ownership đang được chú ý" data-en="Investor Focus: Social systems with ownership layers are gaining attention"></b>
+              <span data-vi="4h trước" data-en="4h ago"></span>
+            </div>
+            <span class="tag purple">Investor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="pane-signals">
+        <div class="card">
+          <div class="value-list">
+            <div class="value-row">
+              <span data-vi="Mức quan tâm invention tuần này" data-en="Invention interest this week"></span>
+              <span class="tag gold">+28%</span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Business Room activity" data-en="Business Room activity"></span>
+              <span class="tag blue">High</span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Private Chat demand" data-en="Private Chat demand"></span>
+              <span class="tag green">Rising</span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Investor signal strength" data-en="Investor signal strength"></span>
+              <span class="tag purple">Strong</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="globalChat">
+      <h2 data-vi="Global Chat Layer <span>– Đối thoại toàn cầu</span>" data-en="Global Chat Layer <span>– Global Dialogue</span>"></h2>
+      <p class="section-intro"
+         data-vi="Không gian chat trong LICENSENETWORK™ được định vị như lớp đối thoại sống của hệ thống: mở, linh hoạt, đa tầng và có thể đi vào chế độ riêng tư cao."
+         data-en="The chat space inside LICENSENETWORK™ is positioned as the living dialogue layer of the system: open, flexible, multi-level, and capable of entering a high-privacy mode.">
+      </p>
+
+      <div class="grid-2">
+        <div class="chat-box">
+          <div class="chat-log" id="chatLog">
+            <div class="bubble them" data-vi="Chào mừng đến với LICENSENETWORK™." data-en="Welcome to LICENSENETWORK™."></div>
+            <div class="bubble them" data-vi="Đây là lớp chat mô phỏng để trình diễn network dialogue." data-en="This is the simulated chat layer for demonstrating network dialogue."></div>
+            <div class="bubble me">Hello LN</div>
+          </div>
+
+          <div class="chat-actions">
+            <input class="chat-input" id="chatInput" type="text" placeholder="Nhập nội dung đối thoại..." />
+            <button class="hero-btn primary" type="button" onclick="sendChat()">Send</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 data-vi="Các chế độ đối thoại" data-en="Dialogue modes"></h3>
+          <div class="value-list">
+            <div class="value-row">
+              <span data-vi="Public Community Chat" data-en="Public Community Chat"></span>
+              <span class="tag green">Open</span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Business Private Room" data-en="Business Private Room"></span>
+              <span class="tag blue">Protected</span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Investor Secure Channel" data-en="Investor Secure Channel"></span>
+              <span class="tag purple">Selective</span>
+            </div>
+            <div class="value-row">
+              <span data-vi="TIM ♥️ AI Support Dialogue" data-en="TIM ♥️ AI Support Dialogue"></span>
+              <span class="tag gold">Active</span>
+            </div>
+          </div>
+
+          <div style="margin-top:14px; display:grid; gap:10px;">
+            <button class="mini-btn primary" type="button" onclick="showToast('Public Community Chat opened.')">Public Chat</button>
+            <button class="mini-btn" type="button" onclick="showToast('Business Private Room request sent.')">Business Private Room</button>
+            <button class="mini-btn" type="button" onclick="showToast('Investor Secure Channel request sent.')">Investor Channel</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="privacyLayer">
+      <h2 data-vi="Privacy Layer <span>– Bảo vệ quyền riêng tư tuyệt đối</span>" data-en="Privacy Layer <span>– Strong privacy protection</span>"></h2>
+      <p class="section-intro"
+         data-vi="LICENSENETWORK™ được định vị là một mạng xã hội lớn hơn tư duy cũ: không khai thác con người bằng dữ liệu, mà bảo vệ con người như một chủ thể có giá trị."
+         data-en="LICENSENETWORK™ is positioned as a social network beyond the old model: not exploiting people through data, but protecting people as valuable subjects.">
+      </p>
+
+      <div class="privacy-panel">
+        <div class="card">
+          <h3 data-vi="Quyền riêng tư là nguyên lý gốc" data-en="Privacy as a foundational principle"></h3>
+          <p
+            data-vi="Trong LICENSENETWORK™, quyền riêng tư không phải chỉ là một cài đặt phụ. Nó là kiến trúc của niềm tin. Người dùng phải được quyền kiểm soát những gì họ chia sẻ, với ai, trong bối cảnh nào và ở độ sâu nào."
+            data-en="In LICENSENETWORK™, privacy is not merely an optional setting. It is the architecture of trust. Users must be able to control what they share, with whom, in what context, and at what depth.">
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="toggle-row">
+            <span data-vi="Private Mode" data-en="Private Mode"></span>
+            <div class="switch" id="switchPrivate" onclick="toggleSwitch(this)"></div>
+          </div>
+          <div class="toggle-row">
+            <span data-vi="Secure Visibility" data-en="Secure Visibility"></span>
+            <div class="switch on" onclick="toggleSwitch(this)"></div>
+          </div>
+          <div class="toggle-row">
+            <span data-vi="Selective Sharing" data-en="Selective Sharing"></span>
+            <div class="switch on" onclick="toggleSwitch(this)"></div>
+          </div>
+          <div class="toggle-row">
+            <span data-vi="Protected Dialogue Logs" data-en="Protected Dialogue Logs"></span>
+            <div class="switch on" onclick="toggleSwitch(this)"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Investor Logic <span>– Vì sao network này có giá trị lớn?</span>" data-en="Investor Logic <span>– Why does this network matter?</span>"></h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 data-vi="Không chỉ social — mà là value network" data-en="Not only social — but a value network"></h3>
+          <p
+            data-vi="Điểm mạnh của LICENSENETWORK™ là không dừng ở tương tác. Nó kết nối đúng các tầng có giá trị cao: invention, creator, founder, business, investor, licensing, commercial và AI support. Điều này tạo ra khả năng monetization và defensibility cao hơn social platform thông thường."
+            data-en="The strength of LICENSENETWORK™ is that it does not stop at interaction. It connects the highest-value layers: invention, creators, founders, business, investors, licensing, commercial, and AI support. This creates stronger monetization potential and defensibility than a conventional social platform.">
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="value-list">
+            <div class="value-row">
+              <span data-vi="High-value audience clustering" data-en="High-value audience clustering"></span>
+              <span class="tag gold">Strong</span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Commercial pathways" data-en="Commercial pathways"></span>
+              <span class="tag green">Multi-Layer</span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Privacy + ownership advantage" data-en="Privacy + ownership advantage"></span>
+              <span class="tag blue">Differentiated</span>
+            </div>
+            <div class="value-row">
+              <span data-vi="Investor confidence logic" data-en="Investor confidence logic"></span>
+              <span class="tag purple">Visible</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-vi="Đi tiếp vào <span>toàn hệ thống</span>" data-en="Continue into the <span>full ecosystem</span>"></h2>
+
+      <div class="cta-grid">
+        <div class="cta-card">
+          <h3>LICENSEGOC™</h3>
+          <p data-vi="Quay lại lõi hệ thống để xem cấu trúc, triết lý và bản sắc trung tâm." data-en="Return to the core system to review structure, philosophy, and central identity."></p>
+          <a class="hero-btn primary" href="licensegoc.html">Open</a>
+        </div>
+
+        <div class="cta-card">
+          <h3>TIM ♥️ AI</h3>
+          <p data-vi="Đi tiếp vào trí tuệ đồng hành của toàn hệ LICENSE GỐC™." data-en="Continue into the companion intelligence of the LICENSE GỐC™ ecosystem."></p>
+          <a class="hero-btn primary" href="tim.html">Open</a>
+        </div>
+
+        <div class="cta-card">
+          <h3>LICENSECOIN™</h3>
+          <p data-vi="Đi tiếp vào lớp giá trị số, wallet, vault và economic flow." data-en="Continue into the digital value layer, wallet, vault, and economic flow."></p>
+          <a class="hero-btn primary" href="licensecoin.html">Open</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">© LICENSENETWORK™ • GLOBAL CONNECT LAYER • LICENSEGOC™ • IN GOD WE TRUST</div>
   </div>
 
-  <!-- NẠP UI CHUNG: Floating Bar + Translate + Theme + LICENSEGOC panel -->
-  <script src="goc-ui.js?v=18" defer></script>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    let currentLang = localStorage.getItem('licensegoc_lang') || 'vi';
+    let currentFilter = 'all';
+    let toastTimer = null;
+
+    function applyLanguage(lang){
+      currentLang = lang;
+      localStorage.setItem('licensegoc_lang', lang);
+
+      document.querySelectorAll('[data-vi]').forEach(el => {
+        const html = lang === 'vi' ? el.getAttribute('data-vi') : el.getAttribute('data-en');
+        if (html !== null) el.innerHTML = html;
+      });
+
+      const search = document.getElementById('searchInput');
+      if(search){
+        search.placeholder = lang === 'vi'
+          ? 'Tìm invention, business, investor, news, chat...'
+          : 'Search invention, business, investor, news, chat...';
+      }
+
+      const chatInput = document.getElementById('chatInput');
+      if(chatInput){
+        chatInput.placeholder = lang === 'vi'
+          ? 'Nhập nội dung đối thoại...'
+          : 'Enter your dialogue...';
+      }
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+
+      document.documentElement.lang = lang === 'vi' ? 'vi' : 'en';
+    }
+
+    function showToast(message){
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    function scrollToSection(id){
+      const el = document.getElementById(id);
+      if(el){
+        el.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    }
+
+    function filterNetwork(){
+      const searchValue = document.getElementById('searchInput').value.trim().toLowerCase();
+      const items = document.querySelectorAll('.network-item');
+
+      items.forEach(item => {
+        const category = item.dataset.category.toLowerCase();
+        const text = item.textContent.toLowerCase();
+
+        const matchesCategory = currentFilter === 'all' || category.includes(currentFilter);
+        const matchesSearch = !searchValue || text.includes(searchValue);
+
+        item.classList.toggle('hide', !(matchesCategory && matchesSearch));
+      });
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        filterNetwork();
+      });
+    });
+
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+
+        btn.classList.add('active');
+        const pane = document.getElementById(btn.dataset.pane);
+        if(pane) pane.classList.add('active');
+      });
+    });
+
+    function sendChat(){
+      const input = document.getElementById('chatInput');
+      const log = document.getElementById('chatLog');
+      const value = input.value.trim();
+      if(!value){
+        showToast(currentLang === 'vi' ? 'Hãy nhập nội dung chat.' : 'Please enter a message.');
+        return;
+      }
+
+      const myBubble = document.createElement('div');
+      myBubble.className = 'bubble me';
+      myBubble.textContent = value;
+      log.appendChild(myBubble);
+
+      input.value = '';
+      log.scrollTop = log.scrollHeight;
+
+      setTimeout(() => {
+        const reply = document.createElement('div');
+        reply.className = 'bubble them';
+        reply.textContent = currentLang === 'vi'
+          ? 'LICENSENETWORK™ đã ghi nhận đối thoại của bạn và mở rộng lớp kết nối phù hợp.'
+          : 'LICENSENETWORK™ has received your dialogue and opened the appropriate connection layer.';
+        log.appendChild(reply);
+        log.scrollTop = log.scrollHeight;
+      }, 700);
+    }
+
+    function toggleSwitch(el){
+      el.classList.toggle('on');
+      showToast(currentLang === 'vi' ? 'Privacy setting updated.' : 'Privacy setting updated.');
+    }
+
+    function togglePrivateMode(){
+      const sw = document.getElementById('switchPrivate');
+      sw.classList.toggle('on');
+      showToast(sw.classList.contains('on')
+        ? (currentLang === 'vi' ? 'Private Mode activated.' : 'Private Mode activated.')
+        : (currentLang === 'vi' ? 'Private Mode deactivated.' : 'Private Mode deactivated.'));
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+    });
+
+    document.getElementById('chatInput').addEventListener('keydown', (e) => {
+      if(e.key === 'Enter') sendChat();
+    });
+
+    applyLanguage(currentLang);
+    filterNetwork();
+  </script>
 </body>
 </html>
