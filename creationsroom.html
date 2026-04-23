@@ -1,368 +1,1314 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Creations Room — Live Collaboration (DEMO)</title>
-<style>
-  :root{
-    --bg:#0a0f1a; --panel:#0f1422; --ink:#e8f0ff; --muted:#9fb0d1;
-    --line:rgba(120,160,255,.25); --brand:#6fd3ff; --gold:#ffd66b; --ok:#62f1a1;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;background:radial-gradient(1200px 800px at 50% -200px, #122040 0%, #0b1120 45%, #05080f 100%);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  a{color:var(--brand);text-decoration:none}
-  .wrap{min-height:100vh;display:grid;grid-template-rows:72px 1fr;gap:12px;padding:12px 12px 110px}
-  .glass{background:linear-gradient(180deg, #10182b, #0a1020); border:1px solid var(--line); border-radius:16px; box-shadow:0 12px 40px rgba(0,0,0,.45);}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CREATIONS ROOM™ — LICENSEGOC</title>
+  <meta
+    name="description"
+    content="CREATIONS ROOM™ within LICENSEGOC — live build ecosystem for inventors, creators, builders, investors, and public collaboration."
+  />
 
-  /* Header */
-  .top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;position:sticky;top:0;z-index:2}
-  .logo{display:flex;align-items:center;gap:12px;font-weight:800}
-  .logo .dot{width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 40% 40%, #7ef, #19a7ff)}
-  .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);padding:10px 14px;border-radius:999px;background:linear-gradient(180deg,#15213a,#0f172a)}
-  .tabs{display:flex;gap:10px}
-  .tabs button{all:unset;cursor:pointer}
-  .tabs .on{box-shadow:inset 0 0 0 2px rgba(111,211,255,.35)}
-  .hint{color:var(--muted);font-size:14px}
+  <link rel="stylesheet" href="core.css" />
 
-  /* Layout */
-  .main{display:grid;grid-template-columns:260px 1fr 280px;gap:12px;min-height:72vh}
-  .col{padding:14px}
-  .title{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-  .title h3{margin:0;font-size:16px;letter-spacing:.2px;color:#cfe2ff}
-  .btn{appearance:none;border:1px solid var(--line);background:linear-gradient(180deg,#172342,#0c142a);color:var(--ink);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:700}
-  .btn:active{transform:translateY(1px)}
+  <style>
+    :root{
+      --bg:#03070d;
+      --bg2:#07111c;
+      --panel:rgba(8,16,30,.82);
+      --panel-2:rgba(12,22,40,.90);
+      --line:rgba(241,199,107,.18);
+      --line-soft:rgba(255,255,255,.08);
+      --gold:#f1c76b;
+      --gold-2:#d99a2f;
+      --text:#fff5de;
+      --muted:rgba(255,255,255,.72);
+      --green:#71f0ad;
+      --blue:#8ecbff;
+      --red:#ff98a0;
+      --shadow:0 24px 70px rgba(0,0,0,.48);
+      --radius:26px;
+      --maxw:440px;
+    }
 
-  /* Rooms list */
-  .rooms ul,.members ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-  .rooms li,.members li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,#0f162c,#0b1224)}
-  .rooms li.on{outline:2px solid rgba(111,211,255,.35)}
-  .rooms .meta{font-size:12px;color:var(--muted)}
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+      background:#000;
+      color:var(--text);
+      font-family:Arial, Helvetica, sans-serif;
+    }
 
-  /* Board */
-  .board{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  .lane{border:1px dashed var(--line);border-radius:14px;background:linear-gradient(180deg,#0e1630,#0a0f22);padding:12px;min-height:220px}
-  .lane h4{margin:0 0 10px 0;color:#bcd9ff;letter-spacing:.3px}
-  .card{user-select:none;cursor:grab;border:1px solid rgba(255,255,255,.06);background:linear-gradient(180deg,#142043,#0d152b);padding:10px;border-radius:12px;margin:10px 0;box-shadow:0 8px 20px rgba(0,0,0,.35)}
-  .card:active{cursor:grabbing}
-  .lane.dragover{outline:2px solid rgba(98,241,161,.35)}
-  .add{display:flex;gap:8px}
+    body{
+      display:flex;
+      justify-content:center;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.50), rgba(0,0,0,.75)),
+        #000;
+    }
 
-  /* Chat */
-  .chat{display:grid;grid-template-rows:1fr auto;gap:10px;height:100%}
-  .chatlog{overflow:auto;border:1px solid var(--line);border-radius:12px;padding:10px;background:linear-gradient(180deg,#0e152b,#0a0f20)}
-  .msg{margin:8px 0}
-  .msg b{color:#9fe1ff}
-  .me b{color:#62f1a1}
-  .composer{display:flex;gap:8px}
-  .composer input{flex:1;border:1px solid var(--line);border-radius:10px;background:#0b1224;color:var(--ink);padding:10px}
+    a{text-decoration:none;color:inherit}
+    button,input,textarea,select{font-family:inherit}
 
-  /* Profile menu */
-  .profile{position:relative}
-  .avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:linear-gradient(180deg,#16274a,#0b1730);border:1px solid var(--line);cursor:pointer}
-  .menu{position:absolute;right:0;top:52px;width:220px;display:none;background:linear-gradient(180deg,#0f162b,#0a1122);border:1px solid var(--line);border-radius:12px;box-shadow:0 16px 44px rgba(0,0,0,.45);overflow:hidden}
-  .menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.05)}
-  .menu a:hover{background:rgba(255,255,255,.04)}
-  .profile.open .menu{display:block}
+    .app{
+      width:100%;
+      max-width:var(--maxw);
+      min-height:100vh;
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(2,7,16,.52), rgba(2,7,16,.92)),
+        url('creations-bg.jpg') center center / cover no-repeat;
+      box-shadow:var(--shadow);
+    }
 
-  /* Tiny badges */
-  .badge{font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);background:linear-gradient(180deg,#14234a,#0c142b);color:#cfe2ff}
-  .online{color:#9fffb9}
-  .dot2{width:8px;height:8px;border-radius:50%;background:#62f1a1;display:inline-block;margin-right:6px}
+    .app::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(241,199,107,.12), transparent 24%),
+        radial-gradient(circle at 10% 70%, rgba(30,145,255,.10), transparent 24%);
+    }
 
-  /* Responsive */
-  @media (max-width: 1024px){
-    .main{grid-template-columns:1fr;grid-auto-rows:auto}
-    .chat{height:auto}
-  }
-</style>
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:40;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:14px;
+      background:rgba(5,10,18,.72);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .top-btn{
+      width:42px;
+      height:42px;
+      border:none;
+      border-radius:14px;
+      cursor:pointer;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      color:#fff;
+      font-size:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .brand{
+      flex:1;
+      min-width:0;
+      text-align:center;
+    }
+
+    .brand b{
+      display:block;
+      font-size:16px;
+      font-weight:1000;
+      letter-spacing:.4px;
+      color:#fff;
+    }
+
+    .brand span{
+      display:block;
+      margin-top:3px;
+      font-size:11px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .page{
+      position:relative;
+      z-index:2;
+      padding:14px;
+      padding-bottom:120px;
+    }
+
+    .glass{
+      background:linear-gradient(180deg, rgba(7,16,30,.85), rgba(6,12,24,.86));
+      border:1px solid var(--line-soft);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      border-radius:var(--radius);
+    }
+
+    .hero{
+      padding:18px;
+      margin-bottom:14px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto -30% -45% auto;
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(241,199,107,.16), transparent 60%);
+      pointer-events:none;
+    }
+
+    .eyebrow{
+      color:var(--gold);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:2px;
+      margin-bottom:10px;
+      text-transform:uppercase;
+    }
+
+    .hero h1{
+      margin:0 0 10px;
+      font-size:32px;
+      line-height:1.04;
+      color:#fff;
+    }
+
+    .hero p{
+      margin:0;
+      font-size:15px;
+      line-height:1.7;
+      color:var(--muted);
+    }
+
+    .hero-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .btn{
+      min-height:50px;
+      border:none;
+      border-radius:18px;
+      cursor:pointer;
+      font-weight:1000;
+      font-size:15px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      transition:.18s ease;
+    }
+
+    .btn:hover{transform:translateY(-1px)}
+    .btn-gold{
+      color:#1e1204;
+      background:linear-gradient(180deg, var(--gold), var(--gold-2));
+      box-shadow:0 12px 24px rgba(0,0,0,.24);
+    }
+
+    .btn-dark{
+      color:#f4dfb5;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(241,199,107,.18);
+    }
+
+    .strip{
+      display:flex;
+      gap:10px;
+      overflow:auto;
+      padding-bottom:4px;
+      margin-bottom:14px;
+    }
+
+    .chip{
+      flex:0 0 auto;
+      min-height:38px;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid rgba(241,199,107,.20);
+      background:rgba(8,16,30,.72);
+      color:#f4dfb5;
+      font-size:12px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    .section{
+      margin-bottom:14px;
+      padding:16px;
+    }
+
+    .section h2{
+      margin:0 0 10px;
+      font-size:24px;
+      line-height:1.15;
+      color:#fff;
+    }
+
+    .section p.lead{
+      margin:0 0 14px;
+      font-size:14px;
+      line-height:1.7;
+      color:var(--muted);
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .metric{
+      padding:14px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+    }
+
+    .metric small{
+      display:block;
+      font-size:11px;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+
+    .metric b{
+      display:block;
+      font-size:24px;
+      color:var(--gold);
+    }
+
+    .live-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      border:1px solid rgba(113,240,173,.22);
+      background:rgba(113,240,173,.10);
+      color:#d6fff0;
+    }
+
+    .dot{
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 0 6px rgba(113,240,173,.10);
+    }
+
+    .card-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .project-card{
+      padding:14px;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    }
+
+    .project-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    .project-title{
+      font-size:18px;
+      font-weight:1000;
+      color:#fff;
+      margin-bottom:6px;
+    }
+
+    .project-sub{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.55;
+    }
+
+    .badge{
+      flex:0 0 auto;
+      min-height:30px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:900;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      white-space:nowrap;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+    }
+
+    .badge.live{
+      color:#d6fff0;
+      border-color:rgba(113,240,173,.22);
+      background:rgba(113,240,173,.10);
+    }
+
+    .badge.review{
+      color:#fff2d2;
+      border-color:rgba(241,199,107,.22);
+      background:rgba(241,199,107,.10);
+    }
+
+    .badge.protect{
+      color:#d8e7ff;
+      border-color:rgba(142,203,255,.22);
+      background:rgba(142,203,255,.10);
+    }
+
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:10px 0 12px;
+    }
+
+    .tag{
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      color:#f4dfb5;
+    }
+
+    .progress-wrap{
+      margin-bottom:12px;
+    }
+
+    .progress-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      margin-bottom:6px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .progress{
+      height:10px;
+      border-radius:999px;
+      overflow:hidden;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.06);
+    }
+
+    .bar{
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--gold), var(--gold-2));
+      width:50%;
+    }
+
+    .project-actions{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+    }
+
+    .mini-btn{
+      min-height:38px;
+      border:none;
+      border-radius:14px;
+      cursor:pointer;
+      font-size:12px;
+      font-weight:900;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      color:#fff2d4;
+    }
+
+    .rooms{
+      display:grid;
+      gap:10px;
+    }
+
+    .room-card{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:10px;
+      align-items:center;
+      padding:14px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+    }
+
+    .room-card b{
+      display:block;
+      font-size:17px;
+      margin-bottom:4px;
+    }
+
+    .room-card span{
+      display:block;
+      font-size:12px;
+      line-height:1.5;
+      color:var(--muted);
+    }
+
+    .join-btn{
+      min-width:82px;
+      min-height:42px;
+      border:none;
+      border-radius:14px;
+      cursor:pointer;
+      font-size:13px;
+      font-weight:1000;
+      color:#f7e7bf;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(241,199,107,.20);
+    }
+
+    .kanban-shell{
+      overflow:auto;
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:12px;
+    }
+
+    .lane{
+      min-width:122px;
+      padding:12px;
+      border-radius:20px;
+      border:1px dashed rgba(142,203,255,.18);
+      background:rgba(255,255,255,.02);
+    }
+
+    .lane h3{
+      margin:0 0 10px;
+      font-size:17px;
+      color:#fff;
+    }
+
+    .task{
+      padding:12px;
+      margin-bottom:10px;
+      border-radius:16px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .task:last-child{margin-bottom:0}
+
+    .task b{
+      display:block;
+      margin-bottom:6px;
+      font-size:13px;
+      color:#fff;
+    }
+
+    .task span{
+      display:block;
+      font-size:11px;
+      line-height:1.5;
+      color:var(--muted);
+    }
+
+    .creator-wall{
+      display:grid;
+      gap:12px;
+    }
+
+    .creator-card{
+      padding:14px;
+      border-radius:22px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .creator-head{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:10px;
+    }
+
+    .avatar{
+      width:54px;
+      height:54px;
+      border-radius:50%;
+      background:linear-gradient(180deg, rgba(241,199,107,.24), rgba(217,154,47,.16));
+      border:1px solid rgba(241,199,107,.20);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff1c7;
+      font-size:20px;
+      font-weight:1000;
+      flex:0 0 54px;
+    }
+
+    .creator-meta b{
+      display:block;
+      font-size:17px;
+      margin-bottom:4px;
+    }
+
+    .creator-meta span{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    .votes{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .vote-btn{
+      min-height:42px;
+      border:none;
+      border-radius:14px;
+      cursor:pointer;
+      font-size:12px;
+      font-weight:900;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      color:#fff;
+    }
+
+    .feed{
+      display:grid;
+      gap:10px;
+    }
+
+    .feed-item{
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+    }
+
+    .feed-item b{
+      display:block;
+      margin-bottom:5px;
+      font-size:14px;
+      color:#fff;
+    }
+
+    .feed-item span{
+      display:block;
+      font-size:12px;
+      line-height:1.6;
+      color:var(--muted);
+    }
+
+    .comment-box{
+      margin-top:12px;
+      display:grid;
+      gap:10px;
+    }
+
+    .comment-box textarea{
+      width:100%;
+      min-height:96px;
+      resize:vertical;
+      border:none;
+      outline:none;
+      border-radius:18px;
+      padding:14px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      color:#fff;
+      font-size:14px;
+    }
+
+    .comment-box textarea::placeholder{
+      color:rgba(255,255,255,.36);
+    }
+
+    .comment-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .footer-links{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:4px;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      left:50%;
+      bottom:0;
+      transform:translateX(-50%);
+      width:min(var(--maxw), 100%);
+      z-index:32;
+      padding:12px 14px 16px;
+      background:rgba(5,10,18,.90);
+      backdrop-filter:blur(14px);
+      border-top:1px solid rgba(255,255,255,.06);
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:8px;
+    }
+
+    .nav-link{
+      min-height:60px;
+      border-radius:18px;
+      border:1px solid rgba(241,199,107,.16);
+      background:rgba(255,255,255,.03);
+      color:#f4dfb5;
+      font-size:11px;
+      font-weight:900;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:5px;
+      text-align:center;
+    }
+
+    .nav-link .icon{
+      font-size:18px;
+      color:var(--gold);
+      line-height:1;
+    }
+
+    .menu-panel{
+      position:fixed;
+      left:50%;
+      bottom:92px;
+      transform:translateX(-50%) translateY(18px);
+      width:min(calc(var(--maxw) - 20px), calc(100% - 20px));
+      z-index:42;
+      opacity:0;
+      pointer-events:none;
+      transition:.22s ease;
+      padding:14px;
+    }
+
+    .menu-panel.show{
+      opacity:1;
+      pointer-events:auto;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    .menu-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .menu-grid a,
+    .menu-grid button{
+      min-height:50px;
+      border:none;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(241,199,107,.16);
+      color:#f4dfb5;
+      font-size:14px;
+      font-weight:1000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:0 10px;
+      cursor:pointer;
+    }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.34);
+      z-index:38;
+      opacity:0;
+      pointer-events:none;
+      transition:.18s ease;
+    }
+
+    .overlay.show{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:95px;
+      transform:translateX(-50%) translateY(20px);
+      width:min(360px, calc(100% - 24px));
+      z-index:60;
+      opacity:0;
+      pointer-events:none;
+      transition:.22s ease;
+      border-radius:16px;
+      border:1px solid rgba(241,199,107,.18);
+      background:rgba(10,16,28,.96);
+      color:#fff;
+      text-align:center;
+      padding:12px 14px;
+      font-size:13px;
+      box-shadow:var(--shadow);
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    @media (max-width:390px){
+      .hero h1{font-size:28px}
+      .grid-2,
+      .hero-actions,
+      .footer-links,
+      .comment-actions,
+      .menu-grid{
+        grid-template-columns:1fr;
+      }
+      .votes{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
-<div class="wrap">
-
-  <!-- Header -->
-  <header class="top glass">
-    <div class="logo pill">
-      <span class="dot"></span>
-      <div>
-        <div style="font-weight:900;letter-spacing:.4px">CREATIONS ROOM</div>
-        <div class="hint">Live collaboration • Idea → Review → Protect → Coin</div>
+  <div class="app">
+    <div class="topbar">
+      <a class="top-btn" href="licensenetwork.html" aria-label="Back">‹</a>
+      <div class="brand">
+        <b>CREATIONS ROOM™</b>
+        <span>Live Build • Inventors • Public Feedback • LICENSEGOC™</span>
       </div>
+      <button class="top-btn" id="topMenuBtn" type="button" aria-label="Menu">☰</button>
     </div>
 
-    <div class="tabs">
-      <button class="pill btn tab on" data-tab="idea">💡 Idea</button>
-      <button class="pill btn tab" data-tab="review">🧪 Review</button>
-      <button class="pill btn tab" data-tab="protect">🛡 Protect</button>
-      <button class="pill btn tab" data-tab="coin">🪙 Coin</button>
-    </div>
+    <main class="page">
+      <section class="glass hero">
+        <div class="eyebrow">LIVE CREATION ECOSYSTEM</div>
+        <h1>Xây ý tưởng thật.<br>Cho cả thế giới cùng thấy.</h1>
+        <p>
+          CREATIONS ROOM™ là không gian nơi inventor, creator, builder, business
+          và investor có thể cùng nhau nhìn thấy một ý tưởng đang được xây thật,
+          góp ý thật, bảo vệ thật và phát triển thành giá trị thật.
+        </p>
 
-    <div class="profile">
-      <div id="avatar" class="avatar">U</div>
-      <nav class="menu glass">
-        <a href="#" id="menu-settings">⚙️ Settings</a>
-        <a href="#" id="menu-ideas">🗂 My Ideas</a>
-        <a href="#" id="menu-wallet">💳 Wallet</a>
-        <a href="#" id="menu-logout">🚪 Logout</a>
-      </nav>
-    </div>
-  </header>
+        <div style="margin-top:12px">
+          <span class="live-badge"><span class="dot"></span> 128 creators live now</span>
+        </div>
 
-  <!-- Main -->
-  <section class="main">
-    <!-- Left: Rooms -->
-    <aside class="col glass rooms">
-      <div class="title">
-        <h3>Rooms</h3>
-        <button class="btn" id="newRoom">＋ New</button>
-      </div>
-      <ul id="roomList"></ul>
-    </aside>
+        <div class="hero-actions">
+          <button class="btn btn-gold" type="button" id="newProjectBtn">＋ Tạo Project</button>
+          <button class="btn btn-dark" type="button" id="openPublicBtn">🌍 Mở Public Room</button>
+        </div>
+      </section>
 
-    <!-- Center: Board -->
-    <main class="col glass center">
-      <div class="title">
-        <h3 id="roomTitle">Room: Common</h3>
-        <div class="badge" id="tableBadge">Table: Idea</div>
+      <div class="strip">
+        <button class="chip" type="button" data-jump="featured">🔥 Featured Builds</button>
+        <button class="chip" type="button" data-jump="rooms">🌐 Public Rooms</button>
+        <button class="chip" type="button" data-jump="kanban">🧩 Live Build Flow</button>
+        <button class="chip" type="button" data-jump="creators">👤 Creator Pages</button>
+        <button class="chip" type="button" data-jump="feedback">💬 Feedback Wall</button>
       </div>
 
-      <div class="board" id="board">
-        <div class="lane" data-lane="todo">
-          <h4>To-Do</h4>
-          <div class="add">
-            <input id="newCard" placeholder="Thêm thẻ mới… (Enter)"/>
+      <section class="glass section">
+        <h2>Hệ sáng tạo đang vận hành</h2>
+        <p class="lead">
+          Không chỉ là room chat hay bảng task. Đây là kiến trúc để mọi người
+          nhìn thấy ai đang xây gì, đang ở giai đoạn nào, có đáng theo dõi,
+          góp ý hay đầu tư hay không.
+        </p>
+
+        <div class="grid-2">
+          <div class="metric">
+            <small>Projects đang mở</small>
+            <b>342</b>
           </div>
-          <div class="lane-body" id="todo"></div>
+          <div class="metric">
+            <small>Public feedback hôm nay</small>
+            <b>1,268</b>
+          </div>
+          <div class="metric">
+            <small>Inventors đang online</small>
+            <b>128</b>
+          </div>
+          <div class="metric">
+            <small>Investor watchlist</small>
+            <b>74</b>
+          </div>
         </div>
-        <div class="lane" data-lane="doing">
-          <h4>Doing</h4>
-          <div class="lane-body" id="doing"></div>
+      </section>
+
+      <section class="glass section" id="featured">
+        <h2>Featured Builds</h2>
+        <p class="lead">
+          Đây là nơi người ngoài bước vào và lập tức hiểu: hệ thống này đang có
+          những ý tưởng thật sự sống.
+        </p>
+
+        <div class="card-list">
+          <article class="project-card">
+            <div class="project-top">
+              <div>
+                <div class="project-title">Micro-Wing™ Display Drone</div>
+                <div class="project-sub">
+                  Drone hiển thị thông minh cho quảng bá, trình diễn và kết nối
+                  hình ảnh thương hiệu trong môi trường tương lai.
+                </div>
+              </div>
+              <span class="badge live">LIVE BUILD</span>
+            </div>
+
+            <div class="tag-row">
+              <span class="tag">Aerospace</span>
+              <span class="tag">Visual Tech</span>
+              <span class="tag">Prototype</span>
+            </div>
+
+            <div class="progress-wrap">
+              <div class="progress-head">
+                <span>Tiến độ tổng thể</span>
+                <span>74%</span>
+              </div>
+              <div class="progress"><div class="bar" style="width:74%"></div></div>
+            </div>
+
+            <div class="project-actions">
+              <button class="mini-btn vote" type="button" data-vote="1">👍 Hợp lý</button>
+              <button class="mini-btn vote" type="button" data-vote="1">💡 Góp ý</button>
+              <button class="mini-btn open-project" type="button">🚀 Xem chi tiết</button>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <div>
+                <div class="project-title">Future Creator Licensing Grid</div>
+                <div class="project-sub">
+                  Hệ thống phân tầng quyền sở hữu, chia doanh thu và bảo vệ công
+                  sức sáng tạo theo mô hình LICENSE GỐC™.
+                </div>
+              </div>
+              <span class="badge review">REVIEW</span>
+            </div>
+
+            <div class="tag-row">
+              <span class="tag">Licensing</span>
+              <span class="tag">Rights</span>
+              <span class="tag">Economy</span>
+            </div>
+
+            <div class="progress-wrap">
+              <div class="progress-head">
+                <span>Tiến độ tổng thể</span>
+                <span>58%</span>
+              </div>
+              <div class="progress"><div class="bar" style="width:58%"></div></div>
+            </div>
+
+            <div class="project-actions">
+              <button class="mini-btn vote" type="button" data-vote="1">👍 Hợp lý</button>
+              <button class="mini-btn vote" type="button" data-vote="1">💡 Góp ý</button>
+              <button class="mini-btn open-project" type="button">🚀 Xem chi tiết</button>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-top">
+              <div>
+                <div class="project-title">Crystal LED Table Experience</div>
+                <div class="project-sub">
+                  Trải nghiệm vật lý + trình diễn ánh sáng + thiết kế cao cấp cho
+                  một sản phẩm mang tính trình diễn mạnh.
+                </div>
+              </div>
+              <span class="badge protect">PROTECT</span>
+            </div>
+
+            <div class="tag-row">
+              <span class="tag">Industrial Design</span>
+              <span class="tag">Luxury</span>
+              <span class="tag">Patent Ready</span>
+            </div>
+
+            <div class="progress-wrap">
+              <div class="progress-head">
+                <span>Tiến độ tổng thể</span>
+                <span>86%</span>
+              </div>
+              <div class="progress"><div class="bar" style="width:86%"></div></div>
+            </div>
+
+            <div class="project-actions">
+              <button class="mini-btn vote" type="button" data-vote="1">👍 Hợp lý</button>
+              <button class="mini-btn vote" type="button" data-vote="1">💡 Góp ý</button>
+              <button class="mini-btn open-project" type="button">🚀 Xem chi tiết</button>
+            </div>
+          </article>
         </div>
-        <div class="lane" data-lane="done">
-          <h4>Done</h4>
-          <div class="lane-body" id="done"></div>
+      </section>
+
+      <section class="glass section" id="rooms">
+        <h2>Public Rooms</h2>
+        <p class="lead">
+          Mỗi room là một không gian mở, nơi mọi người thấy được creator đang
+          build gì và có thể đóng góp góc nhìn thực tế.
+        </p>
+
+        <div class="rooms">
+          <div class="room-card">
+            <div>
+              <b>Common Innovation Hall</b>
+              <span>Room công khai cho mọi người xem ý tưởng mới, hỏi đáp và đóng góp insight nền tảng.</span>
+            </div>
+            <button class="join-btn room-join" type="button" data-room="Common Innovation Hall">Join</button>
+          </div>
+
+          <div class="room-card">
+            <div>
+              <b>Inventors Lab</b>
+              <span>Dành cho inventor, builder và kỹ thuật để bóc tách ý tưởng, cơ chế, prototype và tính khả thi.</span>
+            </div>
+            <button class="join-btn room-join" type="button" data-room="Inventors Lab">Join</button>
+          </div>
+
+          <div class="room-card">
+            <div>
+              <b>Investor Watch Room</b>
+              <span>Nơi investor theo dõi project đang nóng, xem tiến độ, phản hồi cộng đồng và tiềm năng thương mại.</span>
+            </div>
+            <button class="join-btn room-join" type="button" data-room="Investor Watch Room">Join</button>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <section class="glass section" id="kanban">
+        <h2>Live Build Flow</h2>
+        <p class="lead">
+          CREATIONS ROOM™ không dừng ở task. Mỗi ý tưởng phải đi qua một hành
+          trình sống: hình thành, dựng, đánh giá, bảo vệ và mở khóa giá trị.
+        </p>
+
+        <div class="kanban-shell">
+          <div class="lane">
+            <h3>💡 IDEA</h3>
+            <div class="task">
+              <b>Holographic Creator Studio</b>
+              <span>Định hình concept và giá trị cốt lõi cho người dùng toàn cầu.</span>
+            </div>
+            <div class="task">
+              <b>AI Copyright Guardian</b>
+              <span>Khung logic hỗ trợ creator bảo vệ nguồn gốc nội dung.</span>
+            </div>
+          </div>
+
+          <div class="lane">
+            <h3>🧪 BUILD</h3>
+            <div class="task">
+              <b>LICENSECOIN Super App UI</b>
+              <span>Đang tối ưu các flow wallet, transfer, convert và vault.</span>
+            </div>
+            <div class="task">
+              <b>LICENSENETWORK Rooms</b>
+              <span>Đang xây board, live chat, public feedback và moderation.</span>
+            </div>
+          </div>
+
+          <div class="lane">
+            <h3>🔍 REVIEW / 🔐 PROTECT / 💰 VALUE</h3>
+            <div class="task">
+              <b>USPTO-ready filing pack</b>
+              <span>Đang rà soát pháp lý, cấu trúc hồ sơ và tài liệu bảo hộ.</span>
+            </div>
+            <div class="task">
+              <b>Commercial route mapping</b>
+              <span>Đang đánh giá đường đi thương mại và khả năng gọi vốn.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="glass section" id="creators">
+        <h2>Creator Pages</h2>
+        <p class="lead">
+          Mỗi creator cần có một trang riêng như một “startup mini” — có danh
+          tính, có dự án, có quá trình phát triển và có người theo dõi.
+        </p>
+
+        <div class="creator-wall">
+          <article class="creator-card">
+            <div class="creator-head">
+              <div class="avatar">G</div>
+              <div class="creator-meta">
+                <b>GỐC™</b>
+                <span>Founder Vision • System Builder • Future Licensing Architecture</span>
+              </div>
+            </div>
+
+            <div class="project-sub">
+              Đang xây kiến trúc tổng thể LICENSE GỐC™, kết nối sáng tạo, AI,
+              quyền sở hữu, thương mại và giá trị số trong một hệ sống.
+            </div>
+
+            <div class="votes">
+              <button class="vote-btn vote" type="button" data-vote="1">👍 Strong Vision</button>
+              <button class="vote-btn vote" type="button" data-vote="1">💰 Investor Interest</button>
+              <button class="vote-btn vote" type="button" data-vote="1">🧠 Follow Build</button>
+            </div>
+          </article>
+
+          <article class="creator-card">
+            <div class="creator-head">
+              <div class="avatar">I</div>
+              <div class="creator-meta">
+                <b>Inventor-721</b>
+                <span>Prototype • Drone Display • Motion Hardware</span>
+              </div>
+            </div>
+
+            <div class="project-sub">
+              Đang phát triển hệ Micro-Wing™ và demo trình diễn tương tác cho môi trường tương lai.
+            </div>
+
+            <div class="votes">
+              <button class="vote-btn vote" type="button" data-vote="1">👍 Feasible</button>
+              <button class="vote-btn vote" type="button" data-vote="1">⚠️ Review Risk</button>
+              <button class="vote-btn vote" type="button" data-vote="1">💡 Give Input</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="glass section" id="feedback">
+        <h2>Feedback Wall</h2>
+        <p class="lead">
+          Ý tưởng chỉ mạnh hơn khi được nhìn bằng nhiều góc nhìn thực. Đây là nơi
+          cộng đồng góp ý, builder chỉnh hướng và investor đọc tín hiệu.
+        </p>
+
+        <div class="feed" id="feedbackFeed">
+          <div class="feed-item">
+            <b>Investor Watch</b>
+            <span>Dự án Licensing Grid có tiềm năng mạnh nếu flow bảo hộ và chia doanh thu được trình bày rõ hơn.</span>
+          </div>
+          <div class="feed-item">
+            <b>Builder Insight</b>
+            <span>Micro-Wing™ nên có bản exploded view và loop hoạt động ngắn để người xem hiểu cơ chế nhanh hơn.</span>
+          </div>
+          <div class="feed-item">
+            <b>Creator Comment</b>
+            <span>CREATIONS ROOM nên cho mỗi project có page riêng, progress bar và public review score.</span>
+          </div>
+        </div>
+
+        <div class="comment-box">
+          <textarea id="commentInput" placeholder="Viết góp ý thực tế cho hệ sáng tạo này..."></textarea>
+          <div class="comment-actions">
+            <button class="btn btn-dark" type="button" id="clearCommentBtn">Xóa</button>
+            <button class="btn btn-gold" type="button" id="postCommentBtn">Đăng góp ý</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="glass section">
+        <h2>Kết nối toàn hệ LICENSE GỐC</h2>
+        <p class="lead">
+          CREATIONS ROOM™ không đứng riêng lẻ. Nó là cổng sinh ra ý tưởng, rồi
+          dẫn dòng chảy sang mạng lưới, AI, quyền sở hữu, thương mại và giá trị số.
+        </p>
+
+        <div class="footer-links">
+          <a class="btn btn-dark" href="index.html">Trang Chủ</a>
+          <a class="btn btn-dark" href="introduction.html">Introduction</a>
+          <a class="btn btn-dark" href="licensegoc.html">LICENSEGOC</a>
+          <a class="btn btn-dark" href="licensenetwork.html">LICENSENETWORK</a>
+          <a class="btn btn-dark" href="tim.html">AI TIM ♥️</a>
+          <a class="btn btn-dark" href="licensecoin.html">LICENSECOIN</a>
+          <a class="btn btn-dark" href="commercial.html">Commercial</a>
+          <a class="btn btn-dark" href="uspto-patent.html">USPTO Patent</a>
+        </div>
+      </section>
     </main>
 
-    <!-- Right: Members + Chat -->
-    <aside class="col glass members">
-      <div class="title">
-        <h3>Members Online</h3>
-        <span class="badge"><span class="dot2"></span>live</span>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="glass menu-panel" id="menuPanel">
+      <div class="menu-grid">
+        <a href="index.html">🏠 Trang Chủ</a>
+        <a href="introduction.html">📘 Introduction</a>
+        <a href="licensegoc.html">🕊️ LICENSEGOC</a>
+        <a href="licensenetwork.html">🌐 LICENSENETWORK</a>
+        <a href="tim.html">❤️ AI TIM</a>
+        <a href="licensecoin.html">🪙 LICENSECOIN</a>
+        <a href="commercial.html">🏢 Commercial</a>
+        <a href="uspto-patent.html">⚖ USPTO Patent</a>
+        <button type="button" id="menuCloseBtn">Đóng Menu</button>
       </div>
-      <ul id="memberList"></ul>
+    </div>
 
-      <div style="height:14px"></div>
-      <div class="title"><h3>Room Chat</h3></div>
-      <div class="chat">
-        <div class="chatlog" id="chatlog"></div>
-        <div class="composer">
-          <input id="chatmsg" placeholder="Gõ tin nhắn… (Enter)"/>
-          <button class="btn" id="send">Gửi</button>
-        </div>
-      </div>
-    </aside>
-  </section>
-</div>
+    <nav class="bottom-nav">
+      <a class="nav-link" href="index.html">
+        <span class="icon">⌂</span>
+        <span>Home</span>
+      </a>
+      <a class="nav-link" href="licensenetwork.html">
+        <span class="icon">◎</span>
+        <span>Network</span>
+      </a>
+      <a class="nav-link" href="licensegoc.html">
+        <span class="icon">✦</span>
+        <span>LICENSEGOC</span>
+      </a>
+      <a class="nav-link" href="licensecoin.html">
+        <span class="icon">◉</span>
+        <span>LCN</span>
+      </a>
+      <button class="nav-link" id="menuBottomBtn" type="button">
+        <span class="icon">☰</span>
+        <span>Menu</span>
+      </button>
+    </nav>
 
-<!-- GOC Floating Bar Clear (đã có trong site) -->
-<script src="goc-ui.js?v=9" defer></script>
+    <div class="toast" id="toast"></div>
+  </div>
 
-<script>
-(function(){
-  // --------- Small store helpers ---------
-  const bc = ('BroadcastChannel' in window) ? new BroadcastChannel('goc-creations') : null;
-  const NOW = ()=>Date.now();
-  const uid = ()=>Math.random().toString(36).slice(2,9);
-  const LS = {
-    get:(k,def)=>{ try{ return JSON.parse(localStorage.getItem(k)) ?? def; }catch{return def}},
-    set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))
-  };
+  <script src="core.js"></script>
 
-  // --------- User profile (local demo) ---------
-  const USERKEY='goc.user';
-  let me = LS.get(USERKEY);
-  if(!me){
-    const nick = prompt('Tên hiển thị của bạn?', 'User'+Math.floor(Math.random()*999));
-    me = { id: uid(), name: nick || 'User'+uid(), color: `hsl(${Math.floor(Math.random()*360)} 70% 55%)` };
-    LS.set(USERKEY, me);
-  }
-  const avatar = document.getElementById('avatar');
-  avatar.textContent = me.name.slice(0,1).toUpperCase();
-  avatar.style.background = `radial-gradient(circle at 35% 30%, #1b2b55, #0c1835)`;
-  avatar.style.borderColor = 'rgba(111,211,255,.35)';
-  avatar.title = me.name;
+  <script>
+    const toast = document.getElementById('toast');
+    const overlay = document.getElementById('overlay');
+    const menuPanel = document.getElementById('menuPanel');
+    const topMenuBtn = document.getElementById('topMenuBtn');
+    const menuBottomBtn = document.getElementById('menuBottomBtn');
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+    const feedbackFeed = document.getElementById('feedbackFeed');
+    const commentInput = document.getElementById('commentInput');
+    const clearCommentBtn = document.getElementById('clearCommentBtn');
+    const postCommentBtn = document.getElementById('postCommentBtn');
+    const newProjectBtn = document.getElementById('newProjectBtn');
+    const openPublicBtn = document.getElementById('openPublicBtn');
 
-  // profile dropdown
-  avatar.addEventListener('click', ()=>{
-    avatar.parentElement.classList.toggle('open');
-  });
-  document.addEventListener('click', e=>{
-    if(!avatar.parentElement.contains(e.target)) avatar.parentElement.classList.remove('open');
-  });
-  document.getElementById('menu-settings').onclick = ()=>alert('Settings (demo)');
-  document.getElementById('menu-ideas').onclick = ()=>alert('My Ideas (demo)');
-  document.getElementById('menu-wallet').onclick = ()=>alert('Wallet (demo)');
-  document.getElementById('menu-logout').onclick = ()=>{ localStorage.removeItem(USERKEY); location.reload(); };
+    let toastTimer = null;
 
-  // --------- Rooms / Tables ---------
-  const ROOMSKEY='goc.rooms';
-  let rooms = LS.get(ROOMSKEY, [
-    {id:'common', name:'Common', created:NOW()},
-    {id:'design', name:'Design', created:NOW()},
-    {id:'invest', name:'Investors', created:NOW()}
-  ]);
-  let currentRoom = LS.get('goc.currentRoom','common');
-  const tables = ['idea','review','protect','coin'];
-  let currentTable = LS.get('goc.currentTable','idea');
+    function showToast(message){
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
 
-  const roomList = document.getElementById('roomList');
-  const roomTitle = document.getElementById('roomTitle');
-  const tableBadge = document.getElementById('tableBadge');
+    function openMenu(){
+      menuPanel.classList.add('show');
+      overlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
 
-  function renderRooms(){
-    roomList.innerHTML='';
-    rooms.forEach(r=>{
-      const li=document.createElement('li');
-      li.className = (r.id===currentRoom)?'on':'';
-      li.innerHTML = `<div><b>${r.name}</b><div class="meta">id:${r.id}</div></div>
-                      <button class="btn" data-join="${r.id}">Join</button>`;
-      roomList.appendChild(li);
+    function closeMenu(){
+      menuPanel.classList.remove('show');
+      overlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    topMenuBtn.addEventListener('click', openMenu);
+    menuBottomBtn.addEventListener('click', openMenu);
+    menuCloseBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape'){
+        closeMenu();
+      }
     });
-  }
-  function switchRoom(id){
-    currentRoom=id; LS.set('goc.currentRoom',id);
-    roomTitle.textContent = 'Room: '+ rooms.find(x=>x.id===id)?.name;
-    loadBoard(); loadChat(); presenceJoin();
-    bc && bc.postMessage({type:'room',room:id});
-    renderMembers();
-  }
-  document.getElementById('newRoom').onclick=()=>{
-    const name=prompt('Tên room mới?','My Room');
-    if(!name) return;
-    const id=(name.toLowerCase().replace(/[^a-z0-9]+/g,'-')||'room')+'-'+uid();
-    rooms.push({id,name,created:NOW()});
-    LS.set(ROOMSKEY,rooms); renderRooms(); switchRoom(id);
-  };
-  roomList.addEventListener('click', e=>{
-    const id=e.target.getAttribute('data-join');
-    if(id) switchRoom(id);
-  });
 
-  // --------- Tabs (tables) ---------
-  document.querySelectorAll('.tab').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-      btn.classList.add('on');
-      currentTable=btn.dataset.tab; LS.set('goc.currentTable',currentTable);
-      tableBadge.textContent='Table: '+btn.textContent.replace(/^[^\s]+\s/,'');
-      loadBoard();
+    document.querySelectorAll('[data-jump]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.jump;
+        const target = document.getElementById(id);
+        if(target){
+          target.scrollIntoView({ behavior:'smooth', block:'start' });
+        }
+      });
     });
-  });
-  function setTabVisual(){
-    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on', x.dataset.tab===currentTable));
-    tableBadge.textContent = 'Table: ' + document.querySelector('.tab.on').textContent.replace(/^[^\s]+\s/,'');
-  }
 
-  // --------- Board data ---------
-  function keyBoard(){ return `goc.board.${currentRoom}.${currentTable}` }
-  function getBoard(){ return LS.get(keyBoard(), {todo:[],doing:[],done:[]}) }
-  function saveBoard(b){ LS.set(keyBoard(), b); }
-  function cardEl(card){
-    const div=document.createElement('div');
-    div.className='card'; div.draggable=true; div.dataset.id=card.id;
-    div.innerHTML=`<b style="color:${me.color}">#${card.id.slice(0,4)}</b> ${card.text}`;
-    div.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain',card.id); });
-    return div;
-  }
-  function loadBoard(){
-    const b=getBoard();
-    ['todo','doing','done'].forEach(l=>{
-      const box=document.getElementById(l);
-      box.innerHTML='';
-      b[l].forEach(c=>box.appendChild(cardEl(c)));
+    document.querySelectorAll('.vote').forEach(btn => {
+      btn.addEventListener('click', () => {
+        showToast('Ý kiến của bạn đã được ghi nhận.');
+      });
     });
-  }
-  // lanes drag
-  document.querySelectorAll('.lane').forEach(lane=>{
-    lane.addEventListener('dragover',e=>{e.preventDefault(); lane.classList.add('dragover')});
-    lane.addEventListener('dragleave',()=>lane.classList.remove('dragover'));
-    lane.addEventListener('drop',e=>{
-      e.preventDefault(); lane.classList.remove('dragover');
-      const id=e.dataTransfer.getData('text/plain'); if(!id) return;
-      const b=getBoard();
-      ['todo','doing','done'].forEach(k=>b[k]=b[k].filter(c=>c.id!==id));
-      const all=[...b.todo,...b.doing,...b.done]; const card=all.find(c=>c.id===id);
-      if(card){ b[lane.dataset.lane].push(card); saveBoard(b); loadBoard(); bc && bc.postMessage({type:'board',room:currentRoom,table:currentTable}); }
+
+    document.querySelectorAll('.open-project').forEach(btn => {
+      btn.addEventListener('click', () => {
+        showToast('Trang project riêng sẽ được mở ở bản nâng cấp tiếp theo.');
+      });
     });
-  });
-  // new card
-  document.getElementById('newCard').addEventListener('keydown',e=>{
-    if(e.key!=='Enter') return;
-    const text=e.target.value.trim(); if(!text) return;
-    const b=getBoard(); b.todo.push({id:uid(),text}); saveBoard(b); e.target.value=''; loadBoard();
-    bc && bc.postMessage({type:'board',room:currentRoom,table:currentTable});
-  });
 
-  // --------- Chat ---------
-  function keyChat(){ return `goc.chat.${currentRoom}` }
-  function getChat(){ return LS.get(keyChat(),[]) }
-  function pushChat(msg){ const arr=getChat(); arr.push(msg); LS.set(keyChat(),arr) }
-  const chatlog=document.getElementById('chatlog');
-  function renderChat(){
-    chatlog.innerHTML = getChat().slice(-200).map(m=>{
-      const cls = (m.uid===me.id)?'msg me':'msg';
-      const t = new Date(m.ts).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-      return `<div class="${cls}"><b>${m.name}</b> <span class="hint">• ${t}</span><div>${m.text}</div></div>`;
-    }).join('');
-    chatlog.scrollTop=chatlog.scrollHeight;
-  }
-  function sendChat(){
-    const ip=document.getElementById('chatmsg'); const text=ip.value.trim(); if(!text) return;
-    pushChat({uid:me.id,name:me.name,text,ts:NOW()}); ip.value=''; renderChat();
-    bc && bc.postMessage({type:'chat',room:currentRoom});
-  }
-  document.getElementById('send').onclick=sendChat;
-  document.getElementById('chatmsg').addEventListener('keydown',e=>{ if(e.key==='Enter') sendChat(); });
-
-  // --------- Presence (members online) ---------
-  function keyPresence(){ return `goc.presence.${currentRoom}` }
-  function touchPresence(){
-    const now=NOW(); const p=LS.get(keyPresence(),{});
-    p[me.id]={name:me.name,color:me.color,ts:now}; LS.set(keyPresence(),p);
-  }
-  function presenceJoin(){ touchPresence(); bc && bc.postMessage({type:'presence',room:currentRoom}); }
-  setInterval(()=>{ touchPresence(); }, 8000);
-  window.addEventListener('beforeunload',()=>{
-    const p=LS.get(keyPresence(),{}); delete p[me.id]; LS.set(keyPresence(),p);
-  });
-  function renderMembers(){
-    const box=document.getElementById('memberList'); box.innerHTML='';
-    const p=LS.get(keyPresence(),{}); const now=NOW();
-    const rows=Object.entries(p).filter(([id,info])=>now-info.ts < 20000); // 20s alive
-    LS.set(keyPresence(), Object.fromEntries(rows));
-    rows.sort((a,b)=>b[1].ts-a[1].ts).forEach(([id,info])=>{
-      const li=document.createElement('li');
-      li.innerHTML=`<div><b style="color:${info.color}">${info.name}</b><div class="meta">online</div></div><span class="badge">●</span>`;
-      box.appendChild(li);
+    document.querySelectorAll('.room-join').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const room = btn.dataset.room || 'Room';
+        showToast('Bạn đã vào ' + room + '.');
+      });
     });
-  }
-  setInterval(renderMembers, 5000);
 
-  // --------- Broadcast sync ---------
-  bc && bc.addEventListener('message', e=>{
-    const m=e.data;
-    if(m.room && m.room!==currentRoom) return;
-    if(m.type==='chat') renderChat();
-    if(m.type==='board' && m.table===currentTable) loadBoard();
-    if(m.type==='presence') renderMembers();
-    if(m.type==='room'){ renderMembers(); renderChat(); loadBoard(); }
-  });
+    newProjectBtn.addEventListener('click', () => {
+      showToast('Flow tạo project mới đã được kích hoạt.');
+    });
 
-  // --------- Boot ---------
-  renderRooms(); setTabVisual(); switchRoom(currentRoom);
-})();
-</script>
-<script src="goc-ui.js?v=10" defer></script></body>
+    openPublicBtn.addEventListener('click', () => {
+      const target = document.getElementById('rooms');
+      if(target){
+        target.scrollIntoView({ behavior:'smooth', block:'start' });
+      }
+      showToast('Đã mở khu Public Rooms.');
+    });
+
+    clearCommentBtn.addEventListener('click', () => {
+      commentInput.value = '';
+      showToast('Đã xóa nội dung góp ý.');
+    });
+
+    postCommentBtn.addEventListener('click', () => {
+      const text = commentInput.value.trim();
+      if(!text){
+        showToast('Hãy nhập góp ý trước khi đăng.');
+        return;
+      }
+
+      const item = document.createElement('div');
+      item.className = 'feed-item';
+      item.innerHTML = `
+        <b>Public Feedback</b>
+        <span>${escapeHtml(text)}</span>
+      `;
+      feedbackFeed.prepend(item);
+      commentInput.value = '';
+      showToast('Góp ý đã được đăng vào Feedback Wall.');
+    });
+
+    function escapeHtml(text){
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  </script>
+</body>
 </html>
