@@ -229,7 +229,35 @@
             <span>Chính giữa là vùng build project thật.</span>
           </div>
           <div class="center-body">
-            Canvas trung tâm sẽ dựng ở bước 2.
+  <div class="canvas-zone" id="canvasZone">
+    <div class="canvas-placeholder" id="canvasPlaceholder">
+      <h3>Khoảng trống trung tâm để build project thật</h3>
+      <p>
+        Upload blueprint, render, exploded view, concept image hoặc bất cứ hình
+        nào GỐC đang build.
+      </p>
+
+      <div class="canvas-actions">
+        <button class="canvas-btn gold" type="button" id="uploadBtn">＋ Upload Project Image</button>
+        <button class="canvas-btn" type="button" id="clearCanvasBtn">Xóa Canvas</button>
+        <button class="canvas-btn" type="button" id="openDetailBtn">🚀 Xem chi tiết</button>
+      </div>
+    </div>
+
+    <div class="preview-wrap" id="previewWrap">
+      <div class="preview-frame">
+        <img id="previewImage" alt="Project Preview" />
+      </div>
+
+      <div class="canvas-actions">
+        <button class="canvas-btn gold" type="button" id="replaceBtn">Thay hình khác</button>
+        <button class="canvas-btn" type="button" id="removeBtn">Xóa hình</button>
+      </div>
+    </div>
+
+    <input type="file" id="fileInput" accept="image/*" style="display:none;" />
+  </div>
+</div>
           </div>
         </section>
 
