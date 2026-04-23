@@ -200,6 +200,93 @@
       .brand{width:100%;order:-1}
     }
   </style>
+  .canvas-zone{
+  min-height:520px;
+  border-radius:28px;
+  border:1px dashed rgba(122,231,255,.20);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(27,214,255,.09), transparent 34%),
+    linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  text-align:center;
+}
+
+.canvas-placeholder h3{
+  margin:0 0 10px;
+  font-size:28px;
+  color:#fff;
+}
+
+.canvas-placeholder p{
+  margin:0 0 18px;
+  font-size:14px;
+  line-height:1.7;
+  color:var(--muted);
+  max-width:540px;
+}
+
+.canvas-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.canvas-btn{
+  min-height:46px;
+  padding:0 16px;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:1000;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  color:#fff2d4;
+}
+
+.canvas-btn.gold{
+  background:linear-gradient(180deg,var(--gold),var(--gold2));
+  color:#201303;
+  border:none;
+}
+
+.preview-wrap{
+  display:none;
+  width:100%;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
+
+.preview-wrap.show{
+  display:flex;
+}
+
+.preview-frame{
+  width:100%;
+  max-width:760px;
+  min-height:340px;
+  border-radius:24px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.10);
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.preview-frame img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:contain;
+  max-height:700px;
+}
 </head>
 <body>
   <div class="app">
