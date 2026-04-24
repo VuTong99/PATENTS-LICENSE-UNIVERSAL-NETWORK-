@@ -259,7 +259,34 @@ This corrected draft is for preparation and review. Before official USPTO filing
 
   finalAICheck();
 }
-</script>
+function loadProjectFromCreationsRoom(){
+  const params = new URLSearchParams(window.location.search);
+
+  const title = params.get("title");
+  const idea = params.get("idea");
+  const category = params.get("category");
+
+  if(title){
+    document.getElementById("title").value = title;
+  }
+
+  if(idea){
+    document.getElementById("idea").value = idea;
+  }
+
+  if(category){
+    document.getElementById("problem").value =
+      "Project category transferred from CREATIONS ROOM: " + category;
+  }
+
+  if(title || idea){
+    document.getElementById("draft").innerText =
+      "Tim ♥️: Project data transferred from CREATIONS ROOM. Ready for USPTO preparation.";
+  }
+}
+
+window.addEventListener("DOMContentLoaded", loadProjectFromCreationsRoom);
+ </script>
 
 </body>
 </html>
