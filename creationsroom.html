@@ -851,6 +851,31 @@
     "&idea=" + desc +
     "&category=" + category;
 });
-  </script>
+  document.getElementById("sendToUsptoBtn").addEventListener("click", () => {
+
+  const title = encodeURIComponent(
+    document.getElementById("projectName")?.value ||
+    document.getElementById("projectTitle")?.textContent ||
+    "Untitled Invention"
+  );
+
+  const idea = encodeURIComponent(
+    document.getElementById("projectIdea")?.value ||
+    document.getElementById("projectDesc")?.textContent ||
+    "Describe your invention..."
+  );
+
+  const problem = encodeURIComponent(
+    document.getElementById("projectFunction")?.value ||
+    "Problem being solved..."
+  );
+
+  window.location.href =
+    "uspto.html?title=" + title +
+    "&idea=" + idea +
+    "&problem=" + problem;
+});
+  
+</script>
 </body>
 </html>
