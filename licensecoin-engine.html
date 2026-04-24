@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LICENSECOIN ENGINE™ — LICENSEGOC</title>
+
+<style>
+:root{
+  --bg:#020814;
+  --line:rgba(255,255,255,.1);
+  --gold:#f1c76b;
+  --green:#71f0ad;
+  --muted:rgba(255,255,255,.7);
+}
+body{
+  margin:0;
+  font-family:Arial;
+  background:radial-gradient(circle,#071326,#020814);
+  color:#fff;
+}
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:18px;
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+  padding-bottom:14px;
+}
+.card{
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:16px;
+  background:rgba(255,255,255,.05);
+  margin-top:16px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+h1,h2{margin:0 0 10px}
+.stat{
+  margin:8px 0;
+  color:var(--muted);
+}
+.value{
+  font-size:42px;
+  font-weight:900;
+  color:var(--gold);
+}
+.btn{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:900;
+}
+.gold{background:var(--gold);color:#000}
+.dark{background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--line)}
+input{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#09111f;
+  color:#fff;
+  margin-top:8px;
+}
+.bar{
+  height:10px;
+  background:rgba(255,255,255,.08);
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:8px;
+}
+.fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--gold),var(--green));
+}
+@media(max-width:760px){
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="topbar">
+  <h1>🪙 LICENSECOIN ENGINE™</h1>
+  <button class="btn dark" style="max-width:220px" onclick="backRoom()">← CreationsRoom</button>
+</div>
+
+<div class="card">
+  <h2 id="projectName">No Project Selected</h2>
+  <div class="stat" id="ghostId">Ghost ID: —</div>
+  <div class="stat" id="owner">Owner: —</div>
+  <div class="stat" id="status">Status: —</div>
+</div>
+
+<div class="grid">
+
+  <div class="card">
+    <h2>📊 Project Value</h2>
+    <div class="value" id="value">$0</div>
+    <div class="stat">Value based on: idea depth, protection status, public activity, investor signal.</div>
+    <div class="bar"><div class="fill" id="valueBar"></div></div>
+    <button class="btn gold" onclick="recalculate()">Recalculate Value</button>
+  </div>
+
+  <div class="card">
+    <h2>🪙 LICENSECOIN Simulation</h2>
+    <div class="stat">Token Supply: <b id="supply">0 LCG</b></div>
+    <div class="stat">Token Price: <b id="price">$0.00</b></div>
+    <div class="stat">Market Cap: <b id="cap">$0</b></div>
+    <button class="btn gold" onclick="mintTokens()">Mint Project Tokens</button>
+  </div>
+
+</div>
+
+<div class="grid">
+
+  <div class="card">
+    <h2>👥 Ownership Share</h2>
+    <div id="shares"></div>
+    <input id="newInvestor" placeholder="Investor name">
+    <input id="investAmount" type="number" placeholder="Investment amount $">
+    <button class="btn gold" onclick="simulateInvestment()">Simulate Investor Buy-In</button>
+  </div>
+
+  <div class="card">
+    <h2>🚀 Next Actions</h2>
+    <button class="btn dark" onclick="goOwnership()">📜 Ownership Certificate</button>
+    <button class="btn dark" onclick="goGlobal()">🌍 Global Room</button>
+    <button class="btn dark" onclick="goUSPTO()">⚖️ USPTO Prep</button>
+  </div>
+
+</div>
+
+<div class="card">
+  <h2>🤖 Tim ♥️ Value Analysis</h2>
+  <div id="analysis" class="stat">
+    Project value engine ready.
+  </div>
+</div>
+
+</div>
+
+<script>
+let projects = JSON.parse(localStorage.getItem("projects")||"[]");
+let index = Number(localStorage.getItem("openProjectIndex")||0);
+let p = projects[index];
+
+if(!p){
+  document.getElementById("projectName").innerText = "No project found.";
+}else{
+  initProject();
+}
+
+function save(){
+  localStorage.setItem("projects",JSON.stringify(projects));
+}
+
+function baseValue(project){
+  let v = 1000;
+  if(project.idea) v += project.idea.length * 30;
+  if(project.problem) v += 2500;
+  if(project.solution) v += 4000;
+  if(project.image) v += 3000;
+  if(project.status === "Protected") v += 10000;
+  if(project.status === "Published") v += 15000;
+  if(project.members) v += project.members.length * 1200;
+  if(project.likes) v += project.likes * 80;
+  if(project.watchers) v += project.watchers * 50;
+  return Math.round(v);
+}
+
+function initProject(){
+  if(!p.id) p.id = "GOC-"+Math.random().toString(36).substring(2,8).toUpperCase();
+  if(!p.value) p.value = baseValue(p);
+  if(!p.tokenSupply) p.tokenSupply = 0;
+  if(!p.tokenPrice) p.tokenPrice = 0;
+  if(!p.shares){
+    p.shares = [{name:p.owner || "GỐC", percent:100}];
+  }
+  save();
+  render();
+}
+
+function render(){
+  projectName.innerText = p.name || "Untitled Project";
+  ghostId.innerText = "Ghost ID: " + p.id;
+  owner.innerText = "Owner: " + (p.owner || "Unknown");
+  status.innerText = "Status: " + (p.status || "Draft");
+
+  value.innerText = "$" + Number(p.value).toLocaleString();
+  valueBar.style.width = Math.min(100, p.value / 500) + "%";
+
+  supply.innerText = Number(p.tokenSupply).toLocaleString() + " LCG";
+  price.innerText = "$" + Number(p.tokenPrice || 0).toFixed(2);
+  cap.innerText = "$" + Math.round((p.tokenSupply||0)*(p.tokenPrice||0)).toLocaleString();
+
+  shares.innerHTML = "";
+  p.shares.forEach(s=>{
+    shares.innerHTML += `<div class="stat">${s.name}: <b>${s.percent}%</b></div>`;
+  });
+
+  analysis.innerText =
+    "Tim ♥️: This project is now treated as a LICENSEGOC value asset. Stronger protection, more public activity, and clearer ownership will increase simulated value.";
+}
+
+function recalculate(){
+  p.value = baseValue(p);
+  save();
+  render();
+}
+
+function mintTokens(){
+  p.tokenSupply = Math.max(1000, Math.round(p.value / 10));
+  p.tokenPrice = Math.max(0.1, p.value / p.tokenSupply);
+  save();
+  render();
+}
+
+function simulateInvestment(){
+  const investor = newInvestor.value.trim();
+  const amount = Number(investAmount.value || 0);
+
+  if(!investor || amount <= 0) return alert("Enter investor and amount.");
+
+  const percent = Math.min(30, Math.max(1, Math.round((amount / (p.value + amount)) * 100)));
+
+  p.shares.forEach(s=>{
+    s.percent = Math.max(0, s.percent - percent);
+  });
+
+  p.shares.push({name:investor, percent});
+  p.value += amount;
+  if(p.watchers) p.watchers += 5;
+  else p.watchers = 5;
+
+  save();
+  render();
+}
+
+function goOwnership(){
+  localStorage.setItem("openProjectIndex", index);
+  window.location.href = "ownership.html";
+}
+
+function goGlobal(){
+  window.location.href = "globalroom.html";
+}
+
+function goUSPTO(){
+  window.location.href =
+    "uspto.html?title="+encodeURIComponent(p.name||"")+
+    "&idea="+encodeURIComponent(p.idea||"")+
+    "&problem="+encodeURIComponent(p.problem||"")+
+    "&solution="+encodeURIComponent(p.solution||"");
+}
+
+function backRoom(){
+  window.location.href = "creationsroom.html";
+}
+</script>
+
+</body>
+</html>
