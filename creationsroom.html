@@ -1,660 +1,122 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CREATIONS ROOM™ — LICENSEGOC</title>
-  <meta
-    name="description"
-    content="CREATIONS ROOM™ for LICENSEGOC — live build studio with AI assistant, project canvas, tools, assets, and project detail linking."
-  />
-
-  <link rel="stylesheet" href="core.css" />
-
-  <style>
-    :root{
-      --bg:#03070d;
-      --bg2:#07111c;
-      --panel:rgba(9,18,33,.90);
-      --panel2:rgba(6,12,24,.94);
-      --line:rgba(255,255,255,.08);
-      --gold:#f1c76b;
-      --gold2:#d89c31;
-      --text:#fff4dd;
-      --muted:rgba(255,255,255,.68);
-      --green:#71f0ad;
-      --cyan:#7ae7ff;
-      --red:#ff96a0;
-      --shadow:0 24px 70px rgba(0,0,0,.45);
-      --radius:24px;
-      --maxw:1400px;
-    }
-
-    *{box-sizing:border-box}
-
-    html,body{
-      margin:0;
-      padding:0;
-      min-height:100%;
-      background:#000;
-      color:var(--text);
-      font-family:Arial, Helvetica, sans-serif;
-    }
-
-    body{
-      background:
-        radial-gradient(circle at 50% 0%, rgba(241,199,107,.10), transparent 18%),
-        radial-gradient(circle at 90% 20%, rgba(90,140,255,.08), transparent 20%),
-        linear-gradient(180deg,#01040a 0%, #06101a 100%);
-    }
-
-    a{
-      text-decoration:none;
-      color:inherit;
-    }
-
-    button,input,textarea,select{
-      font-family:inherit;
-    }
-
-    .app{
-      width:100%;
-      max-width:var(--maxw);
-      min-height:100vh;
-      margin:0 auto;
-      background:
-        linear-gradient(180deg, rgba(2,6,14,.45), rgba(4,9,18,.94)),
-        url('creations-bg.jpg') center center / cover no-repeat;
-      box-shadow:var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .app::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0) 18%),
-        radial-gradient(circle at 50% 12%, rgba(241,199,107,.10), transparent 24%),
-        radial-gradient(circle at 14% 82%, rgba(122,231,255,.08), transparent 22%);
-    }
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:40;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:14px 18px;
-      background:rgba(4,8,15,.86);
-      backdrop-filter:blur(14px);
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-
-    .topbtn{
-      min-height:42px;
-      padding:0 14px;
-      border:none;
-      border-radius:14px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      color:#fff;
-      font-weight:900;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-    }
-
-    .topbtn.gold{
-      background:linear-gradient(180deg,var(--gold),var(--gold2));
-      color:#1d1205;
-      border:none;
-    }
-
-    .brand{
-      flex:1;
-      text-align:center;
-      min-width:0;
-    }
-
-    .brand b{
-      display:block;
-      font-size:20px;
-      color:#fff;
-      letter-spacing:.5px;
-    }
-
-    .brand span{
-      display:block;
-      margin-top:4px;
-      font-size:12px;
-      color:var(--muted);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .page{
-      position:relative;
-      z-index:2;
-      padding:18px;
-      padding-bottom:120px;
-    }
-
-    .workflow{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:10px;
-      margin-bottom:16px;
-    }
-
-    .step{
-      border-radius:18px;
-      padding:12px 10px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03);
-      text-align:center;
-    }
-
-    .step .n{
-      width:28px;
-      height:28px;
-      margin:0 auto 8px;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:13px;
-      font-weight:1000;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.03);
-      color:#fff;
-    }
-
-    .step.active{
-      border-color:rgba(241,199,107,.24);
-      background:rgba(241,199,107,.08);
-    }
-
-    .step.active .n{
-      background:linear-gradient(180deg,var(--gold),var(--gold2));
-      color:#1b1004;
-      border:none;
-    }
-
-    .step b{
-      display:block;
-      font-size:13px;
-      color:#fff;
-      margin-bottom:3px;
-    }
-
-    .step span{
-      display:block;
-      font-size:11px;
-      color:var(--muted);
-    }
-
-    .studio{
-      display:grid;
-      grid-template-columns:300px 1fr 300px;
-      gap:16px;
-      align-items:start;
-    }
-
-    .panel{
-      border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(10,19,36,.90), rgba(6,12,24,.94));
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-
-    .panel-head{
-      padding:14px;
-      border-bottom:1px solid rgba(255,255,255,.06);
-      font-size:15px;
-      font-weight:1000;
-      color:#fff;
-    }
-
-    .panel-sub{
-      font-size:11px;
-      color:var(--muted);
-      margin-top:4px;
-    }
-
-    .panel-body{
-      padding:14px;
-    }
-
-    .center{
-      border-radius:28px;
-      background:linear-gradient(180deg, rgba(10,19,36,.92), rgba(5,11,22,.96));
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-      min-height:680px;
-      overflow:hidden;
-    }
-
-    .center-head{
-      padding:16px;
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-
-    .center-head b{
-      display:block;
-      font-size:28px;
-      color:#fff;
-      margin-bottom:6px;
-    }
-
-    .center-head span{
-      display:block;
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.6;
-    }
-
-    .center-body{
-      padding:16px;
-    }
-
-    .canvas-zone{
-      min-height:520px;
-      border-radius:28px;
-      border:1px dashed rgba(122,231,255,.20);
-      background:
-        radial-gradient(circle at 50% 50%, rgba(27,214,255,.09), transparent 34%),
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-      text-align:center;
-    }
-
-    .canvas-placeholder h3{
-      margin:0 0 10px;
-      font-size:28px;
-      color:#fff;
-    }
-
-    .canvas-placeholder p{
-      margin:0 0 18px;
-      font-size:14px;
-      line-height:1.7;
-      color:var(--muted);
-      max-width:540px;
-    }
-
-    .canvas-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:center;
-    }
-
-    .canvas-btn{
-      min-height:46px;
-      padding:0 16px;
-      border:none;
-      border-radius:16px;
-      cursor:pointer;
-      font-size:14px;
-      font-weight:1000;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      color:#fff2d4;
-    }
-
-    .canvas-btn.gold{
-      background:linear-gradient(180deg,var(--gold),var(--gold2));
-      color:#201303;
-      border:none;
-    }
-
-    .preview-wrap{
-      display:none;
-      width:100%;
-      flex-direction:column;
-      align-items:center;
-      gap:14px;
-    }
-
-    .preview-wrap.show{
-      display:flex;
-    }
-
-    .preview-frame{
-      width:100%;
-      max-width:760px;
-      min-height:340px;
-      border-radius:24px;
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.10);
-      overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .preview-frame img{
-      width:100%;
-      height:auto;
-      display:block;
-      object-fit:contain;
-      max-height:700px;
-    }
-
-    .ai-card{
-      border-radius:20px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03);
-      padding:14px;
-    }
-
-    .ai-list{
-      display:grid;
-      gap:8px;
-      margin:12px 0;
-    }
-
-    .ai-action{
-      min-height:42px;
-      border:none;
-      border-radius:14px;
-      cursor:pointer;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      color:#fff2d4;
-      text-align:left;
-      padding:0 12px;
-      font-size:13px;
-      font-weight:800;
-    }
-
-    .ask-box{
-      display:flex;
-      gap:8px;
-      margin-top:10px;
-    }
-
-    .ask-box input{
-      flex:1;
-      min-width:0;
-      min-height:44px;
-      border:none;
-      outline:none;
-      border-radius:14px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      color:#fff;
-      padding:0 12px;
-    }
-
-    .send-btn{
-      min-width:70px;
-      min-height:44px;
-      border:none;
-      border-radius:14px;
-      cursor:pointer;
-      font-size:13px;
-      font-weight:1000;
-      color:#201303;
-      background:linear-gradient(180deg,var(--gold),var(--gold2));
-    }
-
-    .tool-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:10px;
-    }
-
-    .tool-btn{
-      min-height:74px;
-      border:none;
-      border-radius:18px;
-      cursor:pointer;
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.08);
-      color:#fff;
-      font-size:13px;
-      font-weight:900;
-      padding:8px;
-      text-align:center;
-    }
-
-    .asset-title{
-      margin-top:14px;
-      font-size:15px;
-      font-weight:1000;
-      color:#fff;
-    }
-
-    .asset-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:10px;
-      margin-top:10px;
-    }
-
-    .asset{
-      min-height:78px;
-      border-radius:16px;
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.08);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:8px;
-      cursor:pointer;
-      color:#f4dfb5;
-      font-size:12px;
-      font-weight:900;
-    }
-
-    .signals{
-      display:grid;
-      grid-template-columns:2fr 1fr 1fr;
-      gap:16px;
-      margin-top:16px;
-    }
-
-    .signal-box{
-      border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(10,19,36,.90), rgba(6,12,24,.94));
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-
-    .signal-head{
-      padding:14px;
-      border-bottom:1px solid rgba(255,255,255,.06);
-      font-size:15px;
-      font-weight:1000;
-      color:#fff;
-    }
-
-    .signal-body{
-      padding:14px;
-    }
-
-    .bottom-dock{
-      position:fixed;
-      left:50%;
-      bottom:0;
-      transform:translateX(-50%);
-      width:min(var(--maxw),100%);
-      padding:12px 18px 16px;
-      background:rgba(4,9,16,.92);
-      backdrop-filter:blur(14px);
-      border-top:1px solid rgba(255,255,255,.06);
-      z-index:45;
-    }
-
-    .dock-grid{
-      display:grid;
-      grid-template-columns:repeat(6,1fr);
-      gap:10px;
-    }
-
-    .dock-item{
-      min-height:58px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03);
-      color:#f4dfb5;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:12px;
-      font-weight:900;
-      text-align:center;
-      padding:8px;
-      cursor:pointer;
-    }
-
-    .dock-item.primary{
-      background:linear-gradient(180deg,var(--gold),var(--gold2));
-      color:#1c1205;
-      border:none;
-    }
-
-    @media (max-width:1100px){
-      .studio{
-        grid-template-columns:1fr;
-      }
-
-      .signals{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media (max-width:760px){
-      .workflow{
-        grid-template-columns:1fr 1fr 1fr;
-      }
-
-      .tool-grid,
-      .asset-grid,
-      .dock-grid{
-        grid-template-columns:1fr 1fr;
-      }
-
-      .topbar{
-        flex-wrap:wrap;
-      }
-
-      .brand{
-        width:100%;
-        order:-1;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREATIONS ROOM™ — LICENSEGOC</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#020814;
+  color:#fff;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+  padding-bottom:100px;
+}
+
+.card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:22px;
+  padding:20px;
+  margin-top:20px;
+  text-align:center;
+}
+
+h1{
+  margin:0 0 10px;
+}
+
+p{
+  color:rgba(255,255,255,.7);
+}
+
+input, textarea{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#09111f;
+  color:#fff;
+}
+
+textarea{
+  min-height:100px;
+}
+
+.btn{
+  margin-top:12px;
+  padding:12px 16px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:900;
+}
+
+.gold{
+  background:linear-gradient(180deg,#f1c76b,#d89c31);
+  color:#1a1205;
+}
+
+.dark{
+  background:rgba(255,255,255,.08);
+  color:#fff;
+}
+
+</style>
 </head>
 
 <body>
-  <div class="app">
-    <header class="topbar">
-      <a class="topbtn" href="index.html">← Back</a>
 
-      <div class="brand">
-        <b>CREATIONS ROOM™</b>
-        <span>Live Build • Inventors • Public Feedback • Protect • Value</span>
-      </div>
+<div class="container">
 
-      <button class="topbtn" type="button" onclick="showMsg('Menu layer sẽ mở rộng ở bản tiếp theo.')">☰ Menu</button>
-    </header>
+  <h1>CREATIONS ROOM™</h1>
+  <p>Build project → Send to USPTO AI</p>
 
-    <main class="page">
-      <section class="workflow">
-        <div class="step"><div class="n">1</div><b>IDEA</b><span>Concept</span></div>
-        <div class="step active"><div class="n">2</div><b>BUILD</b><span>Live</span></div>
-        <div class="step"><div class="n">3</div><b>REVIEW</b><span>Insight</span></div>
-        <div class="step"><div class="n">4</div><b>PROTECT</b><span>Ownership</span></div>
-        <div class="step"><div class="n">5</div><b>VALUE</b><span>Commercial</span></div>
-      </section>
+  <div class="card">
 
-      <section class="studio">
-        <aside class="panel">
-          <div class="panel-head">
-            AI ASSISTANT TIM ♥️
-            <div class="panel-sub">Creator help • Strategy • Structure</div>
-          </div>
+    <h2>PROJECT BUILD</h2>
 
-          <div class="panel-body">
-            <div class="ai-card">
-              <b style="display:block;font-size:18px;color:#7feaff;margin-bottom:8px;">Tim ♥️ AI</b>
+    <input id="projectName" placeholder="Tên Project / Invention">
 
-              <div style="font-size:13px;line-height:1.7;color:var(--muted);">
-                Tim ♥️ đang hỗ trợ creator phân tích ý tưởng, cấu trúc build, patent logic và hướng thương mại.
-              </div>
+    <textarea id="projectIdea" placeholder="Mô tả ý tưởng"></textarea>
 
-              <div class="ai-list">
-                <button class="ai-action" type="button" onclick="runAI('idea')">💡 Phân tích ý tưởng</button>
-                <button class="ai-action" type="button" onclick="runAI('design')">🎨 Gợi ý thiết kế</button>
-                <button class="ai-action" type="button" onclick="runAI('patent')">🛡 Gợi ý bảo hộ</button>
-                <button class="ai-action" type="button" onclick="runAI('market')">📈 Gợi ý thương mại</button>
-              </div>
+    <textarea id="projectProblem" placeholder="Vấn đề cần giải quyết"></textarea>
 
-              <div class="ask-box">
-                <input id="aiInput" type="text" placeholder="Hỏi Tim ♥️ về project..." />
-                <button class="send-btn" type="button" onclick="askAI()">Gửi</button>
-              </div>
+    <textarea id="projectSolution" placeholder="Giải pháp / cơ chế hoạt động"></textarea>
 
-              <div id="aiOutput" style="margin-top:12px;font-size:13px;line-height:1.7;color:var(--text);"></div>
-            </div>
-          </div>
-        </aside>
+    <button class="btn gold" id="sendUSPTOBtn">
+      ⚖️ Send to USPTO Prep
+    </button>
 
-        <section class="center">
-          <div class="center-head">
-            <b id="projectTitle">PROJECT BUILD CANVAS</b>
-            <span id="projectDesc">Chính giữa là vùng build project thật. GỐC có thể upload render, blueprint, exploded view hoặc concept image vào đây.</span>
-          </div>
+  </div>
 
-          <div class="center-body">
-            <div class="canvas-zone" id="canvasZone">
-              <div class="canvas-placeholder" id="canvasPlaceholder">
-                <h3>Khoảng trống trung tâm để build project thật</h3>
-                <p>
-                  Upload blueprint, render, exploded view, concept image hoặc bất cứ hình
-                  nào GỐC đang build.
-                </p>
+</div>
+<script>
+const sendUSPTOBtn = document.getElementById("sendUSPTOBtn");
 
-                <div class="canvas-actions">
-                  <button class="canvas-btn gold" type="button" id="uploadBtn">＋ Upload Project Image</button>
-                  <button class="canvas-btn" type="button" id="clearCanvasBtn">Xóa Canvas</button>
-                  <button class="canvas-btn" type="button" id="openDetailBtn">🚀 Xem chi tiết</button>
-                  <button class="canvas-btn gold" type="button" id="sendToUsptoBtn">
-                   ⚖️ Send to USPTO Prep
-                  </botton>
-                     document.getElementById("sendUSPTOBtn").addEventListener("click", () => {
-
-                    const title = encodeURIComponent(
-     document.getElementById("projectName")?.value || "Untitled Invention"
+sendUSPTOBtn.addEventListener("click", () => {
+  const title = encodeURIComponent(
+    document.getElementById("projectName").value.trim() || "Untitled Invention"
   );
 
   const idea = encodeURIComponent(
-    document.getElementById("projectIdea")?.value || ""
+    document.getElementById("projectIdea").value.trim() || "Describe your invention."
   );
 
   const problem = encodeURIComponent(
-    document.getElementById("projectProblem")?.value || ""
+    document.getElementById("projectProblem").value.trim() || "Problem being solved."
   );
 
   const solution = encodeURIComponent(
-    document.getElementById("projectSolution")?.value || ""
+    document.getElementById("projectSolution").value.trim() || "Solution or mechanism needs to be described."
   );
 
   window.location.href =
@@ -662,245 +124,8 @@
     "&idea=" + idea +
     "&problem=" + problem +
     "&solution=" + solution;
-
 });
-                </div>
-              </div>
-
-              <div class="preview-wrap" id="previewWrap">
-                <div class="preview-frame">
-                  <img id="previewImage" alt="Project Preview" />
-                </div>
-
-                <div class="canvas-actions">
-                  <button class="canvas-btn gold" type="button" id="replaceBtn">Thay hình khác</button>
-                  <button class="canvas-btn" type="button" id="removeBtn">Xóa hình</button>
-                </div>
-              </div>
-
-              <input type="file" id="fileInput" accept="image/*" style="display:none;" />
-            </div>
-          </div>
-        </section>
-
-        <aside class="panel">
-          <div class="panel-head">
-            TOOLS + ASSETS
-            <div class="panel-sub">AI tools • visual tools • preset assets</div>
-          </div>
-
-          <div class="panel-body">
-            <div class="tool-grid">
-              <button class="tool-btn" type="button" onclick="toolAction('AI Writer')">🤖 AI Writer</button>
-              <button class="tool-btn" type="button" onclick="toolAction('Design AI')">🎨 Design AI</button>
-              <button class="tool-btn" type="button" onclick="toolAction('Patent AI')">🛡 Patent AI</button>
-              <button class="tool-btn" type="button" onclick="toolAction('Market AI')">📈 Market AI</button>
-              <button class="tool-btn" type="button" onclick="toolAction('Blueprint')">📐 Blueprint</button>
-              <button class="tool-btn" type="button" onclick="toolAction('Exploded View')">🧩 Exploded</button>
-            </div>
-
-            <div class="asset-title">ASSET LIBRARY</div>
-
-            <div class="asset-grid">
-              <div class="asset" onclick="loadPreset('creations-bg.jpg')">Frame 1</div>
-              <div class="asset" onclick="loadPreset('creations-bg.jpg')">Blueprint</div>
-              <div class="asset" onclick="loadPreset('creations-bg.jpg')">Luxury</div>
-              <div class="asset" onclick="loadPreset('creations-bg.jpg')">Patent</div>
-              <div class="asset" onclick="loadPreset('creations-bg.jpg')">Pitch</div>
-              <div class="asset" onclick="loadPreset('creations-bg.jpg')">Prototype</div>
-            </div>
-          </div>
-        </aside>
-      </section>
-
-      <section class="signals">
-        <div class="signal-box">
-          <div class="signal-head">PROJECT STAGE</div>
-          <div class="signal-body">
-            <div style="font-size:30px;font-weight:1000;color:var(--gold);margin-bottom:8px;">42%</div>
-
-            <div style="height:10px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden;border:1px solid rgba(255,255,255,.06);">
-              <div style="width:42%;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));"></div>
-            </div>
-
-            <div style="margin-top:12px;font-size:13px;line-height:1.7;color:var(--muted);">
-              Project đang trong Build Mode và sẵn sàng chuyển sang Review.
-            </div>
-          </div>
-        </div>
-
-        <div class="signal-box">
-          <div class="signal-head">RISK</div>
-          <div class="signal-body">
-            <div style="font-size:30px;font-weight:1000;color:var(--green);">25%</div>
-            <div style="margin-top:8px;font-size:13px;color:var(--muted);">manageable</div>
-          </div>
-        </div>
-
-        <div class="signal-box">
-          <div class="signal-head">INVESTOR SIGNAL</div>
-          <div class="signal-body">
-            <div style="font-size:24px;font-weight:1000;color:var(--cyan);">RẤT CAO</div>
-            <div style="margin-top:8px;font-size:13px;color:var(--muted);">watching now</div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <div class="bottom-dock">
-      <div class="dock-grid">
-        <a class="dock-item" href="index.html">Home</a>
-        <a class="dock-item" href="licensenetwork.html">Network</a>
-        <a class="dock-item" href="licensegoc.html">LICENSEGOC</a>
-        <a class="dock-item" href="licensecoin.html">LCN</a>
-        <a class="dock-item" href="tim.html">AI TIM</a>
-        <button class="dock-item primary" type="button" onclick="showMsg('Popup Create Project sẽ build ở bước tiếp theo.')">+ Create Project</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="core.js"></script>
-
-  <script>
-    const fileInput = document.getElementById('fileInput');
-    const uploadBtn = document.getElementById('uploadBtn');
-    const replaceBtn = document.getElementById('replaceBtn');
-    const removeBtn = document.getElementById('removeBtn');
-    const clearCanvasBtn = document.getElementById('clearCanvasBtn');
-    const openDetailBtn = document.getElementById('openDetailBtn');
-
-    const previewWrap = document.getElementById('previewWrap');
-    const previewImage = document.getElementById('previewImage');
-    const canvasPlaceholder = document.getElementById('canvasPlaceholder');
-
-    function showMsg(msg){
-      if(window.showTimCoreToast){
-        window.showTimCoreToast(msg);
-      } else {
-        alert(msg);
-      }
-    }
-
-    function openUploader(){
-      fileInput.click();
-    }
-
-    function clearPreview(){
-      previewImage.src = '';
-      previewWrap.classList.remove('show');
-      canvasPlaceholder.style.display = '';
-      fileInput.value = '';
-    }
-
-    uploadBtn.addEventListener('click', openUploader);
-    replaceBtn.addEventListener('click', openUploader);
-    removeBtn.addEventListener('click', clearPreview);
-    clearCanvasBtn.addEventListener('click', clearPreview);
-
-    fileInput.addEventListener('change', (e) => {
-      const file = e.target.files && e.target.files[0];
-      if(!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(ev){
-        previewImage.src = ev.target.result;
-        previewWrap.classList.add('show');
-        canvasPlaceholder.style.display = 'none';
-        showMsg('Đã upload hình project vào trung tâm canvas.');
-      };
-      reader.readAsDataURL(file);
-    });
-
-    openDetailBtn.addEventListener('click', () => {
-      const img = previewImage.src ? encodeURIComponent(previewImage.src) : '';
-      window.location.href = 'project-detail.html?img=' + img;
-    });
-
-    function runAI(type){
-      const out = document.getElementById('aiOutput');
-      let msg = '';
-
-      if(type === 'idea') msg = 'Tim ♥️: Ý tưởng này có thể phát triển thành một hệ sản phẩm hoàn chỉnh.';
-      if(type === 'design') msg = 'Tim ♥️: Nên làm nổi bật hình trung tâm và thêm layer kỹ thuật rõ hơn.';
-      if(type === 'patent') msg = 'Tim ♥️: Project này nên tách phần design và utility để xem khả năng bảo hộ.';
-      if(type === 'market') msg = 'Tim ♥️: Có thể định vị ở phân khúc premium, showcase hoặc investor demo.';
-
-      out.textContent = msg;
-    }
-
-    function askAI(){
-      const input = document.getElementById('aiInput');
-      const out = document.getElementById('aiOutput');
-      const q = input.value.trim();
-
-      if(!q){
-        out.textContent = 'Tim ♥️: GỐC hãy nhập câu hỏi trước nhé.';
-        return;
-      }
-
-      out.textContent = 'Tim ♥️ đang phân tích: ' + q;
-      input.value = '';
-    }
-
-    function toolAction(name){
-      const out = document.getElementById('aiOutput');
-      if(out) out.textContent = 'Tool activated: ' + name;
-      showMsg(name + ' đã được kích hoạt.');
-    }
-
-    function loadPreset(img){
-      previewImage.src = img;
-      previewWrap.classList.add('show');
-      canvasPlaceholder.style.display = 'none';
-      showMsg('Đã load preset asset vào canvas.');
-    }
-     document.getElementById("sendToUsptoBtn").addEventListener("click", () => {
-  const title = encodeURIComponent(
-    document.getElementById("metaProjectName")?.textContent.trim() ||
-    document.getElementById("projectTitle")?.textContent.trim() ||
-    "Untitled Invention"
-  );
-
-  const desc = encodeURIComponent(
-    document.getElementById("projectDesc")?.textContent.trim() ||
-    "Project description from CREATIONS ROOM."
-  );
-
-  const category = encodeURIComponent(
-    document.getElementById("metaCategory")?.textContent.trim() ||
-    "General"
-  );
-
-  window.location.href =
-    "uspto.html?title=" + title +
-    "&idea=" + desc +
-    "&category=" + category;
-});
-  document.getElementById("sendToUsptoBtn").addEventListener("click", () => {
-
-  const title = encodeURIComponent(
-    document.getElementById("projectName")?.value ||
-    document.getElementById("projectTitle")?.textContent ||
-    "Untitled Invention"
-  );
-
-  const idea = encodeURIComponent(
-    document.getElementById("projectIdea")?.value ||
-    document.getElementById("projectDesc")?.textContent ||
-    "Describe your invention..."
-  );
-
-  const problem = encodeURIComponent(
-    document.getElementById("projectFunction")?.value ||
-    "Problem being solved..."
-  );
-
-  window.location.href =
-    "uspto.html?title=" + title +
-    "&idea=" + idea +
-    "&problem=" + problem;
-});
-  
 </script>
+
 </body>
 </html>
