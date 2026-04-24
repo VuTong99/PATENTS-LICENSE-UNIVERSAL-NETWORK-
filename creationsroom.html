@@ -639,6 +639,31 @@
                   <button class="canvas-btn gold" type="button" id="sendToUsptoBtn">
                    ⚖️ Send to USPTO Prep
                    </button>
+                  document.getElementById("sendUSPTOBtn").addEventListener("click", () => {
+
+  const title = encodeURIComponent(
+    document.getElementById("projectName")?.value || "Untitled Invention"
+  );
+
+  const idea = encodeURIComponent(
+    document.getElementById("projectIdea")?.value || ""
+  );
+
+  const problem = encodeURIComponent(
+    document.getElementById("projectProblem")?.value || ""
+  );
+
+  const solution = encodeURIComponent(
+    document.getElementById("projectSolution")?.value || ""
+  );
+
+  window.location.href =
+    "uspto.html?title=" + title +
+    "&idea=" + idea +
+    "&problem=" + problem +
+    "&solution=" + solution;
+
+});
                 </div>
               </div>
 
