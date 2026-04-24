@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLOBAL ROOM™ — LICENSEGOC</title>
+
+<style>
+:root{
+  --line:rgba(255,255,255,.1);
+  --gold:#f1c76b;
+  --muted:rgba(255,255,255,.7);
+}
+body{
+  margin:0;
+  font-family:Arial;
+  background:radial-gradient(circle,#071326,#020814);
+  color:#fff;
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  padding:16px;
+  border-bottom:1px solid var(--line);
+}
+.container{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:16px;
+  padding:16px;
+}
+
+/* SIDEBAR */
+.sidebar{
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:12px;
+  background:rgba(255,255,255,.05);
+}
+.search{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#09111f;
+  color:#fff;
+  margin-bottom:10px;
+}
+
+/* MAIN */
+.main{
+  display:grid;
+  gap:12px;
+}
+
+.project{
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+  background:rgba(255,255,255,.05);
+  cursor:pointer;
+}
+
+.project:hover{
+  background:rgba(255,255,255,.08);
+}
+
+.project img{
+  width:100%;
+  max-height:200px;
+  object-fit:contain;
+  margin-top:10px;
+}
+
+.stat{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.badge{
+  color:#71f0ad;
+  font-size:12px;
+}
+
+.gold{
+  color:var(--gold);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div>🌍 GLOBAL ROOM — LICENSEGOC</div>
+  <div onclick="goRoom()" style="cursor:pointer;color:var(--gold)">← Back to CreationsRoom</div>
+</div>
+
+<div class="container">
+
+<!-- LEFT -->
+<div class="sidebar">
+  <input id="search" class="search" placeholder="Search project..." oninput="render()">
+
+  <h3>🔥 Trending</h3>
+  <div id="trending"></div>
+
+  <h3>💰 Investor Signal</h3>
+  <div id="investor"></div>
+</div>
+
+<!-- RIGHT -->
+<div class="main" id="main"></div>
+
+</div>
+
+<script>
+
+let projects = JSON.parse(localStorage.getItem("projects")||"[]");
+
+/* FAKE VALUE SIGNAL */
+projects.forEach(p=>{
+  if(!p.likes) p.likes = Math.floor(Math.random()*100);
+  if(!p.watch) p.watch = Math.floor(Math.random()*200);
+  if(!p.value) p.value = Math.floor(Math.random()*100000);
+});
+
+function score(p){
+  return p.likes*2 + p.watch;
+}
+
+function render(){
+
+  const q = search.value.toLowerCase();
+
+  let filtered = projects.filter(p=>p.name.toLowerCase().includes(q));
+
+  /* MAIN */
+  main.innerHTML="";
+  filtered.sort((a,b)=>score(b)-score(a));
+
+  filtered.forEach((p,i)=>{
+    main.innerHTML+=`
+    <div class="project" onclick="openProject(${i})">
+      <b>${p.name}</b>
+      <div class="stat">Owner: ${p.owner||"Unknown"}</div>
+      <div class="stat">Status: ${p.status||"Draft"}</div>
+      <div class="stat">❤️ ${p.likes} | 👁 ${p.watch}</div>
+      <div class="stat gold">Value: $${p.value}</div>
+      ${p.image?`<img src="${p.image}">`:""}
+    </div>`;
+  });
+
+  /* TRENDING */
+  trending.innerHTML="";
+  projects.sort((a,b)=>score(b)-score(a)).slice(0,5).forEach(p=>{
+    trending.innerHTML+=`<div>🔥 ${p.name}</div>`;
+  });
+
+  /* INVESTOR */
+  investor.innerHTML="";
+  projects.sort((a,b)=>b.value-a.value).slice(0,5).forEach(p=>{
+    investor.innerHTML+=`<div class="badge">💰 ${p.name} — $${p.value}</div>`;
+  });
+
+}
+
+function openProject(i){
+  localStorage.setItem("openProjectIndex", i);
+  window.location.href = "creationsroom.html";
+}
+
+function goRoom(){
+  window.location.href = "creationsroom.html";
+}
+
+render();
+
+</script>
+
+</body>
+</html>
