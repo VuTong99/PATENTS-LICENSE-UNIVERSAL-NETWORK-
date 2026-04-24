@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LICENSE OWNERSHIP™ — LICENSEGOC</title>
+
+<style>
+:root{
+  --bg:#020814;
+  --line:rgba(255,255,255,.1);
+  --gold:#f1c76b;
+  --muted:rgba(255,255,255,.7);
+}
+body{
+  margin:0;
+  font-family:Arial;
+  background:radial-gradient(circle,#071326,#020814);
+  color:#fff;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:20px;
+  background:rgba(255,255,255,.05);
+}
+
+h1{
+  margin:0 0 10px;
+  color:var(--gold);
+}
+
+.stat{
+  margin:6px 0;
+  font-size:14px;
+  color:var(--muted);
+}
+
+.section{
+  margin-top:20px;
+  border-top:1px solid var(--line);
+  padding-top:12px;
+}
+
+.btn{
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  font-weight:900;
+  cursor:pointer;
+  width:100%;
+}
+
+.gold{background:var(--gold);color:#000}
+.dark{background:rgba(255,255,255,.08);color:#fff}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>📜 LICENSE OWNERSHIP CERTIFICATE</h1>
+
+<div id="projectName"></div>
+
+<div class="stat" id="projectID"></div>
+<div class="stat" id="projectOwner"></div>
+<div class="stat" id="projectStatus"></div>
+<div class="stat" id="projectTime"></div>
+
+<div class="section">
+<h3>👥 Ownership Structure</h3>
+<div id="members"></div>
+</div>
+
+<div class="section">
+<h3>💰 License Value</h3>
+<div id="value"></div>
+</div>
+
+<div class="section">
+<h3>⚖️ Legal Path</h3>
+<button class="btn gold" onclick="goUSPTO()">Send to USPTO</button>
+</div>
+
+<div class="section">
+<button class="btn dark" onclick="backRoom()">← Back to CreationsRoom</button>
+<button class="btn dark" onclick="goGlobal()">🌍 Global Room</button>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let projects = JSON.parse(localStorage.getItem("projects")||"[]");
+let index = localStorage.getItem("openProjectIndex") || 0;
+let p = projects[index];
+
+if(!p){
+  document.body.innerHTML="No project found.";
+}
+
+/* DEFAULT VALUE */
+if(!p.value){
+  p.value = Math.floor(Math.random()*100000);
+}
+
+function load(){
+
+  projectName.innerHTML = "<b>"+p.name+"</b>";
+
+  projectID.innerText = "Ghost ID: " + p.id;
+  projectOwner.innerText = "Owner: " + (p.owner || "Unknown");
+  projectStatus.innerText = "Status: " + (p.status || "Draft");
+  projectTime.innerText = "Created: " + (p.created || "Unknown");
+
+  /* MEMBERS */
+  members.innerHTML="";
+  if(p.members){
+    p.members.forEach(m=>{
+      members.innerHTML += `<div>${m.user} — ${m.role}</div>`;
+    });
+  }else{
+    members.innerHTML="Single Owner";
+  }
+
+  /* VALUE */
+  value.innerHTML = `
+    <div class="stat">Estimated Value: $${p.value}</div>
+    <div class="stat">License Readiness: ${calcReadiness()}%</div>
+  `;
+}
+
+function calcReadiness(){
+  let score = 40;
+  if(p.idea) score+=15;
+  if(p.problem) score+=15;
+  if(p.solution) score+=20;
+  return Math.min(score,95);
+}
+
+function goUSPTO(){
+  window.location.href =
+    "uspto.html?title="+encodeURIComponent(p.name)+
+    "&idea="+encodeURIComponent(p.idea||"")+
+    "&problem="+encodeURIComponent(p.problem||"")+
+    "&solution="+encodeURIComponent(p.solution||"");
+}
+
+function backRoom(){
+  window.location.href="creationsroom.html";
+}
+
+function goGlobal(){
+  window.location.href="globalroom.html";
+}
+
+load();
+
+</script>
+
+</body>
+</html>
