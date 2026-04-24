@@ -636,6 +636,9 @@
                   <button class="canvas-btn gold" type="button" id="uploadBtn">＋ Upload Project Image</button>
                   <button class="canvas-btn" type="button" id="clearCanvasBtn">Xóa Canvas</button>
                   <button class="canvas-btn" type="button" id="openDetailBtn">🚀 Xem chi tiết</button>
+                  <button class="canvas-btn gold" type="button" id="sendToUsptoBtn">
+                   ⚖️ Send to USPTO Prep
+                   </button>
                 </div>
               </div>
 
@@ -826,6 +829,28 @@
       canvasPlaceholder.style.display = 'none';
       showMsg('Đã load preset asset vào canvas.');
     }
+     document.getElementById("sendToUsptoBtn").addEventListener("click", () => {
+  const title = encodeURIComponent(
+    document.getElementById("metaProjectName")?.textContent.trim() ||
+    document.getElementById("projectTitle")?.textContent.trim() ||
+    "Untitled Invention"
+  );
+
+  const desc = encodeURIComponent(
+    document.getElementById("projectDesc")?.textContent.trim() ||
+    "Project description from CREATIONS ROOM."
+  );
+
+  const category = encodeURIComponent(
+    document.getElementById("metaCategory")?.textContent.trim() ||
+    "General"
+  );
+
+  window.location.href =
+    "uspto.html?title=" + title +
+    "&idea=" + desc +
+    "&category=" + category;
+});
   </script>
 </body>
 </html>
