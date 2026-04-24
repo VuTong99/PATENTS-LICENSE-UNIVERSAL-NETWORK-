@@ -577,7 +577,40 @@ Drawing Rules:
 • Avoid purely artistic images without technical explanation.
 • Use labels consistently across all figures.`;
 }
-    </script>
+ <script>
+
+function loadPreset(img){
+  previewImage.src = img;
+  previewWrap.classList.add('show');
+  canvasPlaceholder.style.display = 'none';
+}
+
+document.querySelectorAll(".step").forEach((step, index) => {
+  step.addEventListener("click", () => {
+    document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+    step.classList.add("active");
+
+    const aiOutput = document.getElementById("aiOutput");
+
+    const messages = [
+      "IDEA: Nhập ý tưởng, tên project, vấn đề và giải pháp.",
+      "BUILD: Upload hình, blueprint, render, exploded view và mô tả cơ chế.",
+      "REVIEW: Tim ♥️ AI sẽ rà logic, điểm mạnh/yếu và khả năng phát triển.",
+      "PROTECT: Chuẩn bị dữ liệu để gửi sang USPTO AI Prep.",
+      "VALUE: Đánh giá tiềm năng thương mại, investor signal và licensing."
+    ];
+
+    if(aiOutput){
+      aiOutput.innerText = "Tim ♥️: " + messages[index];
+    }
+
+    const canvas = document.querySelector(".canvas-zone");
+    if(canvas){
+      canvas.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  });
+});
+  </script>
 
 </body>
 </html>
