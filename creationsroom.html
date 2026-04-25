@@ -8,494 +8,54 @@
 
 <style>
 :root{
-  --bg:#020814;
-  --panel:rgba(12,20,36,.92);
-  --panel2:rgba(7,13,25,.96);
-  --line:rgba(255,255,255,.09);
-  --gold:#f1c76b;
-  --gold2:#d89c31;
-  --text:#fff4dd;
-  --muted:rgba(255,255,255,.68);
-  --cyan:#7ae7ff;
-  --green:#71f0ad;
-  --red:#ff8e9a;
-  --shadow:0 24px 70px rgba(0,0,0,.48);
-  --radius:26px;
+  --bg:#020814;--panel:rgba(12,20,36,.92);--panel2:rgba(7,13,25,.96);
+  --line:rgba(255,255,255,.09);--gold:#f1c76b;--gold2:#d89c31;
+  --text:#fff4dd;--muted:rgba(255,255,255,.68);--cyan:#7ae7ff;
+  --green:#71f0ad;--shadow:0 24px 70px rgba(0,0,0,.48);--radius:26px;
 }
-
 *{box-sizing:border-box}
-
-html,body{
-  margin:0;
-  padding:0;
-  background:#000;
-  color:var(--text);
-  font-family:Arial, Helvetica, sans-serif;
-  overflow-x:hidden;
-}
-
-body{
-  background:
-    radial-gradient(circle at 50% 0%, rgba(241,199,107,.10), transparent 18%),
-    radial-gradient(circle at 100% 20%, rgba(122,231,255,.08), transparent 24%),
-    linear-gradient(180deg,#020814,#050b14);
-}
-
-a{text-decoration:none;color:inherit}
-button,input,textarea{font-family:inherit}
-
-.app{
-  width:100%;
-  max-width:980px;
-  margin:0 auto;
-  min-height:100vh;
-  background:
-    linear-gradient(180deg,rgba(2,6,14,.68),rgba(5,10,20,.98)),
-    url('creations-bg.jpg') center/cover no-repeat;
-}
-
-.topbar{
-  position:sticky;
-  top:0;
-  z-index:50;
-  display:grid;
-  grid-template-columns:72px 1fr 72px;
-  gap:10px;
-  align-items:center;
-  padding:14px 16px;
-  background:rgba(3,7,14,.90);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--line);
-}
-
-.topbtn{
-  min-height:54px;
-  border-radius:18px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.04);
-  color:#fff;
-  font-weight:1000;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.brand{
-  text-align:center;
-  min-width:0;
-}
-
-.brand b{
-  display:block;
-  font-size:24px;
-  line-height:1.12;
-  color:#fff;
-  letter-spacing:.5px;
-}
-
-.brand span{
-  display:block;
-  margin-top:5px;
-  font-size:12px;
-  color:var(--muted);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.page{
-  padding:18px;
-  padding-bottom:130px;
-}
-
-.workflow{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-bottom:16px;
-}
-
-.step{
-  min-height:112px;
-  border-radius:22px;
-  border:1px solid var(--line);
-  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.02));
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
-}
-
-.step .n{
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  margin-bottom:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.05);
-  color:#fff;
-  font-weight:1000;
-}
-
-.step.active{
-  border-color:rgba(241,199,107,.38);
-  background:linear-gradient(180deg,rgba(241,199,107,.14),rgba(241,199,107,.05));
-}
-
-.step.active .n{
-  background:linear-gradient(180deg,var(--gold),var(--gold2));
-  color:#1b1004;
-  border:none;
-}
-
-.step b{
-  font-size:15px;
-  color:#fff;
-}
-
-.step span{
-  margin-top:4px;
-  font-size:12px;
-  color:var(--muted);
-}
-
-.card{
-  border-radius:var(--radius);
-  border:1px solid var(--line);
-  background:linear-gradient(180deg,var(--panel),var(--panel2));
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  margin-bottom:16px;
-}
-
-.card-head{
-  padding:18px;
-  border-bottom:1px solid var(--line);
-}
-
-.card-head b{
-  display:block;
-  font-size:20px;
-  color:#fff;
-  letter-spacing:.3px;
-}
-
-.card-head span{
-  display:block;
-  margin-top:6px;
-  font-size:13px;
-  color:var(--muted);
-}
-
-.card-body{
-  padding:18px;
-}
-
-.ai-title{
-  font-size:30px;
-  font-weight:1000;
-  color:var(--cyan);
-  margin:0 0 12px;
-}
-
-.ai-copy{
-  color:var(--muted);
-  line-height:1.7;
-  font-size:15px;
-  margin-bottom:16px;
-}
-
-.ai-actions{
-  display:grid;
-  gap:10px;
-}
-
-.ai-action{
-  min-height:58px;
-  border-radius:18px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.045);
-  color:#fff4dd;
-  text-align:left;
-  padding:0 16px;
-  font-weight:1000;
-  font-size:16px;
-  cursor:pointer;
-}
-
-.ask-row{
-  display:grid;
-  grid-template-columns:1fr 96px;
-  gap:10px;
-  margin-top:14px;
-}
-
-.ask-row input{
-  min-height:56px;
-  border-radius:18px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.04);
-  color:#fff;
-  padding:0 16px;
-  font-size:15px;
-}
-
-.gold-btn{
-  min-height:56px;
-  border:none;
-  border-radius:18px;
-  background:linear-gradient(180deg,var(--gold),var(--gold2));
-  color:#1b1004;
-  font-weight:1000;
-  cursor:pointer;
-  font-size:15px;
-}
-
-.dark-btn{
-  min-height:56px;
-  border-radius:18px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.045);
-  color:#fff4dd;
-  font-weight:1000;
-  cursor:pointer;
-  font-size:15px;
-}
-
-.output{
-  margin-top:14px;
-  min-height:48px;
-  border-radius:16px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.035);
-  padding:14px;
-  color:#eaf7ff;
-  line-height:1.6;
-  white-space:pre-wrap;
-}
-
-.project-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-bottom:16px;
-}
-
-.project-grid input,
-.project-grid textarea{
-  width:100%;
-  border-radius:18px;
-  border:1px solid var(--line);
-  background:rgba(3,10,22,.76);
-  color:#fff;
-  padding:14px;
-  font-size:15px;
-}
-
-.project-grid textarea{
-  min-height:100px;
-  resize:vertical;
-}
-
-.project-grid .wide{
-  grid-column:1 / -1;
-}
-
-.canvas-zone{
-  min-height:520px;
-  border-radius:28px;
-  border:1px dashed rgba(122,231,255,.25);
-  background:
-    radial-gradient(circle at 50% 45%,rgba(122,231,255,.12),transparent 34%),
-    linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:22px;
-}
-
-.canvas-placeholder h2{
-  margin:0 0 12px;
-  font-size:34px;
-  line-height:1.15;
-  color:#fff;
-}
-
-.canvas-placeholder p{
-  margin:0 auto 18px;
-  max-width:560px;
-  color:var(--muted);
-  line-height:1.7;
-  font-size:15px;
-}
-
-.canvas-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-}
-
-.preview-wrap{
-  display:none;
-  width:100%;
-  flex-direction:column;
-  align-items:center;
-  gap:14px;
-}
-
-.preview-wrap.show{
-  display:flex;
-}
-
-.preview-frame{
-  width:100%;
-  max-width:760px;
-  min-height:340px;
-  border-radius:24px;
-  border:1px solid var(--line);
-  background:rgba(0,0,0,.55);
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.preview-frame img{
-  width:100%;
-  height:auto;
-  max-height:680px;
-  object-fit:contain;
-  display:block;
-}
-
-.tool-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.tool-btn{
-  min-height:82px;
-  border-radius:20px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.045);
-  color:#fff;
-  font-weight:1000;
-  font-size:16px;
-  cursor:pointer;
-}
-
-.asset-title{
-  margin:18px 0 10px;
-  font-size:20px;
-  color:#fff;
-  font-weight:1000;
-}
-
-.asset-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.asset{
-  min-height:82px;
-  border-radius:18px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.035);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#f4dfb5;
-  font-weight:1000;
-  cursor:pointer;
-}
-
-.signal-grid{
-  display:grid;
-  gap:16px;
-}
-
-.progress{
-  height:12px;
-  border-radius:999px;
-  background:rgba(255,255,255,.08);
-  overflow:hidden;
-  border:1px solid var(--line);
-}
-
-.progress div{
-  height:100%;
-  width:42%;
-  background:linear-gradient(90deg,var(--gold),var(--gold2));
-}
-
-.big-num{
-  font-size:46px;
-  color:var(--gold);
-  font-weight:1000;
-  margin-bottom:12px;
-}
-
-.green{
-  color:var(--green);
-}
-
-.bottom-dock{
-  position:fixed;
-  left:50%;
-  bottom:0;
-  transform:translateX(-50%);
-  width:min(980px,100%);
-  padding:12px 18px 16px;
-  background:rgba(4,9,16,.94);
-  backdrop-filter:blur(16px);
-  border-top:1px solid var(--line);
-  z-index:60;
-}
-
-.dock-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.dock-item{
-  min-height:64px;
-  border-radius:22px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.035);
-  color:#f4dfb5;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:1000;
-}
-
-.dock-item.primary{
-  background:linear-gradient(180deg,var(--gold),var(--gold2));
-  color:#1b1004;
-  border:none;
-}
-
-@media(max-width:760px){
-  .app{max-width:100%;}
-  .page{padding:16px 14px 130px;}
-  .topbar{grid-template-columns:68px 1fr 68px;}
-  .brand b{font-size:22px;}
-  .workflow{grid-template-columns:1fr 1fr;}
-  .project-grid{grid-template-columns:1fr;}
-  .project-grid .wide{grid-column:auto;}
-  .canvas-placeholder h2{font-size:30px;}
-}
+html,body{margin:0;padding:0;background:#000;color:var(--text);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
+body{background:radial-gradient(circle at 50% 0%,rgba(241,199,107,.10),transparent 18%),linear-gradient(180deg,#020814,#050b14)}
+a{text-decoration:none;color:inherit}button,input,textarea{font-family:inherit}
+.app{width:100%;max-width:980px;margin:0 auto;min-height:100vh;background:linear-gradient(180deg,rgba(2,6,14,.68),rgba(5,10,20,.98)),url('creations-bg.jpg') center/cover no-repeat}
+.topbar{position:sticky;top:0;z-index:50;display:grid;grid-template-columns:72px 1fr 72px;gap:10px;align-items:center;padding:14px 16px;background:rgba(3,7,14,.90);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.topbtn{min-height:54px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;font-weight:1000;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.brand{text-align:center;min-width:0}.brand b{display:block;font-size:24px;line-height:1.12;color:#fff}.brand span{display:block;margin-top:5px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.page{padding:18px;padding-bottom:150px}
+.workflow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.step{min-height:112px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.02));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.step .n{width:38px;height:38px;border-radius:50%;margin-bottom:10px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);font-weight:1000}
+.step.active{border-color:rgba(241,199,107,.38);background:linear-gradient(180deg,rgba(241,199,107,.14),rgba(241,199,107,.05))}
+.step.active .n{background:linear-gradient(180deg,var(--gold),var(--gold2));color:#1b1004;border:none}
+.card{border-radius:var(--radius);border:1px solid var(--line);background:linear-gradient(180deg,var(--panel),var(--panel2));box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
+.card-head{padding:18px;border-bottom:1px solid var(--line)}.card-head b{display:block;font-size:20px;color:#fff}.card-head span{display:block;margin-top:6px;font-size:13px;color:var(--muted)}
+.card-body{padding:18px}
+.ai-title{font-size:30px;font-weight:1000;color:var(--cyan);margin:0 0 12px}.ai-copy{color:var(--muted);line-height:1.7;font-size:15px;margin-bottom:16px}
+.ai-actions{display:grid;gap:10px}.ai-action,.dark-btn{min-height:56px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.045);color:#fff4dd;font-weight:1000;cursor:pointer;font-size:15px}
+.ai-action{text-align:left;padding:0 16px;font-size:16px}
+.ask-row{display:grid;grid-template-columns:1fr 96px;gap:10px;margin-top:14px}
+.ask-row input,.project-grid input,.project-grid textarea{width:100%;border-radius:18px;border:1px solid var(--line);background:rgba(3,10,22,.76);color:#fff;padding:14px;font-size:15px}
+.ask-row input{min-height:56px}
+.gold-btn{min-height:56px;border:none;border-radius:18px;background:linear-gradient(180deg,var(--gold),var(--gold2));color:#1b1004;font-weight:1000;cursor:pointer;font-size:15px}
+.output{margin-top:14px;min-height:48px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.035);padding:14px;color:#eaf7ff;line-height:1.6;white-space:pre-wrap}
+.project-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}.project-grid textarea{min-height:100px;resize:vertical}.wide{grid-column:1/-1}
+.canvas-zone{min-height:520px;border-radius:28px;border:1px dashed rgba(122,231,255,.25);background:radial-gradient(circle at 50% 45%,rgba(122,231,255,.12),transparent 34%),linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01));display:flex;align-items:center;justify-content:center;text-align:center;padding:22px}
+.canvas-placeholder h2{margin:0 0 12px;font-size:34px;line-height:1.15;color:#fff}.canvas-placeholder p{margin:0 auto 18px;max-width:560px;color:var(--muted);line-height:1.7;font-size:15px}
+.canvas-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.preview-wrap{display:none;width:100%;flex-direction:column;align-items:center;gap:14px}.preview-wrap.show{display:flex}
+.preview-frame{width:100%;max-width:760px;min-height:340px;border-radius:24px;border:1px solid var(--line);background:rgba(0,0,0,.55);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.preview-frame img{width:100%;height:auto;max-height:680px;object-fit:contain;display:block}
+.tool-grid,.asset-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tool-btn,.asset{min-height:82px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.045);color:#fff;font-weight:1000;font-size:16px;cursor:pointer}
+.asset{display:flex;align-items:center;justify-content:center;color:#f4dfb5}
+.asset-title{margin:18px 0 10px;font-size:20px;color:#fff;font-weight:1000}
+.project-list-card{border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:12px;background:rgba(255,255,255,.035);cursor:pointer}
+.project-list-card b{color:#fff}.project-list-card small{color:var(--muted);display:block;margin-top:5px}
+.signal-grid{display:grid;gap:16px}.progress{height:12px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;border:1px solid var(--line)}.progress div{height:100%;width:42%;background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.big-num{font-size:46px;color:var(--gold);font-weight:1000;margin-bottom:12px}.green{color:var(--green)}
+.bottom-dock{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(980px,100%);padding:12px 18px 16px;background:rgba(4,9,16,.94);backdrop-filter:blur(16px);border-top:1px solid var(--line);z-index:60}
+.dock-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.dock-item{min-height:64px;border-radius:22px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:#f4dfb5;display:flex;align-items:center;justify-content:center;font-weight:1000}.dock-item.primary{background:linear-gradient(180deg,var(--gold),var(--gold2));color:#1b1004;border:none}
+@media(max-width:760px){.page{padding:16px 14px 150px}.workflow{grid-template-columns:1fr 1fr}.project-grid{grid-template-columns:1fr}.wide{grid-column:auto}.canvas-placeholder h2{font-size:30px}}
 </style>
 </head>
 
@@ -504,10 +64,7 @@ button,input,textarea{font-family:inherit}
 
 <header class="topbar">
   <a class="topbtn" href="index.html">←</a>
-  <div class="brand">
-    <b>CREATIONS<br>ROOM™</b>
-    <span>Live Build • Inventors • Public Feedback</span>
-  </div>
+  <div class="brand"><b>CREATIONS<br>ROOM™</b><span>Live Build • Inventors • Public Feedback</span></div>
   <button class="topbtn" type="button" onclick="showMsg('Menu layer sẽ mở rộng ở bản tiếp theo.')">☰</button>
 </header>
 
@@ -524,32 +81,23 @@ button,input,textarea{font-family:inherit}
 <section class="card">
   <div class="card-body">
     <div class="ai-title">Tim ♥️ AI</div>
-    <div class="ai-copy">
-      Tim ♥️ đang hỗ trợ creator phân tích ý tưởng, cấu trúc build, patent logic và hướng thương mại.
-    </div>
-
+    <div class="ai-copy">Tim ♥️ đang hỗ trợ creator phân tích ý tưởng, cấu trúc build, patent logic và hướng thương mại.</div>
     <div class="ai-actions">
-      <button class="ai-action" type="button" onclick="runAI('idea')">💡 Phân tích ý tưởng</button>
-      <button class="ai-action" type="button" onclick="runAI('design')">🎨 Gợi ý thiết kế</button>
-      <button class="ai-action" type="button" onclick="runAI('patent')">🛡 Gợi ý bảo hộ</button>
-      <button class="ai-action" type="button" onclick="runAI('market')">📈 Gợi ý thương mại</button>
+      <button class="ai-action" onclick="runAI('idea')">💡 Phân tích ý tưởng</button>
+      <button class="ai-action" onclick="runAI('design')">🎨 Gợi ý thiết kế</button>
+      <button class="ai-action" onclick="runAI('patent')">🛡 Gợi ý bảo hộ</button>
+      <button class="ai-action" onclick="runAI('market')">📈 Gợi ý thương mại</button>
     </div>
-
     <div class="ask-row">
       <input id="aiInput" type="text" placeholder="Hỏi Tim ♥️ về project..." />
-      <button class="gold-btn" type="button" onclick="askAI()">Gửi</button>
+      <button class="gold-btn" onclick="askAI()">Gửi</button>
     </div>
-
     <div id="aiOutput" class="output"></div>
   </div>
 </section>
 
 <section class="card">
-  <div class="card-head">
-    <b>PROJECT BUILD CANVAS</b>
-    <span>Nhập dữ liệu project thật để gửi sang USPTO AI Prep.</span>
-  </div>
-
+  <div class="card-head"><b>PROJECT BUILD CANVAS</b><span>Nhập dữ liệu project thật để gửi sang USPTO AI Prep.</span></div>
   <div class="card-body">
     <div class="project-grid">
       <input id="projectName" placeholder="Tên Project / Invention..." />
@@ -563,48 +111,41 @@ button,input,textarea{font-family:inherit}
       <div class="canvas-placeholder" id="canvasPlaceholder">
         <h2>Khoảng trống trung tâm để build project thật</h2>
         <p>Upload blueprint, render, exploded view, concept image hoặc bất cứ hình nào GỐC đang build.</p>
-
         <div class="canvas-actions">
-          <button class="gold-btn" type="button" id="uploadBtn">＋ Upload Project Image</button>
-          <button class="dark-btn" type="button" id="clearCanvasBtn">Xóa Canvas</button>
-          <button class="dark-btn" type="button" id="openDetailBtn">🚀 Xem chi tiết</button>
-          <button class="gold-btn" type="button" id="sendToUsptoBtn">⚖️ Send to USPTO Prep</button>
+          <button class="gold-btn" id="uploadBtn">＋ Upload Project Image</button>
+          <button class="dark-btn" id="clearCanvasBtn">Xóa Canvas</button>
+          <button class="dark-btn" id="openDetailBtn">🚀 Xem chi tiết</button>
+          <button class="gold-btn" id="sendToUsptoBtn">⚖️ Send to USPTO Prep</button>
         </div>
       </div>
 
       <div class="preview-wrap" id="previewWrap">
-        <div class="preview-frame">
-          <img id="previewImage" alt="Project Preview">
-        </div>
-
+        <div class="preview-frame"><img id="previewImage" alt="Project Preview"></div>
         <div class="canvas-actions">
-          <button class="gold-btn" type="button" id="replaceBtn">Thay hình khác</button>
-          <button class="dark-btn" type="button" id="removeBtn">Xóa hình</button>
-          <button class="gold-btn" type="button" id="sendToUsptoBtn2">⚖️ Send to USPTO Prep</button>
+          <button class="gold-btn" id="replaceBtn">Thay hình khác</button>
+          <button class="dark-btn" id="removeBtn">Xóa hình</button>
+          <button class="gold-btn" id="saveProjectBtn">💾 Save Project</button>
+          <button class="gold-btn" id="sendToUsptoBtn2">⚖️ Send to USPTO Prep</button>
         </div>
       </div>
-
       <input type="file" id="fileInput" accept="image/*" style="display:none;">
     </div>
+
+    <div id="project-list"></div>
   </div>
 </section>
 
 <section class="card">
-  <div class="card-head">
-    <b>TOOLS + ASSETS</b>
-    <span>AI tools • visual tools • preset assets</span>
-  </div>
-
+  <div class="card-head"><b>TOOLS + ASSETS</b><span>AI tools • visual tools • preset assets</span></div>
   <div class="card-body">
     <div class="tool-grid">
-      <button class="tool-btn" type="button" onclick="toolAction('AI Writer')">🤖 AI Writer</button>
-      <button class="tool-btn" type="button" onclick="toolAction('Design AI')">🎨 Design AI</button>
-      <button class="tool-btn" type="button" onclick="toolAction('Patent AI')">🛡 Patent AI</button>
-      <button class="tool-btn" type="button" onclick="toolAction('Market AI')">📈 Market AI</button>
-      <button class="tool-btn" type="button" onclick="toolAction('Blueprint')">📐 Blueprint</button>
-      <button class="tool-btn" type="button" onclick="toolAction('Exploded View')">🧩 Exploded</button>
+      <button class="tool-btn" onclick="toolAction('AI Writer')">🤖 AI Writer</button>
+      <button class="tool-btn" onclick="toolAction('Design AI')">🎨 Design AI</button>
+      <button class="tool-btn" onclick="toolAction('Patent AI')">🛡 Patent AI</button>
+      <button class="tool-btn" onclick="toolAction('Market AI')">📈 Market AI</button>
+      <button class="tool-btn" onclick="toolAction('Blueprint')">📐 Blueprint</button>
+      <button class="tool-btn" onclick="toolAction('Exploded View')">🧩 Exploded</button>
     </div>
-
     <div class="asset-title">ASSET LIBRARY</div>
     <div class="asset-grid">
       <div class="asset" onclick="loadPreset('creations-bg.jpg')">Frame 1</div>
@@ -616,33 +157,13 @@ button,input,textarea{font-family:inherit}
 </section>
 
 <section class="signal-grid">
-  <section class="card">
-    <div class="card-head"><b>PROJECT STAGE</b></div>
-    <div class="card-body">
-      <div class="big-num">42%</div>
-      <div class="progress"><div></div></div>
-      <p>Project đang trong Build Mode và sẵn sàng chuyển sang Review.</p>
-    </div>
-  </section>
-
-  <section class="card">
-    <div class="card-head"><b>RISK</b></div>
-    <div class="card-body">
-      <div class="big-num green">25%</div>
-      <p>manageable</p>
-    </div>
-  </section>
-
-  <section class="card">
-    <div class="card-head"><b>INVESTOR SIGNAL</b></div>
-    <div class="card-body">
-      <div class="big-num" style="color:var(--cyan)">RẤT CAO</div>
-      <p>watching now</p>
-    </div>
-  </section>
+  <section class="card"><div class="card-head"><b>PROJECT STAGE</b></div><div class="card-body"><div class="big-num">42%</div><div class="progress"><div></div></div><p>Project đang trong Build Mode và sẵn sàng chuyển sang Review.</p></div></section>
+  <section class="card"><div class="card-head"><b>RISK</b></div><div class="card-body"><div class="big-num green">25%</div><p>manageable</p></div></section>
+  <section class="card"><div class="card-head"><b>INVESTOR SIGNAL</b></div><div class="card-body"><div class="big-num" style="color:var(--cyan)">RẤT CAO</div><p>watching now</p></div></section>
 </section>
 
 </main>
+
 <div class="bottom-dock">
   <div class="dock-grid">
     <a class="dock-item" href="index.html">Home</a>
@@ -650,143 +171,164 @@ button,input,textarea{font-family:inherit}
     <a class="dock-item" href="licensegoc.html">LICENSEGOC</a>
     <a class="dock-item" href="licensecoin.html">LCN</a>
     <a class="dock-item" href="tim.html">AI TIM</a>
-    <button class="dock-item primary" onclick="showMsg('Create Project sẽ nâng cấp ở bước tiếp theo')">
-     + Create Project</button>
-    </button>
+    <button class="dock-item primary" onclick="saveProject()">+ Create Project</button>
   </div>
 </div>
 
 <script>
-function showMsg(msg){
-  alert(msg);
-}
+function showMsg(msg){alert(msg)}
 
-/* =========================
-   CANVAS UPLOAD
-========================= */
-const fileInput = document.getElementById("fileInput");
-const uploadBtn = document.getElementById("uploadBtn");
-const replaceBtn = document.getElementById("replaceBtn");
-const removeBtn = document.getElementById("removeBtn");
-const clearCanvasBtn = document.getElementById("clearCanvasBtn");
+const fileInput=document.getElementById("fileInput");
+const uploadBtn=document.getElementById("uploadBtn");
+const replaceBtn=document.getElementById("replaceBtn");
+const removeBtn=document.getElementById("removeBtn");
+const clearCanvasBtn=document.getElementById("clearCanvasBtn");
+const previewWrap=document.getElementById("previewWrap");
+const previewImage=document.getElementById("previewImage");
+const canvasPlaceholder=document.getElementById("canvasPlaceholder");
 
-const previewWrap = document.getElementById("previewWrap");
-const previewImage = document.getElementById("previewImage");
-const canvasPlaceholder = document.getElementById("canvasPlaceholder");
+uploadBtn.onclick=()=>fileInput.click();
+replaceBtn.onclick=()=>fileInput.click();
 
-uploadBtn.onclick = () => fileInput.click();
-replaceBtn.onclick = () => fileInput.click();
-
-fileInput.onchange = (e)=>{
-  const file = e.target.files[0];
-  if(!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function(ev){
-    previewImage.src = ev.target.result;
+fileInput.onchange=(e)=>{
+  const file=e.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=(ev)=>{
+    previewImage.src=ev.target.result;
     previewWrap.classList.add("show");
-    canvasPlaceholder.style.display = "none";
+    canvasPlaceholder.style.display="none";
   };
   reader.readAsDataURL(file);
 };
 
-removeBtn.onclick = clearCanvasBtn.onclick = ()=>{
-  previewImage.src = "";
+function clearCanvas(){
+  previewImage.src="";
   previewWrap.classList.remove("show");
-  canvasPlaceholder.style.display = "block";
+  canvasPlaceholder.style.display="block";
+  fileInput.value="";
+}
+removeBtn.onclick=clearCanvas;
+clearCanvasBtn.onclick=clearCanvas;
+
+function getProjects(){return JSON.parse(localStorage.getItem("projects")||"[]")}
+function setProjects(projects){localStorage.setItem("projects",JSON.stringify(projects))}
+function makeID(){return "GOC-"+Math.random().toString(36).substring(2,8).toUpperCase()}
+
+function saveProject(){
+  const name=document.getElementById("projectName").value.trim()||"Untitled Project";
+  const category=document.getElementById("projectCategory").value.trim()||"General";
+  const idea=document.getElementById("projectIdea").value.trim();
+  const problem=document.getElementById("projectProblem").value.trim();
+  const solution=document.getElementById("projectSolution").value.trim();
+  const image=previewImage.src||"";
+
+  const projects=getProjects();
+  const project={
+    id:makeID(),
+    name,category,idea,problem,solution,image,
+    owner:"GỐC",
+    status:"Draft",
+    progress:42,
+    likes:0,
+    watchers:0,
+    members:[{user:"GỐC",role:"Owner"}],
+    created:new Date().toLocaleString()
+  };
+
+  projects.push(project);
+  setProjects(projects);
+  localStorage.setItem("openProjectIndex",projects.length-1);
+  renderProjects();
+
+  showMsg("✅ Project đã được tạo và lưu vào hệ thống.");
+}
+
+function renderProjects(){
+  const box=document.getElementById("project-list");
+  const projects=getProjects();
+  if(!projects.length){
+    box.innerHTML="";
+    return;
+  }
+
+  box.innerHTML="<h3 style='margin-top:18px'>🧩 SAVED PROJECTS</h3>";
+  projects.slice().reverse().forEach((p,revIndex)=>{
+    const realIndex=projects.length-1-revIndex;
+    box.innerHTML+=`
+      <div class="project-list-card" onclick="openProject(${realIndex})">
+        <b>${p.name}</b>
+        <small>${p.category} • ${p.status} • ${p.progress||0}%</small>
+        <small>Ghost ID: ${p.id}</small>
+      </div>`;
+  });
+}
+
+function openProject(index){
+  const projects=getProjects();
+  const p=projects[index];
+  if(!p)return;
+  localStorage.setItem("openProjectIndex",index);
+
+  document.getElementById("projectName").value=p.name||"";
+  document.getElementById("projectCategory").value=p.category||"";
+  document.getElementById("projectIdea").value=p.idea||"";
+  document.getElementById("projectProblem").value=p.problem||"";
+  document.getElementById("projectSolution").value=p.solution||"";
+
+  if(p.image){
+    previewImage.src=p.image;
+    previewWrap.classList.add("show");
+    canvasPlaceholder.style.display="none";
+  }
+
+  showMsg("Đã mở project: "+p.name);
+}
+
+function sendToUSPTO(){
+  const title=encodeURIComponent(document.getElementById("projectName").value||"Untitled Invention");
+  const idea=encodeURIComponent(document.getElementById("projectIdea").value||"");
+  const problem=encodeURIComponent(document.getElementById("projectProblem").value||"");
+  const solution=encodeURIComponent(document.getElementById("projectSolution").value||"");
+  window.location.href="uspto.html?title="+title+"&idea="+idea+"&problem="+problem+"&solution="+solution;
+}
+
+document.getElementById("sendToUsptoBtn").onclick=sendToUSPTO;
+document.getElementById("sendToUsptoBtn2").onclick=sendToUSPTO;
+document.getElementById("saveProjectBtn").onclick=saveProject;
+
+document.getElementById("openDetailBtn").onclick=()=>{
+  const index=localStorage.getItem("openProjectIndex");
+  if(index===null){showMsg("Hãy save hoặc chọn project trước.");return;}
+  window.location.href="project-hub.html";
 };
 
-/* =========================
-   AI BASIC
-========================= */
 function runAI(type){
-  const out = document.getElementById("aiOutput");
-
-  if(type === "idea"){
-    out.innerText = "Tim ♥️: Ý tưởng này có thể phát triển thành hệ sản phẩm có giá trị cao.";
-  }
-  if(type === "design"){
-    out.innerText = "Tim ♥️: Nên tập trung vào visual center + cấu trúc rõ ràng.";
-  }
-  if(type === "patent"){
-    out.innerText = "Tim ♥️: Có thể tách Utility + Design để bảo hộ mạnh hơn.";
-  }
-  if(type === "market"){
-    out.innerText = "Tim ♥️: Có thể định vị phân khúc premium / investor demo.";
-  }
+  const out=document.getElementById("aiOutput");
+  if(type==="idea")out.innerText="Tim ♥️: Ý tưởng này có thể phát triển thành hệ sản phẩm có giá trị cao.";
+  if(type==="design")out.innerText="Tim ♥️: Nên tập trung vào visual center + blueprint + exploded view.";
+  if(type==="patent")out.innerText="Tim ♥️: Có thể tách Utility + Design để bảo hộ mạnh hơn.";
+  if(type==="market")out.innerText="Tim ♥️: Có thể định vị phân khúc premium / investor demo.";
 }
 
 function askAI(){
-  const input = document.getElementById("aiInput");
-  const out = document.getElementById("aiOutput");
-
-  if(!input.value){
-    out.innerText = "Tim ♥️: Nhập câu hỏi trước.";
-    return;
-  }
-
-  out.innerText = "Tim ♥️ đang phân tích: " + input.value;
-  input.value = "";
+  const input=document.getElementById("aiInput");
+  const out=document.getElementById("aiOutput");
+  if(!input.value){out.innerText="Tim ♥️: Nhập câu hỏi trước.";return;}
+  out.innerText="Tim ♥️ đang phân tích: "+input.value;
+  input.value="";
 }
 
-/* =========================
-   USPTO TRANSFER (QUAN TRỌNG)
-========================= */
-function sendToUSPTO(){
-
-  const title = encodeURIComponent(
-    document.getElementById("projectName").value || "Untitled Invention"
-  );
-
-  const idea = encodeURIComponent(
-    document.getElementById("projectIdea").value || ""
-  );
-
-  const problem = encodeURIComponent(
-    document.getElementById("projectProblem").value || ""
-  );
-
-  const solution = encodeURIComponent(
-    document.getElementById("projectSolution").value || ""
-  );
-
-  window.location.href =
-    "uspto.html?title=" + title +
-    "&idea=" + idea +
-    "&problem=" + problem +
-    "&solution=" + solution;
-}
-
-/* GẮN BUTTON */
-document.getElementById("sendToUsptoBtn").onclick = sendToUSPTO;
-document.getElementById("sendToUsptoBtn2").onclick = sendToUSPTO;
-
-/* =========================
-   DETAIL PAGE
-========================= */
-document.getElementById("openDetailBtn").onclick = ()=>{
-  if(!previewImage.src){
-    showMsg("Chưa có hình để xem chi tiết");
-    return;
-  }
-  window.location.href = "project-detail.html?img=" + encodeURIComponent(previewImage.src);
-};
-
-/* =========================
-   TOOL + ASSET
-========================= */
-function toolAction(name){
-  showMsg("Activated: " + name);
-}
-
+function toolAction(name){showMsg("Activated: "+name)}
 function loadPreset(img){
-  previewImage.src = img;
+  previewImage.src=img;
   previewWrap.classList.add("show");
-  canvasPlaceholder.style.display = "none";
+  canvasPlaceholder.style.display="none";
 }
+
+renderProjects();
 </script>
-<script src="nav.js">
-  
-</script>
+
+<script src="nav.js"></script>
 </body>
 </html>
