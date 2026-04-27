@@ -10,7 +10,6 @@
   --line:rgba(255,255,255,.1);
   --gold:#f1c76b;
   --green:#71f0ad;
-  --cyan:#7ae7ff;
   --muted:rgba(255,255,255,.7);
 }
 body{
@@ -20,64 +19,44 @@ body{
   color:#fff;
 }
 .container{
-  max-width:1200px;
+  max-width:1100px;
   margin:auto;
-  padding:18px;
-}
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid var(--line);
-  padding-bottom:14px;
+  padding:20px;
+  padding-bottom:100px;
 }
 .card{
   border:1px solid var(--line);
   border-radius:20px;
   padding:16px;
   background:rgba(255,255,255,.05);
-  margin-top:16px;
+  margin-bottom:16px;
 }
 .grid{
   display:grid;
   grid-template-columns:1.2fr .8fr;
   gap:16px;
 }
-.actions{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
+img{
+  width:100%;
+  border-radius:16px;
+  border:1px solid var(--line);
 }
+.stat{color:var(--muted);margin-top:6px}
+.big{font-size:34px;font-weight:1000;color:var(--gold)}
 .btn{
   width:100%;
   padding:12px;
   border:none;
   border-radius:12px;
-  font-weight:900;
+  margin-top:10px;
+  font-weight:1000;
   cursor:pointer;
 }
 .gold{background:var(--gold);color:#000}
 .dark{background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--line)}
-.stat{
-  color:var(--muted);
-  margin:8px 0;
-}
-.big{
-  font-size:36px;
-  font-weight:900;
-  color:var(--gold);
-}
-img{
-  width:100%;
-  max-height:420px;
-  object-fit:contain;
-  border-radius:16px;
-  background:#020814;
-  border:1px solid var(--line);
-}
 .bar{
   height:10px;
-  background:rgba(255,255,255,.08);
+  background:rgba(255,255,255,.1);
   border-radius:999px;
   overflow:hidden;
 }
@@ -87,7 +66,6 @@ img{
 }
 @media(max-width:800px){
   .grid{grid-template-columns:1fr}
-  .actions{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -96,155 +74,121 @@ img{
 
 <div class="container">
 
-<div class="topbar">
-  <h1>🧩 PROJECT HUB™</h1>
-  <button class="btn dark" style="max-width:220px" onclick="goRoom()">← CreationsRoom</button>
-</div>
+<h1>🧩 PROJECT HUB™</h1>
 
 <div class="grid">
 
-  <div class="card">
-    <h2 id="projectName">No Project Selected</h2>
-    <p id="projectIdea" class="stat"></p>
-    <div id="imageBox"></div>
+<div class="card">
+  <h2 id="name">—</h2>
+  <p id="idea" class="stat"></p>
+  <img id="img" src="" style="display:none">
+</div>
+
+<div class="card">
+  <div class="stat" id="id"></div>
+  <div class="stat" id="owner"></div>
+  <div class="stat" id="status"></div>
+  <div class="stat" id="created"></div>
+
+  <div style="margin-top:16px">
+    <div class="stat">Readiness</div>
+    <div class="big" id="ready">0%</div>
+    <div class="bar"><div id="bar" class="fill"></div></div>
   </div>
 
-  <div class="card">
-    <h2>📊 Project Signal</h2>
-    <div class="stat" id="ghostId">Ghost ID: —</div>
-    <div class="stat" id="owner">Owner: —</div>
-    <div class="stat" id="status">Status: —</div>
-    <div class="stat" id="created">Created: —</div>
-
-    <div style="margin-top:18px">
-      <div class="stat">Readiness</div>
-      <div class="big" id="readiness">0%</div>
-      <div class="bar"><div class="fill" id="readinessBar"></div></div>
-    </div>
-
-    <div style="margin-top:18px">
-      <div class="stat">Estimated Value</div>
-      <div class="big" id="value">$0</div>
-    </div>
+  <div style="margin-top:16px">
+    <div class="stat">Estimated Value</div>
+    <div class="big" id="value">$0</div>
   </div>
+</div>
 
 </div>
 
 <div class="card">
-  <h2>🚀 Command Actions</h2>
-
-  <div class="actions">
-    <button class="btn gold" onclick="goAI()">🤖 AI Command</button>
-    <button class="btn dark" onclick="goOwnership()">📜 Ownership</button>
-    <button class="btn dark" onclick="goUSPTO()">⚖️ USPTO Prep</button>
-    <button class="btn dark" onclick="goCoin()">🪙 LICENSECOIN Engine</button>
-    <button class="btn dark" onclick="goGlobal()">🌍 GlobalRoom</button>
-    <button class="btn gold" onclick="markReview()">✅ Mark Review Ready</button>
-  </div>
+  <h3>🚀 ACTIONS</h3>
+  <button class="btn dark" onclick="goAI()">🤖 AI</button>
+  <button class="btn dark" onclick="goOwner()">📜 Ownership</button>
+  <button class="btn dark" onclick="goUSPTO()">⚖️ USPTO</button>
+  <button class="btn dark" onclick="goCoin()">🪙 Coin</button>
+  <button class="btn gold" onclick="goGlobal()">🌍 Global</button>
 </div>
 
 <div class="card">
-  <h2>🧠 Tim ♥️ Hub Analysis</h2>
-  <div id="analysis" class="stat"></div>
+  <h3>🧠 Tim ♥️ Analysis</h3>
+  <p id="analysis" class="stat"></p>
 </div>
 
 </div>
 
 <script>
-let projects = JSON.parse(localStorage.getItem("projects")||"[]");
-let index = Number(localStorage.getItem("openProjectIndex")||0);
+let projects = JSON.parse(localStorage.getItem("projects") || "[]");
+let index = Number(localStorage.getItem("openProjectIndex") || 0);
 let p = projects[index];
 
 if(!p){
-  document.getElementById("projectName").innerText="No project found.";
+  name.innerText="No Project Found";
 }else{
-  if(!p.id)p.id="GOC-"+Math.random().toString(36).substring(2,8).toUpperCase();
   render();
 }
 
-function save(){
-  localStorage.setItem("projects",JSON.stringify(projects));
+function render(){
+  name.innerText = p.name || "Untitled";
+  idea.innerText = p.idea || "";
+
+  if(p.image){
+    img.src = p.image;
+    img.style.display="block";
+  }
+
+  id.innerText = "Ghost ID: " + (p.id || "—");
+  owner.innerText = "Owner: " + (p.owner || "—");
+  status.innerText = "Status: " + (p.status || "Draft");
+  created.innerText = "Created: " + (p.created || "");
+
+  let r = calcReady();
+  let v = calcValue();
+
+  ready.innerText = r + "%";
+  bar.style.width = r + "%";
+  value.innerText = "$" + v.toLocaleString();
+
+  analysis.innerText =
+    "Project đã kết nối toàn hệ. Bước tiếp theo: hoàn thiện USPTO + Ownership + hình proof.";
 }
 
-function calcReadiness(){
-  let score=20;
-  if(p.idea)score+=15;
-  if(p.problem)score+=15;
-  if(p.solution)score+=20;
-  if(p.image)score+=15;
-  if(p.status==="Protected")score+=10;
-  if(p.status==="Published")score+=10;
-  return Math.min(score,100);
+function calcReady(){
+  let r=20;
+  if(p.idea)r+=15;
+  if(p.problem)r+=15;
+  if(p.solution)r+=20;
+  if(p.image)r+=15;
+  if(p.status==="Protected")r+=10;
+  return Math.min(r,100);
 }
 
 function calcValue(){
   let v=1000;
-  if(p.idea)v+=p.idea.length*25;
-  if(p.problem)v+=2500;
+  if(p.idea)v+=2000;
+  if(p.problem)v+=2000;
   if(p.solution)v+=4000;
   if(p.image)v+=3000;
   if(p.status==="Protected")v+=10000;
-  if(p.status==="Published")v+=15000;
-  if(p.members)v+=p.members.length*1000;
-  return Math.round(v);
+  return v;
 }
 
-function render(){
-  const r=calcReadiness();
-  const v=calcValue();
-
-  p.value=v;
-  save();
-
-  projectName.innerText=p.name||"Untitled Project";
-  projectIdea.innerText=p.idea||"No idea description yet.";
-  ghostId.innerText="Ghost ID: "+p.id;
-  owner.innerText="Owner: "+(p.owner||"Unknown");
-  status.innerText="Status: "+(p.status||"Draft");
-  created.innerText="Created: "+(p.created||"Unknown");
-
-  readiness.innerText=r+"%";
-  readinessBar.style.width=r+"%";
-  value.innerText="$"+v.toLocaleString();
-
-  imageBox.innerHTML=p.image ? `<img src="${p.image}">` : `<div class="stat">No project image uploaded.</div>`;
-
-  analysis.innerText =
-    "Tim ♥️: This hub connects the project core to AI, ownership, USPTO, LICENSECOIN, and GlobalRoom. Next strongest move is to complete proof visuals and legal readiness before public monetization.";
-}
-
-function markReview(){
-  p.status="Review Ready";
-  save();
-  render();
-}
-
-function goRoom(){window.location.href="creationsroom.html"}
-function goGlobal(){window.location.href="globalroom.html"}
-
-function goAI(){
-  localStorage.setItem("openProjectIndex", index);
-  window.location.href="ai-command.html";
-}
-
-function goOwnership(){
-  localStorage.setItem("openProjectIndex", index);
-  window.location.href="ownership.html";
-}
-
-function goCoin(){
-  localStorage.setItem("openProjectIndex", index);
-  window.location.href="licensecoin-engine.html";
-}
-
+function goAI(){window.location.href="ai-command.html";}
+function goOwner(){window.location.href="ownership.html";}
 function goUSPTO(){
-  window.location.href =
-    "uspto.html?title="+encodeURIComponent(p.name||"")+
-    "&idea="+encodeURIComponent(p.idea||"")+
-    "&problem="+encodeURIComponent(p.problem||"")+
-    "&solution="+encodeURIComponent(p.solution||"");
+  window.location.href="uspto.html?title="+encodeURIComponent(p.name||"")+
+  "&idea="+encodeURIComponent(p.idea||"")+
+  "&problem="+encodeURIComponent(p.problem||"")+
+  "&solution="+encodeURIComponent(p.solution||"");
 }
+function goCoin(){window.location.href="licensecoin-engine.html";}
+function goGlobal(){window.location.href="globalroom.html";}
 </script>
+
+<script src="nav.js"></script>
 
 </body>
 </html>
