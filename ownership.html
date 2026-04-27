@@ -3,65 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LICENSE OWNERSHIP™ — LICENSEGOC</title>
+<title>OWNERSHIP CERTIFICATE™ — LICENSEGOC</title>
 
 <style>
 :root{
-  --bg:#020814;
   --line:rgba(255,255,255,.1);
   --gold:#f1c76b;
+  --green:#71f0ad;
   --muted:rgba(255,255,255,.7);
 }
 body{
   margin:0;
-  font-family:Arial;
+  font-family:Arial,Helvetica,sans-serif;
   background:radial-gradient(circle,#071326,#020814);
   color:#fff;
 }
-
 .container{
-  max-width:900px;
+  max-width:980px;
   margin:auto;
   padding:20px;
+  padding-bottom:100px;
 }
-
 .card{
   border:1px solid var(--line);
   border-radius:22px;
-  padding:20px;
+  padding:18px;
   background:rgba(255,255,255,.05);
+  margin-bottom:16px;
 }
-
-h1{
-  margin:0 0 10px;
+h1,h2{margin:0 0 10px}
+h1{color:var(--gold)}
+.stat{
+  color:var(--muted);
+  margin:8px 0;
+  line-height:1.5;
+}
+.cert{
+  text-align:center;
+  border:1px solid rgba(241,199,107,.35);
+  background:linear-gradient(180deg,rgba(241,199,107,.08),rgba(255,255,255,.03));
+}
+.big{
+  font-size:28px;
+  font-weight:1000;
   color:var(--gold);
 }
-
-.stat{
-  margin:6px 0;
-  font-size:14px;
-  color:var(--muted);
+.owner-box{
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:12px;
+  margin-top:10px;
+  background:rgba(255,255,255,.04);
 }
-
-.section{
-  margin-top:20px;
-  border-top:1px solid var(--line);
-  padding-top:12px;
-}
-
 .btn{
+  width:100%;
   margin-top:10px;
   padding:12px;
   border:none;
   border-radius:12px;
-  font-weight:900;
+  font-weight:1000;
   cursor:pointer;
-  width:100%;
 }
-
 .gold{background:var(--gold);color:#000}
-.dark{background:rgba(255,255,255,.08);color:#fff}
-
+.dark{background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--line)}
+input,select{
+  width:100%;
+  margin-top:8px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#09111f;
+  color:#fff;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.locked{
+  color:var(--green);
+  font-weight:900;
+}
+@media(max-width:760px){
+  .grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 
@@ -69,110 +94,162 @@ h1{
 
 <div class="container">
 
-<div class="card">
+  <div class="card cert">
+    <h1>📜 OWNERSHIP CERTIFICATE™</h1>
+    <div class="stat">LICENSEGOC™ Internal Ownership Record</div>
+    <div class="big" id="projectName">No Project</div>
+    <div class="stat" id="ghostId">Ghost ID: —</div>
+  </div>
 
-<h1>📜 LICENSE OWNERSHIP CERTIFICATE</h1>
+  <div class="grid">
 
-<div id="projectName"></div>
+    <div class="card">
+      <h2>👤 Owner Information</h2>
+      <div class="stat" id="owner">Owner: —</div>
+      <div class="stat" id="status">Status: —</div>
+      <div class="stat" id="created">Created: —</div>
+      <div class="stat" id="stamp">STAMPSTIME™: —</div>
+    </div>
 
-<div class="stat" id="projectID"></div>
-<div class="stat" id="projectOwner"></div>
-<div class="stat" id="projectStatus"></div>
-<div class="stat" id="projectTime"></div>
+    <div class="card">
+      <h2>🔐 Protection State</h2>
+      <div class="stat" id="lockState">Not locked</div>
+      <button class="btn gold" onclick="lockOwnership()">🔐 Lock Ownership</button>
+      <button class="btn dark" onclick="markProtected()">🛡 Mark Protected</button>
+    </div>
 
-<div class="section">
-<h3>👥 Ownership Structure</h3>
-<div id="members"></div>
-</div>
+  </div>
 
-<div class="section">
-<h3>💰 License Value</h3>
-<div id="value"></div>
-</div>
+  <div class="card">
+    <h2>👥 Ownership Structure</h2>
+    <div id="members"></div>
 
-<div class="section">
-<h3>⚖️ Legal Path</h3>
-<button class="btn gold" onclick="goUSPTO()">Send to USPTO</button>
-</div>
+    <input id="memberName" placeholder="Add member name">
+    <select id="memberRole">
+      <option value="Co-owner">Co-owner</option>
+      <option value="Builder">Builder</option>
+      <option value="Investor">Investor</option>
+      <option value="Witness">Witness</option>
+    </select>
+    <button class="btn dark" onclick="addMember()">＋ Add Member</button>
+  </div>
 
-<div class="section">
-<button class="btn dark" onclick="backRoom()">← Back to CreationsRoom</button>
-<button class="btn dark" onclick="goGlobal()">🌍 Global Room</button>
-</div>
+  <div class="card">
+    <h2>🧠 Ownership Analysis</h2>
+    <div class="stat" id="analysis"></div>
+  </div>
 
-</div>
+  <div class="card">
+    <h2>🚀 Next Actions</h2>
+    <button class="btn dark" onclick="goHub()">🧩 Project Hub</button>
+    <button class="btn dark" onclick="goUSPTO()">⚖️ Send to USPTO</button>
+    <button class="btn dark" onclick="goCoin()">🪙 LICENSECOIN Engine</button>
+    <button class="btn gold" onclick="goGlobal()">🌍 Global Room</button>
+  </div>
 
 </div>
 
 <script>
-
-let projects = JSON.parse(localStorage.getItem("projects")||"[]");
-let index = localStorage.getItem("openProjectIndex") || 0;
+let projects = JSON.parse(localStorage.getItem("projects") || "[]");
+let index = Number(localStorage.getItem("openProjectIndex") || 0);
 let p = projects[index];
 
 if(!p){
-  document.body.innerHTML="No project found.";
+  document.getElementById("projectName").innerText = "No Project Found";
+}else{
+  if(!p.id) p.id = "GOC-" + Math.random().toString(36).substring(2,8).toUpperCase();
+  if(!p.owner) p.owner = "GỐC";
+  if(!p.members) p.members = [{user:p.owner, role:"Owner"}];
+  if(!p.created) p.created = new Date().toLocaleString();
+  if(!p.stampTime) p.stampTime = new Date().toISOString();
+  save();
+  render();
 }
 
-/* DEFAULT VALUE */
-if(!p.value){
-  p.value = Math.floor(Math.random()*100000);
+function save(){
+  localStorage.setItem("projects", JSON.stringify(projects));
 }
 
-function load(){
+function render(){
+  projectName.innerText = p.name || "Untitled Project";
+  ghostId.innerText = "Ghost ID: " + (p.id || "—");
+  owner.innerText = "Owner: " + (p.owner || "Unknown");
+  status.innerText = "Status: " + (p.status || "Draft");
+  created.innerText = "Created: " + (p.created || "—");
+  stamp.innerText = "STAMPSTIME™: " + (p.stampTime || "—");
 
-  projectName.innerHTML = "<b>"+p.name+"</b>";
+  lockState.innerHTML = p.ownershipLocked
+    ? "<span class='locked'>LOCKED — Ownership record protected</span>"
+    : "Not locked yet";
 
-  projectID.innerText = "Ghost ID: " + p.id;
-  projectOwner.innerText = "Owner: " + (p.owner || "Unknown");
-  projectStatus.innerText = "Status: " + (p.status || "Draft");
-  projectTime.innerText = "Created: " + (p.created || "Unknown");
+  members.innerHTML = "";
+  p.members.forEach((m,i)=>{
+    members.innerHTML += `
+      <div class="owner-box">
+        <b>${m.user}</b>
+        <div class="stat">${m.role}</div>
+      </div>
+    `;
+  });
 
-  /* MEMBERS */
-  members.innerHTML="";
-  if(p.members){
-    p.members.forEach(m=>{
-      members.innerHTML += `<div>${m.user} — ${m.role}</div>`;
-    });
-  }else{
-    members.innerHTML="Single Owner";
+  analysis.innerText =
+    "Tim ♥️: Project này đã có Ghost ID, Owner, STAMPSTIME™ và ownership structure. Bước mạnh nhất tiếp theo là khóa ownership, sau đó chuyển qua USPTO hoặc LICENSECOIN Engine.";
+}
+
+function addMember(){
+  const name = memberName.value.trim();
+  const role = memberRole.value;
+  if(!name) return alert("Nhập tên member.");
+
+  p.members.push({user:name, role:role});
+  save();
+  memberName.value = "";
+  render();
+}
+
+function lockOwnership(){
+  p.ownershipLocked = true;
+  p.lockedAt = new Date().toISOString();
+
+  if(p.status === "Draft"){
+    p.status = "Ownership Locked";
   }
 
-  /* VALUE */
-  value.innerHTML = `
-    <div class="stat">Estimated Value: $${p.value}</div>
-    <div class="stat">License Readiness: ${calcReadiness()}%</div>
-  `;
+  save();
+  render();
+  alert("Ownership locked.");
 }
 
-function calcReadiness(){
-  let score = 40;
-  if(p.idea) score+=15;
-  if(p.problem) score+=15;
-  if(p.solution) score+=20;
-  return Math.min(score,95);
+function markProtected(){
+  p.status = "Protected";
+  p.protectedAt = new Date().toISOString();
+  save();
+  render();
+}
+
+function goHub(){
+  localStorage.setItem("openProjectIndex", index);
+  window.location.href = "project-hub.html";
 }
 
 function goUSPTO(){
   window.location.href =
-    "uspto.html?title="+encodeURIComponent(p.name)+
-    "&idea="+encodeURIComponent(p.idea||"")+
-    "&problem="+encodeURIComponent(p.problem||"")+
-    "&solution="+encodeURIComponent(p.solution||"");
+    "uspto.html?title=" + encodeURIComponent(p.name || "") +
+    "&idea=" + encodeURIComponent(p.idea || "") +
+    "&problem=" + encodeURIComponent(p.problem || "") +
+    "&solution=" + encodeURIComponent(p.solution || "");
 }
 
-function backRoom(){
-  window.location.href="creationsroom.html";
+function goCoin(){
+  localStorage.setItem("openProjectIndex", index);
+  window.location.href = "licensecoin-engine.html";
 }
 
 function goGlobal(){
-  window.location.href="globalroom.html";
+  window.location.href = "globalroom.html";
 }
-
-load();
-
 </script>
 
-
+<script src="nav.js"></script>
 </body>
 </html>
