@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>USPTO Command Center™ — LICENSEGOC</title>
+<title>USPTO AI FINAL CHECK™ — LICENSEGOC</title>
 
 <style>
 body{
@@ -12,31 +12,19 @@ body{
   background:#020814;
   color:#fff;
 }
-
 .container{
-  max-width:1150px;
+  max-width:1100px;
   margin:auto;
   padding:20px;
   padding-bottom:100px;
 }
-
 .card{
-  background:rgba(255,255,255,.05);
   border:1px solid rgba(255,255,255,.1);
-  border-radius:22px;
-  padding:20px;
-  margin-top:20px;
+  border-radius:20px;
+  padding:16px;
+  margin-bottom:16px;
+  background:rgba(255,255,255,.05);
 }
-
-h1,h2{
-  margin:0 0 10px;
-}
-
-p{
-  color:rgba(255,255,255,.72);
-  line-height:1.6;
-}
-
 input,textarea,select{
   width:100%;
   padding:12px;
@@ -46,60 +34,28 @@ input,textarea,select{
   background:#09111f;
   color:#fff;
 }
-
-textarea{min-height:110px}
-
+textarea{min-height:100px}
 .btn{
   margin-top:10px;
-  padding:12px 16px;
+  padding:12px;
   border:none;
   border-radius:12px;
   cursor:pointer;
   font-weight:900;
 }
-
-.gold{
-  background:linear-gradient(180deg,#f1c76b,#d89c31);
-  color:#171006;
-}
-
-.dark{
-  background:rgba(255,255,255,.08);
-  color:#fff;
-}
-
+.gold{background:#f1c76b;color:#000}
+.dark{background:rgba(255,255,255,.08);color:#fff}
 .output{
   white-space:pre-wrap;
-  margin-top:14px;
-  padding:14px;
+  margin-top:12px;
+  padding:12px;
   background:#09111f;
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:14px;
-  line-height:1.6;
-  color:#eaf7ff;
+  border-radius:12px;
 }
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-}
-
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-}
-
 .score{
-  font-size:40px;
+  font-size:32px;
   color:#f1c76b;
-  font-weight:1000;
-}
-
-@media(max-width:760px){
-  .grid{grid-template-columns:1fr;}
+  font-weight:900;
 }
 </style>
 </head>
@@ -108,510 +64,121 @@ textarea{min-height:110px}
 
 <div class="container">
 
-<div class="topbar">
-  <div>
-    <h1>USPTO COMMAND CENTER™</h1>
-    <p>AI Build → Attorney Review → Risk → Submit</p>
-  </div>
+<h1>⚖️ USPTO AI FINAL CHECK™</h1>
 
-  <select id="langSelect" onchange="changeLang()">
-    <option value="vi">🇻🇳 VI</option>
-    <option value="en">🇺🇸 EN</option>
-  </select>
-</div>
-
-<!-- ========================= -->
-<!-- 1. PATENT BUILDER -->
-<!-- ========================= -->
 <div class="card">
-  <h2>🧠 Patent Application Builder</h2>
+<h2>Patent Builder</h2>
 
-  <div class="grid">
-    <input id="title" placeholder="Tên sáng chế">
-    <select id="type">
-      <option>Utility Patent</option>
-      <option>Design Patent</option>
-      <option>Provisional Patent</option>
-    </select>
-  </div>
+<input id="title" placeholder="Title">
+<textarea id="idea" placeholder="Idea"></textarea>
+<textarea id="problem" placeholder="Problem"></textarea>
+<textarea id="solution" placeholder="Solution"></textarea>
 
-  <textarea id="idea" placeholder="Mô tả ý tưởng"></textarea>
-  <textarea id="problem" placeholder="Vấn đề cần giải quyết"></textarea>
-  <textarea id="solution" placeholder="Giải pháp"></textarea>
-
-  <button class="btn gold" onclick="generateDraft()">Generate Draft</button>
-
-  <div id="draft" class="output"></div>
+<button class="btn gold" onclick="generateDraft()">Generate Draft</button>
+<div id="draft" class="output"></div>
 </div>
 
-<!-- ========================= -->
-<!-- 2. AI FINAL CHECK -->
-<!-- ========================= -->
 <div class="card">
-  <h2>✅ AI FINAL CHECK</h2>
+<h2>AI Final Check</h2>
 
-  <button class="btn gold" onclick="finalAICheck()">Run Check</button>
-  <button class="btn dark" onclick="autoCorrectFinal()">Auto Fix</button>
-
-  <div id="score" class="score">0%</div>
-  <div id="finalResult" class="output"></div>
+<button class="btn gold" onclick="finalCheck()">Run AI Check</button>
+<div class="score" id="score">0%</div>
+<div id="check" class="output"></div>
 </div>
 
-<!-- ========================= -->
-<!-- 3. PATENT TYPE AI -->
-<!-- ========================= -->
 <div class="card">
-  <h2>🧠 Patent Type AI</h2>
+<h2>Attorney Review</h2>
 
-  <button class="btn gold" onclick="detectPatentType()">Detect Type</button>
+<button class="btn gold" onclick="attorney()">Run Review</button>
+<button class="btn dark" onclick="claims()">Generate Claims</button>
 
-  <div id="typeResult" class="output"></div>
+<div id="attorneyOut" class="output"></div>
 </div>
 
-<!-- ========================= -->
-<!-- 4. PRIOR ART SEARCH -->
-<!-- ========================= -->
 <div class="card">
-  <h2>🔎 Prior Art Search Prep</h2>
+<h2>Navigation</h2>
 
-  <button class="btn gold" onclick="generateSearch()">Generate Keywords</button>
+<button class="btn dark" onclick="goHub()">Project Hub</button>
+<button class="btn dark" onclick="goOwner()">Ownership</button>
+<button class="btn dark" onclick="goCoin()">LicenseCoin</button>
+<button class="btn gold" onclick="goGlobal()">Global</button>
 
-  <div id="searchOutput" class="output"></div>
-
-  <button class="btn dark" onclick="window.open('https://ppubs.uspto.gov/pubwebapp/static/pages/landing.html','_blank')">
-    Open Patent Search
-  </button>
+<button class="btn gold" onclick="window.open('https://patentcenter.uspto.gov/','_blank')">
+Open USPTO Official
+</button>
 </div>
 
-<!-- ========================= -->
-<!-- 5. ATTORNEY REVIEW -->
-<!-- ========================= -->
-<div class="card">
-  <h2>⚖️ Attorney Review</h2>
-
-  <button class="btn gold" onclick="attorneyReview()">Run Review</button>
-  <button class="btn dark" onclick="generateProClaims()">Generate Claims</button>
-  <button class="btn dark" onclick="drawingsChecklist()">Drawings</button>
-
-  <div id="attorneyOutput" class="output"></div>
 </div>
 
-<!-- ========================= -->
-<!-- 6. RISK SCORE -->
-<!-- ========================= -->
-<div class="card">
-  <h2>⚠️ USPTO Risk Score</h2>
-
-  <button class="btn gold" onclick="calculateRisk()">Analyze Risk</button>
-
-  <div id="riskOutput" class="output"></div>
-</div>
-
-<!-- ========================= -->
-<!-- 7. OFFICE ACTION -->
-<!-- ========================= -->
-<div class="card">
-  <h2>📄 Office Action Simulator</h2>
-
-  <button class="btn gold" onclick="simulateOffice()">Simulate Examiner</button>
-
-  <div id="officeOutput" class="output"></div>
-</div>
-
-<!-- ========================= -->
-<!-- 8. OFFICIAL USPTO -->
-<!-- ========================= -->
-<div class="card">
-  <h2>🏛 Official USPTO</h2>
-
-  <button class="btn gold" onclick="window.open('https://patentcenter.uspto.gov/')">Patent Center</button>
-  <button class="btn dark" onclick="window.open('https://www.uspto.gov/patents/apply/forms')">Forms</button>
-  <button class="btn dark" onclick="window.open('https://www.uspto.gov/fees')">Fees</button>
-  <button class="btn dark" onclick="window.open('https://www.uspto.gov/patents/basics')">Guides</button>
-</div>
-
-<!-- ========================= -->
-<!-- 9. LICENSEGOC LAYER -->
-<!-- ========================= -->
-<div class="card">
-  <h2>🛡 LICENSEGOC Protection</h2>
-
-  <button class="btn gold" onclick="stampTime()">STAMPSTIME™</button>
-
-  <div id="stampOutput" class="output"></div>
-</div>
 <script>
-let currentLang = "vi";
+let projects = JSON.parse(localStorage.getItem("projects")||"[]");
+let index = Number(localStorage.getItem("openProjectIndex")||0);
+let p = projects[index];
 
-function changeLang(){
-  currentLang = document.getElementById("langSelect").value;
+if(p){
+  title.value = p.name || "";
+  idea.value = p.idea || "";
+  problem.value = p.problem || "";
+  solution.value = p.solution || "";
 }
 
-function get(id){
-  return document.getElementById(id)?.value.trim() || "";
-}
-
-/* =========================
-   DRAFT BUILDER
-========================= */
 function generateDraft(){
-  const title = get("title");
-  const type = get("type");
-  const idea = get("idea");
-  const problem = get("problem");
-  const solution = get("solution");
-
-  if(!title || !idea){
-    document.getElementById("draft").innerText =
-      "Tim ♥️: Nhập title + idea trước.";
-    return;
-  }
-
-  document.getElementById("draft").innerText =
+  draft.innerText =
 `TITLE:
-${title}
-
-TYPE:
-${type}
+${title.value}
 
 ABSTRACT:
-${title} relates to ${idea}
+${idea.value}
 
 PROBLEM:
-${problem}
+${problem.value}
 
 SOLUTION:
-${solution}
+${solution.value}
 
-CLAIMS:
-Basic structure ready.`;
+CLAIM:
+A system configured to perform the described function.`;
 }
 
-/* =========================
-   FINAL CHECK
-========================= */
-function finalAICheck(){
-  let score = 60;
+function finalCheck(){
+  let s=0;
+  if(title.value.length>5)s+=20;
+  if(idea.value.length>30)s+=20;
+  if(problem.value.length>20)s+=20;
+  if(solution.value.length>30)s+=20;
+  if(draft.innerText.length>100)s+=20;
 
-  if(get("idea").length > 40) score += 20;
-  if(get("solution").length > 30) score += 20;
+  score.innerText = s+"%";
 
-  if(score > 100) score = 100;
-
-  document.getElementById("score").innerText = score + "%";
-
-  document.getElementById("finalResult").innerText =
-    score > 80 ? "READY FOR USPTO" : "NEEDS IMPROVEMENT";
+  check.innerText =
+  s>80 ? "Ready for USPTO" :
+  s>60 ? "Need improvement" :
+  "Not ready";
 }
 
-/* =========================
-   AUTO FIX
-========================= */
-function autoCorrectFinal(){
-  document.getElementById("draft").innerText =
-  "Tim ♥️: Draft đã được chuẩn hóa lại.";
+function attorney(){
+  attorneyOut.innerText =
+  "Tim ♥️: Hồ sơ có thể nộp dạng Utility Patent. Nên mở rộng claims và thêm drawings.";
 }
 
-/* =========================
-   PATENT TYPE
-========================= */
-function detectPatentType(){
-  const idea = get("idea").toLowerCase();
+function claims(){
+  attorneyOut.innerText =
+`CLAIMS:
 
-  let type = "Utility Patent";
+1. A system comprising components configured to perform the invention.
 
-  if(idea.includes("design") || idea.includes("shape")){
-    type = "Design Patent";
-  }
+2. The system improves efficiency by the described mechanism.
 
-  document.getElementById("typeResult").innerText =
-    "Suggested: " + type;
+3. Includes alternative embodiments and scalable architecture.`;
 }
 
-/* =========================
-   PRIOR ART
-========================= */
-function generateSearch(){
-  const words = get("idea").split(" ").slice(0,6);
-
-  document.getElementById("searchOutput").innerText =
-    "Keywords: " + words.join(", ");
-}
-
-/* =========================
-   ATTORNEY REVIEW
-========================= */
-function attorneyReview(){
-  document.getElementById("attorneyOutput").innerText =
-  "Check novelty • claims • structure • drawings";
-}
-
-/* =========================
-   CLAIMS
-========================= */
-function generateProClaims(){
-  const title = get("title");
-
-  document.getElementById("attorneyOutput").innerText =
-`Claim 1: System for ${title}
-Claim 2: Improvement layer
-Claim 3: Additional module`;
-}
-
-/* =========================
-   DRAWINGS
-========================= */
-function drawingsChecklist(){
-  document.getElementById("attorneyOutput").innerText =
-  "FIG1 Overall\nFIG2 Components\nFIG3 Flow";
-}
-
-/* =========================
-   RISK
-========================= */
-function calculateRisk(){
-  document.getElementById("riskOutput").innerText =
-  "Risk: Medium";
-}
-
-/* =========================
-   OFFICE ACTION
-========================= */
-function simulateOffice(){
-  document.getElementById("officeOutput").innerText =
-  "Examiner may question novelty.";
-}
-
-/* =========================
-   STAMP
-========================= */
-function stampTime(){
-  document.getElementById("stampOutput").innerText =
-  "STAMPED: " + new Date().toLocaleString();
-}
-
-/* =========================
-   CREATIONS ROOM DATA
-========================= */
-function loadFromCR(){
-  const p = new URLSearchParams(window.location.search);
-
-  if(p.get("title")) document.getElementById("title").value = p.get("title");
-  if(p.get("idea")) document.getElementById("idea").value = p.get("idea");
-  if(p.get("problem")) document.getElementById("problem").value = p.get("problem");
-  if(p.get("solution")) document.getElementById("solution").value = p.get("solution");
-}
-
-window.onload = loadFromCR;
+function goHub(){location.href="project-hub.html"}
+function goOwner(){location.href="ownership.html"}
+function goCoin(){location.href="licensecoin-engine.html"}
+function goGlobal(){location.href="globalroom.html"}
 </script>
-/* =========================
-   USPTO LEGAL-GRADE LAYER
-========================= */
 
-function generateProClaims(){
-  const title = get("title") || "the invention";
-  const problem = get("problem") || "a technical or practical limitation";
-  const solution = get("solution") || "a structured solution";
+<script src="nav.js"></script>
 
-  document.getElementById("attorneyOutput").innerText =
-`USPTO-STYLE CLAIM SET DRAFT
-
-Independent Claim 1:
-1. A system for ${title}, comprising:
-   a first component configured to perform a primary function;
-   a second component operatively coupled to the first component; and
-   a control or structural mechanism configured to address ${problem};
-   wherein the system provides ${solution}.
-
-Dependent Claim 2:
-2. The system of claim 1, wherein the control or structural mechanism is configured to improve reliability, safety, usability, performance, or efficiency.
-
-Dependent Claim 3:
-3. The system of claim 1, further comprising one or more modular elements configured to be replaced, adjusted, scaled, or upgraded.
-
-Dependent Claim 4:
-4. The system of claim 1, wherein the system includes an alternative embodiment adapted for a different commercial or technical use case.
-
-Method Claim 5:
-5. A method of operating the system of claim 1, comprising:
-   activating the system;
-   coordinating the first component and second component;
-   applying the control or structural mechanism; and
-   producing the intended result.
-
-AI NOTE:
-This is a preparation draft only. A qualified patent professional should refine claim scope before filing.`;
-}
-
-function attorneyReview(){
-  const title = get("title") || "Untitled Invention";
-  const idea = get("idea");
-  const problem = get("problem");
-  const solution = get("solution");
-
-  document.getElementById("attorneyOutput").innerText =
-`PATENT ATTORNEY-STYLE REVIEW
-
-Project:
-${title}
-
-1. Novelty:
-${idea.length > 50 ? "The invention has enough description to begin novelty comparison." : "Idea description is too thin. Add more technical detail before search."}
-
-2. Utility:
-${solution.length > 35 ? "A practical function is present." : "Utility is not yet clear. Explain how the invention works in real use."}
-
-3. Non-Obviousness:
-The strongest patent angle should focus on what is not obvious from known products or combinations.
-
-4. Claim Scope:
-Claims should protect the core mechanism, not only the final product appearance.
-
-5. Drawings:
-Recommended: overall view, component diagram, exploded view, operating flow, alternative embodiment.
-
-6. Filing Strategy:
-- If function/mechanism is the core → Utility Patent.
-- If external appearance is the core → Design Patent.
-- If early-stage and not final → Provisional may be considered.
-
-Risk Note:
-${problem && solution ? "Moderate risk. Add prior art search and stronger claims." : "High risk. Problem/solution must be clearer."}
-
-DISCLAIMER:
-AI preparation only. This is not legal advice.`;
-}
-
-function calculateRisk(){
-  const idea = get("idea");
-  const problem = get("problem");
-  const solution = get("solution");
-  const draft = document.getElementById("draft").innerText;
-
-  let risk = 85;
-  if(idea.length > 60) risk -= 15;
-  if(problem.length > 35) risk -= 15;
-  if(solution.length > 45) risk -= 20;
-  if(draft.includes("CLAIMS")) risk -= 15;
-  if(draft.includes("DETAILED DESCRIPTION")) risk -= 10;
-
-  if(risk < 10) risk = 10;
-
-  let level = "HIGH";
-  if(risk <= 35) level = "LOW";
-  else if(risk <= 60) level = "MEDIUM";
-
-  document.getElementById("riskOutput").innerText =
-`USPTO REJECTION RISK ESTIMATE
-
-Risk Level: ${level}
-Risk Score: ${risk}%
-
-Main Risk Factors:
-• Prior art similarity
-• Broad or unclear claims
-• Weak technical mechanism
-• Missing drawings
-• Obvious combination of known elements
-
-Risk Reduction Plan:
-• Add detailed mechanism
-• Add FIG drawings
-• Narrow independent claim
-• Add dependent fallback claims
-• Search prior art before filing`;
-}
-
-function simulateOffice(){
-  document.getElementById("officeOutput").innerText =
-`OFFICE ACTION SIMULATOR
-
-Possible Examiner Rejections:
-
-1. Novelty Rejection:
-The examiner may argue that a prior patent already discloses similar features.
-
-Suggested Response:
-Identify the exact difference in structure, function, or operation.
-
-2. Obviousness Rejection:
-The examiner may argue that the invention is an obvious combination of known systems.
-
-Suggested Response:
-Explain why the combination is not obvious and what unexpected benefit is achieved.
-
-3. Claim Clarity Issue:
-The examiner may say the claims are too broad or unclear.
-
-Suggested Response:
-Amend claims with clearer components, relationships, and technical limits.
-
-4. Drawing / Description Issue:
-The examiner may require better support for claimed elements.
-
-Suggested Response:
-Add figure references and expand detailed description.
-
-AI Strategy:
-Prepare fallback dependent claims before filing.`;
-}
-
-function drawingsChecklist(){
-  document.getElementById("attorneyOutput").innerText =
-`USPTO DRAWINGS CHECKLIST
-
-Recommended Figures:
-
-FIG. 1 — Overall system view
-FIG. 2 — Main component layout
-FIG. 3 — Exploded view
-FIG. 4 — Internal mechanism / cross-section
-FIG. 5 — Operational flow diagram
-FIG. 6 — Alternative embodiment
-FIG. 7 — User interface or control view
-FIG. 8 — Commercial product view
-
-Drawing Rules:
-• Each figure should match the written description.
-• Every major claim element should appear in at least one figure.
-• Avoid purely artistic images without technical explanation.
-• Use labels consistently across all figures.`;
-}
- <script>
-
-function loadPreset(img){
-  previewImage.src = img;
-  previewWrap.classList.add('show');
-  canvasPlaceholder.style.display = 'none';
-}
-
-document.querySelectorAll(".step").forEach((step, index) => {
-  step.addEventListener("click", () => {
-    document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
-    step.classList.add("active");
-
-    const aiOutput = document.getElementById("aiOutput");
-
-    const messages = [
-      "IDEA: Nhập ý tưởng, tên project, vấn đề và giải pháp.",
-      "BUILD: Upload hình, blueprint, render, exploded view và mô tả cơ chế.",
-      "REVIEW: Tim ♥️ AI sẽ rà logic, điểm mạnh/yếu và khả năng phát triển.",
-      "PROTECT: Chuẩn bị dữ liệu để gửi sang USPTO AI Prep.",
-      "VALUE: Đánh giá tiềm năng thương mại, investor signal và licensing."
-    ];
-
-    if(aiOutput){
-      aiOutput.innerText = "Tim ♥️: " + messages[index];
-    }
-
-    const canvas = document.querySelector(".canvas-zone");
-    if(canvas){
-      canvas.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  });
-});
-  </script>
-
-
-  </body>
+</body>
 </html>
