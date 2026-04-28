@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LICENSEGOC™ SYSTEM MAP</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#000;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+.page{
+  min-height:100vh;
+  padding:28px 18px 100px;
+  background:
+    linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.82)),
+    url("creations-bg.jpg") center/cover no-repeat;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  max-width:980px;
+  margin:0 auto 34px;
+}
+
+.back{
+  padding:12px 18px;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  color:#f1c76b;
+  text-decoration:none;
+  font-weight:1000;
+}
+
+.title{
+  text-align:center;
+  color:#f1c76b;
+  font-size:30px;
+  font-weight:1000;
+  margin:36px 0 22px;
+}
+
+.grid{
+  max-width:900px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.card{
+  min-height:118px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(15,15,15,.82);
+  color:#fff;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:18px;
+  font-weight:1000;
+}
+
+.card span{
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+.footer-note{
+  max-width:760px;
+  margin:28px auto 0;
+  text-align:center;
+  color:rgba(255,255,255,.72);
+  line-height:1.5;
+  font-size:14px;
+}
+
+@media(min-width:900px){
+  .grid{grid-template-columns:repeat(3,1fr)}
+}
+
+@media(max-width:420px){
+  .card{min-height:104px;font-size:16px}
+  .title{font-size:26px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <div class="top">
+    <a class="back" href="index.html">← Home</a>
+    <a class="back" href="creationsroom.html">Enter Room →</a>
+  </div>
+
+  <div class="title">LICENSEGOC™ SYSTEM MAP</div>
+
+  <div class="grid">
+    <a class="card" href="creationsroom.html"><span>🧩</span>CreationsRoom</a>
+    <a class="card" href="dashboard.html"><span>📊</span>Dashboard</a>
+    <a class="card" href="globalroom.html"><span>🌍</span>GlobalRoom</a>
+    <a class="card" href="project-hub.html"><span>🧠</span>Project Hub</a>
+    <a class="card" href="ai-command.html"><span>🤖</span>AI Command</a>
+    <a class="card" href="ownership.html"><span>📜</span>Ownership</a>
+    <a class="card" href="uspto.html"><span>⚖️</span>USPTO</a>
+    <a class="card" href="licensecoin-engine.html"><span>🪙</span>LICENSECOIN</a>
+    <a class="card" href="investor-snapshot.html"><span>💼</span>Investor</a>
+    <a class="card" href="export-project.html"><span>📤</span>Export</a>
+    <a class="card" href="project-log.html"><span>📜</span>Lifecycle Log</a>
+    <a class="card" href="system-checklist.html"><span>✅</span>Checklist</a>
+  </div>
+
+  <div class="footer-note">
+    One map for the full LICENSEGOC™ ecosystem: create, protect, value, export, and present projects.
+  </div>
+
+</div>
+
+</body>
+</html>
