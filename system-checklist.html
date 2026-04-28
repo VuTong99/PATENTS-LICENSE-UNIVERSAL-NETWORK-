@@ -4,87 +4,164 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SYSTEM CHECKLIST™ — LICENSEGOC</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#020814;color:#fff}
-.container{max-width:950px;margin:auto;padding:20px;padding-bottom:100px}
-.card{border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;background:rgba(255,255,255,.05);margin-bottom:16px}
-h1{color:#f1c76b}
-.item{padding:12px;border-bottom:1px solid rgba(255,255,255,.08)}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#020814;
+  color:#fff;
+}
+.page{
+  max-width:980px;
+  margin:auto;
+  padding:22px;
+  padding-bottom:110px;
+}
+h1{
+  color:#f1c76b;
+  text-align:center;
+}
+.card{
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:22px;
+  padding:18px;
+  background:rgba(255,255,255,.05);
+  margin-bottom:16px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+.status{
+  padding:14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+}
 .ok{color:#71f0ad;font-weight:900}
 .warn{color:#f1c76b;font-weight:900}
-.btn{width:100%;padding:12px;margin-top:10px;border:none;border-radius:12px;font-weight:1000;cursor:pointer}
+.bad{color:#ff8e9a;font-weight:900}
+.big{
+  font-size:34px;
+  font-weight:1000;
+  color:#f1c76b;
+}
+.btn{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:12px;
+  font-weight:1000;
+  cursor:pointer;
+}
 .gold{background:#f1c76b;color:#000}
 .dark{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.1)}
+@media(max-width:720px){
+  .grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 
 <body>
-<div class="container">
+<div class="page">
 
 <h1>✅ SYSTEM CHECKLIST™</h1>
 
 <div class="card">
-  <h2>Core Files</h2>
-  <div id="list"></div>
+  <h2>Overall System Progress</h2>
+  <div class="big" id="progress">0%</div>
+  <div id="summary"></div>
 </div>
 
 <div class="card">
-  <h2>System Data</h2>
-  <div id="data"></div>
+  <h2>Project Data Check</h2>
+  <div class="grid" id="projectChecks"></div>
 </div>
 
 <div class="card">
-  <button class="btn gold" onclick="runCheck()">Run Check</button>
+  <h2>Core Module Check</h2>
+  <div class="grid">
+    <div class="status"><span class="ok">●</span> CreationsRoom</div>
+    <div class="status"><span class="ok">●</span> Project Hub</div>
+    <div class="status"><span class="ok">●</span> GlobalRoom</div>
+    <div class="status"><span class="ok">●</span> Ownership</div>
+    <div class="status"><span class="ok">●</span> USPTO</div>
+    <div class="status"><span class="ok">●</span> LICENSECOIN</div>
+    <div class="status"><span class="ok">●</span> Investor Snapshot</div>
+    <div class="status"><span class="ok">●</span> Export</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Navigation</h2>
+  <button class="btn gold" onclick="location.href='system-map.html'">🗺 System Map</button>
   <button class="btn dark" onclick="location.href='dashboard.html'">📊 Dashboard</button>
+  <button class="btn dark" onclick="location.href='project-hub.html'">🧠 Project Hub</button>
   <button class="btn dark" onclick="location.href='creationsroom.html'">🧩 CreationsRoom</button>
 </div>
 
 </div>
 
 <script>
-const files = [
-  "index.html",
-  "creationsroom.html",
-  "globalroom.html",
-  "project-hub.html",
-  "edit-project.html",
-  "project-log.html",
-  "ownership.html",
-  "uspto.html",
-  "licensecoin-engine.html",
-  "ai-command.html",
-  "dashboard.html",
-  "export-project.html",
-  "investor-snapshot.html",
-  "nav.js",
-  "sync.js"
-];
+let projects = JSON.parse(localStorage.getItem("projects") || "[]");
+let index = Number(localStorage.getItem("openProjectIndex") || 0);
+let p = projects[index];
 
-function runCheck(){
-  list.innerHTML = "";
-  files.forEach(f=>{
-    list.innerHTML += `
-      <div class="item">
-        <span class="ok">●</span> ${f}
-        <div style="font-size:12px;color:rgba(255,255,255,.6)">
-          Check file exists in GitHub repo.
-        </div>
+function check(label, condition, good, bad){
+  return `
+    <div class="status">
+      <span class="${condition ? "ok" : "warn"}">●</span>
+      <b>${label}</b>
+      <div style="color:rgba(255,255,255,.68);margin-top:6px">
+        ${condition ? good : bad}
       </div>
-    `;
-  });
-
-  const projects = JSON.parse(localStorage.getItem("projects") || "[]");
-  const openIndex = localStorage.getItem("openProjectIndex");
-
-  data.innerHTML = `
-    <div class="item">Projects stored: <b>${projects.length}</b></div>
-    <div class="item">Open project index: <b>${openIndex ?? "none"}</b></div>
-    <div class="item">Sync layer: <span class="ok">Ready if sync.js exists</span></div>
-    <div class="item">Navigation layer: <span class="ok">Ready if nav.js exists</span></div>
+    </div>
   `;
 }
 
-runCheck();
+function render(){
+  if(!p){
+    progress.innerText = "0%";
+    summary.innerHTML = "<p class='bad'>No active project found. Create a project first.</p>";
+    projectChecks.innerHTML = "";
+    return;
+  }
+
+  let score = 0;
+  let total = 8;
+
+  const checks = [
+    ["Project Name", !!p.name, "Project has a name.", "Missing project name."],
+    ["Idea", !!p.idea, "Idea exists.", "Missing idea."],
+    ["Problem", !!p.problem, "Problem defined.", "Missing problem."],
+    ["Solution", !!p.solution, "Solution defined.", "Missing solution."],
+    ["Image Proof", !!p.image, "Visual proof attached.", "No project image."],
+    ["Ownership", !!p.ownershipLocked, "Ownership locked.", "Ownership not locked."],
+    ["Protection", p.status==="Protected" || p.status==="Published", "Protected / Published.", "Not protected yet."],
+    ["Lifecycle Log", p.logs && p.logs.length>0, "Logs exist.", "No lifecycle logs."]
+  ];
+
+  projectChecks.innerHTML = "";
+
+  checks.forEach(c=>{
+    if(c[1]) score++;
+    projectChecks.innerHTML += check(c[0], c[1], c[2], c[3]);
+  });
+
+  const percent = Math.round((score/total)*100);
+  progress.innerText = percent + "%";
+
+  summary.innerHTML =
+    percent >= 85 ? "<p class='ok'>System is strong and ready for presentation.</p>" :
+    percent >= 55 ? "<p class='warn'>System is usable but should be improved before investor review.</p>" :
+    "<p class='bad'>System needs more project data before presentation.</p>";
+}
+
+render();
 </script>
 
 <script src="sync.js"></script>
