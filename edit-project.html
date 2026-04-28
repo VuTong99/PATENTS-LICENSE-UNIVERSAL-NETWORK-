@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDIT PROJECT™ — LICENSEGOC</title>
+<style>
+body{margin:0;font-family:Arial;background:radial-gradient(circle,#071326,#020814);color:#fff}
+.container{max-width:950px;margin:auto;padding:20px;padding-bottom:100px}
+.card{border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;background:rgba(255,255,255,.05);margin-bottom:16px}
+input,textarea,select{width:100%;padding:12px;margin-top:8px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:#09111f;color:#fff}
+textarea{min-height:110px}
+.btn{width:100%;padding:12px;margin-top:10px;border:none;border-radius:12px;font-weight:1000;cursor:pointer}
+.gold{background:#f1c76b;color:#000}.dark{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.1)}
+img{width:100%;max-height:320px;object-fit:contain;border-radius:16px;margin-top:10px}
+.stat{color:rgba(255,255,255,.7);margin-top:6px}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>🛠 EDIT PROJECT™</h1>
+
+<div class="card">
+  <div class="stat" id="ghostId">Ghost ID: —</div>
+  <div class="stat" id="owner">Owner: —</div>
+  <div class="stat" id="created">Created: —</div>
+</div>
+
+<div class="card">
+  <h2>Project Data</h2>
+
+  <input id="name" placeholder="Project Name">
+  <input id="category" placeholder="Category">
+  <textarea id="idea" placeholder="Idea"></textarea>
+  <textarea id="problem" placeholder="Problem"></textarea>
+  <textarea id="solution" placeholder="Solution"></textarea>
+
+  <select id="status">
+    <option value="Draft">Draft</option>
+    <option value="Build">Build</option>
+    <option value="Review Ready">Review Ready</option>
+    <option value="Ownership Locked">Ownership Locked</option>
+    <option value="Protected">Protected</option>
+    <option value="Published">Published</option>
+  </select>
+
+  <button class="btn gold" onclick="saveEdit()">💾 Save Changes</button>
+</div>
+
+<div class="card">
+  <h2>Project Image</h2>
+  <input type="file" id="fileInput" accept="image/*">
+  <img id="preview" style="display:none">
+  <button class="btn dark" onclick="removeImage()">Remove Image</button>
+</div>
+
+<div class="card">
+  <h2>Navigation</h2>
+  <button class="btn dark" onclick="goHub()">🧩 Project Hub</button>
+  <button class="btn dark" onclick="goUSPTO()">⚖️ USPTO</button>
+  <button class="btn dark" onclick="goOwner()">📜 Ownership</button>
+  <button class="btn dark" onclick="goCoin()">🪙 Coin</button>
+  <button class="btn gold" onclick="goGlobal()">🌍 Global</button>
+</div>
+
+</div>
+
+<script>
+let projects = JSON.parse(localStorage.getItem("projects") || "[]");
+let index = Number(localStorage.getItem("openProjectIndex") || 0);
+let p = projects[index];
+
+if(!p){
+  document.body.innerHTML = "<h2 style='color:white;padding:20px'>No project found.</h2>";
+}else{
+  render();
+}
+
+function save(){
+  localStorage.setItem("projects", JSON.stringify(projects));
+  window.dispatchEvent(new Event("licensegoc-sync"));
+}
+
+function render(){
+  ghostId.innerText = "Ghost ID: " + (p.id || "—");
+  owner.innerText = "Owner: " + (p.owner || "GỐC");
+  created.innerText = "Created: " + (p.created || "—");
+
+  name.value = p.name || "";
+  category.value = p.category || "";
+  idea.value = p.idea || "";
+  problem.value = p.problem || "";
+  solution.value = p.solution || "";
+  status.value = p.status || "Draft";
+
+  if(p.image){
+    preview.src = p.image;
+    preview.style.display = "block";
+  }
+}
+
+function saveEdit(){
+  p.name = name.value.trim() || "Untitled Project";
+  p.category = category.value.trim() || "General";
+  p.idea = idea.value.trim();
+  p.problem = problem.value.trim();
+  p.solution = solution.value.trim();
+  p.status = status.value;
+  p.updatedAt = new Date().toISOString();
+
+  save();
+  alert("✅ Project updated across LICENSEGOC system.");
+}
+
+fileInput.addEventListener("change", e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    p.image = ev.target.result;
+    preview.src = p.image;
+    preview.style.display = "block";
+    save();
+  };
+  reader.readAsDataURL(file);
+});
+
+function removeImage(){
+  p.image = "";
+  preview.src = "";
+  preview.style.display = "none";
+  save();
+}
+
+function goHub(){location.href="project-hub.html"}
+function goOwner(){location.href="ownership.html"}
+function goCoin(){location.href="licensecoin-engine.html"}
+function goGlobal(){location.href="globalroom.html"}
+function goUSPTO(){
+  location.href="uspto.html?title="+encodeURIComponent(p.name||"")+
+  "&idea="+encodeURIComponent(p.idea||"")+
+  "&problem="+encodeURIComponent(p.problem||"")+
+  "&solution="+encodeURIComponent(p.solution||"");
+}
+</script>
+
+<script src="sync.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>
