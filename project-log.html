@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROJECT LIFECYCLE LOG™ — LICENSEGOC</title>
+
+<style>
+body{margin:0;font-family:Arial;background:radial-gradient(circle,#071326,#020814);color:#fff}
+.container{max-width:950px;margin:auto;padding:20px;padding-bottom:100px}
+.card{border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;background:rgba(255,255,255,.05);margin-bottom:16px}
+h1{color:#f1c76b}
+.stat{color:rgba(255,255,255,.7);margin-top:6px}
+.log-item{border-left:3px solid #f1c76b;padding:10px 14px;margin:12px 0;background:rgba(255,255,255,.04);border-radius:12px}
+.time{font-size:12px;color:rgba(255,255,255,.55)}
+.btn{width:100%;padding:12px;margin-top:10px;border:none;border-radius:12px;font-weight:1000;cursor:pointer}
+.gold{background:#f1c76b;color:#000}
+.dark{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.1)}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>📜 PROJECT LIFECYCLE LOG™</h1>
+
+<div class="card">
+  <h2 id="projectName">Project</h2>
+  <div class="stat" id="ghostId">Ghost ID: —</div>
+  <div class="stat" id="status">Status: —</div>
+</div>
+
+<div class="card">
+  <h2>Timeline</h2>
+  <div id="logList"></div>
+  <button class="btn gold" onclick="addManualLog()">＋ Add Manual Log</button>
+</div>
+
+<div class="card">
+  <h2>Navigation</h2>
+  <button class="btn dark" onclick="goHub()">🧩 Project Hub</button>
+  <button class="btn dark" onclick="goEdit()">🛠 Edit Project</button>
+  <button class="btn dark" onclick="goOwner()">📜 Ownership</button>
+  <button class="btn dark" onclick="goUSPTO()">⚖️ USPTO</button>
+  <button class="btn dark" onclick="goCoin()">🪙 Coin</button>
+  <button class="btn gold" onclick="goGlobal()">🌍 Global</button>
+</div>
+
+</div>
+
+<script>
+let projects = JSON.parse(localStorage.getItem("projects") || "[]");
+let index = Number(localStorage.getItem("openProjectIndex") || 0);
+let p = projects[index];
+
+if(!p){
+  document.body.innerHTML = "<h2 style='color:white;padding:20px'>No project found.</h2>";
+}else{
+  if(!p.logs) p.logs = [];
+  ensureBaseLogs();
+  save();
+  render();
+}
+
+function save(){
+  localStorage.setItem("projects", JSON.stringify(projects));
+  window.dispatchEvent(new Event("licensegoc-sync"));
+}
+
+function log(action, detail){
+  if(!p.logs) p.logs = [];
+  p.logs.unshift({
+    action: action,
+    detail: detail || "",
+    time: new Date().toLocaleString()
+  });
+  save();
+  render();
+}
+
+function ensureBaseLogs(){
+  if(!p.logs.find(x=>x.action==="PROJECT CREATED")){
+    p.logs.push({
+      action:"PROJECT CREATED",
+      detail:"Project was created in CREATIONS ROOM.",
+      time:p.created || new Date().toLocaleString()
+    });
+  }
+
+  if(p.updatedAt && !p.logs.find(x=>x.action==="PROJECT UPDATED")){
+    p.logs.unshift({
+      action:"PROJECT UPDATED",
+      detail:"Project data was edited.",
+      time:p.updatedAt
+    });
+  }
+
+  if(p.ownershipLocked && !p.logs.find(x=>x.action==="OWNERSHIP LOCKED")){
+    p.logs.unshift({
+      action:"OWNERSHIP LOCKED",
+      detail:"Ownership certificate was locked.",
+      time:p.lockedAt || new Date().toLocaleString()
+    });
+  }
+
+  if(p.protectedAt && !p.logs.find(x=>x.action==="PROTECTED")){
+    p.logs.unshift({
+      action:"PROTECTED",
+      detail:"Project marked as protected.",
+      time:p.protectedAt
+    });
+  }
+
+  if(p.coinMinted && !p.logs.find(x=>x.action==="LICENSECOIN MINTED")){
+    p.logs.unshift({
+      action:"LICENSECOIN MINTED",
+      detail:"LICENSECOIN value simulation was minted.",
+      time:new Date().toLocaleString()
+    });
+  }
+
+  if(p.investments && p.investments.length){
+    p.investments.forEach(inv=>{
+      const exists = p.logs.find(x=>x.action==="INVESTMENT" && x.detail.includes(String(inv.amount)));
+      if(!exists){
+        p.logs.unshift({
+          action:"INVESTMENT",
+          detail:"Investor amount recorded: $" + Number(inv.amount).toLocaleString(),
+          time:inv.time || new Date().toLocaleString()
+        });
+      }
+    });
+  }
+}
+
+function render(){
+  projectName.innerText = p.name || "Untitled Project";
+  ghostId.innerText = "Ghost ID: " + (p.id || "—");
+  status.innerText = "Status: " + (p.status || "Draft");
+
+  logList.innerHTML = "";
+
+  if(!p.logs || !p.logs.length){
+    logList.innerHTML = "<div class='stat'>No logs yet.</div>";
+    return;
+  }
+
+  p.logs.forEach(item=>{
+    logList.innerHTML += `
+      <div class="log-item">
+        <b>${item.action}</b>
+        <div class="stat">${item.detail || ""}</div>
+        <div class="time">${item.time}</div>
+      </div>
+    `;
+  });
+}
+
+function addManualLog(){
+  const text = prompt("Nhập log mới cho project:");
+  if(!text) return;
+  log("MANUAL NOTE", text);
+}
+
+function goHub(){location.href="project-hub.html"}
+function goEdit(){location.href="edit-project.html"}
+function goOwner(){location.href="ownership.html"}
+function goCoin(){location.href="licensecoin-engine.html"}
+function goGlobal(){location.href="globalroom.html"}
+function goUSPTO(){
+  p.usptoSentAt = new Date().toISOString();
+  log("USPTO SENT", "Project data was sent to USPTO preparation.");
+  location.href="uspto.html?title="+encodeURIComponent(p.name||"")+
+  "&idea="+encodeURIComponent(p.idea||"")+
+  "&problem="+encodeURIComponent(p.problem||"")+
+  "&solution="+encodeURIComponent(p.solution||"");
+}
+</script>
+
+<script src="sync.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>
