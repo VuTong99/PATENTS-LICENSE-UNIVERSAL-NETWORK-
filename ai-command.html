@@ -6,19 +6,60 @@
 <title>AI COMMAND CENTER™ — LICENSEGOC</title>
 
 <style>
-:root{--line:rgba(255,255,255,.1);--gold:#f1c76b;--cyan:#7ae7ff;--green:#71f0ad}
-body{margin:0;font-family:Arial;background:radial-gradient(circle,#071326,#020814);color:#fff}
-.container{max-width:1200px;margin:auto;padding:18px}
-.topbar{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:14px}
-.card{border:1px solid var(--line);border-radius:20px;padding:16px;background:rgba(255,255,255,.05);margin-top:16px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.btn{width:100%;margin-top:10px;padding:12px;border:none;border-radius:12px;font-weight:900;cursor:pointer}
+:root{
+  --line:rgba(255,255,255,.1);
+  --gold:#f1c76b;
+  --cyan:#7ae7ff;
+  --muted:rgba(255,255,255,.7);
+}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:radial-gradient(circle,#071326,#020814);
+  color:#fff;
+}
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+  padding-bottom:100px;
+}
+.card{
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:18px;
+  background:rgba(255,255,255,.05);
+  margin-bottom:16px;
+}
+h1{color:var(--gold)}
+h2{margin-bottom:10px}
+.stat{color:var(--muted);margin-top:6px;line-height:1.6}
+.output{
+  white-space:pre-wrap;
+  margin-top:12px;
+  padding:12px;
+  background:#09111f;
+  border-radius:12px;
+}
+.btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  margin-top:10px;
+  font-weight:1000;
+  cursor:pointer;
+}
 .gold{background:var(--gold);color:#000}
 .dark{background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--line)}
-.output{white-space:pre-wrap;line-height:1.6;color:#eaf7ff;background:#09111f;border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:12px}
-.stat{color:rgba(255,255,255,.72);margin:6px 0}
-h1,h2{margin:0 0 10px}
-@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+@media(max-width:800px){
+  .grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 
@@ -26,52 +67,36 @@ h1,h2{margin:0 0 10px}
 
 <div class="container">
 
-<div class="topbar">
-  <h1>🤖 AI COMMAND CENTER™</h1>
-  <button class="btn dark" style="max-width:220px" onclick="backRoom()">← CreationsRoom</button>
-</div>
+<h1>🤖 AI COMMAND CENTER™</h1>
 
 <div class="card">
-  <h2 id="projectName">No Project Selected</h2>
-  <div class="stat" id="ghostId">Ghost ID: —</div>
-  <div class="stat" id="owner">Owner: —</div>
-  <div class="stat" id="status">Status: —</div>
+  <h2 id="name">Project</h2>
+  <div class="stat" id="idea"></div>
 </div>
 
 <div class="grid">
 
-  <div class="card">
-    <h2>🧠 Build Strategy</h2>
-    <button class="btn gold" onclick="buildStrategy()">Generate Build Plan</button>
-    <div id="buildOut" class="output"></div>
-  </div>
+<div class="card">
+  <h2>🧠 AI Analysis</h2>
+  <button class="btn gold" onclick="analyze()">Run Full Analysis</button>
+  <div id="analysis" class="output"></div>
+</div>
 
-  <div class="card">
-    <h2>🎨 Design Direction</h2>
-    <button class="btn gold" onclick="designDirection()">Generate Design Direction</button>
-    <div id="designOut" class="output"></div>
-  </div>
-
-  <div class="card">
-    <h2>⚖️ Legal / USPTO Path</h2>
-    <button class="btn gold" onclick="legalPath()">Generate Legal Path</button>
-    <button class="btn dark" onclick="goUSPTO()">Send to USPTO</button>
-    <div id="legalOut" class="output"></div>
-  </div>
-
-  <div class="card">
-    <h2>💰 Market / Investor Path</h2>
-    <button class="btn gold" onclick="marketPath()">Generate Investor Path</button>
-    <button class="btn dark" onclick="goCoin()">Open LICENSECOIN Engine</button>
-    <div id="marketOut" class="output"></div>
-  </div>
+<div class="card">
+  <h2>📋 Master Build Orders</h2>
+  <button class="btn gold" onclick="buildOrders()">Generate Orders</button>
+  <div id="orders" class="output"></div>
+</div>
 
 </div>
 
 <div class="card">
-  <h2>🔥 MASTER AI DECISION</h2>
-  <button class="btn gold" onclick="masterDecision()">Run Full AI Command</button>
-  <div id="masterOut" class="output"></div>
+  <h2>🚀 Navigation</h2>
+  <button class="btn dark" onclick="goHub()">🧩 Project Hub</button>
+  <button class="btn dark" onclick="goUSPTO()">⚖️ USPTO</button>
+  <button class="btn dark" onclick="goOwner()">📜 Ownership</button>
+  <button class="btn dark" onclick="goCoin()">🪙 Coin</button>
+  <button class="btn gold" onclick="goGlobal()">🌍 Global</button>
 </div>
 
 </div>
@@ -81,121 +106,61 @@ let projects = JSON.parse(localStorage.getItem("projects")||"[]");
 let index = Number(localStorage.getItem("openProjectIndex")||0);
 let p = projects[index];
 
-if(!p){
-  projectName.innerText="No project found.";
+if(p){
+  name.innerText = p.name || "Untitled Project";
+  idea.innerText = p.idea || "";
 }else{
-  if(!p.id)p.id="GOC-"+Math.random().toString(36).substring(2,8).toUpperCase();
-  render();
+  name.innerText = "No Project Found";
 }
 
-function render(){
-  projectName.innerText=p.name||"Untitled Project";
-  ghostId.innerText="Ghost ID: "+(p.id||"—");
-  owner.innerText="Owner: "+(p.owner||"Unknown");
-  status.innerText="Status: "+(p.status||"Draft");
+function analyze(){
+  if(!p) return;
+
+  let text = "";
+
+  text += "IDEA ANALYSIS:\n";
+  text += p.idea ? "✔ Clear concept\n" : "✖ Missing idea\n";
+
+  text += "\nPROBLEM:\n";
+  text += p.problem ? "✔ Defined problem\n" : "✖ Weak problem\n";
+
+  text += "\nSOLUTION:\n";
+  text += p.solution ? "✔ Technical direction exists\n" : "✖ Missing mechanism\n";
+
+  text += "\nLEGAL (USPTO):\n";
+  text += p.solution ? "Potential Utility Patent\n" : "Needs structure\n";
+
+  text += "\nMARKET:\n";
+  text += (p.likes||0) > 50 ? "High traction\n" : "Low traction\n";
+
+  analysis.innerText = text;
 }
 
-function buildStrategy(){
-  buildOut.innerText =
-`BUILD STRATEGY
+function buildOrders(){
+  if(!p) return;
 
-1. Lock the main project concept.
-2. Add clear problem and solution.
-3. Upload render / blueprint / exploded view.
-4. Split project into modules.
-5. Create version history.
-6. Prepare review layer for AI + human team.
+  let text = "";
 
-Tim ♥️ Priority:
-Build the project core first, then attach legal and market layers.`;
+  text += "MASTER BUILD ORDERS:\n\n";
+
+  text += "1. IDEA → Refine clarity and uniqueness\n";
+  text += "2. DESIGN → Create blueprint + visual proof\n";
+  text += "3. PATENT → Expand claims + USPTO draft\n";
+  text += "4. OWNERSHIP → Lock ownership + members\n";
+  text += "5. VALUE → Increase traction (likes/watchers)\n";
+  text += "6. COIN → Mint LICENSECOIN\n";
+  text += "7. GLOBAL → Push exposure\n";
+
+  orders.innerText = text;
 }
 
-function designDirection(){
-  designOut.innerText =
-`DESIGN DIRECTION
-
-Visual Core:
-- Project must stay large in center.
-- Add blueprint labels.
-- Add exploded view.
-- Add module cards around the object.
-
-Recommended Assets:
-- Main render
-- Technical diagram
-- Component view
-- 2070 future concept view
-
-Tim ♥️ Note:
-Design must prove the invention, not only make it beautiful.`;
-}
-
-function legalPath(){
-  legalOut.innerText =
-`LEGAL / USPTO PATH
-
-1. Confirm invention type: Utility / Design / Provisional.
-2. Prepare problem-solution-mechanism.
-3. Generate claim direction.
-4. Add drawings checklist.
-5. Run prior art search prep.
-6. Send to USPTO Command Center.
-
-Risk:
-${p.problem && p.solution ? "Moderate — needs stronger claims and drawings." : "High — add problem and solution first."}`;
-}
-
-function marketPath(){
-  marketOut.innerText =
-`MARKET / INVESTOR PATH
-
-1. Define target user.
-2. Define commercial category.
-3. Estimate value signal.
-4. Prepare investor snapshot.
-5. Link ownership certificate.
-6. Open LICENSECOIN value engine.
-
-Investor Signal:
-${p.status==="Published" ? "High public readiness." : "Needs public exposure and validation."}`;
-}
-
-function masterDecision(){
-  masterOut.innerText =
-`MASTER AI COMMAND — TIM ♥️
-
-Project:
-${p.name||"Untitled"}
-
-Highest Priority:
-1. Strengthen the invention mechanism.
-2. Add visual proof: render + blueprint + exploded view.
-3. Save ownership certificate.
-4. Run USPTO preparation.
-5. Open value engine.
-6. Publish to Global Room only after protection layer is ready.
-
-Decision:
-This project should move from BUILD → REVIEW → PROTECT before public monetization.`;
-}
-
-function goUSPTO(){
-  window.location.href =
-    "uspto.html?title="+encodeURIComponent(p.name||"")+
-    "&idea="+encodeURIComponent(p.idea||"")+
-    "&problem="+encodeURIComponent(p.problem||"")+
-    "&solution="+encodeURIComponent(p.solution||"");
-}
-
-function goCoin(){
-  localStorage.setItem("openProjectIndex", index);
-  window.location.href="licensecoin-engine.html";
-}
-
-function backRoom(){
-  window.location.href="creationsroom.html";
-}
+function goHub(){location.href="project-hub.html";}
+function goUSPTO(){location.href="uspto.html";}
+function goOwner(){location.href="ownership.html";}
+function goCoin(){location.href="licensecoin-engine.html";}
+function goGlobal(){location.href="globalroom.html";}
 </script>
+
 <script src="nav.js"></script>
 
 </body>
