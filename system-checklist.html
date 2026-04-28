@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYSTEM CHECKLIST™ — LICENSEGOC</title>
+<style>
+body{margin:0;font-family:Arial;background:#020814;color:#fff}
+.container{max-width:950px;margin:auto;padding:20px;padding-bottom:100px}
+.card{border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;background:rgba(255,255,255,.05);margin-bottom:16px}
+h1{color:#f1c76b}
+.item{padding:12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.ok{color:#71f0ad;font-weight:900}
+.warn{color:#f1c76b;font-weight:900}
+.btn{width:100%;padding:12px;margin-top:10px;border:none;border-radius:12px;font-weight:1000;cursor:pointer}
+.gold{background:#f1c76b;color:#000}
+.dark{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.1)}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>✅ SYSTEM CHECKLIST™</h1>
+
+<div class="card">
+  <h2>Core Files</h2>
+  <div id="list"></div>
+</div>
+
+<div class="card">
+  <h2>System Data</h2>
+  <div id="data"></div>
+</div>
+
+<div class="card">
+  <button class="btn gold" onclick="runCheck()">Run Check</button>
+  <button class="btn dark" onclick="location.href='dashboard.html'">📊 Dashboard</button>
+  <button class="btn dark" onclick="location.href='creationsroom.html'">🧩 CreationsRoom</button>
+</div>
+
+</div>
+
+<script>
+const files = [
+  "index.html",
+  "creationsroom.html",
+  "globalroom.html",
+  "project-hub.html",
+  "edit-project.html",
+  "project-log.html",
+  "ownership.html",
+  "uspto.html",
+  "licensecoin-engine.html",
+  "ai-command.html",
+  "dashboard.html",
+  "export-project.html",
+  "investor-snapshot.html",
+  "nav.js",
+  "sync.js"
+];
+
+function runCheck(){
+  list.innerHTML = "";
+  files.forEach(f=>{
+    list.innerHTML += `
+      <div class="item">
+        <span class="ok">●</span> ${f}
+        <div style="font-size:12px;color:rgba(255,255,255,.6)">
+          Check file exists in GitHub repo.
+        </div>
+      </div>
+    `;
+  });
+
+  const projects = JSON.parse(localStorage.getItem("projects") || "[]");
+  const openIndex = localStorage.getItem("openProjectIndex");
+
+  data.innerHTML = `
+    <div class="item">Projects stored: <b>${projects.length}</b></div>
+    <div class="item">Open project index: <b>${openIndex ?? "none"}</b></div>
+    <div class="item">Sync layer: <span class="ok">Ready if sync.js exists</span></div>
+    <div class="item">Navigation layer: <span class="ok">Ready if nav.js exists</span></div>
+  `;
+}
+
+runCheck();
+</script>
+
+<script src="sync.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>
