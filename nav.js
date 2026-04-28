@@ -1,3 +1,4 @@
+function goExport(){location.href="export-project.html";}
 function goRoom(){ window.location.href = "creationsroom.html"; }
 function goHub(){ window.location.href = "project-hub.html"; }
 function goAI(){ window.location.href = "ai-command.html"; }
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function(){
   const nav = document.createElement("div");
   nav.className = "nav-bar";
   nav.innerHTML = `
+    <button onclick="goExport()">📤 Export</button>
     <button onclick="goDashboard()">📊 Dash</button>
     <button onclick="goRoom()">🧩 Room</button>
     <button onclick="goHub()">🧠 Hub</button>
@@ -31,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function(){
       left:0;
       right:0;
       display:grid;
-      grid-template-columns:repeat(8,1fr);
+      grid-template-columns:repeat(9,1fr);
       background:#020814;
       border-top:1px solid rgba(255,255,255,.1);
       z-index:9999;
