@@ -186,6 +186,13 @@ function calcMarket(){
 function mint(){
   p.coinMinted = true;
   p.coinValue = calcValue();
+  if(!p.logs) p.logs = [];
+
+p.logs.unshift({
+  action:"LICENSECOIN MINTED",
+  detail:"LICENSECOIN simulation was minted from project value.",
+  time:new Date().toLocaleString()
+});
   save();
   alert("LICENSECOIN minted based on project value.");
 }
@@ -201,7 +208,13 @@ function invest(){
   });
 
   p.totalInvestment = (p.totalInvestment || 0) + amount;
+  if(!p.logs) p.logs = [];
 
+p.logs.unshift({
+  action:"INVESTMENT RECORDED",
+  detail:"Investment simulation recorded: $" + amount.toLocaleString(),
+  time:new Date().toLocaleString()
+});
   save();
   document.getElementById("investLog").innerText =
     "Total Investment: $" + p.totalInvestment.toLocaleString();
