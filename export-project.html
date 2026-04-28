@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROJECT EXPORT™ — LICENSEGOC</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#020814;color:#fff}
+.container{max-width:900px;margin:auto;padding:20px;padding-bottom:100px}
+.card{border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:18px;background:rgba(255,255,255,.05);margin-bottom:16px}
+h1{color:#f1c76b}
+.output{white-space:pre-wrap;background:#09111f;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px;line-height:1.6;color:#eaf7ff}
+.btn{width:100%;padding:12px;margin-top:10px;border:none;border-radius:12px;font-weight:900;cursor:pointer}
+.gold{background:#f1c76b;color:#000}
+.dark{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.1)}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>📤 PROJECT EXPORT™</h1>
+
+<div class="card">
+  <button class="btn gold" onclick="generateExport()">Generate Export</button>
+  <button class="btn dark" onclick="copyExport()">Copy Text</button>
+  <button class="btn dark" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div class="card">
+  <div id="exportText" class="output">Click Generate Export.</div>
+</div>
+
+</div>
+
+<script>
+let projects = JSON.parse(localStorage.getItem("projects") || "[]");
+let index = Number(localStorage.getItem("openProjectIndex") || 0);
+let p = projects[index];
+
+function generateExport(){
+  if(!p){
+    exportText.innerText = "No project found.";
+    return;
+  }
+
+  exportText.innerText =
+`LICENSEGOC™ PROJECT EXPORT
+
+PROJECT NAME:
+${p.name || "Untitled"}
+
+GHOST ID:
+${p.id || "—"}
+
+OWNER:
+${p.owner || "Unknown"}
+
+STATUS:
+${p.status || "Draft"}
+
+CATEGORY:
+${p.category || "General"}
+
+CREATED:
+${p.created || "—"}
+
+IDEA:
+${p.idea || ""}
+
+PROBLEM:
+${p.problem || ""}
+
+SOLUTION:
+${p.solution || ""}
+
+OWNERSHIP:
+${p.ownershipLocked ? "Locked" : "Not Locked"}
+
+PUBLIC SIGNAL:
+Likes: ${p.likes || 0}
+Watchers: ${p.watchers || 0}
+
+VALUE SIGNAL:
+Estimated project value is generated through LICENSEGOC internal simulation.
+
+LEGAL PATH:
+This project may proceed through USPTO preparation after problem, solution, drawings, ownership, and claim direction are reviewed.
+
+TIM ♥️ AI NOTE:
+This export is a preparation package for investor review, internal archive, or USPTO preparation.`;
+}
+
+function copyExport(){
+  navigator.clipboard.writeText(exportText.innerText);
+  alert("Copied.");
+}
+</script>
+
+<script src="sync.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>
