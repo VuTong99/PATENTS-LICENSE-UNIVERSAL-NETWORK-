@@ -5,11 +5,12 @@ function goOwnership(){ window.location.href = "ownership.html"; }
 function goUSPTO(){ window.location.href = "uspto.html"; }
 function goCoin(){ window.location.href = "licensecoin-engine.html"; }
 function goGlobal(){ window.location.href = "globalroom.html"; }
-
+function goDashboard(){ window.location.href = "dashboard.html"; }
 document.addEventListener("DOMContentLoaded", function(){
   const nav = document.createElement("div");
   nav.className = "nav-bar";
   nav.innerHTML = `
+    <button onclick="goDashboard()">📊 Dash</button>
     <button onclick="goRoom()">🧩 Room</button>
     <button onclick="goHub()">🧠 Hub</button>
     <button onclick="goAI()">🤖 AI</button>
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function(){
       left:0;
       right:0;
       display:grid;
-      grid-template-columns:repeat(7,1fr);
+      grid-template-columns:repeat(8,1fr);
       background:#020814;
       border-top:1px solid rgba(255,255,255,.1);
       z-index:9999;
