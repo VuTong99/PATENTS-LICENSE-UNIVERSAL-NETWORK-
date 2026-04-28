@@ -106,6 +106,7 @@ img{
 
 <div class="card">
   <h3>🚀 ACTIONS</h3>
+  <button class="btn dark" onclick="goLog()">📜 Lifecycle Log</button>
   <button class="btn gold" onclick="goEdit()">🛠 Edit Project</button>
   <button class="btn dark" onclick="goAI()">🤖 AI</button>
   <button class="btn dark" onclick="goOwner()">📜 Ownership</button>
@@ -176,6 +177,7 @@ function calcValue(){
   if(p.status==="Protected")v+=10000;
   return v;
 }
+function goLog(){location.href="project-log.html";}
 function goEdit(){location.href="edit-project.html";}
 function goAI(){window.location.href="ai-command.html";}
 function goOwner(){window.location.href="ownership.html";}
