@@ -112,6 +112,8 @@ img{
   <button class="btn dark" onclick="goOwner()">📜 Ownership</button>
   <button class="btn dark" onclick="goUSPTO()">⚖️ USPTO</button>
   <button class="btn dark" onclick="goCoin()">🪙 Coin</button>
+  <button class="btn dark" onclick="markProtected()">🛡 Mark Protected</button>
+ <button class="btn dark" onclick="markPublished()">🌍 Mark Published</button>
   <button class="btn gold" onclick="goGlobal()">🌍 Global</button>
 </div>
 
@@ -189,6 +191,48 @@ function goUSPTO(){
 }
 function goCoin(){window.location.href="licensecoin-engine.html";}
 function goGlobal(){window.location.href="globalroom.html";}
+  function saveProject(){
+  projects[index] = p;
+  localStorage.setItem("projects", JSON.stringify(projects));
+  window.dispatchEvent(new Event("licensegoc-sync"));
+}
+
+function addLog(action, detail){
+  if(!p.logs) p.logs = [];
+  p.logs.unshift({
+    action: action,
+    detail: detail,
+    time: new Date().toLocaleString()
+  });
+}
+
+function markProtected(){
+  p.status = "Protected";
+  p.protectedAt = new Date().toISOString();
+
+  addLog(
+    "PROJECT PROTECTED",
+    "Project was marked as Protected from PROJECT HUB™."
+  );
+
+  saveProject();
+  render();
+  alert("Project marked as Protected.");
+}
+
+function markPublished(){
+  p.status = "Published";
+  p.publishedAt = new Date().toISOString();
+
+  addLog(
+    "PROJECT PUBLISHED",
+    "Project was published from PROJECT HUB™."
+  );
+
+  saveProject();
+  render();
+  alert("Project marked as Published.");
+}
 </script>
 
 <script src="nav.js"></script>
