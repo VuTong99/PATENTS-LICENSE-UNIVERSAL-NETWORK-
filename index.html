@@ -6,89 +6,174 @@
 <title>LICENSEGOC™ — IN GOD WE TRUST</title>
 
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Arial;
+  font-family:Arial,Helvetica,sans-serif;
   background:#000;
   color:#fff;
   overflow-x:hidden;
 }
-
-/* HEADER */
-.header{
+.hero{
+  min-height:100vh;
+  padding:26px 18px 120px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  padding:40px 20px 20px;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.72)),
+    url("creations-bg.jpg") center/cover no-repeat;
 }
-
-.header h1{
+.logo{
+  font-size:42px;
+  font-weight:1000;
   color:#f1c76b;
-  font-size:28px;
+  text-shadow:0 0 30px rgba(241,199,107,.35);
 }
-
-/* SYSTEM MAP */
-.system-map{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
+.subtitle{
+  max-width:640px;
+  margin:18px auto 28px;
+  color:#f7dfaa;
+  line-height:1.6;
+  font-size:16px;
 }
-
-.system-map h2{
-  text-align:center;
-  color:#f1c76b;
-  margin-bottom:20px;
-}
-
-.system-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:14px;
-}
-
-.system-grid a{
-  display:block;
-  padding:18px;
-  border-radius:18px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.1);
-  color:#fff;
+.enter{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:58px;
+  padding:0 30px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#f1c76b,#d89c31);
+  color:#171006;
+  font-weight:1000;
   text-decoration:none;
-  font-weight:900;
-  text-align:center;
+  box-shadow:0 18px 48px rgba(241,199,107,.26);
 }
-
-.system-grid a:hover{
-  background:rgba(241,199,107,.2);
+.quick{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%);
+  width:min(760px,92%);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+  padding:10px;
+  border-radius:28px;
+  background:rgba(15,12,6,.78);
+  border:1px solid rgba(241,199,107,.22);
+  backdrop-filter:blur(14px);
+  z-index:30;
+}
+.quick a{
+  min-height:58px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#f8dfaa;
+  text-decoration:none;
+  font-size:12px;
+  font-weight:900;
+  border-radius:20px;
+  background:rgba(255,255,255,.04);
+}
+.translate-btn{
+  position:fixed;
+  top:18px;
+  right:18px;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:none;
+  background:linear-gradient(180deg,#f1c76b,#d89c31);
+  color:#000;
+  font-size:22px;
+  cursor:pointer;
+  z-index:10000;
+  box-shadow:0 12px 30px rgba(241,199,107,.25);
+}
+.translate-box{
+  position:fixed;
+  top:76px;
+  right:16px;
+  display:none;
+  background:rgba(0,0,0,.92);
+  border:1px solid rgba(241,199,107,.25);
+  border-radius:16px;
+  padding:12px;
+  z-index:10000;
+}
+.heart{
+  position:fixed;
+  right:22px;
+  bottom:105px;
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  background:linear-gradient(180deg,#f1c76b,#d89c31);
+  color:#2a1600;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  box-shadow:0 18px 60px rgba(241,199,107,.28);
+  z-index:31;
+}
+@media(max-width:600px){
+  .logo{font-size:34px}
+  .quick{grid-template-columns:repeat(5,1fr)}
+  .quick a{font-size:11px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <h1>LICENSEGOC™</h1>
+<button class="translate-btn" onclick="toggleTranslate()">🌍</button>
+<div id="google_translate_element" class="translate-box"></div>
+
+<main class="hero">
+  <div class="logo">LICENSEGOC™</div>
+
+  <div class="subtitle">
+    IN GOD WE TRUST • GLOBAL AI • COPYRIGHT • OWNERSHIP • FUTURE ECONOMY
+  </div>
+
+  <a class="enter" href="creationsroom.html">
+    ENTER CREATIONS ROOM ›
+  </a>
+</main>
+
+<div class="quick">
+  <a href="index.html">⌂<br>Home</a>
+  <a href="licensenetwork.html">◌<br>Network</a>
+  <a href="licensegoc.html">✦<br>LICENSEGOC</a>
+  <a href="licensecoin-engine.html">●<br>LCN</a>
+  <a href="ai-command.html">♥<br>Tim AI</a>
 </div>
 
-<!-- SYSTEM MAP -->
-<section class="system-map">
-  <h2>SYSTEM MAP</h2>
+<a class="heart" href="system-map.html">♥</a>
 
-  <div class="system-grid">
-    <a href="creationsroom.html">🧩 CreationsRoom</a>
-    <a href="dashboard.html">📊 Dashboard</a>
-    <a href="globalroom.html">🌍 GlobalRoom</a>
-    <a href="project-hub.html">🧠 Project Hub</a>
-    <a href="ai-command.html">🤖 AI Command</a>
-    <a href="ownership.html">📜 Ownership</a>
-    <a href="uspto.html">⚖️ USPTO</a>
-    <a href="licensecoin-engine.html">🪙 LICENSECOIN</a>
-    <a href="investor-snapshot.html">💼 Investor</a>
-    <a href="export-project.html">📤 Export</a>
-    <a href="system-checklist.html">✅ Checklist</a>
-  </div>
-</section>
+<script>
+function toggleTranslate(){
+  const box=document.getElementById("google_translate_element");
+  box.style.display=box.style.display==="block"?"none":"block";
+}
 
-<script src="sync.js"></script>
-<script src="nav.js"></script>
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({
+    pageLanguage:"en",
+    includedLanguages:"en,vi,zh-CN,zh-TW,ja,ko,fr,de,es,it,ru,ar",
+    layout:google.translate.TranslateElement.InlineLayout.SIMPLE
+  },"google_translate_element");
+}
+</script>
+
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
