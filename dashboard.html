@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LICENSEGOC DASHBOARD™</title>
+
+<style>
+:root{--line:rgba(255,255,255,.1);--gold:#f1c76b;--green:#71f0ad;--blue:#7ae7ff;--muted:rgba(255,255,255,.7)}
+body{margin:0;font-family:Arial;background:radial-gradient(circle,#071326,#020814);color:#fff}
+.container{max-width:1100px;margin:auto;padding:20px;padding-bottom:100px}
+.card{border:1px solid var(--line);border-radius:22px;padding:18px;background:rgba(255,255,255,.05);margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+h1{color:var(--gold)}
+.big{font-size:38px;font-weight:1000;color:var(--gold)}
+.stat{color:var(--muted);margin-top:6px}
+.project{border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:10px;background:rgba(255,255,255,.04);cursor:pointer}
+.btn{width:100%;padding:12px;margin-top:10px;border:none;border-radius:12px;font-weight:1000;cursor:pointer}
+.gold{background:var(--gold);color:#000}
+.dark{background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--line)}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>📊 LICENSEGOC DASHBOARD™</h1>
+
+<div class="grid">
+  <div class="card"><div class="stat">Total Projects</div><div class="big" id="total">0</div></div>
+  <div class="card"><div class="stat">Protected</div><div class="big" id="protectedCount">0</div></div>
+  <div class="card"><div class="stat">Published</div><div class="big" id="publishedCount">0</div></div>
+  <div class="card"><div class="stat">Total Value</div><div class="big" id="totalValue">$0</div></div>
+</div>
+
+<div class="card">
+  <h2>🔥 Strongest Project</h2>
+  <div id="strongest"></div>
+</div>
+
+<div class="card">
+  <h2>🧩 All Projects</h2>
+  <div id="projectList"></div>
+</div>
+
+<div class="card">
+  <h2>🚀 Navigation</h2>
+  <button class="btn gold" onclick="location.href='creationsroom.html'">🧩 CreationsRoom</button>
+  <button class="btn dark" onclick="location.href='globalroom.html'">🌍 GlobalRoom</button>
+</div>
+
+</div>
+
+<script>
+let projects=JSON.parse(localStorage.getItem("projects")||"[]");
+
+function calcValue(p){
+  let v=1000;
+  if(p.idea)v+=3000;
+  if(p.problem)v+=3000;
+  if(p.solution)v+=5000;
+  if(p.image)v+=3000;
+  if(p.ownershipLocked)v+=10000;
+  if(p.status==="Protected")v+=15000;
+  if(p.status==="Published")v+=20000;
+  v+=(p.likes||0)*50;
+  v+=(p.watchers||0)*30;
+  return v;
+}
+
+function score(p){
+  return calcValue(p)+(p.likes||0)*100+(p.watchers||0)*60;
+}
+
+function render(){
+  total.innerText=projects.length;
+  protectedCount.innerText=projects.filter(p=>p.status==="Protected").length;
+  publishedCount.innerText=projects.filter(p=>p.status==="Published").length;
+
+  const value=projects.reduce((sum,p)=>sum+calcValue(p),0);
+  totalValue.innerText="$"+value.toLocaleString();
+
+  if(projects.length){
+    const best=[...projects].sort((a,b)=>score(b)-score(a))[0];
+    const bestIndex=projects.indexOf(best);
+
+    strongest.innerHTML=`
+      <div class="project" onclick="openProject(${bestIndex})">
+        <b>${best.name||"Untitled Project"}</b>
+        <div class="stat">${best.category||"General"} • ${best.status||"Draft"}</div>
+        <div class="stat">Value: $${calcValue(best).toLocaleString()}</div>
+        <div class="stat">❤️ ${best.likes||0} • 👁 ${best.watchers||0}</div>
+      </div>
+    `;
+  }else{
+    strongest.innerHTML="<div class='stat'>No projects yet.</div>";
+  }
+
+  projectList.innerHTML="";
+  projects.forEach((p,i)=>{
+    projectList.innerHTML+=`
+      <div class="project" onclick="openProject(${i})">
+        <b>${p.name||"Untitled Project"}</b>
+        <div class="stat">${p.category||"General"} • ${p.status||"Draft"}</div>
+        <div class="stat">Ghost ID: ${p.id||"—"}</div>
+      </div>
+    `;
+  });
+}
+
+function openProject(i){
+  localStorage.setItem("openProjectIndex",i);
+  location.href="project-hub.html";
+}
+
+render();
+</script>
+
+<script src="sync.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>
