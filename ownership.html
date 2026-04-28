@@ -223,6 +223,13 @@ function lockOwnership(){
 function markProtected(){
   p.status = "Protected";
   p.protectedAt = new Date().toISOString();
+  if(!p.logs) p.logs = [];
+
+p.logs.unshift({
+  action:"OWNERSHIP LOCKED",
+  detail:"Ownership certificate was locked in OWNERSHIP CERTIFICATE™.",
+  time:new Date().toLocaleString()
+});
   save();
   render();
 }
