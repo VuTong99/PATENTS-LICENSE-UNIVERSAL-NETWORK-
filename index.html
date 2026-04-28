@@ -9,6 +9,7 @@
   
 
   <style>
+    
     :root{
       --gold:#f1c76b;
       --gold-line:rgba(241,199,107,.28);
@@ -697,6 +698,36 @@
         height:170px;
       }
     }
+ .system-map{
+  padding:40px 20px;
+  text-align:center;
+}
+
+.system-map h2{
+  color:#f1c76b;
+}
+
+.system-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
+  max-width:1100px;
+  margin:20px auto 0;
+}
+
+.system-grid a{
+  padding:18px;
+  border-radius:18px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  color:#fff;
+  text-decoration:none;
+  font-weight:900;
+}
+
+.system-grid a:hover{
+  background:rgba(241,199,107,.16);
+}
   </style>
 </head>
 <body>
@@ -1115,5 +1146,22 @@
     });
   </script>
 <script src="core.js"> </script>
+<section class="system-map">
+  <h2>LICENSEGOC™ SYSTEM MAP</h2>
+
+  <div class="system-grid">
+    <a href="creationsroom.html">🧩 CreationsRoom</a>
+    <a href="dashboard.html">📊 Dashboard</a>
+    <a href="globalroom.html">🌍 GlobalRoom</a>
+    <a href="project-hub.html">🧠 Project Hub</a>
+    <a href="ai-command.html">🤖 AI Command</a>
+    <a href="ownership.html">📜 Ownership</a>
+    <a href="uspto.html">⚖️ USPTO</a>
+    <a href="licensecoin-engine.html">🪙 LICENSECOIN Engine</a>
+    <a href="investor-snapshot.html">💼 Investor Snapshot</a>
+    <a href="export-project.html">📤 Export Project</a>
+    <a href="system-checklist.html">✅ System Checklist</a>
+  </div>
+</section>
 </body>
 </html>
