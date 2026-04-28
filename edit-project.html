@@ -109,7 +109,13 @@ function saveEdit(){
   p.solution = solution.value.trim();
   p.status = status.value;
   p.updatedAt = new Date().toISOString();
+ if(!p.logs) p.logs = [];
 
+p.logs.unshift({
+  action:"PROJECT UPDATED",
+  detail:"Project was edited from EDIT PROJECT™.",
+  time:new Date().toLocaleString()
+});
   save();
   alert("✅ Project updated across LICENSEGOC system.");
 }
