@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INVESTOR SNAPSHOT™ — LICENSEGOC</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#020814;color:#fff}
+.container{max-width:960px;margin:auto;padding:20px;padding-bottom:100px}
+.card{border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;background:rgba(255,255,255,.05);margin-bottom:16px}
+h1{color:#f1c76b}
+.stat{color:rgba(255,255,255,.72);line-height:1.6}
+.big{font-size:34px;font-weight:1000;color:#f1c76b}
+.btn{width:100%;padding:12px;margin-top:10px;border:none;border-radius:12px;font-weight:1000;cursor:pointer}
+.gold{background:#f1c76b;color:#000}
+.dark{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.1)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>💼 INVESTOR SNAPSHOT™</h1>
+
+<div class="card">
+  <h2 id="name">Project</h2>
+  <div class="stat" id="meta"></div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h3>Problem</h3>
+    <div class="stat" id="problem"></div>
+  </div>
+
+  <div class="card">
+    <h3>Solution</h3>
+    <div class="stat" id="solution"></div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h3>Market Signal</h3>
+    <div class="big" id="market">0%</div>
+  </div>
+
+  <div class="card">
+    <h3>Investor Readiness</h3>
+    <div class="big" id="ready">0%</div>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Tim ♥️ Investor Note</h3>
+  <div class="stat" id="note"></div>
+</div>
+
+<div class="card">
+  <button class="btn gold" onclick="window.print()">Print / Save PDF</button>
+  <button class="btn dark" onclick="copySnapshot()">Copy Snapshot Text</button>
+  <button class="btn dark" onclick="location.href='project-hub.html'">Project Hub</button>
+</div>
+
+</div>
+
+<script>
+let projects=JSON.parse(localStorage.getItem("projects")||"[]");
+let index=Number(localStorage.getItem("openProjectIndex")||0);
+let p=projects[index];
+
+function calcMarket(){
+  if(!p)return 0;
+  let s=20;
+  if(p.idea)s+=15;
+  if(p.solution)s+=20;
+  if(p.likes)s+=Math.min(25,p.likes);
+  if(p.watchers)s+=Math.min(20,p.watchers);
+  return Math.min(100,s);
+}
+
+function calcReady(){
+  if(!p)return 0;
+  let s=20;
+  if(p.problem)s+=20;
+  if(p.solution)s+=25;
+  if(p.ownershipLocked)s+=15;
+  if(p.status==="Protected")s+=15;
+  if(p.image)s+=5;
+  return Math.min(100,s);
+}
+
+function render(){
+  if(!p){
+    name.innerText="No project found.";
+    return;
+  }
+
+  name.innerText=p.name||"Untitled Project";
+  meta.innerText=
+    "Ghost ID: "+(p.id||"—")+" | Owner: "+(p.owner||"Unknown")+" | Status: "+(p.status||"Draft");
+
+  problem.innerText=p.problem||"Problem not defined yet.";
+  solution.innerText=p.solution||"Solution not defined yet.";
+
+  market.innerText=calcMarket()+"%";
+  ready.innerText=calcReady()+"%";
+
+  note.innerText=
+    "Tim ♥️: Project này có thể đưa vào investor review khi đã rõ problem/solution, có ownership lock, patent path và value signal. Bước mạnh nhất là hoàn thiện visual proof + USPTO readiness.";
+}
+
+function copySnapshot(){
+  const text =
+`INVESTOR SNAPSHOT — LICENSEGOC
+
+Project: ${p.name||"Untitled"}
+Ghost ID: ${p.id||"—"}
+Owner: ${p.owner||"Unknown"}
+Status: ${p.status||"Draft"}
+
+Problem:
+${p.problem||""}
+
+Solution:
+${p.solution||""}
+
+Market Signal: ${calcMarket()}%
+Investor Readiness: ${calcReady()}%
+
+Tim ♥️ Note:
+${note.innerText}`;
+
+  navigator.clipboard.writeText(text);
+  alert("Snapshot copied.");
+}
+
+render();
+</script>
+
+<script src="sync.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>
