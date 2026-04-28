@@ -114,7 +114,19 @@ Open USPTO Official
 let projects = JSON.parse(localStorage.getItem("projects")||"[]");
 let index = Number(localStorage.getItem("openProjectIndex")||0);
 let p = projects[index];
+function saveProjectLog(action, detail){
+  if(!p) return;
 
+  if(!p.logs) p.logs = [];
+
+  p.logs.unshift({
+    action: action,
+    detail: detail,
+    time: new Date().toLocaleString()
+  });
+
+  localStorage.setItem("projects", JSON.stringify(projects));
+}
 if(p){
   title.value = p.name || "";
   idea.value = p.idea || "";
@@ -138,6 +150,7 @@ ${solution.value}
 
 CLAIM:
 A system configured to perform the described function.`;
+  saveProjectLog("USPTO CLAIMS GENERATED", "Claims draft was generated.");
 }
 
 function finalCheck(){
