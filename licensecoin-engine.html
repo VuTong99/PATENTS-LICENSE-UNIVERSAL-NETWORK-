@@ -3,125 +3,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LICENSECOIN ENGINE™ — LICENSEGOC</title>
+<title>LICENSECOIN™ ENGINE — LICENSEGOC</title>
 
 <style>
-:root{
-  --line:rgba(255,255,255,.1);
-  --gold:#f1c76b;
-  --green:#71f0ad;
-  --cyan:#7ae7ff;
-  --muted:rgba(255,255,255,.7);
-}
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  background:radial-gradient(circle,#071326,#020814);
+  background:#020814;
   color:#fff;
+  overflow-x:hidden;
 }
-.container{
-  max-width:1000px;
-  margin:auto;
-  padding:20px;
-  padding-bottom:100px;
+.app{
+  min-height:100vh;
+  padding:22px;
+  padding-bottom:96px;
+  background:
+    radial-gradient(circle at 70% 20%,rgba(241,199,107,.12),transparent 28%),
+    linear-gradient(180deg,#050b14,#020814);
 }
-.card{
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:18px;
-  background:rgba(255,255,255,.05);
-  margin-bottom:16px;
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:22px;
 }
-h1{color:var(--gold)}
-.stat{color:var(--muted);margin-top:6px}
-.big{
-  font-size:34px;
+.brand{
+  font-size:22px;
   font-weight:1000;
-  color:var(--gold);
+  color:#f1c76b;
+}
+.close{
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
 }
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:16px;
+  gap:18px;
+  max-width:1100px;
+  margin:auto;
+}
+.card{
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:28px;
+  padding:22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
+  box-shadow:0 22px 60px rgba(0,0,0,.32);
+}
+.hero{
+  grid-column:1 / -1;
+}
+h1,h2,h3{margin:0 0 10px}
+h1{
+  font-size:34px;
+  color:#fff;
+}
+.sub{
+  color:rgba(255,255,255,.7);
+  line-height:1.6;
+}
+.big{
+  font-size:42px;
+  color:#f1c76b;
+  font-weight:1000;
+  margin:12px 0;
+}
+.stat{
+  color:rgba(255,255,255,.68);
+  margin-top:6px;
 }
 .btn{
   width:100%;
-  padding:12px;
+  min-height:52px;
   border:none;
-  border-radius:12px;
+  border-radius:18px;
   margin-top:10px;
+  font-size:16px;
   font-weight:1000;
   cursor:pointer;
 }
-.gold{background:var(--gold);color:#000}
-.dark{background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--line)}
+.gold{
+  background:linear-gradient(180deg,#f1c76b,#d89c31);
+  color:#160d03;
+}
+.dark{
+  background:rgba(255,255,255,.07);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.1);
+}
 input{
   width:100%;
-  margin-top:10px;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid var(--line);
+  padding:14px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.1);
   background:#09111f;
   color:#fff;
+  margin-top:10px;
+}
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:78px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  background:rgba(3,8,16,.96);
+  border-top:1px solid rgba(241,199,107,.18);
+  z-index:1000;
+}
+.bottom-nav a{
+  color:#f4dfb5;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:900;
+}
+.bottom-nav span{
+  font-size:22px;
+  margin-bottom:4px;
 }
 @media(max-width:760px){
+  .app{padding:18px 14px 96px}
   .grid{grid-template-columns:1fr}
+  h1{font-size:30px}
+  .big{font-size:36px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
-<h1>🪙 LICENSECOIN ENGINE™</h1>
+  <div class="header">
+    <div class="brand">LICENSECOIN™ ENGINE</div>
+    <button class="close" onclick="location.href='project-hub.html'">×</button>
+  </div>
 
-<div class="card">
-  <h2 id="name">Project</h2>
-  <div class="stat" id="category"></div>
+  <div class="grid">
+
+    <section class="card hero">
+      <h1 id="projectName">LICENSECOIN™</h1>
+      <div class="sub" id="projectMeta">Project value layer for LICENSEGOC™ ecosystem.</div>
+    </section>
+
+    <section class="card">
+      <h2>Total Project Value</h2>
+      <div class="big" id="value">$0</div>
+      <div class="stat" id="valueNote">Calculated from project readiness, ownership, protection, and public signal.</div>
+      <button class="btn gold" onclick="mintCoin()">⚡ Mint LICENSECOIN</button>
+    </section>
+
+    <section class="card">
+      <h2>Market Signal</h2>
+      <div class="big" id="market">0%</div>
+      <div class="stat" id="investor">Investor Signal: LOW</div>
+      <button class="btn dark" onclick="addWatch()">👁 Add Watch Signal</button>
+      <button class="btn dark" onclick="addLike()">❤️ Add Like Signal</button>
+    </section>
+
+    <section class="card">
+      <h2>Investor Entry</h2>
+      <input id="amount" type="number" placeholder="Investment Amount ($)">
+      <button class="btn gold" onclick="invest()">Record Investment</button>
+      <div class="stat" id="investmentLog">No investment recorded.</div>
+    </section>
+
+    <section class="card">
+      <h2>Project Actions</h2>
+      <button class="btn dark" onclick="location.href='project-hub.html'">🧠 Project Hub</button>
+      <button class="btn dark" onclick="location.href='ownership.html'">📜 Ownership</button>
+      <button class="btn dark" onclick="location.href='uspto.html'">⚖️ USPTO</button>
+      <button class="btn gold" onclick="location.href='globalroom.html'">🌍 Global Room</button>
+    </section>
+
+  </div>
 </div>
 
-<div class="grid">
-
-<div class="card">
-  <h3>📊 Value Engine</h3>
-  <div class="stat">Estimated Value</div>
-  <div class="big" id="value">$0</div>
-
-  <div class="stat">Market Strength</div>
-  <div class="big" id="market">0%</div>
-
-  <div class="stat">Investor Signal</div>
-  <div class="big" id="investor">LOW</div>
-
-  <button class="btn gold" onclick="mint()">⚡ Mint LICENSECOIN</button>
-</div>
-
-<div class="card">
-  <h3>💰 Investor Entry</h3>
-
-  <input id="amount" placeholder="Investment Amount ($)">
-  <button class="btn dark" onclick="invest()">Invest</button>
-
-  <div class="stat" id="investLog"></div>
-</div>
-
-</div>
-
-<div class="card">
-  <h3>🧠 Tim ♥️ Financial Analysis</h3>
-  <div class="stat" id="analysis"></div>
-</div>
-
-<div class="card">
-  <h3>🚀 Navigation</h3>
-  <button class="btn dark" onclick="goHub()">🧩 Project Hub</button>
-  <button class="btn dark" onclick="goOwner()">📜 Ownership</button>
-  <button class="btn dark" onclick="goUSPTO()">⚖️ USPTO</button>
-  <button class="btn gold" onclick="goGlobal()">🌍 Global</button>
-</div>
-
-</div>
+<nav class="bottom-nav">
+  <a href="index.html"><span>⌂</span>Home</a>
+  <a href="dashboard.html"><span>📊</span>Dash</a>
+  <a href="project-hub.html"><span>🧠</span>Hub</a>
+  <a href="export-project.html"><span>📤</span>Export</a>
+  <a href="system-map.html"><span>♥</span>Map</a>
+</nav>
 
 <script>
 let projects = JSON.parse(localStorage.getItem("projects") || "[]");
@@ -129,111 +206,116 @@ let index = Number(localStorage.getItem("openProjectIndex") || 0);
 let p = projects[index];
 
 if(!p){
-  document.getElementById("name").innerText = "No Project Found";
-}else{
-  render();
+  p = {
+    id:"GOC-DEMO",
+    name:"LICENSECOIN Demo Project",
+    category:"Value Engine",
+    idea:"Demo project value layer.",
+    status:"Draft",
+    likes:0,
+    watchers:0,
+    logs:[]
+  };
 }
 
 function save(){
+  projects[index] = p;
   localStorage.setItem("projects", JSON.stringify(projects));
+  window.dispatchEvent(new Event("licensegoc-sync"));
 }
 
-function render(){
-  name.innerText = p.name || "Untitled";
-  category.innerText = p.category || "";
-
-  let val = calcValue();
-  let marketScore = calcMarket();
-
-  value.innerText = "$" + val.toLocaleString();
-  market.innerText = marketScore + "%";
-  investor.innerText =
-    marketScore > 120 ? "VERY HIGH" :
-    marketScore > 80 ? "HIGH" :
-    marketScore > 50 ? "MEDIUM" : "LOW";
-
-  analysis.innerText =
-    "Tim ♥️: Giá trị project phụ thuộc mạnh vào solution + ownership + traction. Tăng like, watcher và hoàn thiện patent sẽ đẩy value lên nhanh.";
+function addLog(action,detail){
+  if(!p.logs) p.logs=[];
+  p.logs.unshift({
+    action,
+    detail,
+    time:new Date().toLocaleString()
+  });
 }
 
 function calcValue(){
-  let v = 1000;
-
-  if(p.idea) v += 3000;
-  if(p.problem) v += 3000;
-  if(p.solution) v += 5000;
-  if(p.image) v += 2000;
-  if(p.status === "Protected") v += 15000;
-  if(p.ownershipLocked) v += 10000;
-
-  v += (p.likes || 0) * 50;
-  v += (p.watchers || 0) * 30;
-
+  let v=1000;
+  if(p.idea)v+=3000;
+  if(p.problem)v+=3000;
+  if(p.solution)v+=5000;
+  if(p.image)v+=3000;
+  if(p.ownershipLocked)v+=10000;
+  if(p.status==="Protected")v+=15000;
+  if(p.status==="Published")v+=20000;
+  v+=(p.likes||0)*50;
+  v+=(p.watchers||0)*30;
+  if(p.totalInvestment)v+=Number(p.totalInvestment);
   return v;
 }
 
 function calcMarket(){
-  let s = 20;
-  if(p.idea) s += 20;
-  if(p.solution) s += 30;
-  if(p.status === "Protected") s += 20;
-  if(p.ownershipLocked) s += 20;
-  s += Math.min((p.likes || 0), 50);
-
-  return s;
+  let s=20;
+  if(p.idea)s+=15;
+  if(p.solution)s+=20;
+  if(p.ownershipLocked)s+=15;
+  if(p.status==="Protected" || p.status==="Published")s+=20;
+  s+=Math.min((p.likes||0),15);
+  s+=Math.min((p.watchers||0),10);
+  return Math.min(100,s);
 }
 
-function mint(){
-  p.coinMinted = true;
-  p.coinValue = calcValue();
-  if(!p.logs) p.logs = [];
+function render(){
+  projectName.innerText = p.name || "Untitled Project";
+  projectMeta.innerText = (p.category||"General") + " • " + (p.status||"Draft") + " • Ghost ID: " + (p.id||"—");
 
-p.logs.unshift({
-  action:"LICENSECOIN MINTED",
-  detail:"LICENSECOIN simulation was minted from project value.",
-  time:new Date().toLocaleString()
-});
+  const v=calcValue();
+  const m=calcMarket();
+
+  value.innerText = "$" + v.toLocaleString();
+  market.innerText = m + "%";
+  investor.innerText = "Investor Signal: " + (m>=85?"VERY HIGH":m>=65?"HIGH":m>=40?"MEDIUM":"LOW");
+
+  if(p.totalInvestment){
+    investmentLog.innerText = "Total Investment: $" + Number(p.totalInvestment).toLocaleString();
+  }
+}
+
+function mintCoin(){
+  p.coinMinted=true;
+  p.coinValue=calcValue();
+  addLog("LICENSECOIN MINTED","LICENSECOIN value simulation was minted.");
   save();
-  alert("LICENSECOIN minted based on project value.");
+  render();
+  alert("LICENSECOIN minted.");
 }
 
 function invest(){
-  let amount = Number(document.getElementById("amount").value);
-  if(!amount) return alert("Nhập số tiền.");
+  const amount=Number(document.getElementById("amount").value);
+  if(!amount)return alert("Enter investment amount.");
 
-  if(!p.investments) p.investments = [];
-  p.investments.push({
-    amount:amount,
-    time:new Date().toLocaleString()
-  });
+  if(!p.investments)p.investments=[];
+  p.investments.push({amount,time:new Date().toLocaleString()});
+  p.totalInvestment=(p.totalInvestment||0)+amount;
 
-  p.totalInvestment = (p.totalInvestment || 0) + amount;
-  if(!p.logs) p.logs = [];
-
-p.logs.unshift({
-  action:"INVESTMENT RECORDED",
-  detail:"Investment simulation recorded: $" + amount.toLocaleString(),
-  time:new Date().toLocaleString()
-});
+  addLog("INVESTMENT RECORDED","Investment simulation recorded: $" + amount.toLocaleString());
   save();
-  document.getElementById("investLog").innerText =
-    "Total Investment: $" + p.totalInvestment.toLocaleString();
+  render();
+  document.getElementById("amount").value="";
 }
 
-function goHub(){
-  window.location.href="project-hub.html";
+function addLike(){
+  p.likes=(p.likes||0)+1;
+  addLog("LIKE SIGNAL","A public like signal was added.");
+  save();
+  render();
 }
-function goOwner(){
-  window.location.href="ownership.html";
+
+function addWatch(){
+  p.watchers=(p.watchers||0)+1;
+  addLog("WATCH SIGNAL","A public watch signal was added.");
+  save();
+  render();
 }
-function goUSPTO(){
-  window.location.href="uspto.html";
-}
-function goGlobal(){
-  window.location.href="globalroom.html";
-}
+
+render();
 </script>
+
 <script src="sync.js"></script>
-<script src="nav.js"></script>
+<script src="auto-flow.js"></script>
 </body>
 </html>
