@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LICENSEGOC™ — IN GOD WE TRUST</title>
+<title>LICENSEGOC™ — GLOBAL CREATION OS</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
@@ -14,31 +15,36 @@ body{
   color:#fff;
   overflow-x:hidden;
 }
+
 .hero{
   min-height:100vh;
   padding:26px 18px 120px;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.82)),
+    url("creations-bg.jpg") center/cover no-repeat;
   display:flex;
   flex-direction:column;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   text-align:center;
-  background:
-    linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.72)),
-    url("creations-bg.jpg") center/cover no-repeat;
 }
+
 .logo{
   font-size:42px;
   font-weight:1000;
   color:#f1c76b;
-  text-shadow:0 0 30px rgba(241,199,107,.35);
+  text-shadow:0 0 34px rgba(241,199,107,.45);
 }
-.subtitle{
-  max-width:640px;
-  margin:18px auto 28px;
-  color:#f7dfaa;
+
+.tagline{
+  max-width:760px;
+  margin:16px auto 28px;
+  color:#f5dfad;
   line-height:1.6;
-  font-size:16px;
+  font-size:15px;
+  letter-spacing:.6px;
 }
+
 .enter{
   display:inline-flex;
   align-items:center;
@@ -50,52 +56,55 @@ body{
   color:#171006;
   font-weight:1000;
   text-decoration:none;
-  box-shadow:0 18px 48px rgba(241,199,107,.26);
+  box-shadow:0 18px 48px rgba(241,199,107,.28);
 }
-.quick{
-  position:fixed;
-  left:50%;
-  bottom:18px;
-  transform:translateX(-50%);
-  width:min(760px,92%);
+
+.modules{
+  width:min(980px,94%);
+  margin:30px auto 0;
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:8px;
-  padding:10px;
-  border-radius:28px;
-  background:rgba(15,12,6,.78);
-  border:1px solid rgba(241,199,107,.22);
-  backdrop-filter:blur(14px);
-  z-index:30;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
 }
-.quick a{
-  min-height:58px;
+
+.modules a{
+  min-height:86px;
+  border-radius:22px;
+  border:1px solid rgba(241,199,107,.18);
+  background:rgba(5,10,18,.72);
+  backdrop-filter:blur(16px);
+  color:#f7dfaa;
+  text-decoration:none;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  color:#f8dfaa;
-  text-decoration:none;
   font-size:12px;
-  font-weight:900;
-  border-radius:20px;
-  background:rgba(255,255,255,.04);
+  font-weight:1000;
+  letter-spacing:.4px;
 }
+
+.modules span{
+  font-size:24px;
+  margin-bottom:7px;
+}
+
 .translate-btn{
   position:fixed;
-  top:18px;
-  right:18px;
+  top:16px;
+  right:16px;
   width:48px;
   height:48px;
-  border-radius:50%;
   border:none;
+  border-radius:50%;
   background:linear-gradient(180deg,#f1c76b,#d89c31);
   color:#000;
   font-size:22px;
   cursor:pointer;
-  z-index:10000;
+  z-index:9999;
   box-shadow:0 12px 30px rgba(241,199,107,.25);
 }
+
 .translate-box{
   position:fixed;
   top:76px;
@@ -105,28 +114,51 @@ body{
   border:1px solid rgba(241,199,107,.25);
   border-radius:16px;
   padding:12px;
-  z-index:10000;
+  z-index:9999;
 }
-.heart{
+
+.bottom-dock{
   position:fixed;
-  right:22px;
-  bottom:105px;
-  width:72px;
-  height:72px;
-  border-radius:50%;
-  background:linear-gradient(180deg,#f1c76b,#d89c31);
-  color:#2a1600;
+  left:50%;
+  bottom:16px;
+  transform:translateX(-50%);
+  width:min(760px,92%);
+  min-height:74px;
+  padding:10px;
+  border-radius:30px;
+  background:rgba(5,10,18,.86);
+  border:1px solid rgba(241,199,107,.18);
+  backdrop-filter:blur(18px);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+  z-index:1000;
+}
+
+.bottom-dock a{
+  color:#f4dfb5;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:900;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  font-size:28px;
-  box-shadow:0 18px 60px rgba(241,199,107,.28);
-  z-index:31;
+  border-radius:20px;
 }
-@media(max-width:600px){
+
+.bottom-dock span{
+  font-size:22px;
+  margin-bottom:4px;
+}
+
+.goog-te-banner-frame.skiptranslate{display:none!important}
+body{top:0!important}
+
+@media(max-width:560px){
   .logo{font-size:34px}
-  .quick{grid-template-columns:repeat(5,1fr)}
-  .quick a{font-size:11px}
+  .tagline{font-size:13px}
+  .modules{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -137,26 +169,37 @@ body{
 <div id="google_translate_element" class="translate-box"></div>
 
 <main class="hero">
+
   <div class="logo">LICENSEGOC™</div>
 
-  <div class="subtitle">
-    IN GOD WE TRUST • GLOBAL AI • COPYRIGHT • OWNERSHIP • FUTURE ECONOMY
+  <div class="tagline">
+    IN GOD WE TRUST • GLOBAL AI • COPYRIGHT • OWNERSHIP • COMMERCIAL • ENTERTAINMENT • FUTURE ECONOMY
   </div>
 
-  <a class="enter" href="creationsroom.html">
-    ENTER CREATIONS ROOM ›
-  </a>
+  <a class="enter" href="creationsroom.html">ENTER CREATIONS ROOM →</a>
+
+  <section class="modules">
+    <a href="creationsroom.html"><span>🧩</span>CREATIONS ROOM</a>
+    <a href="licensecoin.html"><span>🪙</span>LICENSECOIN ENGINE</a>
+    <a href="commercial.html"><span>💼</span>COMMERCIAL</a>
+    <a href="entertainment.html"><span>🎬</span>ENTERTAINMENT</a>
+    <a href="ownership.html"><span>📜</span>OWNERSHIP</a>
+    <a href="uspto.html"><span>⚖️</span>USPTO</a>
+    <a href="investor-snapshot.html"><span>💼</span>INVESTOR</a>
+    <a href="globalroom.html"><span>🌍</span>GLOBAL ROOM</a>
+    <a href="ai-command.html"><span>🤖</span>AI TIM</a>
+    <a href="system-map.html"><span>♥</span>SYSTEM MAP</a>
+  </section>
+
 </main>
 
-<div class="quick">
-  <a href="index.html">⌂<br>Home</a>
-  <a href="licensenetwork.html">◌<br>Network</a>
-  <a href="licensegoc.html">✦<br>LICENSEGOC</a>
-  <a href="licensecoin-engine.html">●<br>LCN</a>
-  <a href="ai-command.html">♥<br>Tim AI</a>
-</div>
-
-<a class="heart" href="system-map.html">♥</a>
+<nav class="bottom-dock">
+  <a href="index.html"><span>⌂</span>HOME</a>
+  <a href="creationsroom.html"><span>🧩</span>ROOM</a>
+  <a href="licensecoin.html"><span>🪙</span>COIN</a>
+  <a href="commercial.html"><span>💼</span>COMMERCIAL</a>
+  <a href="system-map.html"><span>♥</span>MAP</a>
+</nav>
 
 <script>
 function toggleTranslate(){
@@ -166,7 +209,7 @@ function toggleTranslate(){
 
 function googleTranslateElementInit(){
   new google.translate.TranslateElement({
-    pageLanguage:"en",
+    pageLanguage:"vi",
     includedLanguages:"en,vi,zh-CN,zh-TW,ja,ko,fr,de,es,it,ru,ar",
     layout:google.translate.TranslateElement.InlineLayout.SIMPLE
   },"google_translate_element");
@@ -174,9 +217,6 @@ function googleTranslateElementInit(){
 </script>
 
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<link rel="stylesheet" href="nav.css">
-<script src="sync.js"></script>
-<script src="auto-flow.js"></script>
-<script src="nav.js"></script>
+
 </body>
 </html>
