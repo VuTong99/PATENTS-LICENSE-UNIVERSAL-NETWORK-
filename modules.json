@@ -1,0 +1,114 @@
+[
+  {
+    "id": "introduction",
+    "title": "INTRODUCTION",
+    "subtitle": "Tuyên ngôn tư duy GỐC • Humanity + AI",
+    "file": "introduction.html",
+    "icon": "🕊️",
+    "order": 1
+  },
+  {
+    "id": "creations",
+    "title": "CREATIONS ROOM",
+    "subtitle": "Nơi bắt đầu ý tưởng và phát minh",
+    "file": "creationsroom.html",
+    "icon": "🧩",
+    "order": 2
+  },
+  {
+    "id": "project-hub",
+    "title": "PROJECT HUB",
+    "subtitle": "Trung tâm quản lý project",
+    "file": "project-hub.html",
+    "icon": "🧠",
+    "order": 3
+  },
+  {
+    "id": "entertainment",
+    "title": "ENTERTAINMENT OS",
+    "subtitle": "Music • Art • Film • Games • Books • Live Rooms",
+    "file": "entertainment.html",
+    "icon": "🎬",
+    "order": 4
+  },
+  {
+    "id": "commercial",
+    "title": "COMMERCIAL",
+    "subtitle": "Brand deals • Sponsorship • Revenue",
+    "file": "commercial.html",
+    "icon": "💼",
+    "order": 5
+  },
+  {
+    "id": "ownership",
+    "title": "OWNERSHIP",
+    "subtitle": "Bảo hộ sáng tạo và quyền sở hữu",
+    "file": "ownership.html",
+    "icon": "📜",
+    "order": 6
+  },
+  {
+    "id": "uspto",
+    "title": "USPTO PREP",
+    "subtitle": "Chuẩn bị hồ sơ pháp lý và patent",
+    "file": "uspto.html",
+    "icon": "⚖️",
+    "order": 7
+  },
+  {
+    "id": "licensecoin",
+    "title": "LICENSECOIN",
+    "subtitle": "Creator value layer",
+    "file": "licensecoin.html",
+    "icon": "🪙",
+    "order": 8
+  },
+  {
+    "id": "globalroom",
+    "title": "GLOBAL ROOM",
+    "subtitle": "Cộng đồng sáng tạo toàn cầu",
+    "file": "globalroom.html",
+    "icon": "🌍",
+    "order": 9
+  },
+  {
+    "id": "ai-tim",
+    "title": "AI TIM",
+    "subtitle": "AI đồng hành toàn hệ",
+    "file": "ai-command.html",
+    "icon": "🤖",
+    "order": 10
+  },
+  {
+    "id": "dashboard",
+    "title": "DASHBOARD",
+    "subtitle": "Tổng quan hệ thống",
+    "file": "dashboard.html",
+    "icon": "📊",
+    "order": 11
+  },
+  {
+    "id": "system-map",
+    "title": "SYSTEM MAP",
+    "subtitle": "Bản đồ toàn hệ LICENSEGOC",
+    "file": "system-map.html",
+    "icon": "❤️",
+    "order": 12
+  },
+  {
+    "id": "checklist",
+    "title": "SYSTEM CHECKLIST",
+    "subtitle": "Kiểm tra trạng thái hệ thống",
+    "file": "system-checklist.html",
+    "icon": "✅",
+    "order": 13
+  },
+  {
+    "id": "export",
+    "title": "EXPORT PROJECT",
+    "subtitle": "Xuất hồ sơ, package, tài liệu",
+    "file": "export-project.html",
+    "icon": "📤",
+    "order": 14
+  }
+]
