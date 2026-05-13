@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ENTERTAINMENT OS™ — LICENSEGOC</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+:root{
+
+  --gold:#f1c76b;
+  --gold2:#d89c31;
+
+  --bg:#020814;
+
+  --panel:rgba(255,255,255,.055);
+  --panel2:rgba(255,255,255,.025);
+
+  --line:rgba(255,255,255,.10);
+
+  --muted:rgba(255,255,255,.68);
+
+  --green:#71f0ad;
+  --red:#ff8e9a;
+  --cyan:#7ae7ff;
+  --purple:#bca6ff;
+
+  --shadow:
+  0 24px 70px rgba(0,0,0,.45);
+}
+
+html,body{
+
+  margin:0;
+  padding:0;
+
+  min-height:100%;
+
+  background:#000;
+
+  color:#fff;
+
+  font-family:Arial,Helvetica,sans-serif;
+
+  overflow-x:hidden;
+}
+
+body{
+
+  background:
+
+  radial-gradient(
+    circle at 50% 0%,
+    rgba(241,199,107,.08),
+    transparent 18%
+  ),
+
+  radial-gradient(
+    circle at 85% 20%,
+    rgba(122,231,255,.06),
+    transparent 24%
+  ),
+
+  linear-gradient(
+    180deg,
+    #050b14,
+    #020814
+  );
+}
+
+/* APP */
+
+.app{
+
+  width:100%;
+
+  min-height:100vh;
+
+  padding:18px;
+
+  padding-bottom:120px;
+}
+
+/* TOPBAR */
+
+.topbar{
+
+  max-width:1320px;
+
+  margin:0 auto 18px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:14px;
+}
+
+.brand{
+
+  min-width:0;
+}
+
+.brand b{
+
+  display:block;
+
+  color:var(--gold);
+
+  font-size:26px;
+
+  font-weight:1000;
+
+  letter-spacing:.5px;
+}
+
+.brand span{
+
+  display:block;
+
+  margin-top:5px;
+
+  color:var(--muted);
+
+  font-size:12px;
+
+  white-space:nowrap;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+}
+
+.top-actions{
+
+  display:flex;
+
+  gap:10px;
+
+  align-items:center;
+}
+
+.icon-btn{
+
+  width:48px;
+  height:48px;
+
+  border:none;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,.07);
+
+  border:1px solid var(--line);
+
+  color:#fff;
+
+  font-size:20px;
+
+  cursor:pointer;
+
+  backdrop-filter:blur(14px);
+}
+
+.translate-btn{
+
+  background:
+  linear-gradient(
+    180deg,
+    var(--gold),
+    var(--gold2)
+  );
+
+  color:#100900;
+}
+
+/* TRANSLATE */
+
+.translate-box{
+
+  position:fixed;
+
+  top:78px;
+  right:18px;
+
+  display:none;
+
+  width:230px;
+
+  padding:14px;
+
+  border-radius:18px;
+
+  background:rgba(0,0,0,.92);
+
+  border:1px solid rgba(241,199,107,.22);
+
+  backdrop-filter:blur(16px);
+
+  z-index:9999;
+}
+
+.translate-box.show{
+
+  display:grid;
+
+  gap:8px;
+}
+
+.translate-box button{
+
+  min-height:42px;
+
+  border:none;
+
+  border-radius:14px;
+
+  background:rgba(255,255,255,.06);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  color:#fff;
+
+  font-weight:900;
+
+  cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+
+  max-width:1320px;
+
+  margin:0 auto 22px;
+
+  border-radius:36px;
+
+  overflow:hidden;
+
+  border:1px solid rgba(241,199,107,.12);
+
+  background:
+
+  linear-gradient(
+    180deg,
+    rgba(255,255,255,.05),
+    rgba(255,255,255,.02)
+  );
+
+  box-shadow:var(--shadow);
+}
+
+.hero-inner{
+
+  min-height:420px;
+
+  padding:40px 28px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  text-align:center;
+
+  background:
+
+  linear-gradient(
+    180deg,
+    rgba(0,0,0,.12),
+    rgba(0,0,0,.65)
+  ),
+
+  url("creations-bg.jpg")
+  center/cover no-repeat;
+}
+
+.hero-title{
+
+  font-size:54px;
+
+  font-weight:1000;
+
+  color:#fff;
+
+  text-shadow:
+  0 0 36px rgba(241,199,107,.22);
+}
+
+.hero-sub{
+
+  max-width:920px;
+
+  margin-top:16px;
+
+  color:#f3ddb0;
+
+  line-height:1.8;
+
+  font-size:15px;
+
+  letter-spacing:.4px;
+}
+
+/* STATUS */
+
+.status-row{
+
+  margin-top:22px;
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  justify-content:center;
+
+  gap:10px;
+}
+
+.status-chip{
+
+  padding:10px 16px;
+
+  border-radius:999px;
+
+  background:rgba(255,255,255,.06);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  color:#f5dfae;
+
+  font-size:12px;
+
+  font-weight:900;
+
+  backdrop-filter:blur(12px);
+}
+
+/* MAIN GRID */
+
+.main-grid{
+
+  max-width:1320px;
+
+  margin:auto;
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(auto-fit,minmax(240px,1fr));
+
+  gap:16px;
+}
+
+/* ROOM CARD */
+
+.room-card{
+
+  position:relative;
+
+  min-height:230px;
+
+  border-radius:30px;
+
+  overflow:hidden;
+
+  border:1px solid rgba(241,199,107,.14);
+
+  background:
+
+  linear-gradient(
+    180deg,
+    var(--panel),
+    var(--panel2)
+  );
+
+  box-shadow:var(--shadow);
+
+  padding:22px;
+
+  transition:.22s ease;
+}
+
+.room-card:hover{
+
+  transform:translateY(-4px);
+
+  border-color:rgba(241,199,107,.28);
+}
+
+.room-icon{
+
+  font-size:40px;
+
+  margin-bottom:12px;
+}
+
+.room-title{
+
+  color:#fff;
+
+  font-size:22px;
+
+  font-weight:1000;
+
+  margin-bottom:10px;
+}
+
+.room-desc{
+
+  color:var(--muted);
+
+  line-height:1.6;
+
+  font-size:14px;
+}
+
+/* ROOM BUTTON */
+
+.room-btn{
+
+  position:absolute;
+
+  left:22px;
+  right:22px;
+  bottom:22px;
+
+  min-height:48px;
+
+  border:none;
+
+  border-radius:18px;
+
+  background:
+
+  linear-gradient(
+    180deg,
+    var(--gold),
+    var(--gold2)
+  );
+
+  color:#140d03;
+
+  font-weight:1000;
+
+  font-size:14px;
+
+  cursor:pointer;
+}
+
+/* FLOATING CLEAR BAR */
+
+.floating-bar{
+
+  position:fixed;
+
+  left:50%;
+  bottom:18px;
+
+  transform:translateX(-50%);
+
+  width:min(820px,92%);
+
+  min-height:78px;
+
+  padding:10px;
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(5,1fr);
+
+  gap:8px;
+
+  border-radius:30px;
+
+  background:rgba(5,10,18,.82);
+
+  border:1px solid rgba(241,199,107,.16);
+
+  backdrop-filter:blur(20px);
+
+  z-index:1000;
+}
+
+.floating-bar a{
+
+  color:#f4dfb5;
+
+  text-decoration:none;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:4px;
+
+  font-size:11px;
+
+  font-weight:900;
+
+  border-radius:18px;
+}
+
+.floating-bar a:hover{
+
+  background:rgba(241,199,107,.08);
+}
+
+.floating-bar span{
+
+  font-size:22px;
+}
+
+/* MOBILE */
+
+@media(max-width:760px){
+
+  .hero-inner{
+
+    min-height:360px;
+
+    padding:30px 18px;
+  }
+
+  .hero-title{
+
+    font-size:36px;
+  }
+
+  .hero-sub{
+
+    font-size:13px;
+  }
+
+  .floating-bar{
+
+    grid-template-columns:
+    repeat(5,1fr);
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <header class="topbar">
+
+    <div class="brand">
+      <b>ENTERTAINMENT OS™</b>
+      <span>LICENSEGOC™ • MUSIC • ART • FILM • GAMES • BOOKS • LIVE ROOMS</span>
+    </div>
+
+    <div class="top-actions">
+      <button class="icon-btn translate-btn" onclick="toggleTranslate()">🌍</button>
+      <button class="icon-btn" onclick="location.href='index.html'">×</button>
+    </div>
+
+  </header>
+
+  <div id="translateBox" class="translate-box">
+    <button onclick="setLang('en')">ENGLISH</button>
+    <button onclick="setLang('vi')">VIETNAMESE</button>
+    <button onclick="setLang('zh')">CHINESE</button>
+    <button onclick="setLang('ja')">JAPANESE</button>
+    <button onclick="setLang('ko')">KOREAN</button>
+    <button onclick="setLang('fr')">FRENCH</button>
+    <button onclick="setLang('es')">SPANISH</button>
+    <button onclick="setLang('ar')">ARABIC</button>
+  </div>
+
+  <section class="hero">
+    <div class="hero-inner">
+
+      <div class="hero-title">
+        ENTERTAINMENT ROOM™
+      </div>
+
+      <div class="hero-sub">
+        A global creator ecosystem for music, karaoke, live streaming, art, films,
+        games, cards, books, auctions, fan communities, commercial licensing,
+        ownership protection, and future AI entertainment.
+      </div>
+
+      <div class="status-row">
+        <div class="status-chip">SYSTEM ONLINE</div>
+        <div class="status-chip">CREATOR NETWORK READY</div>
+        <div class="status-chip">AI TIM CONNECTED</div>
+        <div class="status-chip">OWNERSHIP LAYER ACTIVE</div>
+      </div>
+
+    </div>
+  </section>
+
+  <main class="main-grid">
+
+    <article class="room-card">
+      <div class="room-icon">🎵</div>
+      <div class="room-title">MUSIC ROOM</div>
+      <div class="room-desc">
+        Songs AI generation, music rights, beat concepts, lyric ideas,
+        soundtracks, and creator music protection.
+      </div>
+      <button class="room-btn" onclick="openRoom('music')">OPEN ROOM</button>
+    </article>
+
+    <article class="room-card">
+      <div class="room-icon">🎤</div>
+      <div class="room-title">KARAOKE LIVE ROOM</div>
+      <div class="room-desc">
+        Live singing, waiting turns, audience comments, hearts, flowers,
+        stars, and fan interaction.
+      </div>
+      <button class="room-btn" onclick="openRoom('karaoke')">OPEN ROOM</button>
+    </article>
+
+    <article class="room-card">
+      <div class="room-icon">🔊</div>
+      <div class="room-title">AUDIO CONNECT</div>
+      <div class="room-desc">
+        Connect iPhone, computer, speakers, karaoke systems, soundbars,
+        Bluetooth, mixers, and studio audio.
+      </div>
+      <button class="room-btn" onclick="openRoom('audio')">OPEN ROOM</button>
+    </article>
+
+    <article class="room-card">
+      <div class="room-icon">🖼️</div>
+      <div class="room-title">ART WORLD</div>
+      <div class="room-desc">
+        Digital art, AI art, artists, galleries, live drawing, ownership,
+        art marketplace, and auctions.
+      </div>
+      <button class="room-btn" onclick="openRoom('art')">OPEN ROOM</button>
+    </article>
+
+    <article class="room-card">
+      <div class="room-icon">🎬</div>
+      <div class="room-title">FILM / VIDEO ROOM</div>
+      <div class="room-desc">
+        Movie concepts, AI trailers, YouTube creators, short films,
+        video licensing, and commercial media.
+      </div>
+      <button class="room-btn" onclick="openRoom('film')">OPEN ROOM</button>
+    </article>
+
+    <article class="room-card">
+      <div class="room-icon">🎮</div>
+      <div class="room-title">GAME ROOM</div>
+      <div class="room-desc">
+        Global games, mobile games, PC, console, VR, esports,
+        game news, and creator gaming.
+      </div>
+      <button class="room-btn" onclick="openRoom('game')">OPEN ROOM</button>
+    </article>
+        <article class="room-card">
+      <div class="room-icon">🃏</div>
+      <div class="room-title">CARD ROOM</div>
+      <div class="room-desc">
+        Trading cards, sports cards, creator collectibles,
+        digital collectibles, and future ownership cards.
+      </div>
+      <button class="room-btn" onclick="openRoom('cards')">OPEN ROOM</button>
+    </article>
+
+    <article class="room-card">
+      <div class="room-icon">📚</div>
+      <div class="room-title">BOOK & NOVEL ROOM</div>
+      <div class="room-desc">
+        Books, novels, audio books, AI writing, storytelling,
+        publishing, and cinematic reading experiences.
+      </div>
+      <button class="room-btn" onclick="openRoom('books')">OPEN ROOM</button>
+    </article>
+
+    <article class="room-card">
+      <div class="room-icon">🛒</div>
+      <div class="room-title">MARKETPLACE</div>
+      <div class="room-desc">
+        Buy, sell, trade, creator packs, digital assets,
+        auctions, and premium collectibles.
+      </div>
+      <button class="room-btn" onclick="openRoom('market')">OPEN ROOM</button>
+    </article>
+
+    <article class="room-card">
+      <div class="room-icon">💼</div>
+      <div class="room-title">COMMERCIAL ROOM</div>
+      <div class="room-desc">
+        Sponsorships, creator contracts, brand deals,
+        product placement, and entertainment monetization.
+      </div>
+      <button class="room-btn" onclick="openRoom('commercial')">OPEN ROOM</button>
+    </article>
+
+    <article class="room-card">
+      <div class="room-icon">🪙</div>
+      <div class="room-title">LICENSECOIN ROOM</div>
+      <div class="room-desc">
+        Fan rewards, gifts, creator support, premium access,
+        digital economy, and creator monetization systems.
+      </div>
+      <button class="room-btn" onclick="openRoom('coin')">OPEN ROOM</button>
+    </article>
+
+    <article class="room-card">
+      <div class="room-icon">🌍</div>
+      <div class="room-title">GLOBAL ROOM</div>
+      <div class="room-desc">
+        Global creators, trending rooms, featured artists,
+        live events, and worldwide entertainment showcase.
+      </div>
+      <button class="room-btn" onclick="openRoom('global')">OPEN ROOM</button>
+    </article>
+
+    <article class="room-card">
+      <div class="room-icon">🤖</div>
+      <div class="room-title">AI TIM™</div>
+      <div class="room-desc">
+        AI assistance for songs, visuals, scripts, books,
+        cinematic concepts, creator guidance, and future AI media.
+      </div>
+      <button class="room-btn" onclick="openRoom('ai')">OPEN ROOM</button>
+    </article>
+
+  </main>
+
+</div>
+
+<!-- FLOATING CLEAR BAR -->
+
+<nav class="floating-bar">
+
+  <a href="index.html">
+    <span>⌂</span>
+    HOME
+  </a>
+
+  <a href="creationsroom.html">
+    <span>✦</span>
+    CREATE
+  </a>
+
+  <a href="licensecoin.html">
+    <span>🪙</span>
+    COIN
+  </a>
+
+  <a href="commercial.html">
+    <span>💼</span>
+    COMMERCIAL
+  </a>
+
+  <a href="globalroom.html">
+    <span>🌍</span>
+    GLOBAL
+  </a>
+
+</nav>
+<!-- ROOM POPUP -->
+
+<div id="roomPopup"
+style="
+position:fixed;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+background:rgba(0,0,0,.82);
+backdrop-filter:blur(18px);
+z-index:99999;
+">
+
+  <div
+  style="
+  width:min(920px,100%);
+  max-height:92vh;
+  overflow:auto;
+  border-radius:34px;
+  padding:28px;
+  background:
+  linear-gradient(
+    180deg,
+    rgba(255,255,255,.06),
+    rgba(255,255,255,.03)
+  );
+  border:1px solid rgba(241,199,107,.18);
+  box-shadow:0 24px 70px rgba(0,0,0,.45);
+  ">
+
+    <div
+    style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-bottom:20px;
+    ">
+
+      <div>
+        <div
+        id="popupTitle"
+        style="
+        font-size:32px;
+        font-weight:1000;
+        color:#f1c76b;
+        ">
+        ROOM
+        </div>
+
+        <div
+        id="popupSub"
+        style="
+        color:rgba(255,255,255,.7);
+        margin-top:6px;
+        line-height:1.6;
+        ">
+        ROOM DESCRIPTION
+        </div>
+      </div>
+
+      <button
+      onclick="closeRoom()"
+      style="
+      width:54px;
+      height:54px;
+      border:none;
+      border-radius:18px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.1);
+      color:#fff;
+      font-size:24px;
+      cursor:pointer;
+      ">
+      ×
+      </button>
+
+    </div>
+
+    <!-- ROOM ACTIONS -->
+
+    <div
+    style="
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin-bottom:24px;
+    "
+    id="popupActions">
+
+    </div>
+
+    <!-- LIVE AREA -->
+
+    <div
+    style="
+    border-radius:28px;
+    padding:20px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    margin-bottom:18px;
+    ">
+
+      <div
+      style="
+      font-size:22px;
+      font-weight:1000;
+      margin-bottom:14px;
+      color:#fff;
+      ">
+      LIVE COMMUNITY
+      </div>
+
+      <div
+      style="
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:16px;
+      ">
+
+        <button onclick="giveHeart()"
+        style="
+        min-height:44px;
+        padding:0 18px;
+        border:none;
+        border-radius:999px;
+        background:#ff4d73;
+        color:#fff;
+        font-weight:1000;
+        cursor:pointer;
+        ">
+        ♥ GIVE HEART
+        </button>
+
+        <button onclick="giveFlower()"
+        style="
+        min-height:44px;
+        padding:0 18px;
+        border:none;
+        border-radius:999px;
+        background:#ffb347;
+        color:#120900;
+        font-weight:1000;
+        cursor:pointer;
+        ">
+        🌹 FLOWERS
+        </button>
+
+        <button onclick="giveStar()"
+        style="
+        min-height:44px;
+        padding:0 18px;
+        border:none;
+        border-radius:999px;
+        background:#ffd84f;
+        color:#120900;
+        font-weight:1000;
+        cursor:pointer;
+        ">
+        ⭐ STARS
+        </button>
+
+      </div>
+
+      <div
+      id="liveFeed"
+      style="
+      display:grid;
+      gap:10px;
+      ">
+
+        <div
+        style="
+        padding:14px;
+        border-radius:18px;
+        background:rgba(255,255,255,.05);
+        color:#ddd;
+        ">
+        🎧 Audience connected to Entertainment Room™
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- WAITING QUEUE -->
+
+    <div
+    style="
+    border-radius:28px;
+    padding:20px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    ">
+
+      <div
+      style="
+      font-size:22px;
+      font-weight:1000;
+      margin-bottom:16px;
+      ">
+      WAITING QUEUE
+      </div>
+
+      <div
+      id="queueList"
+      style="
+      display:grid;
+      gap:10px;
+      ">
+
+        <div
+        style="
+        padding:14px;
+        border-radius:16px;
+        background:rgba(255,255,255,.05);
+        ">
+        🎤 Tim ♥️ — Waiting to perform
+        </div>
+
+      </div>
+
+      <button
+      onclick="joinQueue()"
+      style="
+      width:100%;
+      min-height:54px;
+      margin-top:16px;
+      border:none;
+      border-radius:18px;
+      background:
+      linear-gradient(
+        180deg,
+        #f1c76b,
+        #d89c31
+      );
+      color:#140d03;
+      font-size:15px;
+      font-weight:1000;
+      cursor:pointer;
+      ">
+      JOIN WAITING QUEUE
+      </button>
+
+    </div>
+
+  </div>
+
+</div><script>
+
+const roomData = {
+
+  music:{
+    title:"🎵 MUSIC ROOM",
+    sub:"AI songs, music rights, soundtrack concepts, beat generation, creator music systems.",
+    actions:[
+      "SONGS AI GENERATION",
+      "MUSIC RIGHTS",
+      "BEAT STUDIO",
+      "VOICE EFFECTS",
+      "SOUND TEST",
+      "STREAM MUSIC"
+    ]
+  },
+
+  karaoke:{
+    title:"🎤 KARAOKE LIVE ROOM",
+    sub:"Live singers, waiting turns, audience interaction, flowers, stars, and live entertainment.",
+    actions:[
+      "JOIN LIVE",
+      "START SINGING",
+      "VIEW QUEUE",
+      "SEND FLOWERS",
+      "FAN COMMENTS",
+      "LIVE STAGE"
+    ]
+  },
+
+  audio:{
+    title:"🔊 AUDIO CONNECT",
+    sub:"Connect devices, home speakers, Bluetooth systems, karaoke systems, mixers, and studio audio.",
+    actions:[
+      "IPHONE CONNECT",
+      "BLUETOOTH",
+      "STUDIO MODE",
+      "KARAOKE MODE",
+      "LOW LATENCY",
+      "AUDIO TEST"
+    ]
+  },
+
+  art:{
+    title:"🖼️ ART WORLD",
+    sub:"Digital art, AI art generation, galleries, artists, auctions, and ownership systems.",
+    actions:[
+      "AI ART",
+      "LIVE DRAWING",
+      "GLOBAL GALLERY",
+      "SELL ART",
+      "AUCTIONS",
+      "ART RIGHTS"
+    ]
+  },
+
+  film:{
+    title:"🎬 FILM / VIDEO ROOM",
+    sub:"YouTube creators, short films, movie concepts, AI trailers, and creator media.",
+    actions:[
+      "AI TRAILER",
+      "VIDEO LICENSE",
+      "STREAM VIDEO",
+      "MOVIE IDEAS",
+      "YOUTUBE CREATOR",
+      "MEDIA EXPORT"
+    ]
+  },
+
+  game:{
+    title:"🎮 GAME ROOM",
+    sub:"Global games, esports, mobile games, VR games, creator gaming, and game updates.",
+    actions:[
+      "GAME NEWS",
+      "LIVE STREAM",
+      "VR GAMES",
+      "MOBILE GAMES",
+      "PC GAMES",
+      "ESPORTS"
+    ]
+  },
+
+  cards:{
+    title:"🃏 CARD ROOM",
+    sub:"Trading cards, sports cards, collectibles, digital cards, and creator collectibles.",
+    actions:[
+      "COLLECTIBLES",
+      "TRADE CARDS",
+      "SELL CARDS",
+      "CARD AUCTIONS",
+      "LIMITED ITEMS",
+      "COLLECTOR ROOM"
+    ]
+  },
+
+  books:{
+    title:"📚 BOOK & NOVEL ROOM",
+    sub:"Books, novels, AI writing, publishing systems, audio books, and storytelling.",
+    actions:[
+      "AI WRITING",
+      "NOVELS",
+      "AUDIO BOOKS",
+      "PUBLISH",
+      "GLOBAL LIBRARY",
+      "STORY IDEAS"
+    ]
+  },
+
+  market:{
+    title:"🛒 MARKETPLACE",
+    sub:"Buy, sell, auction, creator packs, digital assets, and entertainment commerce.",
+    actions:[
+      "BUY",
+      "SELL",
+      "LIVE AUCTION",
+      "CREATOR PACKS",
+      "DIGITAL ITEMS",
+      "PREMIUM MARKET"
+    ]
+  },
+
+  commercial:{
+    title:"💼 COMMERCIAL ROOM",
+    sub:"Sponsors, creator revenue, contracts, partnerships, licensing, and monetization.",
+    actions:[
+      "SPONSORS",
+      "BRAND DEALS",
+      "REVENUE",
+      "CONTRACTS",
+      "LICENSING",
+      "PARTNERS"
+    ]
+  },
+
+  coin:{
+    title:"🪙 LICENSECOIN ROOM",
+    sub:"Creator economy, fan rewards, gifts, premium access, and monetization systems.",
+    actions:[
+      "FAN REWARDS",
+      "SEND GIFTS",
+      "PREMIUM ACCESS",
+      "CREATOR SUPPORT",
+      "COIN SYSTEM",
+      "VAULT"
+    ]
+  },
+
+  global:{
+    title:"🌍 GLOBAL ROOM",
+    sub:"Trending creators, live events, global showcases, and worldwide entertainment.",
+    actions:[
+      "LIVE EVENTS",
+      "GLOBAL CREATORS",
+      "TRENDING",
+      "WORLD STAGE",
+      "SHOWCASE",
+      "DISCOVER"
+    ]
+  },
+
+  ai:{
+    title:"🤖 AI TIM™",
+    sub:"AI assistance for creators, songs, visuals, stories, trailers, books, and entertainment systems.",
+    actions:[
+      "AI SONGS",
+      "AI VISUALS",
+      "AI STORIES",
+      "AI MOVIES",
+      "AI CREATOR",
+      "AI HELP"
+    ]
+  }
+
+};
+
+function openRoom(name){
+
+  const room = roomData[name];
+
+  if(!room)return;
+
+  document.getElementById("roomPopup").style.display="flex";
+
+  document.getElementById("popupTitle").innerText=room.title;
+
+  document.getElementById("popupSub").innerText=room.sub;
+
+  const actions=document.getElementById("popupActions");
+
+  actions.innerHTML="";
+
+  room.actions.forEach(action=>{
+
+    const btn=document.createElement("button");
+
+    btn.innerText=action;
+
+    btn.style.minHeight="56px";
+    btn.style.border="none";
+    btn.style.borderRadius="18px";
+    btn.style.cursor="pointer";
+    btn.style.fontWeight="1000";
+    btn.style.color="#fff";
+
+    btn.style.background=
+    "linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03))";
+
+    btn.style.border=
+    "1px solid rgba(255,255,255,.10)";
+
+    btn.onclick=()=>{
+      addFeed("⚡ " + action + " activated.");
+    };
+
+    actions.appendChild(btn);
+
+  });
+
+}
+
+function closeRoom(){
+
+  document.getElementById("roomPopup").style.display="none";
+
+}
+
+function addFeed(text){
+
+  const feed=document.getElementById("liveFeed");
+
+  const item=document.createElement("div");
+
+  item.style.padding="14px";
+  item.style.borderRadius="18px";
+  item.style.background="rgba(255,255,255,.05)";
+  item.style.color="#ddd";
+
+  item.innerText=text;
+
+  feed.prepend(item);
+
+}
+
+function giveHeart(){
+
+  addFeed("♥ Audience sent hearts to creators.");
+
+}
+
+function giveFlower(){
+
+  addFeed("🌹 Flowers were sent to the live stage.");
+
+}
+
+function giveStar(){
+
+  addFeed("⭐ Premium stars were sent to creators.");
+
+}
+
+function joinQueue(){
+
+  const q=document.getElementById("queueList");
+
+  const item=document.createElement("div");
+
+  item.style.padding="14px";
+  item.style.borderRadius="16px";
+  item.style.background="rgba(255,255,255,.05)";
+
+  item.innerText=
+  "🎤 Visitor #" +
+  Math.floor(Math.random()*9999) +
+  " — Waiting to perform";
+
+  q.appendChild(item);
+
+  addFeed("🎶 A new singer joined the waiting queue.");
+
+}
+
+function toggleTranslate(){
+
+  document
+  .getElementById("translateBox")
+  .classList
+  .toggle("show");
+
+}
+
+function setLang(lang){
+
+  addFeed("🌍 Translation switched to: " + lang.toUpperCase());
+
+}
+
+</script>
+
+<script src="sync.js"></script>
+<script src="auto-flow.js"></script>
+<script src="nav.js"></script>
+
+</body>
+</html>
