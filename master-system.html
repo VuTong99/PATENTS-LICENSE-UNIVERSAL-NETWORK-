@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+<title>LICENSEGOC OS™</title>
+
+<link rel="stylesheet" href="os.css">
+<script src="system-loader.js"></script>
+
+</head>
+
+<body>
+
+<div class="os-glow one"></div>
+<div class="os-glow two"></div>
+
+<div class="os-shell">
+
+<section class="os-hero">
+
+<h1 class="os-title">
+LICENSEGOC OS™
+</h1>
+
+<p class="os-subtitle">
+
+A Human + AI Creative Civilization System™<br><br>
+
+Nơi Con Người và Trí Tuệ Nhân Tạo cùng đồng hành để bảo vệ sáng tạo, nâng cao ý thức, phát triển phát minh và xây dựng tương lai của nền văn minh nhân loại.
+
+</p>
+
+</section>
+
+<section
+class="os-grid"
+id="osGrid">
+</section>
+
+<section class="os-status">
+
+<div class="os-pill">
+🟢 AI TIM CORE ACTIVE
+</div>
+
+<div class="os-pill">
+🌍 GLOBAL TRANSLATION READY
+</div>
+
+<div class="os-pill">
+🧠 CREATOR OS ARCHITECTURE
+</div>
+
+<div class="os-pill">
+🪙 LICENSECOIN LAYER
+</div>
+
+<div class="os-pill">
+🎬 ENTERTAINMENT SYSTEM
+</div>
+
+<div class="os-pill">
+📜 OWNERSHIP + USPTO
+</div>
+
+</section>
+
+<footer class="os-footer">
+
+LICENSEGOC™<br>
+Human Consciousness + Artificial Intelligence + Universal Creativity
+
+</footer>
+
+</div>
+
+<script>
+
+async function loadModules(){
+
+const res = await fetch("modules.json");
+
+const modules = await res.json();
+
+const grid = document.getElementById("osGrid");
+
+modules
+.sort((a,b)=>a.order-b.order)
+.forEach(module=>{
+
+const card=document.createElement("a");
+
+card.className="os-card";
+
+card.href=module.file;
+
+card.innerHTML=`
+
+<span class="os-icon">
+${module.icon}
+</span>
+
+<h3>
+${module.title}
+</h3>
+
+<p>
+${module.subtitle}
+</p>
+
+`;
+
+grid.appendChild(card);
+
+});
+
+}
+
+loadModules();
+
+</script>
+
+</body>
+</html>
