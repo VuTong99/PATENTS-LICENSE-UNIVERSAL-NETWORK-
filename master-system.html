@@ -1,78 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
 
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
 
 <title>LICENSEGOC OS™</title>
 
 <link rel="stylesheet" href="os.css">
-<script src="system-loader.js"></script>
-<script src="os.js"></script>
+
+<script defer
+src="system-loader.js">
+</script>
+
+<script defer
+src="os.js">
+</script>
+
 </head>
 
 <body>
 
-<div class="os-glow one"></div>
-<div class="os-glow two"></div>
+<div class="os-bg"></div>
 
 <div class="os-shell">
 
-<section class="os-hero">
+<header class="hero">
 
-<h1 class="os-title">
+<h1>
+
 LICENSEGOC OS™
+
 </h1>
 
-<p class="os-subtitle">
+<p>
 
-A Human + AI Creative Civilization System™<br><br>
-
-Nơi Con Người và Trí Tuệ Nhân Tạo cùng đồng hành để bảo vệ sáng tạo, nâng cao ý thức, phát triển phát minh và xây dựng tương lai của nền văn minh nhân loại.
+Human + AI + Creativity Civilization System™
 
 </p>
+
+</header>
+
+<section
+id="statusBar"
+class="status">
+
+<div>🟢 AI ACTIVE</div>
+
+<div>🌍 GLOBAL READY</div>
+
+<div>🧠 CREATOR CORE</div>
+
+<div>🪙 LICENSECOIN</div>
+
+<div>📜 OWNERSHIP</div>
+
+<div>⚖ USPTO</div>
 
 </section>
 
 <section
-class="os-grid"
-id="osGrid">
-</section>
-
-<section class="os-status">
-
-<div class="os-pill">
-🟢 AI TIM CORE ACTIVE
-</div>
-
-<div class="os-pill">
-🌍 GLOBAL TRANSLATION READY
-</div>
-
-<div class="os-pill">
-🧠 CREATOR OS ARCHITECTURE
-</div>
-
-<div class="os-pill">
-🪙 LICENSECOIN LAYER
-</div>
-
-<div class="os-pill">
-🎬 ENTERTAINMENT SYSTEM
-</div>
-
-<div class="os-pill">
-📜 OWNERSHIP + USPTO
-</div>
+id="grid"
+class="grid">
 
 </section>
 
-<footer class="os-footer">
+<footer>
 
 LICENSEGOC™<br>
-Human Consciousness + Artificial Intelligence + Universal Creativity
+
+IN GOD WE TRUST • HUMANITY • AI
 
 </footer>
 
@@ -80,49 +79,84 @@ Human Consciousness + Artificial Intelligence + Universal Creativity
 
 <script>
 
-async function loadModules(){
+async function loadSystem(){
 
-const res = await fetch("modules.json");
+try{
 
-const modules = await res.json();
+const res=
+await fetch(
+"modules.json"
+);
 
-const grid = document.getElementById("osGrid");
+const modules=
+await res.json();
+
+const grid=
+document.getElementById(
+"grid"
+);
+
+grid.innerHTML="";
 
 modules
-.sort((a,b)=>a.order-b.order)
-.forEach(module=>{
+.sort(
+(a,b)=>
+a.order-b.order
+)
 
-const card=document.createElement("a");
+.forEach(item=>{
 
-card.className="os-card";
+const card=
+document.createElement(
+"a"
+);
 
-card.href=module.file;
+card.href=
+item.file;
+
+card.className=
+"os-card";
 
 card.innerHTML=`
 
-<span class="os-icon">
-${module.icon}
-</span>
+<div class="icon">
+
+${item.icon}
+
+</div>
 
 <h3>
-${module.title}
+
+${item.title}
+
 </h3>
 
 <p>
-${module.subtitle}
+
+${item.subtitle}
+
 </p>
 
 `;
 
-grid.appendChild(card);
+grid.appendChild(
+card
+);
 
 });
 
+}catch(err){
+
+console.log(err);
+
 }
 
-loadModules();
+}
+
+loadSystem();
 
 </script>
 
 </body>
+
 </html>
