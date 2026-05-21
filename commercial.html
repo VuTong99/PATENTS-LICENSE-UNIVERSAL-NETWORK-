@@ -1,68 +1,519 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Commercial • LICENSE GỐC™</title>
-  <style>
-    :root{
-      --bg:#0a0b0f; --panel:#0f1117; --gold:#ffd700; --line:rgba(255,215,0,.25); --radius:16px;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#111 10%,#0a0b0f 60%,#07090f 100%);color:#eae7dc;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto}
-    header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,rgba(7,9,15,.9),rgba(7,9,15,.75) 40%,transparent);backdrop-filter:blur(6px);padding:14px 18px;border-bottom:1px solid var(--line)}
-    h1{margin:0;font-size:22px;color:var(--gold)}
-    .wrap{max-width:1200px;margin:0 auto;padding:16px}
-    .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0 6px}
-    .pill{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:linear-gradient(180deg,#0f1117,#0b0d13);box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
-    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
-    .card{background:linear-gradient(180deg,#0f1117,#0b0d13);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.35)}
-    .card .thumb{aspect-ratio:16/9;background:#0a0f18}
-    .card img{width:100%;height:100%;object-fit:cover;display:block;loading:lazy}
-    .card .meta{padding:12px;display:grid;gap:8px}
-    .tag{font-size:12px;opacity:.75}
-    .price{color:#9fe870}
-    .btn{cursor:pointer;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,#141824,#0c0f16);color:#fff}
-    .btn.gold{background:linear-gradient(180deg,#3b3200,#2a2300);border-color:#614d00}
-    .center{display:flex;justify-content:center}
-    .see-more{margin:18px 0}
-    /* Cart drawer */
-    .cart{position:fixed;right:16px;bottom:16px;width:320px;max-width:92vw;background:linear-gradient(180deg,#0f1117,#0b0d13);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 80px rgba(0,0,0,.5);padding:12px;display:none}
-    .cart.open{display:block}
-    .cart h3{margin:0 0 8px;color:var(--gold)}
-    .cart ul{list-style:none;margin:0;padding:0;max-height:40vh;overflow:auto}
-    .cart li{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,215,0,.15)}
-    .cart .total{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
-    .cart .pay{width:100%;margin-top:10px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Commercial OS™ • LICENSEGOC</title>
+
+<style>
+*{box-sizing:border-box}
+:root{
+--bg:#030712;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.12);
+--gold:#f1c76b;--gold2:#d89c31;--text:#fff;--muted:rgba(255,255,255,.68);
+--green:#71f0ad;--cyan:#7ae7ff;--shadow:0 24px 70px rgba(0,0,0,.45)
+}
+body{margin:0;background:#000;color:var(--text);font-family:Arial,Helvetica,sans-serif}
+.app{min-height:100vh;padding:18px 16px 120px;background:
+radial-gradient(circle at 70% 0%,rgba(241,199,107,.12),transparent 28%),
+linear-gradient(180deg,#050914,#020610)}
+.top{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:auto}
+.brand b{color:var(--gold);font-size:26px;font-weight:1000}
+.brand span{display:block;color:var(--muted);font-size:12px;margin-top:5px}
+.close{width:50px;height:50px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.07);color:white;font-size:24px}
+.hero{max-width:1200px;margin:24px auto;border:1px solid rgba(241,199,107,.18);border-radius:34px;padding:34px 20px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));box-shadow:var(--shadow)}
+.hero h1{font-size:clamp(38px,8vw,78px);margin:0}
+.hero p{color:#f4ddb0;line-height:1.7;max-width:880px;margin:18px auto}
+.actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.btn{min-height:52px;border:none;border-radius:18px;padding:0 20px;font-weight:1000;font-size:15px}
+.gold{background:linear-gradient(180deg,var(--gold),var(--gold2));color:#140d03}
+.dark{background:rgba(255,255,255,.07);color:white;border:1px solid var(--line)}
+.grid{max-width:1200px;margin:18px auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:16px}
+.card{border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));padding:22px;box-shadow:var(--shadow)}
+.card h2{margin:0 0 10px;font-size:24px}
+.card p{color:var(--muted);line-height:1.6}
+.big{font-size:34px;color:var(--gold);font-weight:1000;margin:10px 0}
+.section{max-width:1200px;margin:34px auto 10px}
+.section h2{font-size:30px;margin:0 0 8px}
+.section p{color:var(--muted)}
+.market{cursor:pointer;transition:.2s}
+.market:hover{transform:translateY(-4px);border-color:rgba(241,199,107,.4)}
+.price{font-size:22px;font-weight:1000;color:var(--green)}
+.feed{display:grid;gap:12px}
+.feed div{padding:15px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(18px);display:none;align-items:center;justify-content:center;padding:18px;z-index:99999}
+.modal.show{display:flex}
+.box{width:min(860px,100%);max-height:90vh;overflow:auto;border-radius:34px;padding:26px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035));border:1px solid rgba(241,199,107,.22);box-shadow:var(--shadow)}
+.box-head{display:flex;justify-content:space-between;gap:12px}
+.box-title{font-size:32px;font-weight:1000;color:var(--gold)}
+.x{width:54px;height:54px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.08);color:white;font-size:26px}
+.input{width:100%;min-height:52px;border-radius:18px;border:1px solid var(--line);background:#08111f;color:white;padding:0 16px;margin:8px 0}
+.nav{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);width:min(860px,92%);display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:10px;border-radius:30px;background:rgba(4,8,16,.9);border:1px solid rgba(241,199,107,.2);backdrop-filter:blur(18px);z-index:1000}
+.nav a{text-decoration:none;color:#f4dfb5;display:flex;flex-direction:column;align-items:center;font-size:11px;font-weight:900;gap:4px}
+.nav span{font-size:22px}
+</style>
 </head>
 <body>
-  <header>
-    <div class="wrap">
-      <h1>Commercial • LICENSE GỐC™</h1>
-      <div class="toolbar">
-        <div class="pill">Feed cuộn dài • “See more” ở cuối</div>
-        <button id="openCart" class="btn">🛒 Xem giỏ hàng</button>
-      </div>
-    </div>
-  </header>
 
-  <main class="wrap">
-    <section id="feed" class="grid" aria-live="polite"></section>
-    <div class="center see-more">
-      <button id="seeMore" class="btn gold">See more</button>
-    </div>
-  </main>
+<div class="app">
 
-  <aside id="cart" class="cart" aria-live="polite">
-    <h3>Giỏ hàng</h3>
-    <ul id="cartList"></ul>
-    <div class="total"><span>Tổng</span><span id="cartTotal">$0</span></div>
-    <button id="payBtn" class="btn gold pay">Pay</button>
-  </aside>
+<div class="top">
 
-  <script src="goc-commercial.js"></script>
-<!-- nạp Floating Bar + Translate + Theme -->
-<script src="goc-ui.js?v=9" defer></script>
+<div class="brand">
+<b>COMMERCIAL OS™</b>
+<span>LICENSEGOC™ Future Economy Layer</span>
+</div>
+
+<button class="close"
+onclick="location.href='index.html'">
+⌂
+</button>
+
+</div>
+
+<section class="hero">
+
+<h1>
+COMMERCIAL
+</h1>
+
+<p>
+
+Creator + Business + AI + Community +
+Commercial Intelligence.
+
+Biến sáng tạo thành giá trị thật.
+Kết nối Creator → Investor → Brand →
+Human Civilization.
+
+</p>
+
+<div class="actions">
+
+<button
+class="btn gold"
+onclick="openModal('creator')">
+CREATOR HUB
+</button>
+
+<button
+class="btn dark"
+onclick="openModal('investor')">
+INVESTOR
+</button>
+
+<button
+class="btn dark"
+onclick="openModal('brand')">
+BRANDS
+</button>
+
+<button
+class="btn dark"
+onclick="openModal('ai')">
+AI ADVISOR
+</button>
+
+</div>
+
+</section>
+
+<div class="grid">
+
+<div class="card">
+
+<h2>
+Marketplace
+</h2>
+
+<div class="big">
+AI Commerce
+</div>
+
+<p>
+
+Mua bán ý tưởng.
+License.
+IP.
+Creator Economy.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>
+LicenseCoin
+</h2>
+
+<div class="big">
+Digital Layer
+</div>
+
+<p>
+
+Tầng giá trị số tương lai.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>
+Global Partner
+</h2>
+
+<div class="big">
+Network
+</div>
+
+<p>
+
+Doanh nghiệp toàn cầu.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>
+Investor
+</h2>
+
+<div class="big">
+Capital Flow
+</div>
+
+<p>
+
+Kết nối nhà đầu tư.
+
+</p>
+
+</div>
+
+</div>
+
+<section class="section">
+
+<h2>
+Future Marketplace
+</h2>
+
+<p>
+
+Marketplace Creator tương lai.
+
+</p>
+
+<div class="grid">
+
+<div
+class="card market"
+onclick="buy('AI Patent')">
+
+<h2>
+AI Patent
+</h2>
+
+<div class="price">
+$500
+</div>
+
+<p>
+
+Patent licensing.
+
+</p>
+
+</div>
+
+<div
+class="card market"
+onclick="buy('Commercial Sponsor')">
+
+<h2>
+Sponsor
+</h2>
+
+<div class="price">
+$1000
+</div>
+
+<p>
+
+Commercial placement.
+
+</p>
+
+</div>
+
+<div
+class="card market"
+onclick="buy('Creator Premium')">
+
+<h2>
+Premium
+</h2>
+
+<div class="price">
+$99
+</div>
+
+<p>
+
+Creator tools.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>
+Commercial Feed
+</h2>
+
+<div class="feed">
+
+<div>
+
+🚀 Creator uploaded invention.
+
+</div>
+
+<div>
+
+🌎 New partner joined.
+
+</div>
+
+<div>
+
+🤖 AI analysis ready.
+
+</div>
+
+<div>
+
+🪙 LicenseCoin integration active.
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+<div
+class="modal"
+id="modal">
+
+<div class="box">
+
+<div class="box-head">
+
+<div>
+
+<div
+class="box-title"
+id="title">
+
+COMMERCIAL
+
+</div>
+
+<p
+id="text"
+style="
+color:rgba(255,255,255,.7);
+line-height:1.7">
+
+</p>
+
+</div>
+
+<button
+class="x"
+onclick="closeModal()">
+
+×
+
+</button>
+
+</div>
+
+<input
+class="input"
+placeholder="Name">
+
+<input
+class="input"
+placeholder="Email">
+
+<input
+class="input"
+placeholder="Goal">
+
+<button
+class="btn gold"
+style="
+width:100%;
+margin-top:10px"
+onclick="submitForm()">
+
+SUBMIT
+
+</button>
+
+</div>
+
+</div>
+
+<nav class="nav">
+
+<a href="index.html">
+
+<span>⌂</span>
+
+HOME
+
+</a>
+
+<a href="creationsroom.html">
+
+<span>🧩</span>
+
+CREATE
+
+</a>
+
+<a href="licensecoin.html">
+
+<span>🪙</span>
+
+COIN
+
+</a>
+
+<a href="entertainment.html">
+
+<span>🎬</span>
+
+MEDIA
+
+</a>
+
+<a href="ownership.html">
+
+<span>📜</span>
+
+IP
+
+</a>
+
+</nav>
+
+<script>
+
+const DATA={
+
+creator:
+"Creator economy + licensing + ownership.",
+
+investor:
+"Investor access + projects + growth.",
+
+brand:
+"Commercial placement + sponsor + business.",
+
+ai:
+"AI Tim ♥️ advisor commercial layer."
+
+};
+
+function openModal(type){
+
+document
+.getElementById(
+"title"
+)
+
+.innerHTML=
+
+type.toUpperCase();
+
+document
+.getElementById(
+"text"
+)
+
+.innerHTML=
+
+DATA[type];
+
+document
+.getElementById(
+"modal"
+)
+
+.classList
+.add(
+"show"
+);
+
+}
+
+function closeModal(){
+
+document
+.getElementById(
+"modal"
+)
+
+.classList
+.remove(
+"show"
+);
+
+}
+
+function submitForm(){
+
+alert(
+
+"Commercial Queue Ready"
+
+);
+
+closeModal();
+
+}
+
+function buy(item){
+
+alert(
+
+item+
+
+" Added"
+
+);
+
+}
+
+</script>
+
+<script
+src="system-loader.js">
+</script>
+
 </body>
+
 </html>
