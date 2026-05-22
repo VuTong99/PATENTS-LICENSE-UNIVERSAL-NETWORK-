@@ -188,6 +188,39 @@ opacity:.6;
 margin-top:50px;
 
 }
+.system-health{
+max-width:1200px;
+margin:0 auto 24px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:12px;
+}
+
+.system-health div{
+padding:14px;
+border-radius:18px;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.12);
+font-weight:900;
+text-align:center;
+}
+
+.system-search{
+display:block;
+width:min(720px,100%);
+margin:0 auto 28px;
+padding:18px 22px;
+border-radius:999px;
+border:1px solid rgba(241,199,107,.28);
+background:rgba(0,0,0,.42);
+color:white;
+font-size:16px;
+outline:none;
+}
+
+.system-search::placeholder{
+color:rgba(255,255,255,.55);
+}
 
 </style>
 
@@ -212,8 +245,22 @@ Visual Technology Ecosystem
 </p>
 
 </div>
+<div class="system-health">
+  <div>🟢 AI ONLINE</div>
+  <div>⚡ SYSTEM HEALTH 98%</div>
+  <div>📦 MODULES 12/12</div>
+  <div>🌍 GLOBAL ACTIVE</div>
+</div>
 
-<div class="grid">
+<input
+  id="systemSearch"
+  class="system-search"
+  type="text"
+  placeholder="Search LICENSEGOC systems..."
+  oninput="searchCards()"
+/>
+
+  <div class="grid">
 
 <a
 class="card"
@@ -415,7 +462,6 @@ Value System
 
 </a>
 
-</div>
 
 <a
 class="card"
@@ -468,15 +514,25 @@ style="background-image:url('assets/licensenetwork.jpg')">
 </div>
 
 </a>
-  <div class="footer">
+ </div>
+    <div class="footer">
 
 LICENSEGOC™
 
 Technology Platform
 
 </div>
+<script>
+function searchCards(){
+  const q=document.getElementById("systemSearch").value.toLowerCase();
+  document.querySelectorAll(".card").forEach(card=>{
+    const text=card.innerText.toLowerCase();
+    card.style.display=text.includes(q) ? "" : "none";
+  });
+}
+</script>
 
-<script
+  <script
 src="licensegoc-nav.js">
 
 </script>
