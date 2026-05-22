@@ -145,5 +145,79 @@ One visual map for the full LICENSEGOC™ ecosystem: create, protect, value, com
 </div>
 
 <button class="float" onclick="location.href='index.html'">⌂</button>
+<div class="footer-note">
+One visual map...
+</div>
+
+</div>
+
+<button class="float">
+⌂
+</button>
+
+<script>
+
+const autoAssets={
+
+"CREATIONS ROOM":
+"assets/creationsroom.jpg",
+
+"DASHBOARD":
+"assets/dashboard.jpg",
+
+"GLOBAL ROOM":
+"assets/globalroom.jpg",
+
+"PROJECT HUB":
+"assets/projecthub.jpg",
+
+"AI TIM":
+"assets/aitim.jpg",
+
+"OWNERSHIP":
+"assets/ownership.jpg",
+
+"USPTO":
+"assets/uspto.jpg",
+
+"LICENSECOIN":
+"assets/licensecoin.jpg",
+
+"COMMERCIAL":
+"assets/commercial.jpg",
+
+"LICENSENETWORK":
+"assets/licensenetwork.jpg"
+
+}
+
+document
+.querySelectorAll(".card")
+.forEach(card=>{
+
+const title=
+
+card
+.querySelector(".title")
+?.innerText
+.trim()
+
+if(autoAssets[title]){
+
+card.style.setProperty(
+
+"--bg",
+
+`url('${autoAssets[title]}')`
+
+)
+
+}
+
+})
+
+</script>
+
 </body>
 </html>
+
