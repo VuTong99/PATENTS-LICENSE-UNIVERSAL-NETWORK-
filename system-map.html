@@ -523,13 +523,100 @@ Technology Platform
 
 </div>
 <script>
+
 function searchCards(){
-  const q=document.getElementById("systemSearch").value.toLowerCase();
-  document.querySelectorAll(".card").forEach(card=>{
-    const text=card.innerText.toLowerCase();
-    card.style.display=text.includes(q) ? "" : "none";
-  });
+
+const q=
+document
+.getElementById("systemSearch")
+.value
+.toLowerCase()
+.trim();
+
+document
+.querySelectorAll(".card")
+.forEach(card=>{
+
+const text=
+card.innerText
+.toLowerCase();
+
+card.style.display=
+text.includes(q)
+? ""
+: "none";
+
+});
+
 }
+
+document
+.getElementById("systemSearch")
+.addEventListener(
+"keydown",
+function(e){
+
+if(e.key==="Enter"){
+
+const q=
+this.value
+.toLowerCase()
+.trim();
+
+const routes={
+
+"licensecoin":
+"licensecoin.html",
+
+"coin":
+"licensecoin.html",
+
+"creationsroom":
+"creationsroom.html",
+
+"dashboard":
+"dashboard.html",
+
+"globalroom":
+"globalroom.html",
+
+"project hub":
+"project-hub.html",
+
+"ai tim":
+"ai-command.html",
+
+"ownership":
+"ownership.html",
+
+"uspto":
+"uspto.html",
+
+"investor":
+"investor-snapshot.html",
+
+"export":
+"export-project.html",
+
+"commercial":
+"commercial.html",
+
+"licensenetwork":
+"licensenetwork.html"
+
+};
+
+if(routes[q]){
+
+window.location.href=
+routes[q];
+
+}
+
+}
+
+});
+
 </script>
 
   <script
