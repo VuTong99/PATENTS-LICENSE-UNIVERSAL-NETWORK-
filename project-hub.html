@@ -132,7 +132,7 @@ let index = Number(localStorage.getItem("openProjectIndex") || 0);
 let p = projects[index];
 
 if(!p){
-  name.innerText="No Project Found";
+   document.getElementById("projectTitle").innerText="No Project Found";
 }else{
   render();
 }
@@ -241,8 +241,6 @@ function markPublished(){
 
 
 <script src="sync.js"></script>
-<script src="core.js"></script>
-<script src="os.js"></script>
 <script src="licensegoc-nav.js"></script>
 
 
