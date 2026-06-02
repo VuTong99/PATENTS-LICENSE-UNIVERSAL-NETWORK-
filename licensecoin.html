@@ -1741,6 +1741,34 @@ function googleTranslateElementInit(){
   },
 
   "google_translate_element");
+function runSearch(){
+
+  const q = document.getElementById("searchInput").value.toLowerCase().trim();
+
+  const routes = {
+    "licensenetwork": "licensenetwork.html",
+    "license network": "licensenetwork.html",
+    "global": "globalroom.html",
+    "global room": "globalroom.html",
+    "ownership": "ownership.html",
+    "uspto": "uspto.html",
+    "patent": "uspto.html",
+    "investor": "investor-snapshot.html",
+    "dashboard": "dashboard.html",
+    "project": "project-hub.html",
+    "project hub": "project-hub.html",
+    "export": "export-project.html",
+    "licensecoin": "licensecoin.html",
+    "coin": "licensecoin.html",
+    "home": "index.html"
+  };
+
+  if(routes[q]){
+    location.href = routes[q];
+    return;
+  }
+
+  document.getElementById("searchResults").innerText = "No page found.";
 
 }
 
