@@ -1,856 +1,1293 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LICENSECOIN™ Unified Super App v3 — LICENSEGOC</title>
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>
+LICENSECOIN™ 10X Enterprise
+</title>
+
+<meta name="description"
+content="LICENSECOIN™ Enterprise Engine">
+
+<link rel="stylesheet"
+href="core.css">
+
+<link rel="stylesheet"
+href="nav.css">
+
+<link rel="stylesheet"
+href="os.css">
 
 <style>
-*{box-sizing:border-box}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 :root{
-  --gold:#f1c76b;
-  --gold2:#d89c31;
-  --bg:#020814;
-  --panel:rgba(255,255,255,.055);
-  --panel2:rgba(255,255,255,.025);
-  --line:rgba(255,255,255,.10);
-  --muted:rgba(255,255,255,.68);
-  --green:#71f0ad;
-  --red:#ff8e9a;
-  --cyan:#7ae7ff;
-  --purple:#bca6ff;
-  --shadow:0 24px 70px rgba(0,0,0,.45);
+
+--gold:#f1c76b;
+--gold2:#d89c31;
+
+--bg:#020814;
+
+--panel:
+rgba(255,255,255,.05);
+
+--panel2:
+rgba(255,255,255,.02);
+
+--line:
+rgba(255,255,255,.08);
+
+--text:#fff;
+
+--muted:
+rgba(255,255,255,.65);
+
+--green:#71f0ad;
+
+--red:#ff8e99;
+
+--blue:#88aaff;
+
+--purple:#c0a8ff;
+
 }
 
 html,body{
-  margin:0;
-  padding:0;
-  min-height:100%;
-  background:#000;
-  color:#fff;
-  font-family:Arial,Helvetica,sans-serif;
-  overflow-x:hidden;
+
+background:#000;
+
+color:white;
+
+font-family:
+Arial,
+Helvetica,
+sans-serif;
+
+overflow-x:hidden;
+
 }
 
 body{
-  background:
-    radial-gradient(circle at 50% 0%,rgba(241,199,107,.10),transparent 18%),
-    radial-gradient(circle at 85% 20%,rgba(122,231,255,.08),transparent 24%),
-    linear-gradient(180deg,#050b14,#020814);
+
+background:
+
+radial-gradient(
+circle at top,
+rgba(241,199,107,.1),
+transparent 20%
+),
+
+linear-gradient(
+180deg,
+#050b14,
+#020814
+);
+
 }
 
 .app{
-  width:100%;
-  min-height:100vh;
-  padding:18px;
-  padding-bottom:96px;
+
+max-width:1400px;
+
+margin:auto;
+
+padding:20px;
+
+padding-bottom:120px;
+
 }
 
 .topbar{
-  max-width:1180px;
-  margin:0 auto 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
+
+display:flex;
+
+justify-content:
+space-between;
+
+align-items:center;
+
+gap:10px;
+
+margin-bottom:18px;
+
 }
 
-.brand{
-  min-width:0;
+.brand h1{
+
+color:var(--gold);
+
+font-size:32px;
+
+font-weight:1000;
+
 }
 
-.brand b{
-  display:block;
-  color:var(--gold);
-  font-size:23px;
-  font-weight:1000;
-  letter-spacing:.3px;
-}
+.brand p{
 
-.brand span{
-  display:block;
-  margin-top:4px;
-  color:var(--muted);
-  font-size:12px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+color:var(--muted);
+
+margin-top:4px;
+
+font-size:13px;
+
 }
 
 .top-actions{
-  display:flex;
-  gap:8px;
-  align-items:center;
+
+display:flex;
+
+gap:10px;
+
 }
 
 .icon-btn{
-  width:46px;
-  height:46px;
-  border-radius:16px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.06);
-  color:#fff;
-  font-size:20px;
-  cursor:pointer;
+
+width:48px;
+
+height:48px;
+
+border:none;
+
+cursor:pointer;
+
+border-radius:16px;
+
+background:
+rgba(255,255,255,.08);
+
+color:white;
+
+font-size:20px;
+
 }
 
 .translate-btn{
-  background:linear-gradient(180deg,var(--gold),var(--gold2));
-  color:#100900;
-  box-shadow:0 12px 34px rgba(241,199,107,.18);
-}
 
-.translate-box{
-  position:fixed;
-  top:72px;
-  right:14px;
-  display:none;
-  background:rgba(0,0,0,.94);
-  border:1px solid rgba(241,199,107,.25);
-  border-radius:14px;
-  padding:10px;
-  z-index:9999;
-}
+background:
+linear-gradient(
+180deg,
+var(--gold),
+var(--gold2)
+);
 
-.layout{
-  max-width:1180px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:16px;
+color:black;
+
+font-weight:900;
+
 }
 
 .card{
-  border:1px solid var(--line);
-  border-radius:26px;
-  background:linear-gradient(180deg,var(--panel),var(--panel2));
-  box-shadow:var(--shadow);
-  padding:18px;
-  margin-bottom:16px;
+
+background:
+
+linear-gradient(
+180deg,
+var(--panel),
+var(--panel2)
+);
+
+border:
+1px solid var(--line);
+
+border-radius:24px;
+
+padding:20px;
+
+margin-bottom:18px;
+
+}
+
+.layout{
+
+display:grid;
+
+grid-template-columns:
+1fr 420px;
+
+gap:18px;
+
 }
 
 .hero{
-  grid-column:1/-1;
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:16px;
-  align-items:center;
+
+display:grid;
+
+grid-template-columns:
+1fr auto;
+
+gap:20px;
+
+align-items:center;
+
 }
 
-h1,h2,h3{
-  margin:0 0 10px;
+.hero h2{
+
+font-size:38px;
+
+margin-bottom:8px;
+
 }
 
-h1{
-  font-size:34px;
-  color:#fff;
+.hero p{
+
+color:var(--muted);
+
 }
 
-.sub,.stat{
-  color:var(--muted);
-  line-height:1.55;
+.big-balance{
+
+font-size:48px;
+
+font-weight:1000;
+
+color:var(--gold);
+
 }
 
-.big{
-  font-size:42px;
-  font-weight:1000;
-  color:var(--gold);
-  margin:10px 0;
+.grid4{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:12px;
+
+}
+
+.stat-box{
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid var(--line);
+
+border-radius:18px;
+
+padding:16px;
+
+}
+
+.stat-box small{
+
+display:block;
+
+color:var(--muted);
+
+margin-bottom:6px;
+
+}
+
+.stat-box b{
+
+font-size:22px;
+
+}
+
+.green{
+color:var(--green);
+}
+
+.red{
+color:var(--red);
+}
+
+.blue{
+color:var(--blue);
+}
+
+.purple{
+color:var(--purple);
+}
+
+.goldtxt{
+color:var(--gold);
+}
+
+.btn{
+
+width:100%;
+
+height:54px;
+
+border:none;
+
+cursor:pointer;
+
+border-radius:16px;
+
+font-weight:900;
+
+margin-top:10px;
+
+}
+
+.btn-gold{
+
+background:
+linear-gradient(
+180deg,
+var(--gold),
+var(--gold2)
+);
+
+color:black;
+
+}
+
+.btn-dark{
+
+background:
+rgba(255,255,255,.08);
+
+color:white;
+
+border:
+1px solid var(--line);
+
+}
+
+input,
+select{
+
+width:100%;
+
+padding:14px;
+
+margin-top:10px;
+
+background:#08111d;
+
+border:
+1px solid var(--line);
+
+border-radius:16px;
+
+color:white;
+
 }
 
 .row{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:10px 0;
-  border-bottom:1px solid rgba(255,255,255,.07);
-  font-size:14px;
+
+display:flex;
+
+justify-content:
+space-between;
+
+padding:12px 0;
+
+border-bottom:
+1px solid rgba(255,255,255,.06);
+
 }
 
 .row:last-child{
-  border-bottom:none;
-}
-
-.green{color:var(--green);font-weight:900}
-.red{color:var(--red);font-weight:900}
-.cyan{color:var(--cyan);font-weight:900}
-.purple{color:var(--purple);font-weight:900}
-.goldtxt{color:var(--gold);font-weight:900}
-
-.btn{
-  width:100%;
-  min-height:52px;
-  border:none;
-  border-radius:18px;
-  margin-top:10px;
-  font-size:15px;
-  font-weight:1000;
-  cursor:pointer;
-}
-
-.btn.gold{
-  background:linear-gradient(180deg,var(--gold),var(--gold2));
-  color:#170d02;
-}
-
-.btn.dark{
-  background:rgba(255,255,255,.07);
-  color:#fff;
-  border:1px solid var(--line);
-}
-
-input,select{
-  width:100%;
-  padding:14px;
-  border-radius:16px;
-  border:1px solid var(--line);
-  background:#09111f;
-  color:#fff;
-  margin-top:10px;
-  font-size:15px;
-}
-
-select option{
-  color:#000;
+border:none;
 }
 
 .tabs{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-bottom:12px;
+
+display:flex;
+
+gap:8px;
+
+flex-wrap:wrap;
+
+margin-bottom:12px;
+
 }
 
 .tab{
-  border:none;
-  border-radius:999px;
-  border:1px solid rgba(241,199,107,.16);
-  background:rgba(255,255,255,.04);
-  color:#efdcb0;
-  padding:8px 12px;
-  font-size:12px;
-  font-weight:900;
-  cursor:pointer;
+
+border:none;
+
+cursor:pointer;
+
+padding:10px 14px;
+
+border-radius:999px;
+
+background:
+rgba(255,255,255,.06);
+
+color:white;
+
 }
 
 .tab.active{
-  background:rgba(241,199,107,.16);
-  color:#fff;
-  border-color:rgba(241,199,107,.36);
+
+background:
+rgba(241,199,107,.15);
+
+border:
+1px solid rgba(241,199,107,.4);
+
 }
 
-.tab-pane{display:none}
-.tab-pane.active{display:block}
-
-.action-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
+.tab-pane{
+display:none;
 }
 
-.action{
-  min-height:82px;
-  border-radius:18px;
-  border:1px solid rgba(241,199,107,.12);
-  background:rgba(255,255,255,.035);
-  color:#f2ddb0;
-  font-weight:900;
-  cursor:pointer;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:7px;
+.tab-pane.active{
+display:block;
 }
 
-.action span:first-child{
-  font-size:23px;
-  color:var(--gold);
+@media(max-width:980px){
+
+.layout{
+
+grid-template-columns:
+1fr;
+
 }
 
-.screen{
-  display:none;
+.hero{
+
+grid-template-columns:
+1fr;
+
 }
 
-.screen.active{
-  display:block;
-  animation:fadeIn .18s ease forwards;
+.grid4{
+
+grid-template-columns:
+repeat(2,1fr);
+
 }
 
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(8px)}
-  to{opacity:1;transform:translateY(0)}
 }
 
-.bottom-nav{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  height:78px;
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  background:rgba(3,8,16,.96);
-  border-top:1px solid rgba(241,199,107,.18);
-  z-index:1000;
-}
-
-.bottom-nav a{
-  color:#f4dfb5;
-  text-decoration:none;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
-  font-weight:900;
-}
-
-.bottom-nav span{
-  font-size:22px;
-  margin-bottom:4px;
-}
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:92px;
-  transform:translateX(-50%) translateY(18px);
-  width:min(360px,calc(100% - 28px));
-  border-radius:14px;
-  border:1px solid rgba(241,199,107,.20);
-  background:rgba(12,18,30,.96);
-  color:#fff;
-  padding:12px 14px;
-  text-align:center;
-  font-size:13px;
-  opacity:0;
-  pointer-events:none;
-  transition:.22s ease;
-  z-index:2000;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
-
-@media(max-width:860px){
-  .layout{
-    grid-template-columns:1fr;
-  }
-
-  .hero{
-    grid-template-columns:1fr;
-  }
-
-  h1{font-size:30px}
-  .big{font-size:36px}
-}
-
-@media(max-width:520px){
-  .app{padding:14px 12px 96px}
-  .action-grid{grid-template-columns:repeat(2,1fr)}
-  .brand b{font-size:20px}
-}
 </style>
+
 </head>
+
 <body>
 
-<button class="icon-btn translate-btn"
-        style="position:fixed;top:14px;right:14px;z-index:9999"
-        onclick="toggleTranslate()">🌍</button>
+<button
+class="icon-btn translate-btn"
+style="
+position:fixed;
+top:15px;
+right:15px;
+z-index:9999;"
+onclick="toggleTranslate()">
 
-<div id="google_translate_element" class="translate-box"></div>
+🌍
 
-<div class="toast" id="toast"></div>
+</button>
+
+<div id="google_translate_element"
+style="
+display:none;
+position:fixed;
+top:72px;
+right:15px;
+background:black;
+padding:10px;
+border-radius:14px;
+z-index:9999;">
+</div>
 
 <div class="app">
 
-  <div class="topbar">
+<div class="topbar">
 
-    <div class="brand">
-      <b>LICENSECOIN™ ENGINE</b>
-      <span>
-        Wallet Super App + Project Value Engine for LICENSEGOC™
-      </span>
-    </div>
+<div class="brand">
 
-    <div class="top-actions">
-      <button class="icon-btn"
-              onclick="location.href='project-hub.html'">
-        🧠
-      </button>
+<h1>
+LICENSECOIN™
+</h1>
 
-      <button class="icon-btn"
-              onclick="location.href='index.html'">
-        ×
-      </button>
-    </div>
-
-  </div>
-
-  <div class="layout">
-
-    <!-- HERO -->
-    <section class="card hero">
-
-      <div>
-
-        <h1 id="projectName">
-          LICENSECOIN™
-        </h1>
-
-        <div class="sub" id="projectMeta">
-          Unified Financial + Ownership + Licensing Layer.
-        </div>
-
-      </div>
-
-      <div style="min-width:240px">
-
-        <div class="big" id="walletBalance">
-          $53,850
-        </div>
-
-        <div class="stat">
-          Total Simulated Portfolio Balance
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- LEFT COLUMN -->
-    <div>
-
-      <!-- QUICK ACTIONS -->
-      <section class="card">
-
-        <h2>⚡ Quick Actions</h2>
-
-        <div class="action-grid">
-
-          <button class="action"
-                  onclick="showToast('Deposit demo opened.')">
-            <span>◉</span>
-            <span>Deposit</span>
-          </button>
-
-          <button class="action"
-                  onclick="showToast('Withdraw demo opened.')">
-            <span>◌</span>
-            <span>Withdraw</span>
-          </button>
-
-          <button class="action"
-                  onclick="showToast('Transfer demo opened.')">
-            <span>⇄</span>
-            <span>Transfer</span>
-          </button>
-
-          <button class="action"
-                  onclick="showToast('Convert demo opened.')">
-            <span>◇</span>
-            <span>Convert</span>
-          </button>
-
-        </div>
-
-      </section>
-
-      <!-- VALUE ENGINE -->
-      <section class="card">
-
-        <h2>📊 Project Value Engine</h2>
-
-        <div class="big" id="value">
-          $0
-        </div>
-
-        <div class="stat">
-          Calculated from ownership, lifecycle, protection,
-          investment, public signals, and readiness.
-        </div>
-
-        <button class="btn gold"
-                onclick="mintCoin()">
-          ⚡ Mint LICENSECOIN
-        </button>
-
-        <button class="btn dark"
-                onclick="location.href='ownership.html'">
-          📜 Ownership
-        </button>
-
-        <button class="btn dark"
-                onclick="location.href='uspto.html'">
-          ⚖️ USPTO
-        </button>
-
-      </section>
-
-      <!-- MARKET -->
-      <section class="card">
-
-        <h2>🌍 Market Signal</h2>
-
-        <div class="big" id="market">
-          0%
-        </div>
-
-        <div class="stat" id="investor">
-          Investor Signal: LOW
-        </div>
-
-        <button class="btn dark"
-                onclick="addWatch()">
-          👁 Add Watch Signal
-        </button>
-
-        <button class="btn dark"
-                onclick="addLike()">
-          ❤️ Add Like Signal
-        </button>
-
-      </section>
-
-      <!-- INVESTMENT -->
-      <section class="card">
-
-        <h2>💰 Investor Entry</h2>
-
-        <input id="amount"
-               type="number"
-               placeholder="Investment Amount ($)">
-
-        <button class="btn gold"
-                onclick="invest()">
-          Record Investment
-        </button>
-
-        <div class="stat" id="investmentLog">
-          No investment recorded.
-        </div>
-
-      </section>
-
-    </div>
-
-    <!-- RIGHT COLUMN -->
-    <div>
-
-      <!-- TABS -->
-      <section class="card">
-
-        <div class="tabs">
-
-          <button class="tab active"
-                  onclick="showTab('wallet',this)">
-            Wallet
-          </button>
-
-          <button class="tab"
-                  onclick="showTab('watchlist',this)">
-            Watchlist
-          </button>
-
-          <button class="tab"
-                  onclick="showTab('security',this)">
-            Security
-          </button>
-
-          <button class="tab"
-                  onclick="showTab('lifecycle',this)">
-            Lifecycle
-          </button>
-
-        </div>
-
-        <!-- WALLET TAB -->
-        <div class="tab-pane active"
-             id="tab-wallet">
-
-          <div class="row">
-            <span>Available</span>
-            <span class="goldtxt">
-              524.52 LICENSECOIN
-            </span>
-          </div>
-
-          <div class="row">
-            <span>Vault</span>
-            <span class="green">
-              $18,420
-            </span>
-          </div>
-
-          <div class="row">
-            <span>24h Change</span>
-            <span class="green">
-              +2.46%
-            </span>
-          </div>
-
-          <div class="row">
-            <span>Revenue Streams</span>
-            <span class="cyan">
-              Active
-            </span>
-          </div>
-
-        </div>
-
-        <!-- WATCHLIST -->
-        <div class="tab-pane"
-             id="tab-watchlist">
-
-          <div class="row">
-            <span>BTC</span>
-            <span id="btc" class="green">
-              $84,492 • +2.51%
-            </span>
-          </div>
-
-          <div class="row">
-            <span>ETH</span>
-            <span id="eth" class="green">
-              $4,101 • +0.83%
-            </span>
-          </div>
-
-          <div class="row">
-            <span>LICENSECOIN</span>
-            <span id="lcn" class="goldtxt">
-              $0.996 • +0.13%
-            </span>
-          </div>
-
-          <div class="row">
-            <span>NASDAQ</span>
-            <span id="nasdaq" class="cyan">
-              16,295 • +1.12%
-            </span>
-          </div>
-
-        </div>
-                <!-- SECURITY -->
-        <div class="tab-pane"
-             id="tab-security">
-
-          <div class="row">
-            <span>2FA</span>
-            <span class="green">
-              Enabled
-            </span>
-          </div>
-
-          <div class="row">
-            <span>Ownership Vault</span>
-            <span class="green">
-              Ready
-            </span>
-          </div>
-
-          <div class="row">
-            <span>Smart Contract Layer</span>
-            <span class="goldtxt">
-              Future
-            </span>
-          </div>
-
-          <div class="row">
-            <span>Revenue Split Engine</span>
-            <span class="cyan">
-              Planned
-            </span>
-          </div>
-
-        </div>
-
-        <!-- LIFECYCLE -->
-        <div class="tab-pane"
-             id="tab-lifecycle">
-
-          <div class="row">
-            <span>Project Created</span>
-            <span id="createdAt">
-              —
-            </span>
-          </div>
-
-          <div class="row">
-            <span>Protected</span>
-            <span id="protectedAt">
-              —
-            </span>
-          </div>
-
-          <div class="row">
-            <span>Published</span>
-            <span id="publishedAt">
-              —
-            </span>
-          </div>
-
-          <div class="row">
-            <span>USPTO Draft</span>
-            <span id="usptoAt">
-              —
-            </span>
-          </div>
-
-        </div>
-
-      </section>
-
-      <!-- CONVERT -->
-      <section class="card">
-
-        <h2>🔁 Transfer / Convert Demo</h2>
-
-        <input id="transferAmount"
-               type="number"
-               placeholder="LICENSECOIN amount">
-
-        <select id="convertTarget">
-          <option>USD Stable</option>
-          <option>BTC</option>
-          <option>ETH</option>
-        </select>
-
-        <button class="btn dark"
-                onclick="convertDemo()">
-          Convert Demo
-        </button>
-
-        <div class="stat" id="convertResult">
-          Ready.
-        </div>
-
-      </section>
-
-      <!-- QR -->
-      <section class="card">
-
-        <h2>📥 Deposit QR Demo</h2>
-
-        <div style="
-          width:170px;
-          height:170px;
-          margin:16px auto;
-          border-radius:14px;
-          background:
-          linear-gradient(90deg,#111 10px,transparent 10px) 0 0/20px 20px,
-          linear-gradient(#111 10px,transparent 10px) 0 0/20px 20px,
-          #fff;">
-        </div>
-
-        <div class="stat"
-             id="depositAddress"
-             style="word-break:break-all">
-
-          0x40d4c4c6748999e8488698598017e250
-
-        </div>
-
-        <button class="btn dark"
-                onclick="copyAddress()">
-          Copy Wallet Address
-        </button>
-
-      </section>
-
-      <!-- PROJECT ACTIONS -->
-      <section class="card">
-
-        <h2>🚀 Project Actions</h2>
-
-        <button class="btn dark"
-                onclick="location.href='project-hub.html'">
-          🧠 Project Hub
-        </button>
-
-        <button class="btn dark"
-                onclick="location.href='globalroom.html'">
-          🌍 Global Room
-        </button>
-
-        <button class="btn dark"
-                onclick="location.href='export-project.html'">
-          📤 Export
-        </button>
-
-        <button class="btn gold"
-                onclick="location.href='investor-snapshot.html'">
-          💼 Investor Snapshot
-        </button>
-
-      </section>
-
-    </div>
-
-  </div>
+<p>
+Enterprise Wallet + Value Engine
+</p>
 
 </div>
 
-<nav class="bottom-nav">
+<div class="top-actions">
 
-  <a href="index.html">
-    <span>⌂</span>
-    Home
-  </a>
+<button
+class="icon-btn"
+onclick="location.href='index.html'">
 
-  <a href="dashboard.html">
-    <span>📊</span>
-    Dash
-  </a>
+⌂
 
-  <a href="project-hub.html">
-    <span>🧠</span>
-    Hub
-  </a>
+</button>
 
-  <a href="export-project.html">
-    <span>📤</span>
-    Export
-  </a>
+<button
+class="icon-btn"
+onclick="location.href='project-hub.html'">
 
-  <a href="system-map.html">
-    <span>♥</span>
-    Map
-  </a>
+🧠
+
+</button>
+
+</div>
+
+</div>
+
+<section class="card hero">
+
+<div>
+
+<h2 id="projectName">
+
+LICENSECOIN™
+
+</h2>
+
+<p id="projectMeta">
+
+Loading Project...
+
+</p>
+
+</div>
+
+<div>
+
+<div
+class="big-balance"
+id="walletBalance">
+
+$0
+
+</div>
+
+<p style="color:var(--muted)">
+
+Total Portfolio Value
+
+</p>
+
+</div>
+
+</section>
+
+<section class="grid4">
+
+<div class="stat-box">
+
+<small>
+Project Value
+</small>
+
+<b
+id="projectValue"
+class="goldtxt">
+
+$0
+
+</b>
+
+</div>
+
+<div class="stat-box">
+
+<small>
+Investor Signal
+</small>
+
+<b
+id="investorSignal"
+class="green">
+
+LOW
+
+</b>
+
+</div>
+
+<div class="stat-box">
+
+<small>
+Watchers
+</small>
+
+<b
+id="watchers">
+
+0
+
+</b>
+
+</div>
+
+<div class="stat-box">
+
+<small>
+Likes
+</small>
+
+<b
+id="likes">
+
+0
+
+</b>
+
+</div>
+
+</section>
+
+<div class="layout">
+
+<div>
+
+<section class="card">
+
+<h3>
+⚡ Quick Actions
+</h3>
+
+<button
+class="btn btn-gold"
+onclick="mintCoin()">
+
+Mint LICENSECOIN™
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="addLike()">
+
+Add Like Signal
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="addWatch()">
+
+Add Watch Signal
+
+</button>
+
+</section>
+<section class="card">
+
+<h3>
+💰 Investor Center
+</h3>
+
+<input
+id="investmentAmount"
+type="number"
+placeholder="Investment Amount ($)">
+
+<button
+class="btn btn-gold"
+onclick="recordInvestment()">
+
+Record Investment
+
+</button>
+
+<div
+id="investmentLog"
+style="
+margin-top:15px;
+color:var(--muted);">
+
+No investment recorded.
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>
+📊 Market Intelligence
+</h3>
+
+<div class="row">
+<span>BTC</span>
+<span
+id="btcPrice"
+class="green">
+
+$84,500
+
+</span>
+</div>
+
+<div class="row">
+<span>ETH</span>
+<span
+id="ethPrice"
+class="green">
+
+$4,100
+
+</span>
+</div>
+
+<div class="row">
+<span>NASDAQ</span>
+<span
+id="nasdaqPrice"
+class="blue">
+
+16,295
+
+</span>
+</div>
+
+<div class="row">
+<span>LICENSECOIN</span>
+<span
+id="lcnPrice"
+class="goldtxt">
+
+$1.000
+
+</span>
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>
+🚀 Revenue Engine
+</h3>
+
+<div class="row">
+<span>Subscriptions</span>
+<span class="green">
+
+ACTIVE
+
+</span>
+</div>
+
+<div class="row">
+<span>Licensing</span>
+<span class="green">
+
+ACTIVE
+
+</span>
+</div>
+
+<div class="row">
+<span>Investor Pool</span>
+<span class="blue">
+
+READY
+
+</span>
+</div>
+
+<div class="row">
+<span>Creator Revenue</span>
+<span class="purple">
+
+PLANNED
+
+</span>
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>
+⚖️ Ownership Status
+</h3>
+
+<div class="row">
+<span>Ghost ID</span>
+<span id="ghostId">
+
+GOC-DEMO
+
+</span>
+</div>
+
+<div class="row">
+<span>Ownership</span>
+<span
+id="ownershipStatus"
+class="green">
+
+LOCKED
+
+</span>
+</div>
+
+<div class="row">
+<span>Protection</span>
+<span
+id="protectionStatus"
+class="green">
+
+ACTIVE
+
+</span>
+</div>
+
+<div class="row">
+<span>USPTO Draft</span>
+<span
+id="usptoStatus"
+class="goldtxt">
+
+READY
+
+</span>
+</div>
+
+</section>
+
+</div>
+
+<!-- RIGHT COLUMN -->
+
+<div>
+
+<section class="card">
+
+<div class="tabs">
+
+<button
+class="tab active"
+onclick="showTab('wallet',this)">
+
+Wallet
+
+</button>
+
+<button
+class="tab"
+onclick="showTab('vault',this)">
+
+Vault
+
+</button>
+
+<button
+class="tab"
+onclick="showTab('lifecycle',this)">
+
+Lifecycle
+
+</button>
+
+<button
+class="tab"
+onclick="showTab('security',this)">
+
+Security
+
+</button>
+
+</div>
+
+<!-- WALLET -->
+
+<div
+id="tab-wallet"
+class="tab-pane active">
+
+<div class="row">
+<span>Balance</span>
+<span
+class="goldtxt"
+id="walletCoins">
+
+500 LCN
+
+</span>
+</div>
+
+<div class="row">
+<span>Vault Value</span>
+<span
+class="green">
+
+$18,420
+
+</span>
+</div>
+
+<div class="row">
+<span>24h Change</span>
+<span
+class="green">
+
++2.4%
+
+</span>
+</div>
+
+<div class="row">
+<span>Wallet Status</span>
+<span
+class="green">
+
+ONLINE
+
+</span>
+</div>
+
+</div>
+
+<!-- VAULT -->
+
+<div
+id="tab-vault"
+class="tab-pane">
+
+<div class="row">
+<span>Protected Assets</span>
+<span>
+
+24
+
+</span>
+</div>
+
+<div class="row">
+<span>Documents</span>
+<span>
+
+12
+
+</span>
+</div>
+
+<div class="row">
+<span>Patents</span>
+<span>
+
+4
+
+</span>
+</div>
+
+<div class="row">
+<span>Copyrights</span>
+<span>
+
+8
+
+</span>
+</div>
+
+</div>
+
+<!-- LIFECYCLE -->
+
+<div
+id="tab-lifecycle"
+class="tab-pane">
+
+<div class="row">
+<span>Created</span>
+<span
+id="createdDate">
+
+—
+
+</span>
+</div>
+
+<div class="row">
+<span>Protected</span>
+<span
+id="protectedDate">
+
+—
+
+</span>
+</div>
+
+<div class="row">
+<span>Published</span>
+<span
+id="publishedDate">
+
+—
+
+</span>
+</div>
+
+<div class="row">
+<span>USPTO</span>
+<span
+id="usptoDate">
+
+—
+
+</span>
+</div>
+
+</div>
+
+<!-- SECURITY -->
+
+<div
+id="tab-security"
+class="tab-pane">
+
+<div class="row">
+<span>2FA</span>
+<span
+class="green">
+
+ENABLED
+
+</span>
+</div>
+
+<div class="row">
+<span>Ownership Lock</span>
+<span
+class="green">
+
+ACTIVE
+
+</span>
+</div>
+
+<div class="row">
+<span>AI Protection</span>
+<span
+class="green">
+
+ACTIVE
+
+</span>
+</div>
+
+<div class="row">
+<span>Investor Security</span>
+<span
+class="green">
+
+VERIFIED
+
+</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>
+🔁 Convert Engine
+</h3>
+
+<input
+id="convertAmount"
+type="number"
+placeholder="LICENSECOIN Amount">
+
+<select
+id="convertTarget">
+
+<option>
+USD
+</option>
+
+<option>
+BTC
+</option>
+
+<option>
+ETH
+</option>
+
+</select>
+
+<button
+class="btn btn-dark"
+onclick="convertDemo()">
+
+Convert
+
+</button>
+
+<div
+id="convertResult"
+style="
+margin-top:12px;
+color:var(--muted);">
+
+Ready.
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>
+📥 Wallet Address
+</h3>
+
+<div
+id="walletAddress"
+style="
+word-break:break-all;
+margin:15px 0;">
+
+0x40d4c4c6748999e8488698598017e250
+
+</div>
+
+<button
+class="btn btn-dark"
+onclick="copyWallet()">
+
+Copy Wallet Address
+
+</button>
+
+</section>
+
+<section class="card">
+
+<h3>
+🌍 Global Navigation
+</h3>
+
+<button
+class="btn btn-dark"
+onclick="location.href='globalroom.html'">
+
+Global Room
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="location.href='ownership.html'">
+
+Ownership
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="location.href='uspto.html'">
+
+USPTO
+
+</button>
+
+<button
+class="btn btn-gold"
+onclick="location.href='investor-snapshot.html'">
+
+Investor Snapshot
+
+</button>
+
+</section>
+
+</div>
+
+</div>
+
+<nav
+style="
+position:fixed;
+left:0;
+right:0;
+bottom:0;
+height:80px;
+background:#020814;
+border-top:1px solid rgba(241,199,107,.2);
+display:grid;
+grid-template-columns:repeat(5,1fr);
+z-index:999;">
+
+<a href="index.html"
+style="text-align:center;padding-top:10px;color:white;text-decoration:none">
+
+⌂<br>Home
+
+</a>
+
+<a href="dashboard.html"
+style="text-align:center;padding-top:10px;color:white;text-decoration:none">
+
+📊<br>Dash
+
+</a>
+
+<a href="project-hub.html"
+style="text-align:center;padding-top:10px;color:white;text-decoration:none">
+
+🧠<br>Hub
+
+</a>
+
+<a href="export-project.html"
+style="text-align:center;padding-top:10px;color:white;text-decoration:none">
+
+📤<br>Export
+
+</a>
+
+<a href="system-map.html"
+style="text-align:center;padding-top:10px;color:white;text-decoration:none">
+
+♥<br>Map
+
+</a>
 
 </nav>
 
 <script>
 
-let projects =
-JSON.parse(localStorage.getItem("projects") || "[]");
+const projects =
+JSON.parse(
+localStorage.getItem("projects")
+|| "[]"
+);
 
-let index =
-Number(localStorage.getItem("openProjectIndex") || 0);
+const index =
+Number(
+localStorage.getItem(
+"openProjectIndex"
+) || 0
+);
 
-let p = projects[index];
+let p =
+projects[index] || {
 
-if(!p){
+id:"GOC-DEMO",
 
-  p = {
-    id:"GOC-DEMO",
-    name:"LICENSECOIN Demo Project",
-    category:"Value Engine",
-    idea:"Demo project value layer.",
-    status:"Draft",
-    likes:0,
-    watchers:0,
-    logs:[]
-  };
+name:"LICENSECOIN",
 
-  projects[index] = p;
-}
+likes:0,
 
-function save(){
+watchers:0,
+
+status:"Draft"
+
+};
+  function saveProject(){
 
   projects[index] = p;
 
@@ -859,347 +1296,396 @@ function save(){
     JSON.stringify(projects)
   );
 
-  window.dispatchEvent(
-    new Event("licensegoc-sync")
-  );
 }
 
-function addLog(action,detail){
+function calcProjectValue(){
 
-  if(!p.logs) p.logs=[];
+  let value = 1000;
 
-  p.logs.unshift({
-    action,
-    detail,
-    time:new Date().toLocaleString()
-  });
-}
+  if(p.idea)
+    value += 3000;
 
-function calcValue(){
+  if(p.problem)
+    value += 3000;
 
-  let v = 1000;
+  if(p.solution)
+    value += 5000;
 
-  if(p.idea) v += 3000;
-  if(p.problem) v += 3000;
-  if(p.solution) v += 5000;
-  if(p.image) v += 3000;
-
-  if(p.ownershipLocked) v += 10000;
-
-  if(p.status==="Protected") v += 15000;
-
-  if(p.status==="Published") v += 20000;
-
-  v += (p.likes||0) * 50;
-  v += (p.watchers||0) * 30;
-
-  if(p.totalInvestment)
-    v += Number(p.totalInvestment);
-
-  return v;
-}
-
-function calcMarket(){
-
-  let s = 20;
-
-  if(p.idea) s += 15;
-  if(p.solution) s += 20;
+  if(p.image)
+    value += 3000;
 
   if(p.ownershipLocked)
-    s += 15;
+    value += 10000;
 
-  if(
-    p.status==="Protected" ||
-    p.status==="Published"
-  ) s += 20;
+  if(p.status==="Protected")
+    value += 15000;
 
-  s += Math.min((p.likes||0),15);
+  if(p.status==="Published")
+    value += 25000;
 
-  s += Math.min((p.watchers||0),10);
+  value += (p.likes || 0) * 50;
 
-  return Math.min(100,s);
+  value += (p.watchers || 0) * 30;
+
+  value += (p.totalInvestment || 0);
+
+  return value;
+
 }
-  function render(){
 
-  projectName.innerText =
-    p.name || "Untitled Project";
+function render(){
 
-  projectMeta.innerText =
+  document.getElementById(
+    "projectName"
+  ).innerText =
+    p.name || "LICENSECOIN";
+
+  document.getElementById(
+    "projectMeta"
+  ).innerText =
     (p.category || "General")
     + " • "
     + (p.status || "Draft")
-    + " • Ghost ID: "
-    + (p.id || "—");
+    + " • "
+    + (p.id || "GOC-DEMO");
 
-  const v = calcValue();
-  const m = calcMarket();
+  document.getElementById(
+    "projectValue"
+  ).innerText =
+    "$" +
+    calcProjectValue()
+    .toLocaleString();
 
-  value.innerText =
-    "$" + v.toLocaleString();
+  document.getElementById(
+    "walletBalance"
+  ).innerText =
+    "$" +
+    calcProjectValue()
+    .toLocaleString();
 
-  market.innerText =
-    m + "%";
+  document.getElementById(
+    "likes"
+  ).innerText =
+    p.likes || 0;
 
-  investor.innerText =
-    "Investor Signal: " +
-    (
-      m>=85 ? "VERY HIGH"
-      : m>=65 ? "HIGH"
-      : m>=40 ? "MEDIUM"
-      : "LOW"
+  document.getElementById(
+    "watchers"
+  ).innerText =
+    p.watchers || 0;
+
+  let score = 20;
+
+  score +=
+    Math.min(
+      (p.likes || 0),
+      25
     );
+
+  score +=
+    Math.min(
+      (p.watchers || 0),
+      20
+    );
+
+  if(p.solution)
+    score += 20;
+
+  if(p.ownershipLocked)
+    score += 15;
+
+  score =
+    Math.min(
+      score,
+      100
+    );
+
+  document.getElementById(
+    "investorSignal"
+  ).innerText =
+
+    score >= 85
+    ? "VERY HIGH"
+
+    : score >= 65
+    ? "HIGH"
+
+    : score >= 45
+    ? "MEDIUM"
+
+    : "LOW";
 
   if(p.totalInvestment){
 
-    investmentLog.innerText =
-      "Total Investment: $" +
-      Number(p.totalInvestment).toLocaleString();
+    document.getElementById(
+      "investmentLog"
+    ).innerText =
+
+      "$" +
+      Number(
+        p.totalInvestment
+      ).toLocaleString();
+
   }
 
-  createdAt.innerText =
-    p.createdAt
-    ? new Date(p.createdAt).toLocaleDateString()
-    : "—";
+  document.getElementById(
+    "ghostId"
+  ).innerText =
+    p.id || "GOC-DEMO";
 
-  protectedAt.innerText =
-    p.protectedAt
-    ? new Date(p.protectedAt).toLocaleDateString()
-    : "—";
-
-  publishedAt.innerText =
-    p.publishedAt
-    ? new Date(p.publishedAt).toLocaleDateString()
-    : "—";
-
-  usptoAt.innerText =
-    p.usptoDraftAt
-    ? new Date(p.usptoDraftAt).toLocaleDateString()
-    : "—";
 }
 
 function mintCoin(){
 
   p.coinMinted = true;
 
-  p.coinValue = calcValue();
+  p.coinValue =
+    calcProjectValue();
 
-  addLog(
-    "LICENSECOIN MINTED",
-    "LICENSECOIN value simulation was minted."
+  saveProject();
+
+  showToast(
+    "LICENSECOIN Minted"
   );
 
-  save();
-
-  render();
-
-  showToast("LICENSECOIN minted.");
-}
-
-function invest(){
-
-  const amount =
-    Number(
-      document.getElementById("amount").value
-    );
-
-  if(!amount)
-    return alert("Enter investment amount.");
-
-  if(!p.investments)
-    p.investments = [];
-
-  p.investments.push({
-    amount,
-    time:new Date().toLocaleString()
-  });
-
-  p.totalInvestment =
-    (p.totalInvestment || 0) + amount;
-
-  addLog(
-    "INVESTMENT RECORDED",
-    "Investment simulation recorded: $"
-    + amount.toLocaleString()
-  );
-
-  save();
-
-  render();
-
-  document.getElementById("amount").value = "";
 }
 
 function addLike(){
 
-  p.likes = (p.likes || 0) + 1;
+  p.likes =
+    (p.likes || 0) + 1;
 
-  addLog(
-    "LIKE SIGNAL",
-    "A public like signal was added."
-  );
-
-  save();
+  saveProject();
 
   render();
+
 }
 
 function addWatch(){
 
-  p.watchers = (p.watchers || 0) + 1;
+  p.watchers =
+    (p.watchers || 0) + 1;
 
-  addLog(
-    "WATCH SIGNAL",
-    "A public watch signal was added."
-  );
-
-  save();
+  saveProject();
 
   render();
+
+}
+
+function recordInvestment(){
+
+  const amount =
+    Number(
+      document.getElementById(
+        "investmentAmount"
+      ).value
+    );
+
+  if(!amount){
+
+    alert(
+      "Enter investment amount."
+    );
+
+    return;
+  }
+
+  p.totalInvestment =
+    (p.totalInvestment || 0)
+    + amount;
+
+  saveProject();
+
+  render();
+
+  document.getElementById(
+    "investmentAmount"
+  ).value = "";
+
 }
 
 function convertDemo(){
 
   const amount =
     Number(
-      document.getElementById("transferAmount").value
+      document.getElementById(
+        "convertAmount"
+      ).value
     );
 
   const target =
-    document.getElementById("convertTarget").value;
+    document.getElementById(
+      "convertTarget"
+    ).value;
 
   if(!amount)
-    return alert("Enter amount.");
+    return;
 
   let result = "";
 
-  if(target==="USD Stable")
+  if(target==="USD")
     result =
-      "$" + (amount * 1.02).toFixed(2);
+      "$" +
+      (amount * 1.02)
+      .toFixed(2);
 
   if(target==="BTC")
     result =
-      (amount * 0.000012).toFixed(6)
+      (amount * 0.000012)
+      .toFixed(6)
       + " BTC";
 
   if(target==="ETH")
     result =
-      (amount * 0.00022).toFixed(6)
+      (amount * 0.00022)
+      .toFixed(6)
       + " ETH";
 
-  convertResult.innerText =
-    amount
-    + " LICENSECOIN converted to "
-    + result
-    + " (demo).";
+  document.getElementById(
+    "convertResult"
+  ).innerText =
 
-  addLog(
-    "CONVERT DEMO",
-    "Converted "
-    + amount
-    + " LICENSECOIN to "
-    + target
-    + " demo."
-  );
+    amount +
+    " LCN → " +
+    result;
 
-  save();
 }
 
-async function copyAddress(){
+async function copyWallet(){
 
   try{
 
-    await navigator.clipboard.writeText(
-      depositAddress.innerText
+    await navigator.clipboard
+    .writeText(
+
+      document.getElementById(
+        "walletAddress"
+      ).innerText
+
     );
 
-    showToast("Wallet address copied.");
+    showToast(
+      "Wallet copied."
+    );
 
   }catch(e){
 
-    showToast("Copy failed.");
+    showToast(
+      "Copy failed."
+    );
+
   }
+
 }
 
-function showTab(name,btn){
+function showTab(
+  tabName,
+  btn
+){
 
-  document.querySelectorAll(".tab-pane")
-    .forEach(x=>x.classList.remove("active"));
+  document
+  .querySelectorAll(
+    ".tab-pane"
+  )
+  .forEach(
 
-  document.getElementById(
-    "tab-" + name
-  ).classList.add("active");
+    el =>
+    el.classList
+    .remove("active")
 
-  document.querySelectorAll(".tab")
-    .forEach(x=>x.classList.remove("active"));
+  );
 
-  btn.classList.add("active");
+  document
+  .getElementById(
+    "tab-" + tabName
+  )
+  .classList
+  .add("active");
+
+  document
+  .querySelectorAll(
+    ".tab"
+  )
+  .forEach(
+
+    el =>
+    el.classList
+    .remove("active")
+
+  );
+
+  btn.classList
+  .add("active");
+
 }
-
-const toast =
-document.getElementById("toast");
-
-let toastTimer = null;
 
 function showToast(msg){
 
-  toast.innerText = msg;
+  alert(msg);
 
-  toast.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer = setTimeout(()=>{
-    toast.classList.remove("show");
-  },2200);
 }
 
-/* MARKET SIMULATION */
+/* ==========
+   MARKET AI
+========== */
 
-let btcVal = 84492;
-let ethVal = 4101;
-let lcnVal = .996;
-let nasdaqVal = 16295;
+let btc = 84500;
+let eth = 4100;
+let nasdaq = 16295;
+let lcn = 1.00;
 
-function tick(){
+setInterval(()=>{
 
-  btcVal += (Math.random()-.5)*180;
+  btc +=
+  (Math.random()-.5)*200;
 
-  ethVal += (Math.random()-.5)*10;
+  eth +=
+  (Math.random()-.5)*20;
 
-  lcnVal = Math.max(
-    .85,
-    Math.min(
-      1.25,
-      lcnVal + (Math.random()-.5)*.01
-    )
-  );
+  nasdaq +=
+  (Math.random()-.5)*25;
 
-  nasdaqVal += (Math.random()-.5)*12;
+  lcn +=
+  (Math.random()-.5)*0.01;
 
-  btc.innerText =
-    "$"
-    + Math.round(btcVal).toLocaleString()
-    + " • +2.51%";
+  document
+  .getElementById(
+    "btcPrice"
+  ).innerText =
 
-  eth.innerText =
-    "$"
-    + Math.round(ethVal).toLocaleString()
-    + " • +0.83%";
+    "$" +
+    Math.round(btc)
+    .toLocaleString();
 
-  lcn.innerText =
-    "$"
-    + lcnVal.toFixed(3)
-    + " • +0.13%";
+  document
+  .getElementById(
+    "ethPrice"
+  ).innerText =
 
-  nasdaq.innerText =
-    Math.round(nasdaqVal).toLocaleString()
-    + " • +1.12%";
-}
+    "$" +
+    Math.round(eth)
+    .toLocaleString();
 
-setInterval(tick,3200);
+  document
+  .getElementById(
+    "nasdaqPrice"
+  ).innerText =
 
-/* TRANSLATE */
+    Math.round(nasdaq)
+    .toLocaleString();
+
+  document
+  .getElementById(
+    "lcnPrice"
+  ).innerText =
+
+    "$" +
+    lcn.toFixed(3);
+
+},3000);
+
+/* ==========
+   160+ LANGUAGE
+========== */
 
 function toggleTranslate(){
 
@@ -1209,25 +1695,34 @@ function toggleTranslate(){
     );
 
   box.style.display =
-    box.style.display==="block"
+
+    box.style.display ===
+    "block"
+
     ? "none"
+
     : "block";
+
 }
 
 function googleTranslateElementInit(){
 
-  new google.translate.TranslateElement({
+  new google.translate
+  .TranslateElement({
 
     pageLanguage:"vi",
 
-    includedLanguages:
-    "en,vi,zh-CN,zh-TW,ja,ko,fr,de,es,it,ru,ar",
+    autoDisplay:false,
 
     layout:
-    google.translate.TranslateElement
+    google.translate
+    .TranslateElement
     .InlineLayout.SIMPLE
 
-  },"google_translate_element");
+  },
+
+  "google_translate_element");
+
 }
 
 render();
@@ -1237,8 +1732,6 @@ render();
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <script src="sync.js"></script>
-
-<script src="auto-flow.js"></script>
 <script src="core.js"></script>
 <script src="os.js"></script>
 <script src="licensegoc-nav.js"></script>
