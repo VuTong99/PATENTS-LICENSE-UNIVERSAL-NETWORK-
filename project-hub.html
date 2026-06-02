@@ -12,22 +12,22 @@
   --green:#71f0ad;
   --muted:rgba(255,255,255,.7);
 }
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Arial;
-  background:radial-gradient(circle,#071326,#020814);
+  font-family:Arial,Helvetica,sans-serif;
+  background:radial-gradient(circle at top,#071326,#020814);
   color:#fff;
 }
 .container{
   max-width:1100px;
   margin:auto;
-  padding:20px;
-  padding-bottom:100px;
+  padding:20px 20px 120px;
 }
 .card{
   border:1px solid var(--line);
-  border-radius:20px;
-  padding:16px;
+  border-radius:22px;
+  padding:18px;
   background:rgba(255,255,255,.05);
   margin-bottom:16px;
 }
@@ -41,13 +41,13 @@ img{
   border-radius:16px;
   border:1px solid var(--line);
 }
-.stat{color:var(--muted);margin-top:6px}
+.stat{color:var(--muted);margin-top:6px;line-height:1.5}
 .big{font-size:34px;font-weight:1000;color:var(--gold)}
 .btn{
   width:100%;
-  padding:12px;
+  padding:13px;
   border:none;
-  border-radius:12px;
+  border-radius:14px;
   margin-top:10px;
   font-weight:1000;
   cursor:pointer;
@@ -62,6 +62,7 @@ img{
 }
 .fill{
   height:100%;
+  width:0%;
   background:linear-gradient(90deg,var(--gold),var(--green));
 }
 @media(max-width:800px){
@@ -77,31 +78,29 @@ img{
 <h1>🧩 PROJECT HUB™</h1>
 
 <div class="grid">
-
-<div class="card">
-  <h2 id="projectTitle">—</h2>
-  <p id="idea" class="stat"></p>
-  <img id="img" src="" style="display:none">
-</div>
-
-<div class="card">
-  <div class="stat" id="id"></div>
-  <div class="stat" id="owner"></div>
-  <div class="stat" id="status"></div>
-  <div class="stat" id="created"></div>
-
-  <div style="margin-top:16px">
-    <div class="stat">Readiness</div>
-    <div class="big" id="ready">0%</div>
-    <div class="bar"><div id="bar" class="fill"></div></div>
+  <div class="card">
+    <h2 id="projectTitle">—</h2>
+    <p id="idea" class="stat"></p>
+    <img id="projectImage" src="" style="display:none">
   </div>
 
-  <div style="margin-top:16px">
-    <div class="stat">Estimated Value</div>
-    <div class="big" id="value">$0</div>
-  </div>
-</div>
+  <div class="card">
+    <div class="stat" id="ghostId"></div>
+    <div class="stat" id="owner"></div>
+    <div class="stat" id="status"></div>
+    <div class="stat" id="created"></div>
 
+    <div style="margin-top:16px">
+      <div class="stat">Readiness</div>
+      <div class="big" id="ready">0%</div>
+      <div class="bar"><div id="readyBar" class="fill"></div></div>
+    </div>
+
+    <div style="margin-top:16px">
+      <div class="stat">Estimated Value</div>
+      <div class="big" id="value">$0</div>
+    </div>
+  </div>
 </div>
 
 <div class="card">
@@ -115,7 +114,7 @@ img{
   <button class="btn dark" onclick="goUSPTO()">⚖️ USPTO</button>
   <button class="btn dark" onclick="goCoin()">🪙 Coin</button>
   <button class="btn dark" onclick="markProtected()">🛡 Mark Protected</button>
- <button class="btn dark" onclick="markPublished()">🌍 Mark Published</button>
+  <button class="btn dark" onclick="markPublished()">🌍 Mark Published</button>
   <button class="btn gold" onclick="goGlobal()">🌍 Global</button>
 </div>
 
@@ -132,76 +131,69 @@ let index = Number(localStorage.getItem("openProjectIndex") || 0);
 let p = projects[index];
 
 if(!p){
-   document.getElementById("projectTitle").innerText="No Project Found";
+  document.getElementById("projectTitle").innerText = "No Project Found";
+  document.getElementById("idea").innerText = "Please create or open a project first.";
 }else{
   render();
 }
 
 function render(){
- document.getElementById("projectTitle").innerText = p.name  || "Untitled";
-  idea.innerText = p.idea || "";
+  document.getElementById("projectTitle").innerText = p.name || "Untitled Project";
+  document.getElementById("idea").innerText = p.idea || "No idea description yet.";
 
   if(p.image){
-    img.src = p.image;
-    img.style.display="block";
+    document.getElementById("projectImage").src = p.image;
+    document.getElementById("projectImage").style.display = "block";
   }
 
-  id.innerText = "Ghost ID: " + (p.id || "—");
-  owner.innerText = "Owner: " + (p.owner || "—");
-  status.innerText = "Status: " + (p.status || "Draft");
-  created.innerText = "Created: " + (p.created || "");
+  document.getElementById("ghostId").innerText = "Ghost ID: " + (p.id || "—");
+  document.getElementById("owner").innerText = "Owner: " + (p.owner || "GỐC");
+  document.getElementById("status").innerText = "Status: " + (p.status || "Draft");
+  document.getElementById("created").innerText = "Created: " + (p.created || p.createdAt || "—");
 
   let r = calcReady();
   let v = calcValue();
 
-  ready.innerText = r + "%";
-  bar.style.width = r + "%";
-  value.innerText = "$" + v.toLocaleString();
+  document.getElementById("ready").innerText = r + "%";
+  document.getElementById("readyBar").style.width = r + "%";
+  document.getElementById("value").innerText = "$" + v.toLocaleString();
 
-  analysis.innerText =
+  document.getElementById("analysis").innerText =
     "Project đã kết nối toàn hệ. Bước tiếp theo: hoàn thiện USPTO + Ownership + hình proof.";
 }
 
 function calcReady(){
-  let r=20;
-  if(p.idea)r+=15;
-  if(p.problem)r+=15;
-  if(p.solution)r+=20;
-  if(p.image)r+=15;
-  if(p.status==="Protected")r+=10;
+  let r = 20;
+  if(p.idea) r += 15;
+  if(p.problem) r += 15;
+  if(p.solution) r += 20;
+  if(p.image) r += 15;
+  if(p.status === "Protected" || p.status === "Published") r += 10;
+  if(p.logs && p.logs.length > 0) r += 5;
   return Math.min(r,100);
 }
 
 function calcValue(){
-  let v=1000;
-  if(p.idea)v+=2000;
-  if(p.problem)v+=2000;
-  if(p.solution)v+=4000;
-  if(p.image)v+=3000;
-  if(p.status==="Protected")v+=10000;
+  let v = 1000;
+  if(p.idea) v += 2000;
+  if(p.problem) v += 2000;
+  if(p.solution) v += 4000;
+  if(p.image) v += 3000;
+  if(p.status === "Protected") v += 10000;
+  if(p.status === "Published") v += 18000;
+  if(p.totalInvestment) v += Number(p.totalInvestment);
   return v;
 }
-  function goInvestor(){location.href="investor-snapshot.html";}
-function goExport(){location.href="export-project.html";}
-function goLog(){location.href="project-log.html";}
-function goEdit(){location.href="edit-project.html";}
-function goAI(){window.location.href="ai-command.html";}
-function goOwner(){window.location.href="ownership.html";}
-function goUSPTO(){
-  window.location.href="uspto.html?title="+encodeURIComponent(p.name||"")+
-  "&idea="+encodeURIComponent(p.idea||"")+
-  "&problem="+encodeURIComponent(p.problem||"")+
-  "&solution="+encodeURIComponent(p.solution||"");
-}
-function goCoin(){window.location.href="licensecoin.html";}
-function goGlobal(){window.location.href="globalroom.html";}
-  function saveProject(){
+
+function saveProject(){
+  if(!p) return;
   projects[index] = p;
   localStorage.setItem("projects", JSON.stringify(projects));
   window.dispatchEvent(new Event("licensegoc-sync"));
 }
 
 function addLog(action, detail){
+  if(!p) return;
   if(!p.logs) p.logs = [];
   p.logs.unshift({
     action: action,
@@ -211,38 +203,46 @@ function addLog(action, detail){
 }
 
 function markProtected(){
+  if(!p) return alert("No project found.");
   p.status = "Protected";
   p.protectedAt = new Date().toISOString();
-
-  addLog(
-    "PROJECT PROTECTED",
-    "Project was marked as Protected from PROJECT HUB™."
-  );
-
+  addLog("PROJECT PROTECTED","Project was marked as Protected from PROJECT HUB™.");
   saveProject();
   render();
   alert("Project marked as Protected.");
 }
 
 function markPublished(){
+  if(!p) return alert("No project found.");
   p.status = "Published";
   p.publishedAt = new Date().toISOString();
-
-  addLog(
-    "PROJECT PUBLISHED",
-    "Project was published from PROJECT HUB™."
-  );
-
+  addLog("PROJECT PUBLISHED","Project was published from PROJECT HUB™.");
   saveProject();
   render();
   alert("Project marked as Published.");
 }
-</script>
 
+function goInvestor(){location.href="investor-snapshot.html";}
+function goExport(){location.href="export-project.html";}
+function goLog(){location.href="project-log.html";}
+function goEdit(){location.href="edit-project.html";}
+function goAI(){location.href="ai-command.html";}
+function goOwner(){location.href="ownership.html";}
+function goCoin(){location.href="licensecoin.html";}
+function goGlobal(){location.href="globalroom.html";}
+
+function goUSPTO(){
+  if(!p){location.href="uspto.html";return;}
+  location.href =
+    "uspto.html?title=" + encodeURIComponent(p.name || "") +
+    "&idea=" + encodeURIComponent(p.idea || "") +
+    "&problem=" + encodeURIComponent(p.problem || "") +
+    "&solution=" + encodeURIComponent(p.solution || "");
+}
+</script>
 
 <script src="sync.js"></script>
 <script src="licensegoc-nav.js"></script>
-
 
 </body>
 </html>
